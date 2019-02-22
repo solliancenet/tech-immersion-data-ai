@@ -7,8 +7,10 @@ In this experience, you will use Azure Cosmos DB to ingest streaming vehicle tel
 - [Day 1, Experience 2 - Leveraging Cosmos DB for near real-time analytics](#day-1-experience-2---leveraging-cosmos-db-for-near-real-time-analytics)
   - [Exercise 1: Configure Cosmos DB](#exercise-1-configure-cosmos-db)
   - [Exercise 2: Configure Event Hubs](#exercise-2-configure-event-hubs)
-  - [Exercise 2: Configure Stream Analytics](#exercise-2-configure-stream-analytics)
-  - [Exercise 2: Configure Azure Function App](#exercise-2-configure-azure-function-app)
+  - [Exercise 3: Configure Stream Analytics](#exercise-3-configure-stream-analytics)
+  - [Exercise 4: Configure Azure Function App](#exercise-4-configure-azure-function-app)
+  - [Exercise 5: Publish Function App and run data generator](#exercise-5-publish-function-app-and-run-data-generator)
+  - [Exercise 6: Create Power BI dashboard](#exercise-6-create-power-bi-dashboard)
 
 ## Exercise 1: Configure Cosmos DB
 
@@ -139,7 +141,7 @@ In this exercise, you will create and configure a new event hub within the provi
 
     ![The Write policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted.](media/event-hubs-write-policy-key.png 'SAS Policy: Write')
 
-## Exercise 2: Configure Stream Analytics
+## Exercise 3: Configure Stream Analytics
 
 In this exercise, you will create and configure a new event hub within the provided Event Hubs namespace. This will be used to capture vehicle telemetry after it has been processed and enriched by the Azure function you will create later on.
 
@@ -288,7 +290,7 @@ In this exercise, you will create and configure a new event hub within the provi
 
     ![The Now and Start buttons are highlighted within the Start job blade.](media/stream-analytics-start-job.png 'Start job')
 
-## Exercise 2: Configure Azure Function App
+## Exercise 4: Configure Azure Function App
 
 In this exercise, you will configure the Function App with the Azure Cosmos DB and Event Hubs connection strings.
 
@@ -323,3 +325,81 @@ In this exercise, you will configure the Function App with the Azure Cosmos DB a
 9.  Scroll to the top of the page and select **Save** in the top toolbar to apply your changes.
 
     ![The Save button is highlighted on top of the Application settings blade.](media/function-app-app-settings-save.png 'Application settings')
+
+## Exercise 5: Publish Function App and run data generator
+
+In this exercise, you will open the lab solution in Visual Studio, publish the Function App, and configure and run the data generator. The data generator saves simulated vehicle telemetry data to Cosmos DB, which triggers the Azure function to run and process the data, sending it to Event Hubs, prompting your Stream Analytics job to aggregate and analyze the enriched data and send it to Power BI. The final step will be to create the Power BI report in the exercise that follows.
+
+1.  Open Windows Explorer and navigate to `C:\lab-files`. Double-click on **TechImmersion.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure credentials you are using for this lab.
+
+    ![The TechImmersion.sln file is highlighted in the C:\tech-immersion folder.](media/vs-solution.png 'Windows explorer')
+
+    The Visual Studio solution contains the following projects:
+
+    - **TechImmersion.CarEventProcessor**: Azure Function App project from which you will publish the Azure function that processes Cosmos DB documents as they arrive, and sends them to Event Hubs.
+    - **TechImmersion.Common**: Common library that contains models and structs used by the other projects within the solution.
+    - **TransactionGenerator**: Console app that generates simulated vehicle telemetry and writes it to Cosmos DB.
+
+2.  Select the **Build** menu item, then select **Build Solution**. You should see a message in the output window on the bottom of the Visual Studio window that the build successfully completed. One of the operations that completes during this process is to download and install all NuGet packages.
+
+    ![The Build menu item and Build Solution sub-menu item are highlighted.](media/vs-build-solution.png 'Build Solution')
+
+3.  You will see the projects listed within the Solution Explorer in Visual Studio. Right-click the **TechImmersion.CarEventProcessor** solution, then select **Publish...** in the context menu.
+
+    ![The TechImmersion.CarEventProcessor project and the Publish menu item are highlighted.](media/vs-publish-link.png 'Solution Explorer')
+
+4.  Select **Select Existing** underneath Azure App Service since you will be publishing this to an existing Function App. Click **Publish** on the bottom of the dialog window. If you are prompted to log into your Azure Account, log in with the Azure account you are using for this lab.
+
+    ![The Select Existing radio button and Publish button are highlighted.](media/vs-publish-target.png 'Pick a publish target')
+
+5.  In the App Service dialog that follows, make sure your Azure **Subscription** for this lab is selected, then find and expand the **tech-immersion** resource group. Select your Function App, then click **OK** on the bottom of the dialog window
+
+    ![The Function App and OK button are highlighted.](media/vs-publish-app-service.png 'App Service')
+
+6.  The Function App will start publishing in a moment. You can watch the output window for the publish status. When it is done publishing, you should see a "Publish completed" message on the bottom of the output window.
+
+    ![The Publish Succeeded and Publish Completed messages are highlighted in the output window.](media/vs-publish-output.png 'Publish output')
+
+7.  Expand the **TransactionGenerator** project within the Solution Explorer, then double-click on **appsettings.json** to open it.
+
+    ![The appsettings.json file is highlighted in Solution Explorer.](media/vs-appsettings-link.png 'Solution Explorer')
+
+8.  Paste your Cosmos DB connection string value next to `COSMOS_DB_CONNECTION_STRING`. Make sure you have quotes ("") around the value, as shown.
+
+    ![The Cosmos DB connection string is highlighted within the appsettings.json file.](media/vs-appsettings.png 'appsettings.json')
+
+    `SECONDS_TO_LEAD` is the amount of time to wait before sending vehicle telemetry data. Default value is `0`.
+
+    `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. The default value is `600`. Data will also stop transmitting when you enter Ctrl+C while the generator is running, or if you close the window.
+
+9.  Now you are ready to run the transaction generator. Select the **Debug** menu item, then select **Start Debugging**, or press _F-5_ on your keyboard.
+
+    ![The Debug menu item and Start Debugging sub-menu item are selected](media/vs-debug.png 'Debug')
+
+10. A new console window will open, and you should see it start to send data after a few seconds. Once you see that it is sending data to Cosmos DB, _minimize_ the window and keep it running in the background.
+
+    ![Screenshot of the console window.](media/vs-console.png "Console window")
+
+    The top of the output displays information about the Cosmos DB collection you created (telemetry), the requested RU/s as well as estimated hourly and monthly cost. After every 1,000 records are requested to be sent, you will see output statistics.
+
+## Exercise 6: Create Power BI dashboard
+
+In this exercise, ...
+
+1.  Open your web browser and navigate to <https://powerbi.microsoft.com/>. Select **Sign in** on the upper-right.
+
+    ![The Power BI home page is shown with the Sign in link highlighted.](media/pbi-signin.png 'Power BI home page')
+
+2.  Enter your Power BI credentials you used when creating the Power BI output for Stream Analytics.
+
+3.  After signing in, select **My Workspace** on the left-hand menu.
+
+    ![The My Workspace link is selected on the left-hand menu.](media/pbi-my-workspace-link.png 'My Workspace')
+
+4.  Select the **Datasets** tab on top of the workspace. Locate the dataset named **VehicleAnomalies**, then select the **Create Report** action button to the right of the name.
+
+    ![The Datasets tab is selected in My Workspace and the VehicleAnomalies dataset is highlighted.](media/pbi-my-workspace.png 'Datasets')
+
+5.  You should see a new blank report for VehicleAnomalies with the field list on the far right.
+
+    ![A new blank report is displayed with the field list on the right.](media/pbi-blank-report.png 'Blank report')
