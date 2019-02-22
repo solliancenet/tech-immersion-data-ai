@@ -51,3 +51,84 @@ In this exercise, you will create a new Cosmos DB database and collection, set t
 10. Copy the **Primary Connection String** value by selecting the copy button to the right of the field. **SAVE THIS VALUE** in Notepad or similar text editor for later.
 
     ![The Primary Connection String key is copied.](media/cosmos-db-keys.png 'Keys')
+
+## Exercise 2: Configure Event Hub
+
+In this exercise, you will create and configure a new event hub within the provided Event Hubs namespace. This will be used to capture vehicle telemetry after it has been processed and enriched by the Azure function you will create later on.
+
+1.  Navigate to the [Azure portal](https://portal.azure.com).
+
+2.  Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion**.
+
+    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
+
+3.  Select the **Event Hubs Namespace** from the list of resources in your resource group.
+
+    ![The Event Hubs Namespace is selected in the resource group.](media/tech-immersion-rg-event-hubs.png 'tech-immersion resource group')
+
+4.  Within the Event Hubs Namespace blade, select **Event Hubs** within the left-hand menu.
+
+    ![The Event Hubs link is selected in the left-hand menu.](media/event-hubs-link.png 'Event Hubs link')
+
+5.  Select **+ Event Hub** in the top toolbar to create a new event hub in the namespace.
+
+    ![The new Event Hub link is highlighted in the top toolbar.](media/event-hubs-new-event-hub-link.png 'New event hub link')
+
+6.  In the **Create Event Hub** blade, configure the following:
+
+    - **Name:** Enter "telemetry".
+    - **Partition Count:** Select 2.
+    - **Message Retention**: Select 1.
+    - **Capture:** Select Off.
+
+    ![The Create Event Hub form is filled out with the previously mentioned settings entered into the appropriate fields.](media/event-hubs-create-event-hub.png 'Create Event Hub')
+
+7.  Select **Create** on the bottom of the form when you are finished entering the values.
+
+8.  Select your newly created **telemetry** event hub from the list after it is created.
+
+    ![The newly created telemetry event hub is selected.](media/event-hubs-select.png 'Event hubs')
+
+9.  Select **Shared access policies** from the left-hand menu.
+
+    ![The Shared access policies link is selected in the left-hand menu.](media/event-hubs-shared-access-policies-link.png 'Shared access policies link')
+
+10. Select **+ Add** in the top toolbar to create a new shared access policy.
+
+    ![The Add button is highlighted.](media/event-hubs-shared-access-policies-add-link.png 'Add')
+
+11. In the **Add SAS Policy** blade, configure the following:
+
+    - **Name:** Enter "Read".
+    - **Managed:** Unchecked.
+    - **Send:** Unchecked.
+    - **Listen:** Checked.
+
+    ![The Add SAS Policy form is filled out with the previously mentioned settings entered into the appropriate fields.](media/event-hubs-add-sas-policy-read.png 'Add SAS Policy')
+
+    > It is a best practice to create separate policies for reading, writing, and managing events. This follows the principle of least privilege to prevent services and applications from performing unauthorized operations.
+
+12. Select **Create** on the bottom of the form when you are finished entering the values.
+
+13. Select **+ Add** in the top toolbar to create a new shared access policy.
+
+    ![The Add button is highlighted.](media/event-hubs-shared-access-policies-add-link.png 'Add')
+
+14. In the **Add SAS Policy** blade, configure the following:
+
+    - **Name:** Enter "Write".
+    - **Managed:** Unchecked.
+    - **Send:** Checked.
+    - **Listen:** Unchecked.
+
+    ![The Add SAS Policy form is filled out with the previously mentioned settings entered into the appropriate fields.](media/event-hubs-add-sas-policy-write.png 'Add SAS Policy')
+
+15. Select **Create** on the bottom of the form when you are finished entering the values.
+
+16. Select your **Read** policy from the list. Copy the **Connection string - primary key** value by selecting the Copy button to the right of the field. **SAVE THIS VALUE** in Notepad or similar text editor for later.
+
+    ![The Read policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted.](media/event-hubs-read-policy-key.png 'SAS Policy: Read')
+
+17. Now select your **Write** policy from the list. Copy the **Connection string - primary key** value by selecting the Copy button to the right of the field. **SAVE THIS VALUE** in Notepad or similar text editor for later.
+
+    ![The Write policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted.](media/event-hubs-write-policy-key.png 'SAS Policy: Write')
