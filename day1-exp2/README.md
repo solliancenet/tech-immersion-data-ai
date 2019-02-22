@@ -132,3 +132,152 @@ In this exercise, you will create and configure a new event hub within the provi
 17. Now select your **Write** policy from the list. Copy the **Connection string - primary key** value by selecting the Copy button to the right of the field. **SAVE THIS VALUE** in Notepad or similar text editor for later.
 
     ![The Write policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted.](media/event-hubs-write-policy-key.png 'SAS Policy: Write')
+
+## Exercise 2: Configure Stream Analytics
+
+In this exercise, you will create and configure a new event hub within the provided Event Hubs namespace. This will be used to capture vehicle telemetry after it has been processed and enriched by the Azure function you will create later on.
+
+1.  Navigate to the [Azure portal](https://portal.azure.com).
+
+2.  Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion**.
+
+    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
+
+3.  Select the **Stream Analytics job** from the list of resources in your resource group.
+
+    ![The Stream Analytics job is selected in the resource group.](media/tech-immersion-rg-stream-analytics.png 'tech-immersion resource group')
+
+4.  Within the Stream Analytics job blade, select **Inputs** within the left-hand menu.
+
+    ![The Inputs link is selected in the left-hand menu.](media/inputs-link.png 'Inputs link')
+
+5.  Select **+ Add stream input** in the top toolbar, then select **Event Hub** to create a new Event Hub input.
+
+    ![The Add stream input button and Event Hub menu item are highlighted.](media/stream-analytics-add-input-link.png 'Add stream input - Event Hub')
+
+6.  In the **New Input** blade, configure the following:
+
+    - **Name:** Enter "eventhub".
+    - **Select Event Hub from your subscriptions:** Selected.
+    - **Subscription:** Make sure the subscription you are using for this lab is selected.
+    - **Event Hub namespace:** Select the Event Hub namespace you are using for this lab.
+    - **Event Hub name:** Select **Use existing**, then select **telemetry**, which you created earlier.
+    - **Event Hub policy name:** Select **Read**.
+    - Leave all other values at their defaults.
+
+    ![The New Input form is filled out with the previously mentioned settings entered into the appropriate fields.](media/stream-analytics-new-input.png 'New Input')
+
+7.  Select **Save** on the bottom of the form when you are finished entering the values.
+
+8.  Within the Stream Analytics job blade, select **Outputs** within the left-hand menu.
+
+    ![The Outputs link is selected in the left-hand menu.](media/outputs-link.png 'Outputs link')
+
+9.  Select **+ Add** in the top toolbar, then select **Power BI** to create a new Power BI output.
+
+    ![The Add button and Power BI menu item are highlighted.](media/stream-analytics-add-output-link.png 'Add output - Power BI')
+
+10. In the **New Output** blade, select the **Authorize** button to authorize a connection from Stream Analytics to your Power BI account. If you do not have a Power BI account, select the **Sign up** link below the button.
+
+    ![The Authorize button is highlighted in the New Output blade.](media/stream-analytics-new-output-authorize.png 'New Output')
+
+11. When prompted, sign in to your Power BI account.
+
+    ![The Power BI sign in form is displayed.](media/power-bi-sign-in.png 'Power BI Sign In')
+
+12. After successfully signing in to your Power BI account, the New Output blade will update to show you are currently authorized.
+
+    ![The New Output blade has been updated to show user is authorized to Power BI.](media/stream-analytics-new-output-authorized.png 'Authorized')
+
+13. In the **New Output** blade, configure the following:
+
+    - **Output alias:** Enter "powerBIAlerts".
+    - **Group workspace:** Select My Workspace.
+    - **Dataset name:** Enter "VehicleAnomalies".
+    - **Table name:** Enter "Alerts".
+
+    ![The New Output form is filled out with the previously mentioned settings entered into the appropriate fields.](media/stream-analytics-new-output.png 'New Output')
+
+14. Select **Save** on the bottom of the form when you are finished entering the values.
+
+15. Within the Stream Analytics job blade, select **Query** within the left-hand menu.
+
+    ![The Query link is selected in the left-hand menu.](media/query-link.png "Query link")
+
+16. Clear the edit **Query** window and paste the following in its place:
+
+    ```sql
+    WITH
+    Averages AS (
+    select
+        AVG(engineTemperature) averageEngineTemperature,
+        AVG(speed) averageSpeed
+    FROM
+        eventhub TIMESTAMP BY [timestamp]
+    GROUP BY
+        TumblingWindow(Duration(second, 2))
+    ),
+    Anomalies AS (
+    select
+        t.vin,
+        t.[timestamp],
+        t.city,
+        t.region,
+        t.outsideTemperature,
+        t.engineTemperature,
+        a.averageEngineTemperature,
+        t.speed,
+        a.averageSpeed,
+        t.fuel,
+        t.engineoil,
+        t.tirepressure,
+        t.odometer,
+        t.accelerator_pedal_position,
+        t.parking_brake_status,
+        t.headlamp_status,
+        t.brake_pedal_status,
+        t.transmission_gear_position,
+        t.ignition_status,
+        t.windshield_wiper_status,
+        t.abs,
+        (case when a.averageEngineTemperature >= 405 OR a.averageEngineTemperature <= 15 then 1 else 0 end) as enginetempanomaly,
+        (case when t.engineoil <= 1 then 1 else 0 end) as oilanomaly,
+        (case when (t.transmission_gear_position = 'first' OR
+            t.transmission_gear_position = 'second' OR
+            t.transmission_gear_position = 'third') AND
+            t.brake_pedal_status = 1 AND
+            t.accelerator_pedal_position >= 90 AND
+            a.averageSpeed >= 55 then 1 else 0 end) as aggressivedriving
+    from eventhub t TIMESTAMP BY [timestamp]
+    INNER JOIN Averages a ON DATEDIFF(second, t, a) BETWEEN 0 And 2
+    )
+    SELECT
+        *
+    INTO
+        powerBIAlerts
+    FROM
+        Anomalies
+    where aggressivedriving = 1 OR enginetempanomaly = 1 OR oilanomaly = 1
+    ```
+
+    ![The query above has been inserted into the Query window.](media/stream-analytics-query.png "Query window")
+
+    The query averages the engine temperature and speed over a two second duration. Then it selects all telemetry data, including the average values from the previous step, and specifies the following anomalies as new fields:
+
+    a.  **enginetempanomaly**: When the average engine temperature is \>= 405 or \<= 15.
+
+    b.  **oilanomaly**: When the engine oil \<= 1.
+
+    c.  **aggressivedriving**: When the transmission gear position is in first, second, or third, and the brake pedal status is 1, the accelerator pedal position \>= 90, and the average speed is \>= 55.
+
+    Finally, the query outputs all fields from the anomalies step into the `powerBIAlerts` output where aggressivedriving = 1 or enginetempanomaly = 1 or oilanomaly = 1.
+
+17. Select **Save** in the top toolbar when you are finished updating the query.
+
+18. Within the Stream Analytics job blade, select **Overview** within the left-hand menu. On top of the Overview blade, select **Start**.
+
+    ![The Start button is highlighted on top of the Overview blade.](media/stream-analytics-overview-start-button.png "Overview")
+
+19. In the Start job blade that appears, select **Now** for the job output start time, then select **Start**. This will start the Stream Analytics job so it will be ready to start processing and sending your events to Power BI later on.
+
+    ![The Now and Start buttons are highlighted within the Start job blade.](media/stream-analytics-start-job.png "Start job")
