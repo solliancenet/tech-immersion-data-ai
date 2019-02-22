@@ -196,36 +196,27 @@ namespace TransactionGenerator
         /// Extracts properties from either the appsettings.json file or system environment variables.
         /// </summary>
         /// <returns>
-        /// CosmosDbEndpointUrl: The endpoint URL copied from your Cosmos DB properties.
-        /// CosmosDbAuthorizationKey: The authorization key copied from your Cosmos DB properties.
+        /// CosmosDbConnectionString: The primary or secondary connection string copied from your Cosmos DB properties.
         /// MillisecondsToRun: The maximum amount of time to allow the generator to run before stopping transmission of data. The default value is 600. Data will also stop transmitting after the included Untagged_Transactions.csv file's data has been sent.
         /// MillisecondsToLead: The amount of time to wait before sending payment transaction data. Default value is 0.
         /// </returns>
-        private static (string CosmosDbEndpointUrl,
-                        string CosmosDbAuthorizationKey,
-                        int MillisecondsToRun,
-                        int MillisecondsToLead) ParseArguments()
+        private static (string CosmosDbConnectionString,
+            int MillisecondsToRun,
+            int MillisecondsToLead) ParseArguments()
         {
             try
             {
                 // The Configuration object will extract values either from the machine's environment variables, or the appsettings.json file.
-                var cosmosDbEndpointUrl = _configuration["COSMOS_DB_ENDPOINT"];
-                var cosmosDbAuthorizationKey = _configuration["COSMOS_DB_AUTH_KEY"];
+                var cosmosDbEndpointUrl = _configuration["COSMOS_DB_CONNECTION_STRING"];
                 var numberOfMillisecondsToRun = (int.TryParse(_configuration["SECONDS_TO_RUN"], out var outputSecondToRun) ? outputSecondToRun : 0) * 1000;
                 var numberOfMillisecondsToLead = (int.TryParse(_configuration["SECONDS_TO_LEAD"], out var outputSecondsToLead) ? outputSecondsToLead : 0) * 1000;
 
                 if (string.IsNullOrWhiteSpace(cosmosDbEndpointUrl))
                 {
-                    throw new ArgumentException("COSMOS_DB_ENDPOINT must be provided");
+                    throw new ArgumentException("COSMOS_DB_CONNECTION_STRING must be provided");
                 }
 
-                if (string.IsNullOrWhiteSpace(cosmosDbAuthorizationKey))
-                {
-                    throw new ArgumentException("COSMOS_DB_AUTH_KEY must be provided");
-                }
-
-                return (cosmosDbEndpointUrl, cosmosDbAuthorizationKey,
-                    numberOfMillisecondsToRun, numberOfMillisecondsToLead);
+                return (cosmosDbEndpointUrl, numberOfMillisecondsToRun, numberOfMillisecondsToLead);
             }
             catch (Exception e)
             {
@@ -246,6 +237,7 @@ namespace TransactionGenerator
             _configuration = builder.Build();
 
             var arguments = ParseArguments();
+            var cosmosDbConnectionString = new CosmosDbConnectionString(arguments.CosmosDbConnectionString);
             // Set an optional timeout for the generator.
             var cancellationSource = arguments.MillisecondsToRun == 0 ? new CancellationTokenSource() : new CancellationTokenSource(arguments.MillisecondsToRun);
             var cancellationToken = cancellationSource.Token;
@@ -301,7 +293,7 @@ namespace TransactionGenerator
             TelemetryGenerator.Init();
 
             // Instantiate Cosmos DB client and start sending messages:
-            using (_cosmosDbClient = new DocumentClient(new Uri(arguments.CosmosDbEndpointUrl), arguments.CosmosDbAuthorizationKey, connectionPolicy))
+            using (_cosmosDbClient = new DocumentClient(cosmosDbConnectionString.ServiceEndpoint, cosmosDbConnectionString.AuthKey, connectionPolicy))
             {
                 InitializeCosmosDb().Wait();
 
