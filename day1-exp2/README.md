@@ -384,7 +384,7 @@ In this exercise, you will open the lab solution in Visual Studio, publish the F
 
 ## Exercise 6: Create Power BI dashboard
 
-In this exercise, ...
+In this exercise, you will use Power BI to create a report showing captured vehicle anomaly data. Then you will pin that report to a live dashboard for near real-time updates.
 
 1.  Open your web browser and navigate to <https://powerbi.microsoft.com/>. Select **Sign in** on the upper-right.
 
