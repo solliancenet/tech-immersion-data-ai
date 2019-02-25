@@ -1,16 +1,23 @@
 # Day 1, Experience 2 - Leveraging Cosmos DB for near real-time analytics
 
-ContosoAuto is collecting vehicle telemetry and wants to use Cosmos DB to rapidly ingest and store the data in its raw form, then do some processing in near real-time. In the end, they want to create a dashboard that automatically updates with new data as it flows in after being processed. What they would like to see on the dashboard are various visualizations of detected anomalies, like engines overheating, abnormal oil pressure, and aggressive driving, using components such as a map to show anomalies related to cities, as well as various charts and graphs depicting this information in a clear way.
+Contoso Auto is collecting vehicle telemetry and wants to use Cosmos DB to rapidly ingest and store the data in its raw form, then do some processing in near real-time. In the end, they want to create a dashboard that automatically updates with new data as it flows in after being processed. What they would like to see on the dashboard are various visualizations of detected anomalies, like engines overheating, abnormal oil pressure, and aggressive driving, using components such as a map to show anomalies related to cities, as well as various charts and graphs depicting this information in a clear way.
 
 In this experience, you will use Azure Cosmos DB to ingest streaming vehicle telemetry data as the entry point to a near real-time analytics pipeline built on Cosmos DB, Azure Functions, Event Hubs, Azure Stream Analytics, and Power BI. To start, you will complete configuration and performance-tuning on Cosmos DB to prepare it for data ingest, and use the change feed capability of Cosmos DB to trigger Azure Functions for data processing. The function will enrich the telemetry data with location information, then send it to Event Hubs. Azure Stream Analytics extracts the enriched sensor data from Event Hubs, performs aggregations over windows of time, then sends the aggregated data to Power BI for data visualization and analysis. A vehicle telemetry data generator will be used to send vehicle telemetry data to Cosmos DB.
 
 - [Day 1, Experience 2 - Leveraging Cosmos DB for near real-time analytics](#day-1-experience-2---leveraging-cosmos-db-for-near-real-time-analytics)
+  - [Experience requirements](#experience-requirements)
   - [Task 1: Configure Cosmos DB](#task-1-configure-cosmos-db)
   - [Task 2: Configure Event Hubs](#task-2-configure-event-hubs)
   - [Task 3: Configure Stream Analytics](#task-3-configure-stream-analytics)
   - [Task 4: Configure Azure Function App](#task-4-configure-azure-function-app)
   - [Task 5: Publish Function App and run data generator](#task-5-publish-function-app-and-run-data-generator)
   - [Task 6: Create Power BI dashboard](#task-6-create-power-bi-dashboard)
+
+## Experience requirements
+
+- Azure subscription
+- Visual Studio 2017 Community (or better)
+- Power BI account (sign up at <https://powerbi.microsoft.com>)
 
 ## Task 1: Configure Cosmos DB
 
