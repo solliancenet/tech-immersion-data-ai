@@ -286,13 +286,13 @@ Read more about [intelligent query processing](https://docs.microsoft.com/sql/re
 
     ![The Actual Query Plan button is highlighted in the toolbar.](media/ssms-enable-actual-query-plan.png 'Enable Actual Query Plan')
 
-9.  Execute the query.
+9.  **Execute** the query.
 
 10. After the query executes, select the **Execution plan** tab. As the plan shows, SQL Server adopts a simple strategy here: for every tuple in the `Customer` table, invoke the UDF and output the results. This strategy is naïve and inefficient. Also, make note of the query execution time. In our case in the screenshot below, it took 9 seconds to complete.
 
     ![This screenshot shows the query execution plan using the legacy method.](media/ssms-udf-inlining-old.png 'Query execution plan with legacy method')
 
-11. Clear the query window, or open a new one, then paste the following query that makes use of the scalar UDF inlining QP feature. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it.
+11. Clear the query window, or open a new one, then paste the following query that makes use of the scalar UDF inlining QP feature. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
 
     ```sql
     USE ContosoAutoDW;
@@ -318,6 +318,137 @@ Read more about [intelligent query processing](https://docs.microsoft.com/sql/re
     3. SQL Server is now using parallelism across all operators.
 
     > Depending upon the complexity of the logic in the UDF, the resulting query plan might also get bigger and more complex. As we can see, the operations inside the UDF are now no longer a black box, and hence the query optimizer is able to cost and optimize those operations. Also, since the UDF is no longer in the plan, iterative UDF invocation is replaced by a plan that completely avoids function call overhead.
+
+13. Either highlight and delete everything in the query window, or open a new query window. Paste the following query. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
+
+    ```sql
+    USE [master];
+    GO
+
+    ALTER DATABASE [ContosoAutoDW] SET COMPATIBILITY_LEVEL = 140;
+    GO
+
+    USE [ContosoAutoDW];
+    GO
+
+    DECLARE @Order TABLE
+      ([Order Key] BIGINT NOT NULL,
+      [Quantity] INT NOT NULL
+      );
+
+    INSERT @Order
+    SELECT [Order Key], [Quantity]
+    FROM [Fact].[OrderHistory]
+    WHERE  [Quantity] > 99;
+
+    -- Look at estimated rows, speed, join algorithm
+    SELECT oh.[Order Key], oh.[Order Date Key],
+        oh.[Unit Price], o.Quantity
+    FROM Fact.OrderHistoryExtended AS oh
+    INNER JOIN @Order AS o
+      ON o.[Order Key] = oh.[Order Key]
+    WHERE oh.[Unit Price] > 0.10
+    ORDER BY oh.[Unit Price] DESC;
+    GO
+    ```
+
+    > The script above assigns a table variable, `@Order`, storing the `Order Key` and `Quantity` fields from the `OrderHistory` table to be used in an INNER JOIN further below. Since the database compatibility level was set to 140, the table variable deferred compilation QP feature is not used (more on this below).
+
+14. After the query executes, select the **Execution Plan** tab. There are two plans. The one you want to observe is the second query plan. Hover over the second INNER JOIN to view the estimated number of rows and the output list, which shows the join algorithm. The estimated number of rows should be around 1. Also, observe the execution time. In our case, it took 11 seconds to complete.
+
+    ![This screenshot shows the query execution plan using the legacy method.](media/ssms-tvdc-old.png 'Query execution plan with old method')
+
+15. Either highlight and delete everything in the query window, or open a new query window. Paste the following query that makes use of the table variable deferred compilation feature by setting the compatibility level to 150. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
+
+    ```sql
+    USE [master]
+    GO
+
+    ALTER DATABASE [ContosoAutoDW] SET COMPATIBILITY_LEVEL = 150
+    GO
+
+    USE [ContosoAutoDW]
+    GO
+
+    DECLARE @Order TABLE
+      ([Order Key] BIGINT NOT NULL,
+      [Quantity] INT NOT NULL
+      );
+
+    INSERT @Order
+    SELECT [Order Key], [Quantity]
+    FROM [Fact].[OrderHistory]
+    WHERE  [Quantity] > 99;
+
+    -- Look at estimated rows, speed, join algorithm
+    SELECT oh.[Order Key], oh.[Order Date Key],
+        oh.[Unit Price], o.Quantity
+    FROM Fact.OrderHistoryExtended AS oh
+    INNER JOIN @Order AS o
+      ON o.[Order Key] = oh.[Order Key]
+    WHERE oh.[Unit Price] > 0.10
+    ORDER BY oh.[Unit Price] DESC;
+    GO
+    ```
+
+16. After the query executes, select the **Execution plan** tab once again. Notice this time that the join algorithm is a hash match, and that the overall query execution plan looks different. When you hover over the INNER JOIN, notice that there is a high value for estimated number of rows and that the output list shows the use of hash keys and an optimized join algorithm. Once again, observe the execution time. In our case, it took 5 seconds to complete, which is less than half the time it took to execute without the table variable deferred compilation feature.
+
+    ![This screenshot shows the query execution plan using the new method.](media/ssms-tvdc-new.png 'Query execution plan with new method')
+
+    > Table variable deferred compilation improves plan quality and overall performance for queries that reference table variables. During optimization and initial compilation, this feature propagates cardinality estimates that are based on actual table variable row counts. This accurate row count information optimizes downstream plan operations. Table variable deferred compilation defers compilation of a statement that references a table variable until the first actual run of the statement. This deferred compilation behavior is the same as that of temporary tables. This change results in the use of actual cardinality instead of the original one-row guess. _For more information, see [Table variable deferred compilation](https://docs.microsoft.com/sql/t-sql/data-types/table-transact-sql?view=sql-server-2017#table-variable-deferred-compilation)._
+
+17. Either highlight and delete everything in the query window, or open a new query window. Paste the following query to simulate out-of-date statistics on the `OrderHistory` table, followed by a query that executes a hash match. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
+
+    ```sql
+    ALTER DATABASE ContosoAutoDW SET COMPATIBILITY_LEVEL = 150;
+    GO
+
+    ALTER DATABASE SCOPED CONFIGURATION CLEAR PROCEDURE_CACHE;
+    GO
+
+    USE ContosoAutoDW;
+    GO
+
+    -- Simulate out-of-date stats
+    UPDATE STATISTICS Fact.OrderHistory
+    WITH ROWCOUNT = 1;
+    GO
+
+    SELECT
+      fo.[Order Key], fo.Description,
+      si.[Lead Time Days]
+    FROM    Fact.OrderHistory AS fo
+    INNER HASH JOIN Dimension.[Stock Item] AS si
+      ON fo.[Stock Item Key] = si.[Stock Item Key]
+    WHERE   fo.[Lineage Key] = 9
+      AND si.[Lead Time Days] > 19;
+    ```
+
+18. After the query executes, select the **Execution plan** tab. Hover over the Hash Match step of the execution plan. You should see a warning toward the bottom of the Hash Match dialog showing spilled data. Also observe the execution time. In our case, this query took 26 seconds to execute.
+
+    ![The Hash Match dialog shows spilled data warnings.](media/ssms-memory-grant-feedback.png 'Query execution plan showing spilled data')
+
+19. Either highlight and delete everything in the query window, or open a new query window. Paste the following query to execute the select query that contains the hash match once more. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
+
+    ```sql
+    USE ContosoAutoDW;
+    GO
+
+    SELECT
+      fo.[Order Key], fo.Description,
+      si.[Lead Time Days]
+    FROM    Fact.OrderHistory AS fo
+    INNER HASH JOIN Dimension.[Stock Item] AS si
+      ON fo.[Stock Item Key] = si.[Stock Item Key]
+    WHERE   fo.[Lineage Key] = 9
+      AND si.[Lead Time Days] > 19;
+    ```
+
+20. After the query executes, select the **Execution plan** tab. Hover over the Hash Match step of the execution plan. You should **no longer** see a warning about spilled data. Also observe the execution time. In our case, this query took 4 seconds to execute.
+
+    ![The Hash Match dialog no longer contains spilled data warnings.](media/ssms-memory-grant-feedback-fixed.png 'Query execution plan with no spilled data')
+
+    > So what happened? A query's post-execution plan in SQL Server includes the minimum required memory needed for execution and the ideal memory grant size to have all rows fit in memory. Performance suffers when memory grant sizes are incorrectly sized. Excessive grants result in wasted memory and reduced concurrency. Insufficient memory grants cause expensive spills to disk. By addressing repeating workloads, batch mode memory grant feedback recalculates the actual memory required for a query and then updates the grant value for the cached plan. **When an identical query statement is executed**, the query uses the revised memory grant size, reducing excessive memory grants that impact concurrency and fixing underestimated memory grants that cause expensive spills to disk. Row mode memory grant feedback expands on the batch mode memory grant feedback feature by adjusting memory grant sizes for both batch and row mode operators. \_For more information, see [Row mode memory grant feedback](https://docs.microsoft.com/sql/relational-databases/performance/adaptive-query-processing?view=sql-server-2017#row-mode-memory-grant-feedback).
 
 ## Task 5: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS
 
