@@ -1,20 +1,27 @@
 # Day 1, Experience 2 - Leveraging Cosmos DB for near real-time analytics
 
-ContosoAuto is collecting vehicle telemetry and wants to use Cosmos DB to rapidly ingest and store the data in its raw form, then do some processing in near real-time. In the end, they want to create a dashboard that automatically updates with new data as it flows in after being processed. What they would like to see on the dashboard are various visualizations of detected anomalies, like engines overheating, abnormal oil pressure, and aggressive driving, using components such as a map to show anomalies related to cities, as well as various charts and graphs depicting this information in a clear way.
+Contoso Auto is collecting vehicle telemetry and wants to use Cosmos DB to rapidly ingest and store the data in its raw form, then do some processing in near real-time. In the end, they want to create a dashboard that automatically updates with new data as it flows in after being processed. What they would like to see on the dashboard are various visualizations of detected anomalies, like engines overheating, abnormal oil pressure, and aggressive driving, using components such as a map to show anomalies related to cities, as well as various charts and graphs depicting this information in a clear way.
 
 In this experience, you will use Azure Cosmos DB to ingest streaming vehicle telemetry data as the entry point to a near real-time analytics pipeline built on Cosmos DB, Azure Functions, Event Hubs, Azure Stream Analytics, and Power BI. To start, you will complete configuration and performance-tuning on Cosmos DB to prepare it for data ingest, and use the change feed capability of Cosmos DB to trigger Azure Functions for data processing. The function will enrich the telemetry data with location information, then send it to Event Hubs. Azure Stream Analytics extracts the enriched sensor data from Event Hubs, performs aggregations over windows of time, then sends the aggregated data to Power BI for data visualization and analysis. A vehicle telemetry data generator will be used to send vehicle telemetry data to Cosmos DB.
 
 - [Day 1, Experience 2 - Leveraging Cosmos DB for near real-time analytics](#day-1-experience-2---leveraging-cosmos-db-for-near-real-time-analytics)
-  - [Exercise 1: Configure Cosmos DB](#exercise-1-configure-cosmos-db)
-  - [Exercise 2: Configure Event Hubs](#exercise-2-configure-event-hubs)
-  - [Exercise 3: Configure Stream Analytics](#exercise-3-configure-stream-analytics)
-  - [Exercise 4: Configure Azure Function App](#exercise-4-configure-azure-function-app)
-  - [Exercise 5: Publish Function App and run data generator](#exercise-5-publish-function-app-and-run-data-generator)
-  - [Exercise 6: Create Power BI dashboard](#exercise-6-create-power-bi-dashboard)
+  - [Experience requirements](#experience-requirements)
+  - [Task 1: Configure Cosmos DB](#task-1-configure-cosmos-db)
+  - [Task 2: Configure Event Hubs](#task-2-configure-event-hubs)
+  - [Task 3: Configure Stream Analytics](#task-3-configure-stream-analytics)
+  - [Task 4: Configure Azure Function App](#task-4-configure-azure-function-app)
+  - [Task 5: Publish Function App and run data generator](#task-5-publish-function-app-and-run-data-generator)
+  - [Task 6: Create Power BI dashboard](#task-6-create-power-bi-dashboard)
 
-## Exercise 1: Configure Cosmos DB
+## Experience requirements
 
-In this exercise, you will create a new Cosmos DB database and collection, set the throughput units, and obtain the connection details.
+- Azure subscription
+- Visual Studio 2017 Community (or better)
+- Power BI account (sign up at <https://powerbi.microsoft.com>)
+
+## Task 1: Configure Cosmos DB
+
+In this task, you will create a new Cosmos DB database and collection, set the throughput units, and obtain the connection details.
 
 1.  To start, open a new web browser window and navigate to <https://portal.azure.com>. Log in with the credentials provided to you for this lab.
 
@@ -60,9 +67,9 @@ In this exercise, you will create a new Cosmos DB database and collection, set t
 
     ![The Primary Connection String key is copied.](media/cosmos-db-keys.png 'Keys')
 
-## Exercise 2: Configure Event Hubs
+## Task 2: Configure Event Hubs
 
-In this exercise, you will create and configure a new event hub within the provided Event Hubs namespace. This will be used to capture vehicle telemetry after it has been processed and enriched by the Azure function you will create later on.
+In this task, you will create and configure a new event hub within the provided Event Hubs namespace. This will be used to capture vehicle telemetry after it has been processed and enriched by the Azure function you will create later on.
 
 1.  Navigate to the [Azure portal](https://portal.azure.com).
 
@@ -141,9 +148,9 @@ In this exercise, you will create and configure a new event hub within the provi
 
     ![The Write policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted.](media/event-hubs-write-policy-key.png 'SAS Policy: Write')
 
-## Exercise 3: Configure Stream Analytics
+## Task 3: Configure Stream Analytics
 
-In this exercise, you will create and configure a new event hub within the provided Event Hubs namespace. This will be used to capture vehicle telemetry after it has been processed and enriched by the Azure function you will create later on.
+In this task, you will create and configure a new event hub within the provided Event Hubs namespace. This will be used to capture vehicle telemetry after it has been processed and enriched by the Azure function you will create later on.
 
 1.  Navigate to the [Azure portal](https://portal.azure.com).
 
@@ -290,9 +297,9 @@ In this exercise, you will create and configure a new event hub within the provi
 
     ![The Now and Start buttons are highlighted within the Start job blade.](media/stream-analytics-start-job.png 'Start job')
 
-## Exercise 4: Configure Azure Function App
+## Task 4: Configure Azure Function App
 
-In this exercise, you will configure the Function App with the Azure Cosmos DB and Event Hubs connection strings.
+In this task, you will configure the Function App with the Azure Cosmos DB and Event Hubs connection strings.
 
 1.  Navigate to the [Azure portal](https://portal.azure.com).
 
@@ -312,13 +319,13 @@ In this exercise, you will configure the Function App with the Azure Cosmos DB a
 
     ![The Add new setting link is highlighted on the bottom of the Application settings section.](media/function-app-app-settings-new-link.png 'Application settings')
 
-6.  Enter **CosmosDbConnectionString** into the **Name** field, then paste your Cosmos DB connection string into the **Value** field. If you cannot locate your connection string, refer to Exercise 1, step 10.
+6.  Enter **CosmosDbConnectionString** into the **Name** field, then paste your Cosmos DB connection string into the **Value** field. If you cannot locate your connection string, refer to Task 1, step 10.
 
     ![The CosmosDbConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-cosmos-db.png 'Application settings')
 
 7.  Select **Add new setting** underneath the new application setting you just added to add a new one.
 
-8.  Enter **EventHubsConnectionString** into the **Name** field, then paste your Event Hubs connection string into the **Value** field. If you cannot locate your connection string, refer to Exercise 2, step 17.
+8.  Enter **EventHubsConnectionString** into the **Name** field, then paste your Event Hubs connection string into the **Value** field. If you cannot locate your connection string, refer to Task 2, step 17.
 
     ![The EventHubsConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-event-hubs.png 'Application settings')
 
@@ -326,9 +333,9 @@ In this exercise, you will configure the Function App with the Azure Cosmos DB a
 
     ![The Save button is highlighted on top of the Application settings blade.](media/function-app-app-settings-save.png 'Application settings')
 
-## Exercise 5: Publish Function App and run data generator
+## Task 5: Publish Function App and run data generator
 
-In this exercise, you will open the lab solution in Visual Studio, publish the Function App, and configure and run the data generator. The data generator saves simulated vehicle telemetry data to Cosmos DB, which triggers the Azure function to run and process the data, sending it to Event Hubs, prompting your Stream Analytics job to aggregate and analyze the enriched data and send it to Power BI. The final step will be to create the Power BI report in the exercise that follows.
+In this task, you will open the lab solution in Visual Studio, publish the Function App, and configure and run the data generator. The data generator saves simulated vehicle telemetry data to Cosmos DB, which triggers the Azure function to run and process the data, sending it to Event Hubs, prompting your Stream Analytics job to aggregate and analyze the enriched data and send it to Power BI. The final step will be to create the Power BI report in the task that follows.
 
 1.  Open Windows Explorer and navigate to `C:\lab-files`. Double-click on **TechImmersion.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure credentials you are using for this lab.
 
@@ -382,9 +389,9 @@ In this exercise, you will open the lab solution in Visual Studio, publish the F
 
     The top of the output displays information about the Cosmos DB collection you created (telemetry), the requested RU/s as well as estimated hourly and monthly cost. After every 1,000 records are requested to be sent, you will see output statistics.
 
-## Exercise 6: Create Power BI dashboard
+## Task 6: Create Power BI dashboard
 
-In this exercise, you will use Power BI to create a report showing captured vehicle anomaly data. Then you will pin that report to a live dashboard for near real-time updates.
+In this task, you will use Power BI to create a report showing captured vehicle anomaly data. Then you will pin that report to a live dashboard for near real-time updates.
 
 1.  Open your web browser and navigate to <https://powerbi.microsoft.com/>. Select **Sign in** on the upper-right.
 
