@@ -34,7 +34,7 @@ In this exercise, you will use compute resources provided by Azure Machine Learn
 
 7. In the Upload files from URL dialog, for the File URL copy and paste in the following URL and then press TAB to leave the File URL field: 
 
-https://github.com/nthacker/aml-demos/blob/master/Connected%20Car%20Demo/devintersection-aml-demo.ipynb
+[predict-battery-life-with-AML.ipynb](./predict-battery-life-with-AML.ipynb)
 
 8.  The File Name field will be auto-populated with the name of the notebook.  Select **Done** to upload the notebook.
 
