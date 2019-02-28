@@ -24,6 +24,7 @@ This experience will highlight the new features of SQL Server 2019 with a focus 
 - [Azure Data Studio](https://docs.microsoft.com/sql/azure-data-studio/download?view=sql-server-ver15)
   - [SQL Server 2019 extension](https://docs.microsoft.com/sql/azure-data-studio/sql-server-2019-extension?view=sql-server-ver15)
 - SQL Server 2019 login credentials provided for your lab environment
+- Azure SQL Database login credentials provided for your lab environment
 
 ## Before the lab: Connecting to SQL Server 2019
 
@@ -192,7 +193,166 @@ The script you will execute below enlarges the ContosoAutoDW database. This help
 
 ## Task 1: Query and join data from flat files, data from external database systems, and SQL Server
 
-TBD
+One of the key new features of SQL Server 2019 is data virtualization. What this means is that you can _virtualize_ external data in a SQL Server instance, regardless of source, location, and format, so that it can be queried like any other table, or sets of tables, within your SQL Server instance. In essence, data virtualization helps you create a single "virtual" layer of data from these disparate sources, providing unified data services to support multiple applications and users. A more familiar term we could use is data lake, or perhaps data hub. Unlike a typical data lake, however, you do not have to move data out from where it lives, yet you can still query that data through a consistent interface. This is a huge advantage over traditional ETL (extract-transform-load) processes where data must be moved from its original source to a new destination, oftentimes with some data transformation or mapping. This causes delays, extra storage, additional security, and a fair amount of engineering in most cases. With data virtualization, no data movement is required, which means the data sets are up-to-date, and it is possible to query and join these different data sources through these new capabilities, thanks to the use of new [PolyBase](https://docs.microsoft.com/sql/relational-databases/polybase/polybase-guide?view=sql-server-ver15) connectors. The data sources you can connect to include Cosmos DB, SQL Server (including Azure SQL Database), Oracle, HDFS (for flat files), and DB2.
+
+![Data Virtualization compared to traditional ETL.](media/data-virtualization-vs-etl.png 'ETL vs. Data Virtualization')
+
+The image to the left represents traditional data movement using ETL. Compare that to data virtualization, which does not require data movement and provides a unified layer over top of existing data sources.
+
+In this task, you will experience how to configure data virtualization in SQL Server 2019 by joining data in a single query from a SQL Server 2019 table, an external file stored in HDFS (Hadoop Filesystem), and an external database.
+
+Learn more about using data virtualization with [relational data sources](https://docs.microsoft.com/sql/relational-databases/polybase/data-virtualization?toc=%2fsql%2fbig-data-cluster%2ftoc.json&view=sql-server-ver15) and [CSV files](https://docs.microsoft.com/sql/relational-databases/polybase/data-virtualization-csv?view=sql-server-ver15), using the External Table Wizard.
+
+To start, we will use the External Table Wizard in Azure Data Studio to connect to an external Azure SQL Database.
+
+1.  Open Azure Data Studio and connect to your SQL Server 2019 cluster, following the [connection steps](#connect-with-azure-data-studio) above.
+
+2.  Expand the Databases folder, right-click on the **sales** database, then select **Create External Table**.
+
+    ![The sales database and the Create External Table sub-menu item are highlighted.](media/ads-create-external-table-sales.png 'Create External Table')
+
+3.  Select the **SQL Server** data source type, then click **Next**.
+
+    ![The SQL Server data source type is selected.](media/ads-external-table-wizard-data-source-type.png 'Select data source type')
+
+4.  The next step is to create a database master key, if it does not already exist. This secures the credentials used by an external data source. Enter `MySecure@MasterKey1` in the **Password** and **Confirm Password** fields. If you see a message stating that a master key already exists, you may skip this step. Click **Next**.
+
+    ![The Master Key step is displayed.](media/ads-external-table-wizard-master-key.png 'Master Key')
+
+5.  Now, enter the credentials provided to you for the **CA_Commerce** Azure SQL Database within the following fields:
+
+    - **External Data Source Name:** Enter "SQLReviews".
+    - **Server Name:** Enter the value provided to you for the Azure SQL Server name. The name should end with `.database.windows.net`.
+    - **Database Name:** Enter "CA_Commerce".
+    - **Choose Credential:** Select "-- Create New Credential --".
+    - **Username:** Enter the Azure SQL Server username provided to you for this lab.
+    - **Password:** Enter the Azure SQL Server password provided to you for this lab.
+
+    ![The external data source connection form is filled out with the previously mentioned settings entered into the appropriate fields.](media/ads-external-table-wizard-data-source.png 'Create a connection to your Data Source')
+
+6.  Click **Next**. This process will take a few moments while the External Table Wizard attempts to connect to your data source.
+
+7.  The next screen allows you to configure external table mapping and select the tables for which you want to create external views. Expand the **CA_Commerce** database node, then expand Tables, and check the box next to the **dbo.Reviews** table. Click on the table name to highlight it as well. It is here where you can rename the external table if you wish. For now, just click **Next**.
+
+    ![The external tables are listed and the Reviews table is checked and selected.](media/ads-external-table-wizard-table-mapping.png 'External tables')
+
+8.  In the Summary page that follows, you can see the name of the database scoped credential and external data source objects to be created in the destination database. Here you can click Generate Script to view the SQL script that will run to create the external table. Instead, click **Create**.
+
+    ![A screenshot of the summary is displayed.](media/ads-external-table-wizard-summary.png 'Summary')
+
+9.  After a few moments, a "Create External Table succeeded" message will display.
+
+    ![The Create External Table succeeded message is displayed.](media/ads-external-table-wizard-succeeded.png 'Create External Table succeeded message')
+
+10. Select the Servers link (Ctrl+G) on the left-hand menu, then expand the Tables list underneath your **sales** database and find the **dbo.Reviews (External)** table. If you do not see it, right-click on the Tables folder, then select Refresh. The "(External)" portion of the table name denotes that it is a virtual data object that was added as an external table.
+
+    ![The Reviews external table is displayed in the sales tables list.](media/ads-reviews-table-in-list.png 'Reviews external table')
+
+11. Right-click the **dbo.Reviews (External)** table, then select the **Select Top 1000** menu option to display the table contents.
+
+    ![The Select Top 1000 rows menu item is highlighted.](media/ads-reviews-select-top-1000.png 'Select Top 1000')
+
+12. You should see a SQL query selecting the top 1000 records from the Reviews table and its results. The interesting thing to note is that the query selects the table and fields using the same syntax you would use to select from any other table in the sales database. The fact that the Reviews table is external is completely seamless and transparent to the user. This is the power of data virtualization in SQL Server 2019.
+
+    ![The Reviews query and results are displayed.](media/ads-reviews-query-results.png 'Reviews query results')
+
+    ```sql
+    SELECT TOP (1000) [product_id]
+        ,[customer_id]
+        ,[review]
+        ,[date_added]
+    FROM [sales].[dbo].[Reviews]
+    ```
+
+13. The next data source we will be virtualizing is a CSV file that you will upload to HDFS. **Download** the [stockitemholdings.csv](../lab-files/files/stockitemholdings.csv) file, making note of where it is being saved.
+
+14. Within Azure Data Studio, scroll down below the list of SQL Server 2019 databases to find the **Data Services** folder. Expand that folder, then expand the **HDFS** sub-folder. **Right-click on HDFS**, then select **New directory** on the context menu.
+
+
+    ![The HDFS folder and New directory menu items are highlighted.](media/ads-new-directory-link.png "New directory")
+
+15. In the new dialog that appears, type "data", then press Enter on your keyboard.
+
+    ![The new directory dialog is displayed with data typed in as the new directory name.](media/ads-new-directory.png 'New directory dialog')
+
+16. **Right-click** on your newly created **data** folder, then select **Upload files**.
+
+    ![The data folder and Upload files menu item are highlighted.](media/ads-upload-files-link.png 'Upload files')
+
+17. Browse to the location to which you downloaded the `stockitemholdings.csv` file and select it. Click **Upload**.
+
+    ![The file browse dialog is displayed with the CSV file selected and the Upload button highlighted.](media/ads-upload-files.png 'Select file and upload')
+
+18. Right-click on the `stockitemholdings.csv` file that was just uploaded to the **data** folder, then select **Create External Table From CSV Files**.
+
+
+    ![The CSV file and the Create External Table From CSV Files menu item are highlighted.](media/ads-create-external-table-csv.png "Create External Table From CSV Files")
+
+19. The first dialog has you select the SQL Server Master instance containing your Big Data Cluster. Select the connection underneath **Active SQL Server connections** that includes the cluster's IP address and the **sales** database name.
+
+    ![The active SQL Server connection is highlighted.](media/ads-external-table-csv-wizard-active-connection.png 'Active SQL Server connections')
+
+20. Click **Next**.
+
+21. In the destination database step, select the **sales** database underneath **Database the external table will be created in**. Leave the name and schema at their defaults, then click **Next**.
+
+    ![The sales database is selected and highlighted.](media/ads-external-table-csv-destination.png 'Destination database')
+
+22. The next step displays a preview of the first 50 rows CSV data for validation. Click **Next** to continue.
+
+    ![A preview of the CSV data is displayed.](media/ads-external-table-csv-preview.png 'Preview Data')
+
+23. In the next step, you will be able to Modify the columns of the external table you intend to create. you are able to alter the column name, Change the data type, and allow for Nullable rows. Leave everything as-is and click **Next**.
+
+    ![The Modify Columns step is displayed.](media/ads-external-table-csv-modify.png 'Modify Columns')
+
+24. Verify that everything looks correct in the Summary step, then click **Create Table**.
+
+    ![The Summary step is displayed.](media/ads-external-table-csv-create.png 'Summary')
+
+25. As with the previous external table you created, a "Create External Table succeeded" dialog will appear under your task history in a few moments. Select the Servers link (Ctrl+G) on the left-hand menu, then expand the Tables list underneath your **sales** database and find the **dbo.stockitemholdings (External)** table. If you do not see it, right-click on the Tables folder, then select Refresh. **Right-click** the **dbo.stockitemholdings (External)** table, then select **Select Top 1000** from the context menu.
+
+    ![The Select Top 1000 rows menu item is highlighted.](media/ads-stockitemholdings-select-top-1000.png 'Select Top 1000')
+
+26. Just as before, you should see a SQL query selecting the top 1000 rows and its query results, this time from the `stockitemholdings` table. Again, the SQL query is the same type of query you would write to select from a table internal to the sales database.
+
+    ![The stockitemholdings query and results are displayed.](media/ads-stockitemholdings-results.png 'Stockitemholdings results')
+
+    ```sql
+    SELECT TOP (1000) [StockItemID]
+        ,[QuantityOnHand]
+        ,[BinLocation]
+        ,[LastStocktakeQuantity]
+        ,[LastCostPrice]
+        ,[ReorderLevel]
+        ,[TargetStockLevel]
+        ,[LastEditedBy]
+        ,[LastEditedWhen]
+    FROM [sales].[dbo].[stockitemholdings]
+    ```
+
+27. Now that we have our two external tables added, we will now join those two external tables and two internal tables with a new SQL query to demonstrate how you can seamlessly combine all these data sources without having to copy any files or with separate queries or additional processing of that data. **Right-click** the **sales** database, then select **New Query**.
+
+    ![The sales database and New Query menu item are highlighted.](media/ads-new-query.png 'New Query')
+
+28. Paste the following into the new query window:
+
+    ```sql
+    SELECT i.i_item_sk AS ItemID, i.i_item_desc AS Item, c.c_first_name AS FirstName,
+      c.c_last_name AS LastName, s.QuantityOnHand, r.review AS Review, r.date_added AS DateReviewed
+    FROM dbo.item as i
+    JOIN dbo.Reviews AS r ON i.i_item_sk = r.product_id
+    JOIN dbo.customer AS c ON c.c_customer_sk = r.customer_id
+    JOIN dbo.stockitemholdings AS s ON i.i_item_sk = s.StockItemID
+    ```
+
+29. Click the **Run** button above the query window to execute.
+
+    ![The Run button above the query window is highlighted.](media/ads-run.png 'Run')
+
+30. At the bottom of the query window, you will see results that include columns from the four data sources.
+
+    ![Query results from the four data sets.](media/ads-query-results.png 'Query results')
 
 ## Task 2: Train a machine learning model and deploy it to a SQL stored procedure
 
