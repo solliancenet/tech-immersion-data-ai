@@ -654,4 +654,50 @@ In this exercise, you will run the SQL Data Discovery & Classification tool agai
 
 ## Task 6: Fix compliance issues with dynamic data masking
 
-TBD
+Some of the columns identified by the Data Discovery & Classification tool as containing sensitive (PII/GDPR) information include phone numbers and addresses. One way to ensure compliance with various rules and regulations that enforce policies to protect such sensitive data is to prevent those who are not authorized from seeing it. An example would be displaying `XXX-XXX-XX95` instead of `123-555-2695` when outputting a phone number within a SQL query result, report, web page, etc. This is commonly called data masking. Traditionally, modifying systems and applications to implement data masking can be challenging. This is especially true when the masking has to apply all the way down to the data source level. Fortunately, SQL Server and its cloud-related product, Azure SQL Database, provides a feature named [dynamic data masking](https://docs.microsoft.com/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver15) (DDD) to automatically protect this sensitive data from non-privileged users.
+
+Dynamic data masking helps prevent unauthorized access to sensitive data by enabling customers to designate how much of the sensitive data to reveal with minimal impact on the application layer. DDM can be configured on the database to hide sensitive data in the result sets of queries over designated database fields, while the data in the database is not changed. Dynamic data masking is easy to use with existing applications, since masking rules are applied in the query results. Many applications can mask sensitive data without modifying existing queries.
+
+In this task, you will apply dynamic data masking to one of the database fields so you can see how to address the reported compliance issues. To test the data mask, you will create a test user and query the field as that user.
+
+1.  Open SQL Server Management Studio (SSMS) and connect to your SQL Server 2019 cluster.
+
+2.  Expand the databases list, right-click on **ContosoAutoDW**, then select **New Query**.
+
+    ![The ContosoAutoDW database and New Query menu item are highlighted.](media/ssms-contosoautodw-new-query.png 'New Query')
+
+3.  Add a dynamic data mask to the existing `Dimension.Customer.Postal Code` field by pasting the below query into the new query window:
+
+    ```sql
+    ALTER TABLE Dimension.Customer
+    ALTER COLUMN [Postal Code] ADD MASKED WITH (FUNCTION = 'partial(2,"XXX",0)');
+    ```
+
+    > The `partial` custom string masking method above exposes the first two characters and adds a custom padding string after for the remaining characters. The parameters are: `prefix,[padding],suffix`
+
+4.  Execute the query by clicking the **Execute** button above the query window, or enter _F5_.
+
+    ![The dynamic data mask query is shown and the Execute button is highlighted above.](media/ssms-execute-ddm-query.png 'Execute query')
+
+5.  Clear the query window and replace the previous query with the following, selecting the first 50 rows:
+
+    ```sql
+    SELECT TOP 50 * FROM Dimension.Customer
+    ```
+
+    ![The query results are shown with no mask applied to the Postal Code field.](media/ssms-ddm-results-no-mask.png 'Query results')
+
+6.  Notice that the full Postal Code values are visible. That is because the user you are logged in as a privileged user. Let's create a new user and execute the query again.
+
+    ```sql
+    CREATE USER TestUser WITHOUT LOGIN;
+    GRANT SELECT ON Dimension.Customer TO TestUser;
+
+    EXECUTE AS USER = 'TestUser';
+    SELECT TOP 50 * FROM Dimension.Customer;
+    REVERT;
+    ```
+
+7.  Execute the query by clicking the **Execute** button. Notice this time that the Postal Code values are masked (`90XXX`).
+
+    ![The query results are shown with the mask applied to the Postal Code field.](media/ssms-ddm-results-mask.png 'Query results')
