@@ -23,7 +23,7 @@ In this task, you will quickly set up your ADLS Gen2 filesystem using a Databric
 
     ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
 
-2. Select **tech-immersion-databricks** from the list of resources.
+2. Prior to using ADF to move data into your ADLS Gen2 instance, you must create a filesystem in ADLS Gen2. This will be done using an Azure Databricks notebook. Select **tech-immersion-databricks** from the list of resources.
 
     ![The Databricks resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-databricks.png "Tech Immersion resource group")
 
@@ -73,11 +73,9 @@ In this task, you will quickly set up your ADLS Gen2 filesystem using a Databric
 
     > The **Activity Runs** view allows you to monitor individual activities within your pipelines. In this view, you can see the amount of time each activity took to execute, as well as select the various icons under Actions to view the inputs, outputs, and details of each activity run. As with pipeline runs, you are provided with the Status of each activity.
 
-14. When the pipeline run is complete, return to the **Author** page by selecting the pencil icon in the left-hand menu.
-
 ## Task 2: Read streaming data from Cosmos DB using Databricks
 
-You have now used ADF to move data from various sources, including Cosmos DB, into an ADLS Gen2 filesystem. In this task, you will use an Azure Databricks notebook to extend the use of Cosmos DB further, by creating a connection to your Cosmos DB instance, using the Azure Cosmos DB Spark Connector, and querying streaming data from the Cosmos DB Change Feed.
+You have now used ADF to move data from various sources, including Cosmos DB, into an ADLS Gen2 filesystem. In this task, you will use an Azure Databricks notebook to extend the use of Cosmos DB further. You will create a connection to your Cosmos DB instance, using the Azure Cosmos DB Spark Connector, and query streaming data from the Cosmos DB Change Feed.
 
 1. In the [Azure portal](https://portal.azure.com), select **Resource groups**, select **Resource groups** from the left-hand menu, and then select the resource group named **tech-immersion**.
 
@@ -99,6 +97,8 @@ You have now used ADF to move data from various sources, including Cosmos DB, in
 
 6. In the **2-Cosmos-DB-Change-Feed** notebook, follow the instructions to complete the remaining steps of this task.
 
+> The notebook contains all the instructions needed to complete this task. In addition, the final cell of the notebook contains instructions on the next step, which will include a link to the notebook for the next task in this experience, or instructions to return to this document.
+
 ## Task 3: Perform data aggregation and summarization
 
 In this task, you will using Databricks to perform data preparation, aggregation and summarization with both batch and streaming data.
@@ -110,6 +110,8 @@ In this task, you will using Databricks to perform data preparation, aggregation
    ![In the shared workspace, the 3-Aggregation-and-Summarization notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.](media/databricks-workspace-day1-exp4-notebook3.png "Notebooks in the shared workspace")
 
 3. In the **3-Aggregation-and-Summarization** notebook, follow the instructions to complete the remaining steps of this task.
+
+> The notebook contains all the instructions needed to complete this task. In addition, the final cell of the notebook contains instructions on the next step, which will include a link to the notebook for the next task in this experience, or instructions to return to this document.
 
 ## Task 4: Persisting data to Databricks Delta tables
 
@@ -123,6 +125,8 @@ In this task, you will see how Databricks Delta provides capabilities previous u
 
 3. In the **4-Databricks-Delta** notebook, follow the instructions to complete the remaining steps of this task.
 
+> The notebook contains all the instructions needed to complete this task. In addition, the final cell of the notebook contains instructions on the next step, which will include a link to the notebook for the next task in this experience, or instructions to return to this document.
+
 ## Task 5: Visualizations and dashboards with Databricks
 
 In this task, you will use visualizations configured within a Databricks notebook to build a dashboard displaying your data aggregations.
@@ -135,6 +139,8 @@ In this task, you will use visualizations configured within a Databricks noteboo
 
 3. In the **5-Databricks-Dashboards** notebook, follow the instructions to complete the remaining steps of this task.
 
+> The notebook contains all the instructions needed to complete this task. In addition, the final cell of the notebook contains instructions on the next step, which will include a link to the notebook for the next task in this experience, or instructions to return to this document.
+
 ## Task 6: Send summarized data to Azure SQL DW
 
 In this task, you will use the Azure SQL Data Warehouse connector to write aggregated data from Databricks into your SQL DW. You will also apply aggregations to streaming data from the Cosmos DB Change Feed, and stream the data directly into your Azure SQL DW from Databricks.
@@ -146,6 +152,8 @@ In this task, you will use the Azure SQL Data Warehouse connector to write aggre
    ![In the shared workspace, the 6-Write-to-SQL-DW notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.](media/databricks-workspace-day1-exp4-notebook6.png "Notebooks in the shared workspace")
 
 3. In the **6-Write-to-SQL-DW** notebook, follow the instructions to complete the remaining steps of this task.
+
+> The notebook contains all the instructions needed to complete this task. In addition, the final cell of the notebook contains instructions on the next step, which will include a link to the notebook for the next task in this experience, or instructions to return to this document.
 
 ## Task 7: Generate reports in Power BI with data from Azure SQL DW
 
