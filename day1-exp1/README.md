@@ -11,10 +11,9 @@ This experience will highlight the new features of SQL Server 2019 with a focus 
     - [Connect with SQL Server Management Studio](#connect-with-sql-server-management-studio)
   - [Task 1: Query and join data from flat files, data from external database systems, and SQL Server](#task-1-query-and-join-data-from-flat-files-data-from-external-database-systems-and-sql-server)
   - [Task 2: Train a machine learning model and deploy it to a SQL stored procedure](#task-2-train-a-machine-learning-model-and-deploy-it-to-a-sql-stored-procedure)
-  - [Task 3: Scale out both storage and compute capabilities of a SQL cluster](#task-3-scale-out-both-storage-and-compute-capabilities-of-a-sql-cluster)
-  - [Task 4: Query performance improvements with intelligent query processing](#task-4-query-performance-improvements-with-intelligent-query-processing)
-  - [Task 5: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS](#task-5-identify-pii-and-gdpr-related-compliance-issues-using-data-discovery--classification-in-ssms)
-  - [Task 6: Fix compliance issues with dynamic data masking](#task-6-fix-compliance-issues-with-dynamic-data-masking)
+  - [Task 3: Query performance improvements with intelligent query processing](#task-3-query-performance-improvements-with-intelligent-query-processing)
+  - [Task 4: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS](#task-4-identify-pii-and-gdpr-related-compliance-issues-using-data-discovery--classification-in-ssms)
+  - [Task 5: Fix compliance issues with dynamic data masking](#task-5-fix-compliance-issues-with-dynamic-data-masking)
 
 ## Experience requirements
 
@@ -242,11 +241,7 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
 
 TBD
 
-## Task 3: Scale out both storage and compute capabilities of a SQL cluster
-
-TBD
-
-## Task 4: Query performance improvements with intelligent query processing
+## Task 3: Query performance improvements with intelligent query processing
 
 In this task, you will execute a series of SQL scripts in SQL Server Management Studio (SSMS) to explore the improvements to family of intelligent query processing (QP) features in SQL Server 2019. These features improve the performance of existing workloads with minimal work on your part to implement. The key to enabling these features in SQL Server 2019 is to set the database compatibility level to `150`. You will be executing these queries against the `ContosoAutoDW` database.
 
@@ -494,7 +489,7 @@ Read more about [intelligent query processing](https://docs.microsoft.com/sql/re
 
     > So what happened? A query's post-execution plan in SQL Server includes the minimum required memory needed for execution and the ideal memory grant size to have all rows fit in memory. Performance suffers when memory grant sizes are incorrectly sized. Excessive grants result in wasted memory and reduced concurrency. Insufficient memory grants cause expensive spills to disk. By addressing repeating workloads, batch mode memory grant feedback recalculates the actual memory required for a query and then updates the grant value for the cached plan. **When an identical query statement is executed**, the query uses the revised memory grant size, reducing excessive memory grants that impact concurrency and fixing underestimated memory grants that cause expensive spills to disk. Row mode memory grant feedback expands on the batch mode memory grant feedback feature by adjusting memory grant sizes for both batch and row mode operators. _For more information, see [Row mode memory grant feedback](https://docs.microsoft.com/sql/relational-databases/performance/adaptive-query-processing?view=sql-server-2017#row-mode-memory-grant-feedback)._
 
-## Task 5: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS
+## Task 4: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS
 
 Contoso Auto has several databases that include tables containing sensitive data, such as personally identifiable information (PII) like phone numbers, social security numbers, financial data, etc. Since some of their personnel and customer data include individuals who reside within the European Union (EU), they need to adhere to the General Data Protection Regulation ([GDPR](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation)) as well. Because of this, Contoso Auto is required to provide periodic data auditing reports to identify sensitive and GDPR-related data that reside within their various databases.
 
@@ -536,7 +531,7 @@ In this exercise, you will run the SQL Data Discovery & Classification tool agai
 
     ![The report is displayed, as well as the context menu showing export options after right-clicking on the report.](media/ssms-report.png 'SQL Data Classification Report')
 
-## Task 6: Fix compliance issues with dynamic data masking
+## Task 5: Fix compliance issues with dynamic data masking
 
 Some of the columns identified by the Data Discovery & Classification tool as containing sensitive (PII/GDPR) information include phone numbers and addresses. One way to ensure compliance with various rules and regulations that enforce policies to protect such sensitive data is to prevent those who are not authorized from seeing it. An example would be displaying `XXX-XXX-XX95` instead of `123-555-2695` when outputting a phone number within a SQL query result, report, web page, etc. This is commonly called data masking. Traditionally, modifying systems and applications to implement data masking can be challenging. This is especially true when the masking has to apply all the way down to the data source level. Fortunately, SQL Server and its cloud-related product, Azure SQL Database, provides a feature named [dynamic data masking](https://docs.microsoft.com/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver15) (DDD) to automatically protect this sensitive data from non-privileged users.
 
