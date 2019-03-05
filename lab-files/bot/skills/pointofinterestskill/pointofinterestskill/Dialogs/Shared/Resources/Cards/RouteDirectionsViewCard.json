@@ -1,0 +1,26 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "speak": "This will get you to {Location} in {TravelTime}. {TrafficDelay}",
+  "id": "RouteDirectionsViewCard",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "This will get you to {Location} in {TravelTime}. {TrafficDelay}",
+      "wrap": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Get started",
+      "data": {
+        "event": {
+          "name": "IPA.ActiveRoute",
+          "value": "{RouteId}"
+        }
+      }
+    }
+  ]
+}
