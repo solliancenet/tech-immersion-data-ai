@@ -19,3 +19,5 @@ The computer or VM on which you run the scripts to deploy the cluster and restor
   ```shell
   az extension add -n botservice
   ```
+
+Lab attendees will run a script to deploy required Azure resources during the lab, using the Azure account provided to them.
