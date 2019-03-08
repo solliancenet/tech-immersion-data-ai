@@ -16802,11 +16802,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\calendarskill\\calendarskilltest\\CalendarSkillTest.csproj",
+      "projectUniqueName": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\calendarskill\\calendarskilltest\\CalendarSkillTest.csproj",
       "projectName": "CalendarSkillTest",
-      "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\calendarskill\\calendarskilltest\\CalendarSkillTest.csproj",
+      "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\calendarskill\\calendarskilltest\\CalendarSkillTest.csproj",
       "packagesPath": "C:\\Users\\joel\\.nuget\\packages\\",
-      "outputPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\calendarskill\\calendarskilltest\\obj\\",
+      "outputPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\calendarskill\\calendarskilltest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -16825,11 +16825,11 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj"
             },
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\calendarskill\\calendarskill\\CalendarSkill.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\calendarskill\\calendarskill\\CalendarSkill.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\calendarskill\\calendarskill\\CalendarSkill.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\calendarskill\\calendarskill\\CalendarSkill.csproj"
             }
           }
         }

@@ -15304,11 +15304,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\automotiveskill\\automotiveskill\\AutomotiveSkill.csproj",
+      "projectUniqueName": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\automotiveskill\\automotiveskill\\AutomotiveSkill.csproj",
       "projectName": "AutomotiveSkill",
-      "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\automotiveskill\\automotiveskill\\AutomotiveSkill.csproj",
+      "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\automotiveskill\\automotiveskill\\AutomotiveSkill.csproj",
       "packagesPath": "C:\\Users\\joel\\.nuget\\packages\\",
-      "outputPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\automotiveskill\\automotiveskill\\obj\\",
+      "outputPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\automotiveskill\\automotiveskill\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -15327,8 +15327,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj"
             }
           }
         }

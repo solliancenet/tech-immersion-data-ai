@@ -30,7 +30,7 @@ In this experience, you will use Microsoft's [Virtual Assistant Solution](https:
 
 The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com/services/cognitive-services/language-understanding-intelligent-service/), which is a natural language understanding service, to process and interpret user language to a set of actions or goals. One of the goals of building a bot is to have it interact with users in as human a way as possible. Understanding casual text or voice commands is an increasingly natural way to interact with bots and other virtual assistants. Before we can begin, we must first sign in to the LUIS website and obtain an authoring key that allows the service to be called by your bot.
 
-1. If you will be running your bot services in the United States, navigate to [https://www.luis.ai/](www.luis.ai) and sign in with the Azure account you are using for this experience. If you are outside of the US, sign in to the LUIS site for your [region](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-reference-regions).
+1. If you will be running your bot services in the United States, navigate to [www.luis.ai](https://www.luis.ai/) and sign in with the Azure account you are using for this experience. If you are outside of the US, sign in to the LUIS site for your [region](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-reference-regions).
 
 2. If it is your first time signing in, you may see a "Permission requested" dialog. If so, select **Accept**.
 
@@ -544,7 +544,7 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
 If you recall, the bot deployment script created Azure services, generated a .bot file, and converted the .lu files to JSON files were uploaded to LUIS. Let's take this new knowledge about how LUIS works and how the files are used to train it, and browse to the LUIS portal to explore the generated apps.
 
-1.  Navigate to the LUIS portal ([https://www.luis.ai/](www.luis.ai)) and sign in if needed. You should see four new apps listed underneath **My Apps**, each of which start with the name of your bot. You can see by the `Endpoint hits` value which LUIS app gets used the most.
+1.  Navigate to the LUIS portal ([www.luis.ai](https://www.luis.ai/)) and sign in if needed. You should see four new apps listed underneath **My Apps**, each of which start with the name of your bot. You can see by the `Endpoint hits` value which LUIS app gets used the most.
 
     ![My Apps is displayed with a list of generated LUIS apps.](media/luis-apps.png "My Apps")
 
