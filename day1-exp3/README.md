@@ -183,11 +183,9 @@ In this task, you will enable DDM on the `CreditCard` table in the database, to 
 
 4. Now, let's apply DDM to the field. Execute the following to apply a mask to the `CardNumber` field.
 
-TODO: Add function for creating the mask.
-
     ```sql
     ALTER TABLE [Sales].[CreditCard]
-    ALTER COLUMN [CardNumber] NVARCHAR(25) NOT NULL MASKED WITH (FUNCTION = '')
+    ALTER COLUMN [CardNumber] NVARCHAR(25) NOT NULL MASKED WITH (FUNCTION = 'partial(0,"xxxx-xxxx-xxxx-",4)')
     ```
 
 5. Run the `SELECT` query again, and observe the results.
