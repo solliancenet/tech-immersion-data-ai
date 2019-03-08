@@ -17182,11 +17182,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\tests\\virtualassistant.tests\\VirtualAssistant.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\tests\\virtualassistant.tests\\VirtualAssistant.Tests.csproj",
       "projectName": "VirtualAssistant.Tests",
-      "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\tests\\virtualassistant.tests\\VirtualAssistant.Tests.csproj",
+      "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\tests\\virtualassistant.tests\\VirtualAssistant.Tests.csproj",
       "packagesPath": "C:\\Users\\joel\\.nuget\\packages\\",
-      "outputPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\tests\\virtualassistant.tests\\obj\\",
+      "outputPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\tests\\virtualassistant.tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -17205,26 +17205,26 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\assistant\\VirtualAssistant.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\assistant\\VirtualAssistant.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\assistant\\VirtualAssistant.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\assistant\\VirtualAssistant.csproj"
             },
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj"
             },
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\automotiveskill\\automotiveskill\\AutomotiveSkill.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\automotiveskill\\automotiveskill\\AutomotiveSkill.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\automotiveskill\\automotiveskill\\AutomotiveSkill.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\automotiveskill\\automotiveskill\\AutomotiveSkill.csproj"
             },
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\calendarskill\\calendarskill\\CalendarSkill.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\calendarskill\\calendarskill\\CalendarSkill.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\calendarskill\\calendarskill\\CalendarSkill.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\calendarskill\\calendarskill\\CalendarSkill.csproj"
             },
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\emailskill\\emailskill\\EmailSkill.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\emailskill\\emailskill\\EmailSkill.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\emailskill\\emailskill\\EmailSkill.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\emailskill\\emailskill\\EmailSkill.csproj"
             },
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\pointofinterestskill\\pointofinterestskill\\PointOfInterestSkill.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\pointofinterestskill\\pointofinterestskill\\PointOfInterestSkill.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\pointofinterestskill\\pointofinterestskill\\PointOfInterestSkill.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\pointofinterestskill\\pointofinterestskill\\PointOfInterestSkill.csproj"
             },
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\todoskill\\todoskill\\ToDoSkill.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\todoskill\\todoskill\\ToDoSkill.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\todoskill\\todoskill\\ToDoSkill.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\todoskill\\todoskill\\ToDoSkill.csproj"
             }
           }
         }

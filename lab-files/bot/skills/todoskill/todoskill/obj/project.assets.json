@@ -15341,11 +15341,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\todoskill\\todoskill\\ToDoSkill.csproj",
+      "projectUniqueName": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\todoskill\\todoskill\\ToDoSkill.csproj",
       "projectName": "ToDoSkill",
-      "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\todoskill\\todoskill\\ToDoSkill.csproj",
+      "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\todoskill\\todoskill\\ToDoSkill.csproj",
       "packagesPath": "C:\\Users\\joel\\.nuget\\packages\\",
-      "outputPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\todoskill\\todoskill\\obj\\",
+      "outputPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\todoskill\\todoskill\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -15364,8 +15364,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj"
             }
           }
         }

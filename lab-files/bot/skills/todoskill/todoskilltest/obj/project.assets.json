@@ -16542,11 +16542,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\todoskill\\todoskilltest\\ToDoSkillTest.csproj",
+      "projectUniqueName": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\todoskill\\todoskilltest\\ToDoSkillTest.csproj",
       "projectName": "ToDoSkillTest",
-      "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\todoskill\\todoskilltest\\ToDoSkillTest.csproj",
+      "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\todoskill\\todoskilltest\\ToDoSkillTest.csproj",
       "packagesPath": "C:\\Users\\joel\\.nuget\\packages\\",
-      "outputPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\todoskill\\todoskilltest\\obj\\",
+      "outputPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\todoskill\\todoskilltest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -16565,11 +16565,11 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\microsoft.bot.solutions\\Microsoft.Bot.Solutions.csproj"
             },
-            "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\todoskill\\todoskill\\ToDoSkill.csproj": {
-              "projectPath": "C:\\Dropbox (Personal)\\Projects\\Solliance\\tech-immersion-data-ai\\lab-files\\bot\\skills\\todoskill\\todoskill\\ToDoSkill.csproj"
+            "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\todoskill\\todoskill\\ToDoSkill.csproj": {
+              "projectPath": "C:\\Users\\joel\\Source\\Repos\\AI\\solutions\\Virtual-Assistant\\src\\csharp\\skills\\todoskill\\todoskill\\ToDoSkill.csproj"
             }
           }
         }
