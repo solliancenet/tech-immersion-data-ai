@@ -1,8 +1,8 @@
 # Day 2, Experience 3 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator
 
-Contoso Auto is interested in building bots to help automate certain tasks in a way that feels similar to dealing with a real person. The motivation for this is to add self-service capabilities in their automobiles that will help drivers and passengers interact with their vehicles in a more natural way, through voice-driven commands and simple visual feedback and prompts, without needing to involve a live person. They would like to build a proof of concept that will support their users through speech actions, such as controlling the vehicle's climate settings and radio. They would like to take this capability further by automatically monitoring car sensor data and alerting the driver when there is a potential problem with the vehicle, offering an incentive such as a gift card when the driver selects a recommended service and makes an appointment with a service center.
+Contoso Auto is interested in building bots to help automate certain tasks in a way that feels similar to dealing with a real person. The motivation for this is to add self-service capabilities in their automobiles that will help drivers and passengers interact with their vehicles in a more natural way, through voice-driven commands and simple visual feedback and prompts, without needing to involve a live person. They would like to build a proof of concept that will support their users through speech actions, such as controlling the vehicle's climate settings and radio. As a stretch goal, they would like to take this capability further by automatically monitoring car sensor data and alerting the driver when there is a potential problem with the vehicle, offering an incentive such as a gift card when the driver selects a recommended service and makes an appointment with a service center.
 
-In this experience, you will use Microsoft's [Virtual Assistant Solution](https://docs.microsoft.com/azure/bot-service/bot-builder-virtual-assistant-introduction?view=azure-bot-service-4.0) accelerator to quickly develop this capability on top of foundational capabilities. By following the tasks below, you will register a new skill that monitors car sensor data and alerts the driver when there is a potential problem with the vehicle. Part of the process is to create an Adaptive Card to show vehicle data, recommendation for service (call out to function to get battery replacement prediction), and an option to contact the nearest service center. To entice the driver to service the car at that time, the bot will have them select a gift card of their choice that will give them a promo code for a coupon at that service center.
+In this experience, you will use Microsoft's [Virtual Assistant Solution](https://docs.microsoft.com/azure/bot-service/bot-builder-virtual-assistant-introduction?view=azure-bot-service-4.0) accelerator to quickly develop this capability on top of foundational capabilities. By following the tasks below, you will explore and run the Automotive skill bot locally to experience the natural language-driven conversations with the bot, powered by the LUIS Cognitive Service, with the conversation control flow managed by the bot. You will end off by evaluating how LUIS is trained to understand a user's intent based on what they typed in, and read some ideas of how this project can be expanded to meet Contoso Auto's stretch goals.
 
 - [Day 2, Experience 3 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator](#day-2-experience-3---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator)
   - [Experience requirements](#experience-requirements)
@@ -12,7 +12,6 @@ In this experience, you will use Microsoft's [Virtual Assistant Solution](https:
   - [Task 4: Load and explore the automotive Virtual Assistant starter solution](#task-4-load-and-explore-the-automotive-virtual-assistant-starter-solution)
   - [Task 5: Open the generated bot file in the Bot Framework Emulator](#task-5-open-the-generated-bot-file-in-the-bot-framework-emulator)
   - [Task 6: Open LUIS to view the generated apps](#task-6-open-luis-to-view-the-generated-apps)
-  - [Task 7: View Power BI report for bot statistics](#task-7-view-power-bi-report-for-bot-statistics)
   - [Next steps](#next-steps)
 
 ## Experience requirements
@@ -398,9 +397,16 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
     ![The bot file secret dialog is displayed.](media/bot-framework-emulator-secret.png "Bot file secret")
 
-## Task 6: Open LUIS to view the generated apps
+12. Now you should see a Live Chat window with the following features:
 
-## Task 7: View Power BI report for bot statistics
+    1. **Development endpoint:** Make sure this endpoint is selected under endpoints to the left. You cannot use the production endpoint until you publish your bot.
+    2. **Bot service path:** This should display the path to your locally running bot (http://localhost:3980/api/messages). If not, select the `development` endpoint on the left.
+    3. **Welcome message:** The bot is configured to show a welcome message when the user first connects to it. This is controlled by the dialogs within the project that you explored. This area is where your chat history is displayed as well.
+    4. **Send message box:** Use this textbox to type in and send all of your messages to the bot.
+
+    ![The Live Chat window is displayed with each of the described features highlighted.](media/bot-framework-emulator-live-chat.png "Live Chat")
+
+## Task 6: Open LUIS to view the generated apps
 
 ## Next steps
 
