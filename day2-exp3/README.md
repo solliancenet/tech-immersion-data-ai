@@ -542,6 +542,50 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
 ## Task 6: Open LUIS to view the generated apps
 
+If you recall, the bot deployment script created Azure services, generated a .bot file, and converted the .lu files to JSON files were uploaded to LUIS. Let's take this new knowledge about how LUIS works and how the files are used to train it, and browse to the LUIS portal to explore the generated apps.
+
+1.  Navigate to the LUIS portal ([https://www.luis.ai/](www.luis.ai)) and sign in if needed. You should see four new apps listed underneath **My Apps**, each of which start with the name of your bot. You can see by the `Endpoint hits` value which LUIS app gets used the most.
+
+    ![My Apps is displayed with a list of generated LUIS apps.](media/luis-apps.png "My Apps")
+
+2.  Open the app that ends with **General**. Select **Intents** under App Assets on the left-hand menu. Notice that each named intent has a number of labeled utterances. Remember, utterances are used to train LUIS on different ways a user may express their intent. Generally speaking, the more utterances you have, the more variety of ways LUIS can understand how people may type or speak a phrase.
+
+    ![The list of General intents.](media/luis-general-intents.png "Intents")
+
+3.  Select the **Cancel** intent.
+
+4.  You may use the navigation controls on the bottom of the list to look through the utterances for this intent. If you click on a word, you will see an option to assign an entity to that word. We'll take a look at an utterance with an entity in a bit to see what that looks like.
+
+    ![Screenshot of the Cancel intent.](media/luis-cancel-intent.png "Cancel intent")
+
+5.  Select **My apps** in the top menu. Now open the app that ends with **_settings**.
+
+    ![My Apps is displayed with the settings app highlighted.](media/luis-apps-settings.png "My Apps")
+
+6.  As you can see, this app's intents have a much larger number of labeled utterances. Select **VEHICLE_SETTINGS_DECLARATIVE**.
+
+    ![The settings app's intents are listed.](media/luis-settings-intents.png "Intents")
+
+7.  As you can see, these utterances are a bit more descriptive and contain one or more `SETTING` and/or `VALUE` entities. When you hover over an entity, you can see a sample value. Feel free to explore the other entities.
+
+    ![The declarative intent is shown.](media/luis-declarative-intent.png "Declarative intent")
+
+8.  Select **Entities** on the left-hand menu. The list of entities shows the number of times each is used within an utterance. If you click on an entity, you can browse through the list of utterances in which it is used.
+
+    ![The list of entities is displayed.](media/luis-entities.png "Entities")
+
+9.  Select **Dashboard** on the top menu to view statistics about this app. The top of the dashboard displays app state information, like the status and number of labeled utterances.
+
+    ![The top of the dashboard is displayed and the Dashboard menu item is highlighted.](media/luis-dashboard.png "Dashboard")
+
+10. When you scroll further down, you will see the **Endpoint State** section, which gives you a sense of how much the endpoint is being used and when.
+
+    ![The Endpoint State section of the Dashboard is shown.](media/luis-endpoint-state.png "Dashboard: Endpoint State")
+
+11. The bottom of the dashboard shows detailed model view charts with the intent and entity breakdowns by utterance. This can give you an idea of which intents and entities are used in the most utterances. Hover over any section of the chart to view its label.
+
+    ![The Detailed Model View of the Dashboard id shown.](media/luis-detailed-model-view.png "Dashboard: Detailed Model View")
+
 ## Next steps
 
 The Virtual Assistant solution accelerator is a great starting point for adding many new skills or updating existing ones to your bot. To address some of Contoso Auto's requirements, you may consider doing the following:
