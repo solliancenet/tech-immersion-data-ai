@@ -369,6 +369,19 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
     ![The bot file is highlighted within the Solution Explorer.](media/vs-bot-file.png "Bot file")
 
+    Find the JSON code block with the `type` set to **endpoint** and the `name` set to **development** and clear out the `appId` and `appPassword` values. The edited result should look like the following:
+
+    ```javascript
+    {
+        "type": "endpoint",
+        "id": "1",
+        "name": "development",
+        "appId": "",
+        "appPassword": "",
+        "endpoint": "http://localhost:3980/api/messages"
+    },
+    ```
+
 5.  Next, you must **Debug** the **AutomotiveSkills** project. To do this, **right-click** the **AutomotiveSkills** project in the Solution Explorer, then select **Debug** in the context menu, then **Start new instance**.
 
     ![The AutomotiveSkill project is highlighted, as well as the Debug and Start new instance sub-menu items.](media/vs-debug.png "Debug")
