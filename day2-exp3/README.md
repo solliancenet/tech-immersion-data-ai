@@ -365,7 +365,7 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
     ![Screenshot of a completed appsettings.json file.](media/vs-appsettings.png "appsettings.json")
 
-4.  The last file change you need to do is to update the `development` endpoint setting within the .bot file located in the **AutomotiveSkill** root folder. There is a bug that currently exists which adds the `appId` and `appPassword` values of your Azure App to the `development` endpoint, which is meant to be run locally. If those values are present, the Bot Framework Emulator is not able to send messages to your bot when running it locally. To edit this file, **double-click** on the generated .bot file that is located in the root directory of the **AutomotiveSkill** project in the Visual Studio Solution Explorer.
+4.  The last file change you need to make is to update the `development` endpoint setting within the .bot file located in the **AutomotiveSkill** root folder. There is a bug that currently exists which adds the `appId` and `appPassword` values of your Azure App to the `development` endpoint, which is meant to be run locally. If those values are present, the Bot Framework Emulator is not able to send messages to your bot when running it locally. To edit this file, **double-click** on the generated .bot file that is located in the root directory of the **AutomotiveSkill** project in the Visual Studio Solution Explorer.
 
     ![The bot file is highlighted within the Solution Explorer.](media/vs-bot-file.png "Bot file")
 
@@ -418,6 +418,127 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
     4. **Send message box:** Use this textbox to type in and send all of your messages to the bot.
 
     ![The Live Chat window is displayed with each of the described features highlighted.](media/bot-framework-emulator-live-chat.png "Live Chat")
+
+13. Type `help` and hit Enter. The bot will respond with a message and a list of suggested actions. Notice that the Log pane to the right lists both user input and bot response activities. You can click on any of the hyperlinks within the Log to view the activity details in the Inspector above. If you click on an item in the chat window, such as the `help` message you typed, you can inspect the data that was sent to the bot as well as the response. For now, click on the `put the air on my feet`, or type it in if you don't see it as a suggested action.
+
+    ![The Live Chat window is displayed with various outputs.](media/bot-framework-emulator-help.png "Live Chat")
+
+14. The bot sent the `put the air on my feet` text to LUIS so that it could derive your intent and desired action. If you click on the LUIS trace message in the chat window, you should see the following in the Inspector pane:
+
+    ```javascript
+    {
+      "recognizerResult": {
+        "alteredText": null,
+        "entities": {
+          "$instance": {
+            "SETTING": [
+              {
+                "endIndex": 11,
+                "score": 0.996788144,
+                "startIndex": 8,
+                "text": "air",
+                "type": "SETTING"
+              }
+            ],
+            "VALUE": [
+              {
+                "endIndex": 22,
+                "score": 0.5489724,
+                "startIndex": 18,
+                "text": "feet",
+                "type": "VALUE"
+              }
+            ]
+          },
+          "SETTING": [
+            "air"
+          ],
+          "VALUE": [
+            "feet"
+          ]
+        },
+        "intents": {
+          "VEHICLE_SETTINGS_CHANGE": {
+            "score": 0.9998417
+          }
+        },
+        "text": "put the air on my feet"
+      }
+    }
+    ```
+
+    To explain, the utterance is your text (located on the bottom): `put the air on my feet`. LUIS detected the intent as `VEHICLE_SETTINGS_CHANGE` (you should remember that one from earlier) with a score, or "confidence" level of 99%. It detected two entities, a `SETTING` of "air" with a value of "feet". The "air" setting also had a high score of 99%, but the setting value of "feet" scored about 55%.
+
+    The result is that the bot must clarify the user's intent by prompting for more information. To do this, the bot asks which of the two matching settings would you like to select? Since you did not explicitly say to turn the air on in the back of the car or the front of the car, you need to tell it which option you like. The bot displays a [card](https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-add-rich-card-attachments?view=azure-bot-service-3.0) for you to choose from. You may either click on one of the options, or type it in.
+
+    ![The Live Chat shows the bot's prompt to choose which air control mode to use.](media/bot-framework-emulator-option.png "Live Chat")
+
+15. If you selected or typed in the `Front Combined Air Delivery Mode Control` option, you should see a response from the bot that says: `Setting Front Combined Air Delivery Mode Control to Floor`. The amazing thing that happened is that your original somewhat vague request to "put the air on my feet" ultimately resulted in the bot telling the vehicle to turn on the air in the front of the car to the floor setting, knowing that your feet are most likely located on the floor :)
+
+    ![The bot's response to your selected action.](media/bot-framework-emulator-air-feet.png "Live Chat")
+
+16. Now type a command that the bot would not understand, such as "make me a coffee". The bot will respond with, "Sorry, I don't know what setting you're talking about."
+
+    ![The bot responded with it does not know what setting you are talking about.](media/bot-framework-emulator-do-not-know.png "Live Chat")
+
+    So how did this happen? Remember, the Dialogs within the bot's code controls the conversation flow. It first gets help from LUIS to decide what the user is trying to do. In this case the `ProcessSetting` method within the `VehicleSettingsDialog.cs` file is called and the LUIS result is evaluated to get the top (highest rated) intent.
+
+    ```csharp
+    var luisResult = state.VehicleSettingsLuisResult;
+    var topIntent = luisResult?.TopIntent().intent;
+    ```
+
+    Next, the `topIntent`'s value is evaluated in a `switch` statement to perform actions based on the value. In this case, it is determined that the intent type is `VEHICLE_SETTINGS_DECLARATIVE`. Next, some post-processing of the entities is performed as well as removing entities that don't make sense (like "coffee"). After this processing and cleanup is done, there are no matching setting names, so we call `SendActivityAsync` with the `VehicleSettingsResponses.VehicleSettingsMissingSettingName` response.
+
+    ```csharp
+    switch (topIntent.Value)
+    {
+        case Luis.VehicleSettings.Intent.VEHICLE_SETTINGS_CHANGE:
+        case Luis.VehicleSettings.Intent.VEHICLE_SETTINGS_DECLARATIVE:
+
+            // Perform post-processing on the entities, if it's declarative we indicate for special processing (opposite of the condition they've expressed)
+            settingFilter.PostProcessSettingName(state, topIntent.Value == Luis.VehicleSettings.Intent.VEHICLE_SETTINGS_DECLARATIVE ? true : false);
+
+            // Perform content logic and remove entities that don't make sense
+            settingFilter.ApplyContentLogic(state);
+
+            var settingNames = state.GetUniqueSettingNames();
+            if (!settingNames.Any())
+            {
+                // missing setting name
+                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(VehicleSettingsResponses.VehicleSettingsMissingSettingName));
+                return await sc.EndDialogAsync();
+            }
+
+        // ...
+        // REMOVED FOR BREVITY
+        // ...
+    }
+    ```
+
+    Remember reading about the Speech & Text response files at the end of the previous Task? That's what the `VehicleSettingsResponses.VehicleSettingsMissingSettingName` value was referring to. You can find the `VehicleSettingsMissingSettingName` response within the `VehicleSettingsResponses.json` file:
+
+    ```javascript
+    "VehicleSettingsMissingSettingName": {
+      "replies": [
+        {
+          "text": "Sorry, I don't know what setting you're talking about.",
+          "speak": "Sorry, I don't know what setting you're talking about."
+        }
+      ],
+      "inputHint": "ignoringInput"
+    },
+    ```
+
+17. Now that you are starting to understand what is going on, try out the following commands to see how the bot responds:
+
+    - Set temperature to 68 degrees
+    - It's feeling cold in the back
+    - The passenger is freezing
+    - temperature
+    - Increase the volume
+    - adjust the equalizer
+    - The volume is too low
 
 ## Task 6: Open LUIS to view the generated apps
 
