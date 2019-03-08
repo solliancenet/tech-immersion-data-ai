@@ -317,6 +317,14 @@ For now, let's explore how this bot is created and how LUIS is trained with the 
     },
     ```
 
+7.  Now we are ready to test the bot. Before testing, you must **Debug** the **AutomotiveSkills** project. To do this, **right-click** the **AutomotiveSkills** project in the Solution Explorer, then select **Debug** in the context menu, then **Start new instance**.
+
+    ![The AutomotiveSkill project is highlighted, as well as the Debug and Start new instance sub-menu items.](media/vs-debug.png "Debug")
+
+8.  After a few moments, a new web browser window will open, displaying web page with the message, "Your Enterprise Bot is ready!". **Leave this window open** and continue to the next task.
+
+    ![The Enterprise Bot Template web page is displayed.](media/web-browser.png "Web browser")
+
 ## Task 5: Open the generated bot file in the Bot Framework Emulator
 
 Bots developed using the Bot Framework can be tested locally, using the Bot Framework Emulator. This emulator can be used with local .bot files or be used to test remote, or hosted, bots. Being able to test in this way saves the time needed to deploy your bot and test it using other channels, such as through a web chat dialog, Facebook, Skype, Slack, etc.
@@ -334,6 +342,32 @@ The advantages of using .bot file are:
 - Bot Framework Emulator and CLI tools rely on and work great with tracking connected services in a consistent format (in a .bot file)
 
 In this task, you will open the generated .bot file in the Bot Framework Emulator and start testing out your bot! First, we need to make sure the script is finished running. This must be completed before continuing with this experience.
+
+1.  Switch back to your Command Prompt (console) window to make sure the script has successfully finished. If it has, **scroll up** until you see where you input the **name**, **location**, and **luisAuthoringKey** values. A few lines below that section will be the bot file secret in purple, underneath a line that says `The secret used to decrypt <YOUR-BOT-NAME>.bot is:`. **Copy the bot file secret** and save it to Notepad or similar text application.
+
+    > You **must** copy this secret now because it will not be displayed again!
+
+    ![The bot file secret is highlighted.](media/cmd-script-finished.png "Command Prompt")
+
+2.  Oftentimes, the Bot Framework Emulator automatically launches after the bot file is created. If not, open it by clicking on the search box next to the Start Menu on the bottom-left corner of your Windows desktop. Type **Bot Framework Emulator**, then select the Bot Framework Emulator desktop app in the search results.
+
+    ![The search box has "Bot Framework Emulator" entered into it and the desktop app is highlighted in the results.](media/launch-emulator.png 'Launch Command Prompt')
+
+3.  Within the Bot Framework Emulator window, click on **Open Bot**.
+
+    ![Th Open Bot button is highlighted on the Bot Framework Emulator home screen.](media/bot-framework-emulator.png "Bot Framework Emulator")
+
+4.  In the "Open a bot" dialog, click the **Browse** button to find the generated bot file.
+
+    ![The Browse button is highlighted.](media/bot-framework-emulator-open-dialog.png "Open a bot")
+
+5.  Within the Open file browser, navigate to `C:\lab-files\bot\skills\automotiveskill\automotiveskill`, select your generated bot file, then click **Open**.
+
+    ![The file browser is displayed.](media/bot-framework-emulator-browse.png "Browse")
+
+6.  You should see a dialog prompting you for your bot file secret. **Paste** the bot file secret you copied in Step 1 above, then click **Submit**.
+
+    ![The bot file secret dialog is displayed.](media/bot-framework-emulator-secret.png "Bot file secret")
 
 ## Task 6: Open LUIS to view the generated apps
 
