@@ -317,14 +317,6 @@ For now, let's explore how this bot is created and how LUIS is trained with the 
     },
     ```
 
-7.  Now we are ready to test the bot. Before testing, you must **Debug** the **AutomotiveSkills** project. To do this, **right-click** the **AutomotiveSkills** project in the Solution Explorer, then select **Debug** in the context menu, then **Start new instance**.
-
-    ![The AutomotiveSkill project is highlighted, as well as the Debug and Start new instance sub-menu items.](media/vs-debug.png "Debug")
-
-8.  After a few moments, a new web browser window will open, displaying web page with the message, "Your Enterprise Bot is ready!". **Leave this window open** and continue to the next task.
-
-    ![The Enterprise Bot Template web page is displayed.](media/web-browser.png "Web browser")
-
 ## Task 5: Open the generated bot file in the Bot Framework Emulator
 
 Bots developed using the Bot Framework can be tested locally, using the Bot Framework Emulator. This emulator can be used with local .bot files or be used to test remote, or hosted, bots. Being able to test in this way saves the time needed to deploy your bot and test it using other channels, such as through a web chat dialog, Facebook, Skype, Slack, etc.
@@ -349,23 +341,60 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
     ![The bot file secret is highlighted.](media/cmd-script-finished.png "Command Prompt")
 
-2.  Oftentimes, the Bot Framework Emulator automatically launches after the bot file is created. If not, open it by clicking on the search box next to the Start Menu on the bottom-left corner of your Windows desktop. Type **Bot Framework Emulator**, then select the Bot Framework Emulator desktop app in the search results.
+2.  Now we are ready to test the bot. Before testing, you must update the **appsettings.json** file in the **AutomotiveSkills** project. To do this, switch back to the solution in Visual Studio and expand the **AutomotiveSkill** project in the Solution Explorer. **Double-click** on the **appsettings.json** file to open it.
+
+3.  Update your `appsettings.json` file with the newly created .bot file name and .bot file secret. The .bot file is located in the root directory of the **AutomotiveSkill** project.
+
+    ```
+      {
+        "botFilePath": "./YOURBOTFILE.bot",
+        "botFileSecret": "YOUR_BOT_SECRET",
+      }
+    ```
+
+    - Finally, add the .bot file paths for each of your language configurations (English only at this time). You can find the bot file under the **LocalseConfigurations** folder.
+
+    ```
+    "defaultLocale": "en-us",
+    "languageModels": {
+      "en": {
+        "botFilePath": "./LocaleConfigurations/YOUR_EN_BOT_PATH.bot",
+        "botFileSecret": "YOUR_BOT_SECRET"
+      }
+    }
+    ```
+
+    ![Screenshot of a completed appsettings.json file.](media/vs-appsettings.png "appsettings.json")
+
+4.  The last file change you need to do is to update the `development` endpoint setting within the .bot file located in the **AutomotiveSkill** root folder. There is a bug that currently exists which adds the `appId` and `appPassword` values of your Azure App to the `development` endpoint, which is meant to be run locally. If those values are present, the Bot Framework Emulator is not able to send messages to your bot when running it locally. To edit this file, **double-click** on the generated .bot file that is located in the root directory of the **AutomotiveSkill** project in the Visual Studio Solution Explorer.
+
+    ![The bot file is highlighted within the Solution Explorer.](media/vs-bot-file.png "Bot file")
+
+5.  Next, you must **Debug** the **AutomotiveSkills** project. To do this, **right-click** the **AutomotiveSkills** project in the Solution Explorer, then select **Debug** in the context menu, then **Start new instance**.
+
+    ![The AutomotiveSkill project is highlighted, as well as the Debug and Start new instance sub-menu items.](media/vs-debug.png "Debug")
+
+6.  After a few moments, a new web browser window will open, displaying web page with the message, "Your Enterprise Bot is ready!". **Leave this window open** and continue to the next task.
+
+    ![The Enterprise Bot Template web page is displayed.](media/web-browser.png "Web browser")
+
+7.  Oftentimes, the Bot Framework Emulator automatically launches after the bot file is created. If not, open it by clicking on the search box next to the Start Menu on the bottom-left corner of your Windows desktop. Type **Bot Framework Emulator**, then select the Bot Framework Emulator desktop app in the search results.
 
     ![The search box has "Bot Framework Emulator" entered into it and the desktop app is highlighted in the results.](media/launch-emulator.png 'Launch Command Prompt')
 
-3.  Within the Bot Framework Emulator window, click on **Open Bot**.
+8.  Within the Bot Framework Emulator window, click on **Open Bot**.
 
     ![Th Open Bot button is highlighted on the Bot Framework Emulator home screen.](media/bot-framework-emulator.png "Bot Framework Emulator")
 
-4.  In the "Open a bot" dialog, click the **Browse** button to find the generated bot file.
+9.  In the "Open a bot" dialog, click the **Browse** button to find the generated bot file.
 
     ![The Browse button is highlighted.](media/bot-framework-emulator-open-dialog.png "Open a bot")
 
-5.  Within the Open file browser, navigate to `C:\lab-files\bot\skills\automotiveskill\automotiveskill`, select your generated bot file, then click **Open**.
+10. Within the Open file browser, navigate to `C:\lab-files\bot\skills\automotiveskill\automotiveskill`, select your generated bot file, then click **Open**.
 
     ![The file browser is displayed.](media/bot-framework-emulator-browse.png "Browse")
 
-6.  You should see a dialog prompting you for your bot file secret. **Paste** the bot file secret you copied in Step 1 above, then click **Submit**.
+11. You should see a dialog prompting you for your bot file secret. **Paste** the bot file secret you copied in Step 1 above, then click **Submit**.
 
     ![The bot file secret dialog is displayed.](media/bot-framework-emulator-secret.png "Bot file secret")
 
