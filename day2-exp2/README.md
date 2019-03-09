@@ -25,6 +25,7 @@ For this experience, you will be using the `tweets` collection in ContosoAuto's 
     The Visual Studio solution contains the following projects:
 
     - **PipelineEnhancer**: Console app that interacts with Azure Search Service REST APIs to enhance the Cognitive Search pipeline.
+    - **Search.Common**: Common library containing models and structs used by the `PipelineEnhancer` to communicate with the Azure Search Service APIs.
     - **TextTranslateFunction**: Azure Function with an HTTP Trigger that will be used translate non-English tweets to English.
     - **TweetGenerator**: Console app that generates simulated tweets and sends them to Cosmos DB.
     - **Twitter.Common**: Common library containing models and structs used by the other projects within the solution.
@@ -199,13 +200,19 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
 
 2. To prepare the console application, you need to update the `appsettings.json` file for the project in information about your search service. Return to Visual Studio, and open the `appsettings.json` file located under the `PipelineEnhanceer` project.
 
-3. To retrieve values for the required settings, navigate to your Azure Search Service in the Azure portal by selecting it from the list of resources in the **tech-immersion** resource group.
+    ![appsettings.json is highlighted under the PipelineEnhancer solution.](media/visual-studio-solution-explorer-pipeline-enhancer.png "Solution explorer")
+
+    The `appsettings.json` file will look like the following, and here you can see the values that you need to retrieve before moving on.
+
+    ![The list of key values needed from appsettings.json.](media/appsettings-json-empty.png "App settings")
+
+3. To retrieve values for the required settings for your Azure Search Service, navigate to your Azure Search Service in the Azure portal by selecting it from the list of resources in the **tech-immersion** resource group.
 
     ![The tech-immersion Search Service is highlighted in the tech-immersion resource group.](media/tech-immersion-resource-group-search-service.png "Resource group")
 
 4. On the overview blade of your search service, copy the Url field.
 
-    azure-search-url
+    ![Azure Search Service URL](media/azure-search-url.png "Azure Search Service URL")
 
 5. Return to Visual Studio, and in the `appsettings.json` file, locate the line that looks like the following:
 
@@ -229,13 +236,59 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
     "AZURE_SEARCH_SERVICE_KEY": "B54E21DC49EB3B5A322190851F22BA8E"
     ```
 
-9. Save `appsettings.json`. The file should now look like the following.
+9.  Return to the Azure portal, and select your **Cognitive Services** account from the list of resources under the **tech-immersion** resource group.
+
+    ![The Cognitive Services resource is highlighted in the tech-immersion resource group.](media/tech-immersion-resource-group-cog-services.png "Cognitive Services resource")
+
+10. On the Cognitive Services blade, select **Properties** from the left-hand menu, and then copy the value for the **Resource ID** field by selecting the copy button to the right of the field.
+
+    ![Cognitive Services properties blade.](media/cog-services-properties.png "Properties")
+
+11. Return to Visual Studio and in the `appsettings.json` file, paste the **Resource ID** value into the `COGNITIVE_SERVICES_RESOURCE_ID` field value. It should look like the following:
+
+    ```json
+    "COGNITIVE_SERVICES_RESOURCE_ID": "/subscriptions/30fc406c-c745-44f0-be2d-63b1c860cde0/resourceGroups/tech-immersion/providers/Microsoft.CognitiveServices/accounts/tech-immersion-cog-services"
+    ```
+
+12. Return to your Cognitive Services account in the Azure portal, and select **Keys** from the left-hand menu. On the Keys blade, copy the **Key 1** value by selecting the copy button to the right of the field.
+
+    ![Cognitive Services keys.](media/cog-services-keys.png "Keys")
+
+13. Return to Visual Studio and in the `appsettings.json` file, paste the Cognitive Services Key 1 value into the value for the `COGNITIVE_SERVICES_KEY` field. It will looks similar to the following.
+
+    ```json
+    "COGNITIVE_SERVICES_KEY": "872353ecac8d43a7bf5a60c3ece9ff4a"
+    ```
+
+14. The final settings you need to retrieve are those for your Azure Function App. In the Azure portal, navigate to your **tech-immersion-functions** Function App, and copy the **URL** on the Overview blade.
+
+    ![The URL field is highlighted on the overview blade of the Function App.](media/function-app-url.png "Function App")
+
+15. Return to the `appsettings.json` file for the `pipelineEnhancer` project in Visual Studio, and paste the value into the `AZURE_FUNCTION_APP_URL` setting. It should look silimar to:
+
+    ```json
+    "AZURE_FUNCTION_APP_URL": "https://tech-immersion-functions.azurewebsites.net"
+    ```
+
+16. Back in the Azure portal, select **Function app settings** on the Overview blade.
+
+    ![Function app settings link.](media/function-app-settings.png "Function app settings")
+
+17. On the Function app settings tab, select the **Copy** button next to the **default** Host Key.
+
+    ![The default host key copy button is highlighted.](media/function-app-default-host-key.png "Function app settings default host key")
+
+18. Return to Visual Studio and the `appsettings.json` file for the `PipelineEnhancer` project, and paste default host key value into the `AZURE_FUNCTION_APP_DEFAULT_HOST_KEY` setting. It will look similar to the following:
+
+    ```json
+    "AZURE_FUNCTION_APP_DEFAULT_HOST_KEY": "IMsboDWGI9brkZHFpL8aFCVxuPVLnVAr6l6f2D6eqlLZ511MK50JbQ=="
+    ```
+
+19. Save `appsettings.json`. The file should now look like the following.
 
     ![Search service values entered into the appsettings.json file.](media/pipeline-enhancer-app-settings-search-service.png "App settings")
 
-    > You will add the values associated with your Azure Function App later in this experience.
-
-10. You are now ready to move on to adding the enhancements to your pipeline. The [create skillset API](https://docs.microsoft.com/en-us/rest/api/searchservice/create-skillset) uses the following endpoint:
+20. You are now ready to move on to adding the enhancements to your pipeline. The [create skillset API](https://docs.microsoft.com/en-us/rest/api/searchservice/create-skillset) uses the following endpoint:
 
     ```http
     PUT https://[servicename].search.windows.net/skillsets/[skillset name]?api-version=2017-11-11-Preview
@@ -243,7 +296,7 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
     Content-Type: application/json
     ```
 
-11. To add the [sentiment analysis pre-built skill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-sentiment) to your search pipeline the following JSON will be appended to the body of the Skillset you built with the UI by the `PipelineEnhancer` app.
+21. To add the [sentiment analysis pre-built skill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-sentiment) to your search pipeline the following JSON will be appended to the body of the Skillset you built with the UI by the `PipelineEnhancer` app.
 
     ```json
     {
@@ -265,19 +318,27 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
 
     > In the above JSON, the `inputs` specify the field in the source data document to send for analysis. The `outputs` section dictates that the `score` value returned by the Text Analytics in Cognitive Services should be output into a field named `sentiment` in the search results. This is sent into the REST API, along with the JSON from the previously built skillset to update or create the skillset.
 
-12. To add sentiment analysis to your pipeline you will run the `PipelineEnhancer` project within the **CognitiveSearch** solution in Visual Studio. To run the project, right-click the `PipelineEnhancer` project in Visual Studio and select **Debug** and **Start new instance**.
+22. To add sentiment analysis to your pipeline you will run the `PipelineEnhancer` project within the **CognitiveSearch** solution in Visual Studio. To run the project, right-click the `PipelineEnhancer` project in Visual Studio and select **Set as StartUp Project**.
 
-    ![In the Solution Explorer, PipelineEnhancer is highlighted, and the right-click contenxt menu is displayed. Debug and Start new instance are highlighted in the context menu.](media/visual-studio-pipeline-enhancer-debug.png "Pipeline Enhancer run")
+    ![In the Solution Explorer, PipelineEnhancer is highlighted, and the right-click contenxt menu is displayed. Set as StartUp Project is highlighted in the context menu.](media/visual-studio-pipeline-enhancer-startup-project.png "Pipeline Enhancer")
 
-13. At the command prompt for the console app, enter **1** to incorporate the Sentiment cognitive skill to your pipeline.
+23. Now, select the run button on the Visual Studio toolbar, which is the one with a green arrow followed by the text "PipelineEnhancer."
 
-    TODO: Add image of the console window, with 1 entered.
+    ![The run button is displayed for PipelineEnhancer.](media/visual-studio-run-pipeline-enhancer.png "Run button")
 
-14. When the console app completes, navigate to your Azure Search service in the Azure portal and select **Indexes** and then select **tweet-index**.
+24. At the command prompt for the console app, enter **1** to incorporate the Sentiment cognitive skill to your pipeline.
+
+    ![1 is entered at the prompt in the pipeline enhancer](media/pipeline-enhancer-1.png "Pipeline Enhancer")
+
+25. When the console app completes you will receive a message stating that the sentiment analysis skill was successfully added.
+
+    ![A success message is displayed in the PipelineEnhancer console window.](media/pipeline-enhancer-sentiment-analysis-success.png "Pipeline enhancer")
+
+26. Navigate to your Azure Search service in the Azure portal and select **Indexes** and then select **tweet-index**.
 
     > In addition to updating the Skillset JSON, the Indexer and Index were also be updated to include a new field named `sentiment`. This process deleted and recreated your Index, Indexer and Skillset. You may need to select **Indexers** and the **tweet-indexer**, and then select **Run** to force the Indexer to run against your tweet data again before attempting to run a search against the index.
 
-15. On the Index blade, select **Search** and inspect one of the records in the search results.
+27. On the Index blade, select **Search** and inspect one of the records in the search results.
 
     ```json
     {
@@ -297,13 +358,13 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
             "Tesla"
         ],
         "language": "en",
-        "sentiment": "0.994744300842285"
+        "sentiment": 0.994744300842285
     }
     ```
 
     > Notice the addition of the `sentiment` field to the bottom of the record. The value contained in this field is a numeric prediction made by a machine learning model about the sentiment of the contents of the `text` field in the tweet. Scores range from 0 to 1. Scores close to 1 indicate positive sentiment, and scores close to 0 indicate negative sentiment. Scores in the middle are considered to be neutral in the expression of sentiment. In the record above, the sentiment was determined to be very positive by the ML model.
 
-16. Next, let's move on to adding user information from tweets to our search results. To accomplish this, you will use the [delete index](https://docs.microsoft.com/en-us/rest/api/searchservice/delete-index) and [delete indexer](https://docs.microsoft.com/en-us/rest/api/searchservice/delete-indexer) APIs to drop the index and indexer, and then use the [create index](https://docs.microsoft.com/en-us/rest/api/searchservice/create-index) and [create indexer](https://docs.microsoft.com/en-us/rest/api/searchservice/create-indexer) APIs to recreate them with a few fields added which point to the `user` object in the JSON tweet documents in Cosmos DB.
+28. Next, let's move on to adding user information from tweets to our search results. To accomplish this, you will use the [delete index](https://docs.microsoft.com/en-us/rest/api/searchservice/delete-index) and [delete indexer](https://docs.microsoft.com/en-us/rest/api/searchservice/delete-indexer) APIs to drop the index and indexer, and then use the [create index](https://docs.microsoft.com/en-us/rest/api/searchservice/create-index) and [create indexer](https://docs.microsoft.com/en-us/rest/api/searchservice/create-indexer) APIs to recreate them with a few fields added which point to the `user` object in the JSON tweet documents in Cosmos DB.
 
     > For this workshop, we are going to add the user's `location` and `name` fields to our search index.
 
@@ -359,15 +420,15 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
 
     > For each new field, `userLocation` and `userName`, an entry is added which maps the source field in the `tweet` document to an output field name.
 
-17. As you did previously, go to Visual Studio and run the `EnhanceCognitiveSearch` console app by right-clicking, and select **Debug** and **Start new instance** from the context menu. This time enter **2** at the prompt to add the new user-related fields to your pipeline.
+29. Return to the `PipelieneEnhancer` console app and enter **2** at the prompt to add the new user-related fields to your pipeline.
 
-    TODO: Add image of the console window, with 2 entered.
+    ![2 is entered at the prompt in the pipeline enhancer](media/pipeline-enhancer-2.png "Pipeline Enhancer")
 
-18. When the console app completes, navigate to your Azure Search service in the Azure portal and select **Indexes** and then select **tweet-index**.
+30. When the console app completes you will receive a success message. Navigate to your Azure Search service in the Azure portal and select **Indexes** and then select **tweet-index**.
 
     > As before, the console app deleted and recreated your Index and Indexer. You may need to select **Indexers** and the **tweet-indexer**, and then select **Run** to force the Indexer to run against your tweet data again before attempting to run a search against the index.
 
-19. On the Index blade, select **Search** and inspect one of the records in the search results.
+31. On the Index blade, select **Search** and inspect one of the records in the search results.
 
     ```json
     {
@@ -390,7 +451,7 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
             "Tesla"
         ],
         "language": "en",
-        "sentiment": "0.994744300842285"
+        "sentiment": 0.994744300842285
     }
     ```
 
@@ -481,57 +542,25 @@ With the Function App now in place to support your Text Translator custom skill,
         "outputs": [
             {
             "name": "text",
-            "targetName": "translatedText"
+            "targetName": "textTranslated"
             }
         ]
     }
     ```
 
-    > In the above JSON, the `inputs` specify the field in the source data document to send for analysis. The `outputs` section dictates that the `score` value returned by the Text Analytics in Cognitive Services should be output into a field named `sentiment` in the search results. This is sent into the REST API, along with the JSON from the previously built skillset to update or create the skillset.
+    > In the above JSON, the `inputs` specify the field in the source data document to send for analysis. The `outputs` section dictates that the `text` value returned by your Function App should output into a field named `textTranslated` in the search results. This is sent into the REST API, along with the JSON from the previously built skillset to update or create the skillset.
 
-2. Note that there are two values within the `uri` that will need to be supplied to your custom skill, so it can connect to your Function app: the Function App name and default host code. You need to retrieve these from the Azure portal, and paste them into the `appsettings.json` file, as you have done for other settings previously.
+2. Note that there are two values within the `uri` field of your custom skill that will need to be supplied to your custom skill, so it can connect to your Function app: the Function App name and default host code. You already added these values to your `appsettings.json` file.
 
-3. In the Azure portal, navigate to your **tech-immersion-functions** Function App, and copy the **URL** on the Overview blade.
+3. Return to the `PipelineEnhancer` console app window and enter **3** at the prompt. This step will incorporate the custom cognitive skill into your pipeline.
 
-    ![The URL field is highlighted on the overview blade of the Function App.](media/function-app-url.png "Function App")
+    ![3 is entered at the prompt in the pipeline enhancer](media/pipeline-enhancer-3.png "Pipeline Enhancer")
 
-4. Return to the `appsettings.json` file for the `pipelineEnhancer` project in Visual Studio, and paste the value into the `AZURE_FUNCTION_APP_URL` setting. It should look silimar to:
-
-    ```json
-    "AZURE_FUNCTION_APP_URL": "https://tech-immersion-functions.azurewebsites.net"
-    ```
-
-5. Back in the Azure portal, select **Function app settings** on the Overview blade.
-
-    ![Function app settings link.](media/function-app-settings.png "Function app settings")
-
-6. On the Function app settings tab, select the **Copy** button next to the **default** Host Key.
-
-    ![The default host key copy button is highlighted.](media/function-app-default-host-key.png "Function app settings default host key")
-
-7. Return to Visual Studio and the `appsettings.json` file for the `PipelineEnhancer` project, and paste default host key value into the `AZURE_FUNCTION_APP_DEFAULT_HOST_KEY` setting. It will look similar to the following:
-
-    ```json
-    "AZURE_FUNCTION_APP_DEFAULT_HOST_KEY": "IMsboDWGI9brkZHFpL8aFCVxuPVLnVAr6l6f2D6eqlLZ511MK50JbQ=="
-    ```
-
-8. Save `appsettings.json`. It should now look like the following:
-
-    ![Completed appsettings.json file.](media/pipeline-enhancer-complete-appsettings.png "App settings")
-
-9. It's now time run the `PipelineEnhancer` project within the **CognitiveSearch** solution in Visual Studio. To run the project, right-click the `PipelineEnhancer` project in Visual Studio and select **Debug** and **Start new instance**.
-
-    ![In the Solution Explorer, PipelineEnhancer is highlighted, and the right-click contenxt menu is displayed. Debug and Start new instance are highlighted in the context menu.](media/visual-studio-pipeline-enhancer-debug.png "Pipeline Enhancer run")
-
-10. At the command prompt for the console app, enter **3** to incorporate the Sentiment cognitive skill to your pipeline.
-
-    TODO: Add image of the console window, with 3 entered.
-
-11. When the console app completes, navigate to your Azure Search service in the Azure portal and select **Indexes** and then select **tweet-index**.
+4. When the console app completes, navigate to your Azure Search service in the Azure portal and select **Indexes** and then select **tweet-index**.
 
     > In addition to updating the Skillset JSON, the Indexer and Index were also be updated to include a new field named `textTranslated`. This process deleted and recreated your Index, Indexer and Skillset. You may need to select **Indexers** and the **tweet-indexer**, and then select **Run** to force the Indexer to run against your tweet data again before attempting to run a search against the index.
 
-12. On the Index blade, enter "language is es" into the search field and select **Search** to find and inspect one of the records in the search results which was in Spanish.
+5. On the Index blade, enter "language is es" into the search field and select **Search** to find and inspect one of the records in the search results which was in Spanish.
 
     ```json
     {
@@ -551,12 +580,16 @@ With the Function App now in place to support your Text Translator custom skill,
             "the best"
         ],
         "language": "es",
-        "sentiment": "0.986368536949158",
+        "sentiment": 0.986368536949158,
         "textTranslated": "@ContosoAuto My 2019 #Ford #Mustang is the best car of all!"
     }
     ```
 
     > Notice the addition of the `textTranslated` field to the bottom of the record. This contains the English translation of the contents of the `text` field in the tweet. You will also notice that they `keyphrases` field contains only English words and phrases. This is because the `KeyPhraseExtractionSkill` was pointed to the new `textTranslated` field with the latest updates to the pipeline.
+
+6. Return to the `PipelineEnhancer` console app window and enter **X** at the prompt to close the application.
+
+    ![X is entered at the prompt in the pipeline enhancer](media/pipeline-enhancer-x.png "Pipeline Enhancer")
 
 ## Task 6: Run indexer and query data
 
