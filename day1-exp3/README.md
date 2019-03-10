@@ -113,11 +113,64 @@ In this task, you will use the Microsoft Data Migration Assistant (DMA) to perfo
 
     ![For a target platform of Azure SQL Database Managed Instance, there are no feature parity issues found.](media/dma-feature-parity-azure-sql-mi.png "Database feature parity")
 
-    > The DMA assessment for a migrating the `ContosoAutoDb` database to a target platform of Azure SQL Database Managed Instance shows two no feature parity. The database, including the cross-database references and Service broker features, can be migrated as is, allowing ContosoAuto to have a fully managed database instance running in Azure.
+    > The DMA assessment for a migrating the `ContosoAutoDb` database to a target platform of Azure SQL Database Managed Instance shows no feature parity. The database, including the cross-database references and Service broker features, can be migrated as is, allowing ContosoAuto to have a fully managed database instance running in Azure.
 
-20. Next, you will migrate the `ContosoAutoDb` database from SQL 2008 R2 to SQL MI using a backup of the database stored in your Azure Blob storage account. To get started, you first need to generate a SAS token that you will use to access your Blob storage account from T-SQL in SSMS.
+20. Next, you will migrate the `ContosoAutoDb` database from SQL 2008 R2 to SQL MI using a backup of the database stored in a Azure Blob storage account. For this, you will need to retrieve the host name of your SQL Managed Instance. In the [Azure portal](https://portal.azure.com), select **Resource groups** in the left-hand navigation menu and select the **tech-immersion** resource group from the list.
 
-21. TODO: Add remaining steps here.
+    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
+
+21. In the tech-immersion resource group, select your **SQL Managed Instance** resource.
+
+    ![SQL Managed Instance resource.](media/tech-immersion-resource-group-sql-mi.png "Resource group")
+
+22. On the overview blade of your SQL MI, copy the **host** value.
+
+    ![The host value is highlighted on the overview blade of the SQL Managed Instance.](media/sql-mi-host.png "SQL Managed Instance")
+
+23. Now, open SQL Server Management Studio (SSMS) from the Windows Start menu and connect to your SQL MI database. On the connection dialog enter the following:
+
+    - **Server name**: Paste the SQL MI host value you copied in the previous step.
+    - **Authentication**: Select **SQL Server Authentication**.
+    - **Login**: Enter **tiuser**.
+    - **Password**: Enter **Password.1234567890**.
+
+    ![Connection dialog for SSMS.](media/ssms-connect-sql-mi.png "SSMS")
+
+24. Select **Connect**.
+
+25. Select **New Query** from the SSMS toolbar. In the new query window, paste the following SQL code.
+
+    ```sql
+    CREATE CREDENTIAL [https://techimmersionstorage.blob.core.windows.net/database-backup]
+    WITH IDENTITY = 'SHARED ACCESS SIGNATURE'
+    , SECRET = 'sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2099-03-10T23:02:10Z&st=2019-03-10T15:02:10Z&spr=https&sig=5AgfetYb9MumCIN%2FqpaaMtpUlwb0TLK%2FeBbpBz7Nj1A%3D'
+    ```
+
+    > The script above uses a pre-configured storage account and SAS token to [create a credential](https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017) in your Managed Instance.
+
+26. Select **Execute** on the SSMS toolbar. You will see a message that the command completed successfully in the output window.
+
+    ![Script to create a credential in SSMS.](media/ssms-sql-mi-create-credential.png "SSMS")
+
+27. To verify your credential, select **New Query** again from the SSMS toolbar, paste the following SQL script to get a backup file list from the storage account into the new query window and select **Execute** from the toolbar.
+
+    ```sql
+    RESTORE FILELISTONLY FROM URL = 'https://techimmersionstorage.blob.core.windows.net/database-backup/ContosoAutoDb.bak'
+    ```
+
+    ![Script to list files in a backup file in Blob storage.](media/ssms-sql-mi-restore-filelistonly.png "SSMS")
+
+28. You are now ready to restore the `ContosoAutoDb` database in SQL MI. Select **New Query** on the SSMS toolbar again, then paste the following SQL script to restore the database and select **Execute**.
+
+    ```sql
+    RESTORE DATABASE [ContosoAutoDb] FROM URL = 'https://techimmersionstorage.blob.core.windows.net/database-backup/ContosoAutoDb.bak'
+    ```
+
+29. The restore will take 1 - 2 minutes to complete. You will receive a "Commands completed successfully" message when it is done.
+
+30. When the restore completes, expand **Databases** in the Object Explorer, and then expand **ContosoAutoDb** and **Tables**. You will see that the tables are all listed, and the SQL Server 2008R2 database has been successfully restored into SQL MI.
+
+    ![The Object Explorer is displayed with Databases, ContosoAutoDb, and Tables expanded.](media/ssms-sql-mi-object-explorer.png "SSMS Object Explorer")
 
 ## Task 2: Update web application to use SQL MI database
 
@@ -125,19 +178,25 @@ In this task, you will use the Microsoft Data Migration Assistant (DMA) to perfo
 
     ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
 
-2. TODO: Add steps here to retrieve the connection string for the SQL MI database.
+2. In the tech-immersion resource group, select your **SQL Managed Instance** resource.
 
-3. Select the **tech-immersion** App Service from the list of resources.
+    ![SQL Managed Instance resource.](media/tech-immersion-resource-group-sql-mi.png "Resource group")
+
+3. Select **Connections strings** under Settings in the left-hand menu, and then copy the ADO.NET connection string value by selecting the copy button to the right of the value.
+
+    ![Connection strings blade for SQL MI in the Azure portal.](media/sql-mi-connection-strings.png "Connection strings")
+
+4. Return to the **tech-immersion** resource group, and select the **tech-immersion App Service** from the list of resources.
 
     ![The App Service resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-appservice.png "Tech Immersion resource group")
 
-4. On the App Service blade, select **Application settings** under Settings on the left-hand side.
+5. On the App Service blade, select **Application settings** under Settings on the left-hand side.
 
     ![The Application settings item is selected under Settings.](media/tech-immersion-app-service-app-settings.png "Application settings")
 
-5. On the Application settings blade, scroll down and locate the connection string named `contosoAutoConnStr` within the **Connection strings** section.
+6. On the Application settings blade, scroll down and locate the connection string named `contosoAutoConnStr` within the **Connection strings** section. Update the value of the `contosoAutoConnStr` connection string with the value you copied for the SQL MI database.
 
-6. Update the value of the `contosoAutoConnStr` connection string with the value you copied for the SQL MI database.
+    ![The copied SQL MI connection string is pasted into the value for the contosoAutoConnStr connection string.](media/app-service-app-settings-connection-strings.png "Connection strings")
 
 7. Select **Save** at the top of the Application settings blade.
 
@@ -147,7 +206,7 @@ In this task, you will use the Microsoft Data Migration Assistant (DMA) to perfo
 
     ![Overview is highlighted on the left-hand menu for App Service](media/app-service-overview-menu-item.png "Overview menu item")
 
-9. On the overview blade, click the **URL** of your App service to launch the website.
+9. On the overview blade, click the **URL** of your App service to launch the website. This will open the URL in a browser window.
 
     ![The App service URL is highlighted.](media/app-service-url.png "App service URL")
 
