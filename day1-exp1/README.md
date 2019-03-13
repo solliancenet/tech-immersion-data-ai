@@ -2,7 +2,7 @@
 
 Contoso Auto stores data in several data stores, including relational databases, NoSQL databases, data warehouses, and unstructured data stored in a data lake. They have heard of data virtualization in SQL Server 2019, and are interested to see whether this feature will allow them to more easily access their data stored in these disparate locations. They have heard of the new Big Data Clusters that can be scaled out to handle their Big Data workloads, including machine learning tasks and advanced analytics. They are also interested in any performance improvements against their internal SQL tables by moving to 2019, since the overall amount of data is growing at a rapid pace.
 
-This experience will highlight the new features of SQL Server 2019 with a focus on Big Data Clusters and data virtualization. You will gain hands-on experience with querying both structured and unstructured data in a unified way using T-SQL. This capability will be illustrated by joining different data sets, such as product stock data in flat CSV files in Azure Storage, product reviews stored in Azure SQL Database, and transactional data in SQL Server 2019 for exploratory data analysis within Azure Data Studio. This joined data will be prepared into a table used for reporting, highlighting query performance against this table due to intelligent query processing. With the inclusion of Apache Spark packaged with Big Data Clusters, it is now possible to use Spark to train machine learning models over data lakes and use those models in SQL Server in one system. You will learn how to use Azure Data Studio to work with Jupyter notebooks to train a simple model that can predict vehicle battery lifetime, then operationalize it within a stored procedure. Finally, you will experience the data security and compliance features provided by SQL Server 2019 by using the Data Discovery & Classification tool in SSMS to identify tables and columns with PII and GDPR-related compliance issues, then address the issues by layering on dynamic data masking to identified columns.
+This experience will highlight the new features of SQL Server 2019 with a focus on Big Data Clusters and data virtualization. You will gain hands-on experience with querying both structured and unstructured data in a unified way using T-SQL. This capability will be illustrated by joining different data sets, such as product stock data in flat CSV files in Azure Storage, product reviews stored in Azure SQL Database, and transactional data in SQL Server 2019 for exploratory data analysis within Azure Data Studio. This joined data will be prepared into a table used for reporting, highlighting query performance against this table due to intelligent query processing. With the inclusion of Apache Spark packaged with Big Data Clusters, it is now possible to use Spark to train machine learning models over data lakes and use those models in SQL Server in one system. You will learn how to use Azure Data Studio to work with Jupyter notebooks to train a simple model that can predict vehicle battery lifetime, score new data and save the result as an external table. Finally, you will experience the data security and compliance features provided by SQL Server 2019 by using the Data Discovery & Classification tool in SSMS to identify tables and columns with PII and GDPR-related compliance issues, then address the issues by layering on dynamic data masking to identified columns.
 
 - [Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters](#day-1-experience-1---handling-big-data-with-sql-server-2019-big-data-clusters)
   - [Experience requirements](#experience-requirements)
@@ -10,7 +10,7 @@ This experience will highlight the new features of SQL Server 2019 with a focus 
     - [Connect with Azure Data Studio](#connect-with-azure-data-studio)
     - [Connect with SQL Server Management Studio](#connect-with-sql-server-management-studio)
   - [Task 1: Query and join data from flat files, data from external database systems, and SQL Server](#task-1-query-and-join-data-from-flat-files-data-from-external-database-systems-and-sql-server)
-  - [Task 2: Train a machine learning model and deploy it to a SQL stored procedure](#task-2-train-a-machine-learning-model-and-deploy-it-to-a-sql-stored-procedure)
+  - [Task 2: Train a machine learning model, score and save data as external table](#task-2-train-a-machine-learning-model-score-and-save-data-as-external-table)
   - [Task 3: Query performance improvements with intelligent query processing](#task-3-query-performance-improvements-with-intelligent-query-processing)
   - [Task 4: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS](#task-4-identify-pii-and-gdpr-related-compliance-issues-using-data-discovery--classification-in-ssms)
   - [Task 5: Fix compliance issues with dynamic data masking](#task-5-fix-compliance-issues-with-dynamic-data-masking)
@@ -237,9 +237,64 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
 
     ![Query results from the four data sets.](media/ads-query-results.png 'Query results')
 
-## Task 2: Train a machine learning model and deploy it to a SQL stored procedure
+## Task 2: Train a machine learning model, score and save data as external table
 
-TBD
+In this task, you will use Azure Data Studio to execute a notebook that will enable you to train a model to predict the battery lifetime, apply the model to make batch predictions against a set of vehicle telemetry and save the scored telemetry to an external table that you can query using SQL.
+
+1. TODO: Agree on how to share starter files. Navigate to [predict-battery-life-with-sqlbdc.ipynb](./predict-battery-life-with-sqlbdc.ipynb). 
+
+2. TODO: Agree on how to share starter files. Next, download the two sample data files you will use:
+- https://databricksdemostore.blob.core.windows.net/data/connected-car/training-formatted.csv
+- https://databricksdemostore.blob.core.windows.net/data/connected-car/fleet-formatted.csv 
+
+3. Open Azure Data Studio and select Servers.
+
+4. Expand your Big Data Cluster, `Data Services`, `HDFS`, `Data`. Right click Data and select `Upload Files`
+![Upload files](media/task02-upload-files.png 'Upload files')
+
+5. Browse to the location where you uploaded both training-formatted.csv and fleet-formatted.csv. Select both files and then select `Upload`.
+
+4. Right click your Big Data Cluster node select `Manage`.
+![Manage cluster](media/task02-manage-cluster.png 'Manage cluster')
+
+5. In the window, select the `SQL Big Data Cluster` tab and then select the `Open Notebook` tile.
+
+![Open notebook](media/task02-sql-bdc-manage.png 'Open notebook')
+
+7. Browse to the notebook you just downloaded, select it and select `Open`.
+
+8. Follow the instructions in the notebook and return to the next step after you have completed the notebook.
+
+9. In Azure Data Studio, under Servers, expand your Big Data Cluster, `Data Services`, `HDFS`, `data`. 
+
+10. Right click the `data` folder and select `Refresh` to see the newly created folder.
+![Refresh data](media/task02-refresh-data.png 'Refresh data')
+
+11. You should see `battery-life.csv` as a folder, expand it and then right click on the CSV file whose name starts with `part-00000-` and select `Create External Table From CSV Files`.
+![Create External Table](media/task02-create-external-menu.png 'Create External Table')
+
+13. In Step 1 of the wizard, select your Active SQL Server connection to connect to your Big Data Cluster endpoint and select `Next`.
+![Select endpoint](media/task02-ext-step1.png 'Select endpoint')
+
+14. In Step 2, select the `sales` database and for the `Name for new external table` field provide `battery-life-predictions`. Select Next.
+![Step 2](media/task02-ext-step2.png 'Step 2')
+
+15. On Step 3, select `Next`.
+
+16. On Step 4, for the column `Car_Has_EcoStart` set the Data Type to `char(10)`. Select `Next`.
+![Step 4](media/task02-ext-step4.png 'Step 4')
+
+17. On Step 5, select `Create Table`. Your predictions are now available for SQL querying in the battery-life-predictions table in the sales database. 
+
+18. In Azure Data Studio, Servers, expand your Big Data Cluster, `Databases`, `sales`, right click `Tables` and then select `Refresh`.
+![Refresh sales](media/task02-refresh-sales.png 'Refresh sales')
+
+19. Expand `tables`, right click `battery-life-prediction` and select `query` to view the data contained by the external table.
+![Select Top 1000](media/task02-select-top.png 'Select Top 1000')
+
+20. The vehicle telemetry along with predictions will appear. These are queried from the external table which is sourced from the CSV you created using the notebook.
+![View data](media/task02-view-data.png 'View data')
+
 
 ## Task 3: Query performance improvements with intelligent query processing
 
