@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ContosoAutoOpsWeb.Models.ProductSalesByStore>
+
+@{
+    ViewData["Title"] = "Contoso Auto - Reports";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Product Sales by Store Report</h2>
+        <h4>@ViewData["Message"]</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Store)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Product)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SalesTotal)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Store)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SalesTotal)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
