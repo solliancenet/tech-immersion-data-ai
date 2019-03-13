@@ -12,10 +12,11 @@ In this task, you will train a deep learning model to classify the descriptions 
 1. From the Azure Portal, navigate to your deployed Azure Databricks workspace and select **Launch Workspace**.
 2. Within the Workspace, using the command bar on the left, select **Workspace**, **Users** and select your username (the entry with house icon).
 3. In the blade that appears, select the downwards pointing chevron next to your name, and select **Import**.
-4. On the Import Notebooks dialog, select URL and paste in the following URL:
-    ```
-[Deep_Learning.dbc](./Deep_Learning.dbc)
-    ```
+4. On the Import Notebooks dialog, select URL and paste in the following URL (copy the URL from the link below):
+
+    [Deep_Learning.dbc](./Deep_Learning.dbc)
+
+
 5. Select **Import**.
 6. A folder named after the archive should appear. Select that folder.
 7. The folder will contain a notebook. This is the notebooks you will use in completing this lab. Follow the instructions in the notebook, and then return to this guide to complete the experience.
