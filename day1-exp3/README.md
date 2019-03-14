@@ -1,12 +1,16 @@
-# Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Managed Instance
+# Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance
 
-ContosoAuto runs their operations and finance database, `ContosoAutoDb`, on an on-premises SQL Server 2008 R2 database. This system is vital to the company's daily activities and as SQL Server 2008 R2 is approaching end of support, they are looking at options for migrating this database into Azure. They have read about some of the advanced security and performance tuning options that are available only in Azure and would prefer to a migrate the database into a platform-as-a-service (PaaS) offering, if possible.
+**Migrate your SQL Server databases without changing your apps.**
+[Azure SQL Database Managed Instance](https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance) (SQL MI) is a new deployment option of Azure SQL Database which enables the migration of existing on-premises SQL Server databases to the cloud with minimal or no application and database changes. With SQL MI, you get the broadest SQL Server engine compatibility and native virtual network (VNET) support. This option gives you the best of SQL Server, plus the operational and cost benefits of an intelligent, fully managed service. SQL MI is ideal for migrating a large number of existing SQL Server databases from on-premises or virtual machines to SQL Database.
 
-ContosoAuto is using the Service Broker feature of SQL Server within the `ContosoAutoDb` database. Service Broker is a feature of SQL Server used for sending and receiving guaranteed, asynchronous messages by using extensions to the Transact-SQL Data Manipulation Language (DML). This functionality is being used for several critical business processes, and they cannot afford to lose this capability when migrating their operations database to the cloud. They have also stated that, at this time, they do not have the resources to rearchitect the solution to use an alternative message broker.
+![Diagram outlining the key features of managed instances.](media/azure-sql-database-managed-instance.png "What is SQL MI?")
 
-In this experience, you will use the Microsoft Data Migration Assistant (DMA) to perform assessments of feature parity and compatibility against both Azure SQL Database and Azure SQL Database Managed Instance, with the goal of migrating the `ContosoAutoDb` database into an Azure PaaS offering with minimal or no changes. After completing the assessments, you will perform the database migration and then update ContosoAuto's operations web application to use the new database. Once that is complete, you will review and enable some of the database features that are only available in Azure.
+**Accelerate your database migration.** Reduce the complexity of your cloud migration by using a single comprehensive service instead of multiple tools. [Azure Database Migration Service](https://docs.microsoft.com/azure/dms/dms-overview) is designed as a seamless, end-to-end solution for moving on-premises SQL Server databases to the cloud. Use the [Database Migration Guide](https://datamigration.microsoft.com/) for recommendations, step-by-step guidance, and expert tips on your specific database migration.
 
-- [Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Managed Instance](#day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-managed-instance)
+**Maximize ROI by migrating to the cloud.** Reduce the burden of data-tier management and save time and costs by migrating workloads to the cloud. [Azure Hybrid Benefit](https://azure.microsoft.com/pricing/hybrid-benefit/) for SQL Server provides a cost-effective path for migrating hundreds or thousands of SQL Server databases with minimal effort. Use your SQL Server licenses with Software Assurance to pay a reduced rate when migrating to the cloud. Save up to 55 percent with Azure Hybrid Benefit, and up to 80 percent with [reserved capacity](https://docs.microsoft.com/azure/sql-database/sql-database-reserved-capacity). Learn how [customers have increased productivity](https://azure.microsoft.com/resources/forrester-tei-sql-database-managed-instance/) by up to 40 percent by migrating to Azure SQL Database.
+
+- [Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance](#day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-database-managed-instance)
+  - [Overview](#overview)
   - [Task 1: Perform database assessments for migration](#task-1-perform-database-assessments-for-migration)
   - [Task 2: Migrate the database to SQL MI](#task-2-migrate-the-database-to-sql-mi)
   - [Task 3: Update the web application to use the new SQL MI database](#task-3-update-the-web-application-to-use-the-new-sql-mi-database)
@@ -18,9 +22,17 @@ In this experience, you will use the Microsoft Data Migration Assistant (DMA) to
   - [Task 9: SQL Data Discovery and Classification](#task-9-sql-data-discovery-and-classification)
   - [Additional resources and more information](#additional-resources-and-more-information)
 
+## Overview
+
+ContosoAuto runs their operations and finance database, `ContosoAutoDb`, on an on-premises SQL Server 2008 R2 database. This system is vital to the company's daily activities and as SQL Server 2008 R2 is approaching end of support, they are looking at options for migrating this database into Azure. They have read about some of the advanced security and performance tuning options that are available only in Azure and would prefer to a migrate the database into a platform-as-a-service (PaaS) offering, if possible.
+
+ContosoAuto is using the Service Broker feature of SQL Server within the `ContosoAutoDb` database. Service Broker is a feature of SQL Server used for sending and receiving guaranteed, asynchronous messages by using extensions to the Transact-SQL Data Manipulation Language (DML). This functionality is being used for several critical business processes, and they cannot afford to lose this capability when migrating their operations database to the cloud. They have also stated that, at this time, they do not have the resources to rearchitect the solution to use an alternative message broker.
+
+In this experience, you will use the Microsoft Data Migration Assistant (DMA) to perform assessments of feature parity and compatibility against both Azure SQL Database and Azure SQL Database Managed Instance, with the goal of migrating the `ContosoAutoDb` database into an Azure PaaS offering with minimal or no changes. After completing the assessments, you will perform the database migration and then update ContosoAuto's operations web application to use the new database. Once that is complete, you will review and enable some of the database features that are only available in Azure.
+
 ## Task 1: Perform database assessments for migration
 
-In this task, you will use the Microsoft [Data Migration Assistant](https://docs.microsoft.com/en-us/sql/dma/dma-overview?view=azuresqldb-mi-current) (DMA) to perform assessments on the `ContosoAutoDb` database. You will create two assessments, one for a migration to Azure SQL Database, and then a second for SQL MI. These assessments will provide reports about any feature parity and compatibility issues between the on-premises database and the Azure managed SQL database service options.
+In this task, you will use the Microsoft [Data Migration Assistant](https://docs.microsoft.com/sql/dma/dma-overview?view=azuresqldb-mi-current) (DMA) to perform assessments on the `ContosoAutoDb` database. You will create two assessments, one for a migration to Azure SQL Database, and then a second for SQL MI. These assessments will provide reports about any feature parity and compatibility issues between the on-premises database and the Azure managed SQL database service options.
 
 > DMA helps you upgrade to a modern data platform by detecting compatibility issues that can impact database functionality in your new version of SQL Server or Azure SQL Database. DMA recommends performance and reliability improvements for your target environment and allows you to move your schema, data, and uncontained objects from your source server to your target server.
 
@@ -122,7 +134,7 @@ In this task, you will use the Microsoft [Data Migration Assistant](https://docs
 
 ## Task 2: Migrate the database to SQL MI
 
-In this task, you will migrate the `ContosoAutoDb` database from the on-premises SQL 2008 R2 database to SQL MI, targeting the [Business Critical service tier](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-managed-instance#managed-instance-service-tiers).
+In this task, you will migrate the `ContosoAutoDb` database from the on-premises SQL 2008 R2 database to SQL MI, targeting the [Business Critical service tier](https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance#managed-instance-service-tiers).
 
 > The Business Critical service tier is designed for business applications with the highest performance and high-availability (HA) requirements.
 
@@ -189,9 +201,9 @@ To migrate the `ContosoAutoDb` database from SQL 2008 R2 to SQL MI you will use 
 
 ## Task 3: Update the web application to use the new SQL MI database
 
-With the `ContosoAutoDb` database now running on SQL MI in Azure, the next step is to make the required modifications to the ContosoAuto operations web application. The operations web app is currently running an [Azure App Service Environment](https://docs.microsoft.com/en-us/azure/app-service/environment/intro), which was provisioned in the same virtual network as the SQL Managed Instance.
+With the `ContosoAutoDb` database now running on SQL MI in Azure, the next step is to make the required modifications to the ContosoAuto operations web application. The operations web app is currently running an [Azure App Service Environment](https://docs.microsoft.com/azure/app-service/environment/intro), which was provisioned in the same virtual network as the SQL Managed Instance.
 
-> SQL Managed Instance has private IP address in its own VNet, so to connect an application you need to configure access to the VNet where Managed Instance is deployed. To learn more, read [Connect your application to Azure SQL Database Managed Instance](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-managed-instance-connect-app).
+> SQL Managed Instance has private IP address in its own VNet, so to connect an application you need to configure access to the VNet where Managed Instance is deployed. To learn more, read [Connect your application to Azure SQL Database Managed Instance](https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance-connect-app).
 
 In this task, you will make updates to the ContosoAuto operations web application to enable it to connect to and utilize the SQL MI database.
 
@@ -248,7 +260,7 @@ In this task, you will make updates to the ContosoAuto operations web applicatio
 
 ## Task 4: Enable Dynamic Data Masking
 
-[Dynamic Data Masking](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-dynamic-data-masking-get-started) (DDM) limits sensitive data exposure by masking it to non-privileged users. This feature helps prevent unauthorized access to sensitive data by enabling customers to designate how much of the sensitive data to reveal with minimal impact on the application layer. It’s a policy-based security feature that hides the sensitive data in the result set of a query over designated database fields, while the data in the database is not changed.
+[Dynamic Data Masking](https://docs.microsoft.com/azure/sql-database/sql-database-dynamic-data-masking-get-started) (DDM) limits sensitive data exposure by masking it to non-privileged users. This feature helps prevent unauthorized access to sensitive data by enabling customers to designate how much of the sensitive data to reveal with minimal impact on the application layer. It’s a policy-based security feature that hides the sensitive data in the result set of a query over designated database fields, while the data in the database is not changed.
 
 > For example, a service representative at a call center may identify callers by several digits of their credit card number, but those data items should not be fully exposed to the service representative. A masking rule can be defined that masks all but the last four digits of any credit card number in the result set of any query. As another example, an appropriate data mask can be defined to protect personally identifiable information (PII) data, so that a developer can query production environments for troubleshooting purposes without violating compliance regulations.
 
@@ -327,9 +339,9 @@ In this task, you will enable DDM on the `CardNumber` field in the `CreditCard` 
 
 ## Task 5: Add clustered columnstore index
 
-ContosoAuto is looking to take advantage of some of the performance improvement features available in Azure SQL MI. In particular, they are interested in optimizing performance by using [In-Memory technologies](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-in-memory).
+ContosoAuto is looking to take advantage of some of the performance improvement features available in Azure SQL MI. In particular, they are interested in optimizing performance by using [In-Memory technologies](https://docs.microsoft.com/azure/sql-database/sql-database-in-memory).
 
-In this task, you will create a new table based on the existing `[Sales].[SalesOrderDetail]` table and apply a [ColumnStore index](https://docs.microsoft.com/en-us/sql/relational-databases/indexes/columnstore-indexes-overview?view=azuresqldb-mi-current).
+In this task, you will create a new table based on the existing `[Sales].[SalesOrderDetail]` table and apply a [ColumnStore index](https://docs.microsoft.com/sql/relational-databases/indexes/columnstore-indexes-overview?view=azuresqldb-mi-current).
 
 > Columnstore indexes are the standard for storing and querying large data warehousing fact tables. This index uses column-based data storage and query processing to achieve gains up to **10 times the query performance** in your data warehouse over traditional row-oriented storage. You can also achieve gains up to **10 times the data compression** over the uncompressed data size.
 
@@ -442,9 +454,9 @@ In this task, you will create a new table based on the existing `[Sales].[SalesO
 
 In this task, you will look at how you can use the automatically created online secondary for reporting, without feeling the impacts of a heavy transactional load on the primary database. Each database in the SQL MI  Business Critical tier is automatically provisioned with several AlwaysON replicas to support the availability SLA.
 
-> High availability in this architectural model is achieved by replication of compute (SQL Server Database Engine process) and storage (locally attached SSD) deployed in 4-node cluster, using technology similar to SQL Server [Always On Availability Groups](https://docs.microsoft.com/sql/database-engine/availability-groups/windows/overview-of-always-on-availability-groups-sql-server). You can read more in the [SQL Database high availability](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-high-availability#premium-and-business-critical-service-tier-availability) documentation.
+> High availability in this architectural model is achieved by replication of compute (SQL Server Database Engine process) and storage (locally attached SSD) deployed in 4-node cluster, using technology similar to SQL Server [Always On Availability Groups](https://docs.microsoft.com/sql/database-engine/availability-groups/windows/overview-of-always-on-availability-groups-sql-server). You can read more in the [SQL Database high availability](https://docs.microsoft.com/azure/sql-database/sql-database-high-availability#premium-and-business-critical-service-tier-availability) documentation.
 
-[**Read Scale-Out**](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-read-scale-out) allows you to load balance Azure SQL Database read-only workloads using the capacity of one read-only replica. This way the read-only workload will be isolated from the main read-write workload and will not affect its performance. To learn more, check out the [SQL Database Read Scale-Out documentation](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-read-scale-out).
+[**Read Scale-Out**](https://docs.microsoft.com/azure/sql-database/sql-database-read-scale-out) allows you to load balance Azure SQL Database read-only workloads using the capacity of one read-only replica. This way the read-only workload will be isolated from the main read-write workload and will not affect its performance. To learn more, check out the [SQL Database Read Scale-Out documentation](https://docs.microsoft.com/azure/sql-database/sql-database-read-scale-out).
 
 ![Business Critical service tier: collocated compute and storage.](media/sql-mi-read-scale-out.png "Read Scale-Out")
 
@@ -512,13 +524,13 @@ Server=tcp:tech-immersion-sql-mi.3e134c88d9f6.database.windows.net;Database=Cont
 
 ContosoAuto is interested in learning more about using transactional replication to push changes from their on-premises SQL 2008 R2 database into the SQL MI database, so they can complete their database migration without experience any downtime.
 
-In this task, you will review the capabilities of the [Transactional replication](https://docs.microsoft.com/en-us/azure/sql-database/replication-with-sql-database-managed-instance) feature of Azure SQL Database Managed Instance. This feature enables you to synchronize multiple tables in different databases.
+In this task, you will review the capabilities of the [Transactional replication](https://docs.microsoft.com/azure/sql-database/replication-with-sql-database-managed-instance) feature of Azure SQL Database Managed Instance. This feature enables you to synchronize multiple tables in different databases.
 
 > Transactional replication is in the public preview on Azure SQL Database managed instance.
 
 You can use transactional replication to replicate data into an Azure SQL MI database from a remote SQL Server database or another instance database. You an also use it to push changes made in an instance database in SQL MI to a remote SQL Server database, to a single database in Azure SQL Database, or to a pooled database in an Azure SQL Database elastic pool.
 
-> A managed instance can host publisher, distributor, and subscriber databases. See [transactional replication configurations](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-managed-instance-transactional-replication#common-configurations) for available configurations.
+> A managed instance can host publisher, distributor, and subscriber databases. See [transactional replication configurations](https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance-transactional-replication#common-configurations) for available configurations.
 
 Transactional replication is useful in the following scenarios:
 
@@ -528,7 +540,7 @@ Transactional replication is useful in the following scenarios:
 
 ## Task 8: Enable Advanced Data Security
 
-In this task, you will enable [Advance Data Security](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-advanced-data-security) for the `ContosoAutoDb` database and review its features, including the vulnerability assessment and data discovery and classification capabilities.
+In this task, you will enable [Advance Data Security](https://docs.microsoft.com/azure/sql-database/sql-database-advanced-data-security) for the `ContosoAutoDb` database and review its features, including the vulnerability assessment and data discovery and classification capabilities.
 
 1. Using a web browser, navigate to the [Azure portal](https://portal.azure.com), select **Resource groups** from the left-hand menu, and then select the resource group named **tech-immersion**.
 
@@ -576,7 +588,7 @@ In this task, you will enable [Advance Data Security](https://docs.microsoft.com
 
     ![Advanced Data Security is selected in the left-hand menu, and the Vulnerability tile is highlighted.](media/sql-mi-contosoautodb-ads.png "Advanced Data Security")
 
-    > The [SQL Vulnerability Assessment service](https://docs.microsoft.com/en-us/azure/sql-database/sql-vulnerability-assessment) is a service that provides visibility into your security state, and includes actionable steps to resolve security issues, and enhance your database security.
+    > The [SQL Vulnerability Assessment service](https://docs.microsoft.com/azure/sql-database/sql-vulnerability-assessment) is a service that provides visibility into your security state, and includes actionable steps to resolve security issues, and enhance your database security.
 
 10. On the Vulnerability Assessment blade, you will see a dashboard, displaying the number of failing checks, passing checks, and a breakdown of the risk summary by severity level.
 
@@ -592,7 +604,7 @@ In this task, you will enable [Advance Data Security](https://docs.microsoft.com
 
     > The details for each finding provide more insight into the reason for the finding. Of note are the fields describing the finding, the impact of the recommeneded settings, and details on remediation for the finding.
 
-13. Let's now act on the recommendation remediation steps for the finding, and enable [Transparent Data Encryption](https://docs.microsoft.com/en-us/azure/sql-database/transparent-data-encryption-azure-sql) for the `ContosoAutoDb` database. To accomplish this, you will switch back to using SSMS for the next few steps.
+13. Let's now act on the recommendation remediation steps for the finding, and enable [Transparent Data Encryption](https://docs.microsoft.com/azure/sql-database/transparent-data-encryption-azure-sql) for the `ContosoAutoDb` database. To accomplish this, you will switch back to using SSMS for the next few steps.
 
     > Transparent data encryption (TDE) needs to be manually enabled for Azure SQL Managed Instanc. TDE helps protect Azure SQL Database, Azure SQL Managed Instance, and Azure Data Warehouse against the threat of malicious activity. It performs real-time encryption and decryption of the database, associated backups, and transaction log files at rest without requiring changes to the application.
 
@@ -644,7 +656,7 @@ In this task, you will enable [Advance Data Security](https://docs.microsoft.com
 
 ## Task 9: SQL Data Discovery and Classification
 
-In this task, you will look at another **Advanced Data Security** feature available within the SQL MI database, [SQL Data Discovery and Classification](https://docs.microsoft.com/en-us/sql/relational-databases/security/sql-data-discovery-and-classification?view=sql-server-2017). Data Discovery & Classification introduces a new tool built into SQL Server Management Studio (SSMS) for discovering, classifying, labeling & reporting the sensitive data in your databases. It introduces a set of advanced services, forming a new SQL Information Protection paradigm aimed at protecting the data in your database, not just the database. Discovering and classifying your most sensitive data (business, financial, healthcare, etc.) can play a pivotal role in your organizational information protection stature.
+In this task, you will look at another **Advanced Data Security** feature available within the SQL MI database, [SQL Data Discovery and Classification](https://docs.microsoft.com/sql/relational-databases/security/sql-data-discovery-and-classification?view=sql-server-2017). Data Discovery & Classification introduces a new tool built into SQL Server Management Studio (SSMS) for discovering, classifying, labeling & reporting the sensitive data in your databases. It introduces a set of advanced services, forming a new SQL Information Protection paradigm aimed at protecting the data in your database, not just the database. Discovering and classifying your most sensitive data (business, financial, healthcare, etc.) can play a pivotal role in your organizational information protection stature.
 
     > This functionality is not currently available for SQL MI through the Azure portal, so you return to SSMS to use this capability.
 
@@ -678,13 +690,27 @@ In this task, you will look at another **Advanced Data Security** feature availa
 
 ## Additional resources and more information
 
-| Name | Link |
-| ---- | ---- |
-| Azure SQL Database service tiers | <https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers-general-purpose-business-critical> |
-| Overview of Azure SQL Database security capabilities | <https://docs.microsoft.com/en-us/azure/sql-database/sql-database-security-overview> |
-| Advanced data security for Azure SQL Database | <https://docs.microsoft.com/en-us/azure/sql-database/sql-database-advanced-data-security> |
-| Data discovery and classification | <https://docs.microsoft.com/en-us/azure/sql-database/sql-database-data-discovery-and-classification> |
-| SQL Vulnerability Assessment service | <https://docs.microsoft.com/en-us/azure/sql-database/sql-vulnerability-assessment> |
-| SQL Database Read Scale-Out | <https://docs.microsoft.com/en-us/azure/sql-database/sql-database-read-scale-out> |
-| Connect App to SQL MI | <https://docs.microsoft.com/en-us/azure/sql-database/sql-database-managed-instance-connect-app> |
-| Integrate your app with an Azure Virtual Network | <https://docs.microsoft.com/en-us/azure/app-service/web-sites-integrate-with-vnet> |
+- [Azure SQL Database](https://azure.microsoft.com/services/sql-database/)
+  - [Service tiers](https://docs.microsoft.com/azure/sql-database/sql-database-service-tiers-general-purpose-business-critical)
+- [What is Azure SQL Database Managed Instance?](https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance-index)
+- [Database Migration Guide](https://datamigration.microsoft.com/)
+  - [Database Migration Assistant](https://docs.microsoft.com/sql/dma/dma-overview?view=azuresqldb-mi-current)
+  - [Azure Database Migration Service](https://docs.microsoft.com/azure/dms/dms-overview)
+- [Migrate SQL Server to an Azure SQL Database Managed Instance](https://datamigration.microsoft.com/scenario/sql-to-azuresqldbmi)
+- [SQL Database Platform as a Service](https://docs.microsoft.com/azure/sql-database/sql-database-paas)
+  - [Business continuity](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-business-continuity)
+  - [High availability](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-high-availability)
+  - [Automated backups](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-automated-backups)
+  - [Long-term back retention](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-long-term-retention)
+  - [Geo-replication](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-auto-failover-group)
+  - [Scale resources](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-scale-resources)
+- [How to use Azure SQL Database](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-howto)
+- [Azure updates for Azure SQL Database](https://azure.microsoft.com/en-us/updates/?product=sql-database)
+- [Azure SQL Database pricing](https://azure.microsoft.com/en-us/pricing/details/sql-database/managed/)
+- [Overview of Azure SQL Database security capabilities](https://docs.microsoft.com/azure/sql-database/sql-database-security-overview)
+  - [Advanced data security](https://docs.microsoft.com/azure/sql-database/sql-database-advanced-data-security)
+  - [Data discovery and classification](https://docs.microsoft.com/azure/sql-database/sql-database-data-discovery-and-classification)
+  - [SQL Vulnerability Assessment service](https://docs.microsoft.com/azure/sql-database/sql-vulnerability-assessment)
+  - [Threat detection](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-threat-detection-overview)
+- [SQL Database Read Scale-Out](https://docs.microsoft.com/azure/sql-database/sql-database-read-scale-out)
+- [Connect an application to Azure SQL Database Managed Instance](https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance-connect-app)
