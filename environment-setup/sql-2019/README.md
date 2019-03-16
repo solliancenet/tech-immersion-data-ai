@@ -16,7 +16,7 @@ The computer or VM on which you run the scripts to deploy the cluster and restor
 
 The computer or VM on which the attendee completes the lab requires the following:
 
-- [SQL Server Management Studio](https://docs.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15) (SSMS) v17.9.1 or greater
+- [SQL Server Management Studio](https://go.microsoft.com/fwlink/?linkid=2078638) (SSMS) v18.0 (Preview 7) or greater
 - [Azure Data Studio](https://docs.microsoft.com/sql/azure-data-studio/download?view=sql-server-ver15)
   - [SQL Server 2019 extension](https://docs.microsoft.com/sql/azure-data-studio/sql-server-2019-extension?view=sql-server-ver15)
 - SQL Server 2019 login credentials provided for the lab environment
@@ -137,7 +137,7 @@ The script you will execute below enlarges the ContosoAutoDW database. This help
 
 1.  Open SQL Server Management Studio (SSMS) and connect to your SQL Server 2019 cluster. If you are unsure of how to do this, refer to [Connect with SQL Server Management Studio](#connect-with-sql-server-management-studio) above.
 
-2.  Right-click on `ContosoAutoDW`, then select **New Query**. This will open a new query window into which you can paste the following queries. You may wish to reuse the same query window, replacing its contents with each SQL statement blocks below, or follow these same steps to create new query windows for each.
+2.  Right-click on `ContosoAutoDW`, then select **New Query**. This will open a new query window into which you can paste the following query.
 
     ![ContosoAutoDW is selected and the New Query menu option is highlighted.](../../day1-exp1/media/ssms-new-query.png 'New Query')
 
@@ -245,3 +245,119 @@ The script you will execute below enlarges the ContosoAutoDW database. This help
 5.  After the query is finished, you should see output similar to the screenshot below (highlighted in red) in the Results window. Also, the lower-right portion of the status bar shows the total execution time, in this case just under 11 minutes.
 
     ![The query results are highlighted, as well as the execution time.](../../day1-exp1/media/ssms-execution-completed.png 'SSMS query results')
+
+### Set the database compatibility level to 150 and create a UDF
+
+This lab requires the database compatibility level to be set to 150, and uses a user-defined function (UDF) for one of the queries. Rather than having students set the level and create the UDF, we do this for them ahead of time. This only needs to be done one time since the ContosoAutoDW database is shared.
+
+1.  Open SQL Server Management Studio (SSMS) and connect to your SQL Server 2019 cluster. If you are unsure of how to do this, refer to [Connect with SQL Server Management Studio](#connect-with-sql-server-management-studio) above.
+
+2.  Right-click on `ContosoAutoDW`, then select **New Query**. This will open a new query window into which you can paste the following query.
+
+3.  Paste the following query into the query window. This ensures that the database compatibility level is set to `150`, which is the new compatibility level for SQL Server 2019, enabling the most recent intelligent QP features. It also creates a new user-defined function (UDF) named `customer_category` that will be called inline from the two queries that follow in order to show QP improvements on scalar UDF inlining.
+
+    ```sql
+    USE ContosoAutoDW;
+    GO
+
+    ALTER DATABASE ContosoAutoDW
+    SET COMPATIBILITY_LEVEL = 150;
+    GO
+
+    ALTER DATABASE SCOPED CONFIGURATION
+    CLEAR PROCEDURE_CACHE;
+    GO
+    /*
+    Adapted from SQL Server Books Online
+    https://docs.microsoft.com/en-us/sql/relational-databases/user-defined-functions/scalar-udf-inlining?view=sqlallproducts-allversions
+    */
+    CREATE OR ALTER FUNCTION
+      dbo.customer_category(@CustomerKey INT)
+    RETURNS CHAR(10) AS
+    BEGIN
+      DECLARE @total_amount DECIMAL(18,2);
+      DECLARE @category CHAR(10);
+
+      SELECT @total_amount =
+      SUM([Total Including Tax])
+      FROM [Fact].[OrderHistory]
+      WHERE [Customer Key] = @CustomerKey;
+
+      IF @total_amount < 500000
+        SET @category = 'REGULAR';
+      ELSE IF @total_amount < 1000000
+        SET @category = 'GOLD';
+      ELSE
+        SET @category = 'PLATINUM';
+
+      RETURN @category;
+    END
+    GO
+    ```
+
+### Connect with Azure Data Studio
+
+1.  On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **Azure Data Studio**, then select the Azure Data Studio desktop app in the search results.
+
+    ![The search box has "Azure Data Studio" entered into it and the desktop app is highlighted in the results.](../../day1-exp1/media/launch-azure-data-studio.png 'Launch Azure Data Studio')
+
+2.  Within Azure Data Studio, select **Servers** from the top of the left-hand menu, then select **New Connection** from the top toolbar to the right of the menu.
+
+    ![The Servers menu icon is selected, as well as the new connection icon.](../../day1-exp1/media/ads-new-connection-link.png 'Azure Data Studio')
+
+3.  Within the Connection dialog, configure the following:
+
+    - **Connection type:** Select Microsoft SQL Server.
+    - **Server:** Enter the IP address, followed by port number `31433`. For example: `123.123.123.123,31433`.
+    - **Username:** Enter "sa".
+    - **Password:** Enter the password provided to you for this lab.
+    - **Remember password:** Checked.
+    - Leave all other options at their default values.
+
+    ![The Connection form is filled out with the previously mentioned settings entered into the appropriate fields.](../../day1-exp1/media/ads-new-connection.png 'Azure Data Studio - New Connection')
+
+4.  Click **Connect**.
+
+### Upload lab files to HDFS
+
+Upload required lab files to HDFS within the provisioned big data cluster.
+
+1.  Within Azure Data Studio, scroll down below the list of SQL Server 2019 databases to find the **Data Services** folder. Expand that folder, then expand the **HDFS** sub-folder. **Right-click on HDFS**, then select **New directory** on the context menu.
+
+    ![The HDFS folder and New directory menu items are highlighted.](../../day1-exp1/media/ads-new-directory-link.png "New directory")
+
+2.  In the new dialog that appears, type "data", then press Enter on your keyboard.
+
+    ![The new directory dialog is displayed with data typed in as the new directory name.](../../day1-exp1/media/ads-new-directory.png 'New directory dialog')
+
+3.  **Right-click** on your newly created **data** folder, then select **Upload files**.
+
+    ![The data folder and Upload files menu item are highlighted.](../../day1-exp1/media/ads-upload-files-link.png 'Upload files')
+
+4.  Upload each of the following files:
+
+    - [fleet-formatted.csv](fleet-formatted.csv)
+    - [stockitemholdings.csv](stockitemholdings.csv)
+    - [training-formatted.csv](training-formatted.csv)
+
+### Install the required Python libraries
+
+This needs to be done from each user's jump box. It is required for the Python libraries for the big data cluster to be installed on the user's machine before they can execute Jupyter notebooks.
+
+1.  Within Azure Data Studio, right-click on the connection (1) then select **Manage** (2). Select the **SQL Server Big Data Cluster** tab (3). Select **New Notebook** (4).
+
+     ![New Notebook.](../../day1-exp1/media/ads-new-notebook.png 'New Notebook')
+
+2.  When prompted, select the option to install the required Python libraries to the default location.
+
+### Create Azure SQL Server and import CA_Commerce bacpac
+
+All attendees will access one Azure SQL Database named `CA_Commerce` for the lab. They only require Read Only access.
+
+1.  Provision a shared Azure SQL Server that will be used for all attendees.
+
+2.  Create a user with Read Only access.
+
+3.  Share the Azure SQL Server path, username, and password with attendees (add to attendee notes).
+
+4.  Follow [these steps](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-import) to create a new Azure SQL Database on this new SQL Server, using the [CA_Commerce.bacpac](CA_Commerce.bacpac) file.

@@ -29,6 +29,8 @@ Contoso Auto stores data in several data stores, including relational databases,
 This experience will highlight the new features of SQL Server 2019 with a focus on Big Data Clusters and data virtualization. You will gain hands-on experience with querying both structured and unstructured data in a unified way using T-SQL. This capability will be illustrated by joining different data sets, such as product stock data in flat CSV files in Azure Storage, product reviews stored in Azure SQL Database, and transactional data in SQL Server 2019 for exploratory data analysis within Azure Data Studio. This joined data will be prepared into a table used for reporting, highlighting query performance against this table due to intelligent query processing. With the inclusion of Apache Spark packaged with Big Data Clusters, it is now possible to use Spark to train machine learning models over data lakes and use those models in SQL Server in one system. You will learn how to use Azure Data Studio to work with Jupyter notebooks to train a simple model that can predict vehicle battery lifetime, score new data and save the result as an external table. Finally, you will experience the data security and compliance features provided by SQL Server 2019 by using the Data Discovery & Classification tool in SSMS to identify tables and columns with PII and GDPR-related compliance issues, then address the issues by layering on dynamic data masking to identified columns.
 
 - [Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters](#day-1-experience-1---handling-big-data-with-sql-server-2019-big-data-clusters)
+  - [SQL Server 2019 overview](#sql-server-2019-overview)
+  - [Scenario overview](#scenario-overview)
   - [Experience requirements](#experience-requirements)
   - [Before the lab: Connecting to SQL Server 2019](#before-the-lab-connecting-to-sql-server-2019)
     - [Connect with Azure Data Studio](#connect-with-azure-data-studio)
@@ -38,11 +40,13 @@ This experience will highlight the new features of SQL Server 2019 with a focus 
   - [Task 3: Query performance improvements with intelligent query processing](#task-3-query-performance-improvements-with-intelligent-query-processing)
   - [Task 4: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS](#task-4-identify-pii-and-gdpr-related-compliance-issues-using-data-discovery--classification-in-ssms)
   - [Task 5: Fix compliance issues with dynamic data masking](#task-5-fix-compliance-issues-with-dynamic-data-masking)
+  - [Wrap-up](#wrap-up)
+  - [Resources and more information](#resources-and-more-information)
 
 ## Experience requirements
 
 - Azure subscription
-- [SQL Server Management Studio](https://docs.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15) (SSMS) v17.9.1 or greater
+- [SQL Server Management Studio](https://go.microsoft.com/fwlink/?linkid=2078638) (SSMS) v18.0 (Preview 7) or greater
 - [Azure Data Studio](https://docs.microsoft.com/sql/azure-data-studio/download?view=sql-server-ver15)
   - [SQL Server 2019 extension](https://docs.microsoft.com/sql/azure-data-studio/sql-server-2019-extension?view=sql-server-ver15)
 - SQL Server 2019 login credentials provided for your lab environment
@@ -114,7 +118,7 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
 
 1.  Open Azure Data Studio and connect to your SQL Server 2019 cluster, following the [connection steps](#connect-with-azure-data-studio) above.
 
-2.  Expand the Databases folder, right-click on the **sales** database, then select **Create External Table**.
+2.  Expand the Databases folder, right-click on the **sales_YOUR_UNIQUE_IDENTIFIER** database, then select **Create External Table**. The `YOUR_UNIQUE_IDENTIFIER` portion of the name is the unique identifier assigned to you for this lab.
 
     ![The sales database and the Create External Table sub-menu item are highlighted.](media/ads-create-external-table-sales.png 'Create External Table')
 
@@ -151,7 +155,7 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
 
     ![The Create External Table succeeded message is displayed.](media/ads-external-table-wizard-succeeded.png 'Create External Table succeeded message')
 
-10. Select the Servers link (Ctrl+G) on the left-hand menu, then expand the Tables list underneath your **sales** database and find the **dbo.Reviews (External)** table. If you do not see it, right-click on the Tables folder, then select Refresh. The "(External)" portion of the table name denotes that it is a virtual data object that was added as an external table.
+10. Select the Servers link (Ctrl+G) on the left-hand menu, then expand the Tables list underneath your **sales_YOUR_UNIQUE_IDENTIFIER** database and find the **dbo.Reviews (External)** table. If you do not see it, right-click on the Tables folder, then select Refresh. The "(External)" portion of the table name denotes that it is a virtual data object that was added as an external table.
 
     ![The Reviews external table is displayed in the sales tables list.](media/ads-reviews-table-in-list.png 'Reviews external table')
 
@@ -168,60 +172,42 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
         ,[customer_id]
         ,[review]
         ,[date_added]
-    FROM [sales].[dbo].[Reviews]
+    FROM [sales_YOUR_UNIQUE_IDENTIFIER].[dbo].[Reviews]
     ```
 
-13. The next data source we will be virtualizing is a CSV file that you will upload to HDFS. **Download** the [stockitemholdings.csv](../lab-files/files/stockitemholdings.csv) file, making note of where it is being saved.
+13. The next data source we will be virtualizing is a CSV file that was uploaded HDFS.
 
-14. Within Azure Data Studio, scroll down below the list of SQL Server 2019 databases to find the **Data Services** folder. Expand that folder, then expand the **HDFS** sub-folder. **Right-click on HDFS**, then select **New directory** on the context menu.
+14. Within Azure Data Studio, scroll down below the list of SQL Server 2019 databases to find the **Data Services** folder. Expand that folder, expand the **HDFS** folder, then expand the **data** subfolder. Right-click on the `stockitemholdings.csv` file, then select **Create External Table From CSV Files**.
 
+    ![The CSV file and the Create External Table From CSV Files menu item are highlighted.](media/ads-create-external-table-csv.png 'Create External Table From CSV Files')
 
-    ![The HDFS folder and New directory menu items are highlighted.](media/ads-new-directory-link.png "New directory")
-
-15. In the new dialog that appears, type "data", then press Enter on your keyboard.
-
-    ![The new directory dialog is displayed with data typed in as the new directory name.](media/ads-new-directory.png 'New directory dialog')
-
-16. **Right-click** on your newly created **data** folder, then select **Upload files**.
-
-    ![The data folder and Upload files menu item are highlighted.](media/ads-upload-files-link.png 'Upload files')
-
-17. Browse to the location to which you downloaded the `stockitemholdings.csv` file and select it. Click **Upload**.
-
-    ![The file browse dialog is displayed with the CSV file selected and the Upload button highlighted.](media/ads-upload-files.png 'Select file and upload')
-
-18. Right-click on the `stockitemholdings.csv` file that was just uploaded to the **data** folder, then select **Create External Table From CSV Files**.
-
-
-    ![The CSV file and the Create External Table From CSV Files menu item are highlighted.](media/ads-create-external-table-csv.png "Create External Table From CSV Files")
-
-19. The first dialog has you select the SQL Server Master instance containing your Big Data Cluster. Select the connection underneath **Active SQL Server connections** that includes the cluster's IP address and the **sales** database name.
+15. The first dialog has you select the SQL Server Master instance containing your Big Data Cluster. Select the connection underneath **Active SQL Server connections** that includes the cluster's IP address and the **sales_YOUR_UNIQUE_IDENTIFIER** database name.
 
     ![The active SQL Server connection is highlighted.](media/ads-external-table-csv-wizard-active-connection.png 'Active SQL Server connections')
 
-20. Click **Next**.
+16. Click **Next**.
 
-21. In the destination database step, select the **sales** database underneath **Database the external table will be created in**. Leave the name and schema at their defaults, then click **Next**.
+17. In the destination database step, select the **sales_YOUR_UNIQUE_IDENTIFIER** database underneath **Database the external table will be created in**. Leave the name and schema at their defaults, then click **Next**.
 
     ![The sales database is selected and highlighted.](media/ads-external-table-csv-destination.png 'Destination database')
 
-22. The next step displays a preview of the first 50 rows CSV data for validation. Click **Next** to continue.
+18. The next step displays a preview of the first 50 rows CSV data for validation. Click **Next** to continue.
 
     ![A preview of the CSV data is displayed.](media/ads-external-table-csv-preview.png 'Preview Data')
 
-23. In the next step, you will be able to Modify the columns of the external table you intend to create. you are able to alter the column name, Change the data type, and allow for Nullable rows. Leave everything as-is and click **Next**.
+19. In the next step, you will be able to Modify the columns of the external table you intend to create. you are able to alter the column name, Change the data type, and allow for Nullable rows. Leave everything as-is and click **Next**.
 
     ![The Modify Columns step is displayed.](media/ads-external-table-csv-modify.png 'Modify Columns')
 
-24. Verify that everything looks correct in the Summary step, then click **Create Table**.
+20. Verify that everything looks correct in the Summary step, then click **Create Table**.
 
     ![The Summary step is displayed.](media/ads-external-table-csv-create.png 'Summary')
 
-25. As with the previous external table you created, a "Create External Table succeeded" dialog will appear under your task history in a few moments. Select the Servers link (Ctrl+G) on the left-hand menu, then expand the Tables list underneath your **sales** database and find the **dbo.stockitemholdings (External)** table. If you do not see it, right-click on the Tables folder, then select Refresh. **Right-click** the **dbo.stockitemholdings (External)** table, then select **Select Top 1000** from the context menu.
+21. As with the previous external table you created, a "Create External Table succeeded" dialog will appear under your task history in a few moments. Select the Servers link (Ctrl+G) on the left-hand menu, then expand the Tables list underneath your **sales** database and find the **dbo.stockitemholdings (External)** table. If you do not see it, right-click on the Tables folder, then select Refresh. **Right-click** the **dbo.stockitemholdings (External)** table, then select **Select Top 1000** from the context menu.
 
     ![The Select Top 1000 rows menu item is highlighted.](media/ads-stockitemholdings-select-top-1000.png 'Select Top 1000')
 
-26. Just as before, you should see a SQL query selecting the top 1000 rows and its query results, this time from the `stockitemholdings` table. Again, the SQL query is the same type of query you would write to select from a table internal to the sales database.
+22. Just as before, you should see a SQL query selecting the top 1000 rows and its query results, this time from the `stockitemholdings` table. Again, the SQL query is the same type of query you would write to select from a table internal to the sales database.
 
     ![The stockitemholdings query and results are displayed.](media/ads-stockitemholdings-results.png 'Stockitemholdings results')
 
@@ -235,14 +221,14 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
         ,[TargetStockLevel]
         ,[LastEditedBy]
         ,[LastEditedWhen]
-    FROM [sales].[dbo].[stockitemholdings]
+    FROM [sales_YOUR_UNIQUE_IDENTIFIER].[dbo].[stockitemholdings]
     ```
 
-27. Now that we have our two external tables added, we will now join those two external tables and two internal tables with a new SQL query to demonstrate how you can seamlessly combine all these data sources without having to copy any files or with separate queries or additional processing of that data. **Right-click** the **sales** database, then select **New Query**.
+23. Now that we have our two external tables added, we will now join those two external tables and two internal tables with a new SQL query to demonstrate how you can seamlessly combine all these data sources without having to copy any files or with separate queries or additional processing of that data. **Right-click** the **sales_YOUR_UNIQUE_IDENTIFIER** database, then select **New Query**.
 
     ![The sales database and New Query menu item are highlighted.](media/ads-new-query.png 'New Query')
 
-28. Paste the following into the new query window:
+24. Paste the following into the new query window:
 
     ```sql
     SELECT i.i_item_sk AS ItemID, i.i_item_desc AS Item, c.c_first_name AS FirstName,
@@ -253,11 +239,11 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
     JOIN dbo.stockitemholdings AS s ON i.i_item_sk = s.StockItemID
     ```
 
-29. Click the **Run** button above the query window to execute.
+25. Click the **Run** button above the query window to execute.
 
     ![The Run button above the query window is highlighted.](media/ads-run.png 'Run')
 
-30. At the bottom of the query window, you will see results that include columns from the four data sources.
+26. At the bottom of the query window, you will see results that include columns from the four data sources.
 
     ![Query results from the four data sets.](media/ads-query-results.png 'Query results')
 
@@ -265,60 +251,57 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
 
 In this task, you will use Azure Data Studio to execute a notebook that will enable you to train a model to predict the battery lifetime, apply the model to make batch predictions against a set of vehicle telemetry and save the scored telemetry to an external table that you can query using SQL.
 
-1. TODO: Agree on how to share starter files. Navigate to [predict-battery-life-with-sqlbdc.ipynb](./predict-battery-life-with-sqlbdc.ipynb). 
+1.  Open Azure Data Studio and select Servers.
 
-2. TODO: Agree on how to share starter files. Next, download the two sample data files you will use:
-- https://databricksdemostore.blob.core.windows.net/data/connected-car/training-formatted.csv
-- https://databricksdemostore.blob.core.windows.net/data/connected-car/fleet-formatted.csv 
+2.  Right click your Big Data Cluster node select `Manage`.
 
-3. Open Azure Data Studio and select Servers.
+    ![Manage cluster](media/task02-manage-cluster.png 'Manage cluster')
 
-4. Expand your Big Data Cluster, `Data Services`, `HDFS`, `Data`. Right click Data and select `Upload Files`
-![Upload files](media/task02-upload-files.png 'Upload files')
+3.  In the window, select the `SQL Big Data Cluster` tab and then select the `Open Notebook` tile.
 
-5. Browse to the location where you uploaded both training-formatted.csv and fleet-formatted.csv. Select both files and then select `Upload`.
+    ![Open notebook](media/task02-sql-bdc-manage.png 'Open notebook')
 
-4. Right click your Big Data Cluster node select `Manage`.
-![Manage cluster](media/task02-manage-cluster.png 'Manage cluster')
+4.  Browse to **C:\lab-files\data\1**, select **predict-battery-life-with-sqlbdc.ipynb** and select `Open`.
 
-5. In the window, select the `SQL Big Data Cluster` tab and then select the `Open Notebook` tile.
+5.  Follow the instructions in the notebook and return to the next step after you have completed the notebook.
 
-![Open notebook](media/task02-sql-bdc-manage.png 'Open notebook')
+6.  In Azure Data Studio, under Servers, expand your Big Data Cluster, `Data Services`, `HDFS`, `data`.
 
-7. Browse to the notebook you just downloaded, select it and select `Open`.
+7.  Right click the `data` folder and select `Refresh` to see the newly created folder.
 
-8. Follow the instructions in the notebook and return to the next step after you have completed the notebook.
+    ![Refresh data](media/task02-refresh-data.png 'Refresh data')
 
-9. In Azure Data Studio, under Servers, expand your Big Data Cluster, `Data Services`, `HDFS`, `data`. 
+8.  You should see `battery-life-YOUR_UNIQUE_IDENTIFIER.csv` as a folder (where `YOUR_UNIQUE_IDENTIFIER` is your assigned identifier), expand it and then right click on the CSV file whose name starts with `part-00000-` and select `Create External Table From CSV Files`.
 
-10. Right click the `data` folder and select `Refresh` to see the newly created folder.
-![Refresh data](media/task02-refresh-data.png 'Refresh data')
+    ![Create External Table](media/task02-create-external-menu.png 'Create External Table')
 
-11. You should see `battery-life.csv` as a folder, expand it and then right click on the CSV file whose name starts with `part-00000-` and select `Create External Table From CSV Files`.
-![Create External Table](media/task02-create-external-menu.png 'Create External Table')
+9.  In Step 1 of the wizard, select your Active SQL Server connection to connect to your Big Data Cluster endpoint and select `Next`.
 
-13. In Step 1 of the wizard, select your Active SQL Server connection to connect to your Big Data Cluster endpoint and select `Next`.
-![Select endpoint](media/task02-ext-step1.png 'Select endpoint')
+    ![Select endpoint](media/task02-ext-step1.png 'Select endpoint')
 
-14. In Step 2, select the `sales` database and for the `Name for new external table` field provide `battery-life-predictions`. Select Next.
-![Step 2](media/task02-ext-step2.png 'Step 2')
+10. In Step 2, select the `sales_YOUR_UNIQUE_IDENTIFIER` database and for the `Name for new external table` field provide `battery-life-predictions`. Select Next.
 
-15. On Step 3, select `Next`.
+    ![Step 2](media/task02-ext-step2.png 'Step 2')
 
-16. On Step 4, for the column `Car_Has_EcoStart` set the Data Type to `char(10)`. Select `Next`.
-![Step 4](media/task02-ext-step4.png 'Step 4')
+11. On Step 3, select `Next`.
 
-17. On Step 5, select `Create Table`. Your predictions are now available for SQL querying in the battery-life-predictions table in the sales database. 
+12. On Step 4, for the column `Car_Has_EcoStart` set the Data Type to `char(10)`. Select `Next`.
 
-18. In Azure Data Studio, Servers, expand your Big Data Cluster, `Databases`, `sales`, right click `Tables` and then select `Refresh`.
-![Refresh sales](media/task02-refresh-sales.png 'Refresh sales')
+    ![Step 4](media/task02-ext-step4.png 'Step 4')
 
-19. Expand `tables`, right click `battery-life-prediction` and select `query` to view the data contained by the external table.
-![Select Top 1000](media/task02-select-top.png 'Select Top 1000')
+13. On Step 5, select `Create Table`. Your predictions are now available for SQL querying in the battery-life-predictions table in the sales database.
 
-20. The vehicle telemetry along with predictions will appear. These are queried from the external table which is sourced from the CSV you created using the notebook.
-![View data](media/task02-view-data.png 'View data')
+14. In Azure Data Studio, Servers, expand your Big Data Cluster, `Databases`, `sales`, right click `Tables` and then select `Refresh`.
 
+    ![Refresh sales](media/task02-refresh-sales.png 'Refresh sales')
+
+15. Expand `tables`, right click `battery-life-prediction` and select `query` to view the data contained by the external table.
+
+    ![Select Top 1000](media/task02-select-top.png 'Select Top 1000')
+
+16. The vehicle telemetry along with predictions will appear. These are queried from the external table which is sourced from the CSV you created using the notebook.
+
+    ![View data](media/task02-view-data.png 'View data')
 
 ## Task 3: Query performance improvements with intelligent query processing
 
@@ -326,66 +309,53 @@ In this task, you will execute a series of SQL scripts in SQL Server Management 
 
 Read more about [intelligent query processing](https://docs.microsoft.com/sql/relational-databases/performance/intelligent-query-processing?view=sql-server-ver15) in SQL databases.
 
+The first query you will run uses a user-defined function (UDF) that we have created for you, named `customer_category`. This UDF contains several steps to identify the discount price category for each customer. Notice that the top of the query we ran to create this UDF sets the database compatibility level to `150`, which is the new compatibility level for SQL Server 2019, enabling the most recent intelligent QP features. This UDF will be called inline from the two queries that follow in order to show QP improvements on scalar UDF inlining.
+
+```sql
+USE ContosoAutoDW;
+GO
+
+ALTER DATABASE ContosoAutoDW
+SET COMPATIBILITY_LEVEL = 150;
+GO
+
+ALTER DATABASE SCOPED CONFIGURATION
+CLEAR PROCEDURE_CACHE;
+GO
+
+CREATE OR ALTER FUNCTION
+  dbo.customer_category(@CustomerKey INT)
+RETURNS CHAR(10) AS
+BEGIN
+  DECLARE @total_amount DECIMAL(18,2);
+  DECLARE @category CHAR(10);
+
+  SELECT @total_amount =
+  SUM([Total Including Tax])
+  FROM [Fact].[OrderHistory]
+  WHERE [Customer Key] = @CustomerKey;
+
+  IF @total_amount < 500000
+    SET @category = 'REGULAR';
+  ELSE IF @total_amount < 1000000
+    SET @category = 'GOLD';
+  ELSE
+    SET @category = 'PLATINUM';
+
+  RETURN @category;
+END
+GO
+```
+
+> Scalar UDF inlining automatically transforms [scalar UDFs](https://docs.microsoft.com/sql/relational-databases/user-defined-functions/create-user-defined-functions-database-engine?view=sql-server-2017#Scalar) into relational expressions. It embeds them in the calling SQL query. This transformation improves the performance of workloads that take advantage of scalar UDFs. Scalar UDF inlining facilitates cost-based optimization of operations inside UDFs. The results are efficient, set-oriented, and parallel instead of inefficient, iterative, serial execution plans. This feature is enabled by default under database compatibility level 150. _For more information, see [Scalar UDF inlining](https://docs.microsoft.com/sql/relational-databases/user-defined-functions/scalar-udf-inlining?view=sql-server-2017)_.
+
 1.  Open SQL Server Management Studio (SSMS) and connect to your SQL Server 2019 cluster. If you are unsure of how to do this, refer to [Connect with SQL Server Management Studio](#connect-with-sql-server-management-studio) at the top of this guide.
 
 2.  Right-click on `ContosoAutoDW`, then select **New Query**. This will open a new query window into which you can paste the following queries. You may wish to reuse the same query window, replacing its contents with each SQL statement blocks below, or follow these same steps to create new query windows for each.
 
     ![ContosoAutoDW is selected and the New Query menu option is highlighted.](media/ssms-new-query.png 'New Query')
 
-3.  Paste the following query into the query window. This ensures that the database compatibility level is set to `150`, which is the new compatibility level for SQL Server 2019, enabling the most recent intelligent QP features. It also creates a new user-defined function (UDF) named `customer_category` that will be called inline from the two queries that follow in order to show QP improvements on scalar UDF inlining.
-
-    ```sql
-    USE ContosoAutoDW;
-    GO
-
-    ALTER DATABASE ContosoAutoDW
-    SET COMPATIBILITY_LEVEL = 150;
-    GO
-
-    ALTER DATABASE SCOPED CONFIGURATION
-    CLEAR PROCEDURE_CACHE;
-    GO
-    /*
-    Adapted from SQL Server Books Online
-    https://docs.microsoft.com/en-us/sql/relational-databases/user-defined-functions/scalar-udf-inlining?view=sqlallproducts-allversions
-    */
-    CREATE OR ALTER FUNCTION
-      dbo.customer_category(@CustomerKey INT)
-    RETURNS CHAR(10) AS
-    BEGIN
-      DECLARE @total_amount DECIMAL(18,2);
-      DECLARE @category CHAR(10);
-
-      SELECT @total_amount =
-      SUM([Total Including Tax])
-      FROM [Fact].[OrderHistory]
-      WHERE [Customer Key] = @CustomerKey;
-
-      IF @total_amount < 500000
-        SET @category = 'REGULAR';
-      ELSE IF @total_amount < 1000000
-        SET @category = 'GOLD';
-      ELSE
-        SET @category = 'PLATINUM';
-
-      RETURN @category;
-    END
-    GO
-    ```
-
-    > Scalar UDF inlining automatically transforms [scalar UDFs](https://docs.microsoft.com/sql/relational-databases/user-defined-functions/create-user-defined-functions-database-engine?view=sql-server-2017#Scalar) into relational expressions. It embeds them in the calling SQL query. This transformation improves the performance of workloads that take advantage of scalar UDFs. Scalar UDF inlining facilitates cost-based optimization of operations inside UDFs. The results are efficient, set-oriented, and parallel instead of inefficient, iterative, serial execution plans. This feature is enabled by default under database compatibility level 150. _For more information, see [Scalar UDF inlining](https://docs.microsoft.com/sql/relational-databases/user-defined-functions/scalar-udf-inlining?view=sql-server-2017)_.
-
-4.  Click the **Execute** button on the top toolbar to run the script, or simply enter _F5_ on your keyboard.
-
-    ![The New Query window has the SQL query pasted into it, and the Execute button is highlighted.](media/ssms-execute-udf.png 'SSMS Execute query')
-
-5.  After executing the query, you should see a message below that says, `Commands completed successfully.`
-
-    ![The Messages output says Commands completed successfully.](media/ssms-completed-successfully.png 'SSMS Messages')
-
-6.  Next, either highlight and delete everything in the query window, or repeat step 2 above to open a new query window.
-
-7.  The next query selects the top 100 rows from the `Customer` dimension table, calling the UDF you created inline for each row. It uses the `DISABLE_TSQL_SCALAR_UDF_INLINING` hint to disable the new scalar UDF inlining QP feature. Paste the following query into the the empty query window. **Do not execute yet**.
+3.  The query below selects the top 100 rows from the `Customer` dimension table, calling a user-defined function (UDF) inline for each row. It uses the `DISABLE_TSQL_SCALAR_UDF_INLINING` hint to disable the new scalar UDF inlining QP feature. Paste the following query into the the empty query window. **Do not execute yet**.
 
     ```sql
     USE ContosoAutoDW;
@@ -400,17 +370,17 @@ Read more about [intelligent query processing](https://docs.microsoft.com/sql/re
     OPTION (RECOMPILE,USE HINT('DISABLE_TSQL_SCALAR_UDF_INLINING'));
     ```
 
-8.  Click the **Include Actual Execution Plan** (Ctrl+M) button in the toolbar above the query window. This will allow us to view the actual (not estimated) query plan after executing the query.
+4.  Click the **Include Actual Execution Plan** (Ctrl+M) button in the toolbar above the query window. This will allow us to view the actual (not estimated) query plan after executing the query.
 
     ![The Actual Query Plan button is highlighted in the toolbar.](media/ssms-enable-actual-query-plan.png 'Enable Actual Query Plan')
 
-9.  **Execute** the query.
+5.  **Execute** the query.
 
-10. After the query executes, select the **Execution plan** tab. As the plan shows, SQL Server adopts a simple strategy here: for every tuple in the `Customer` table, invoke the UDF and output the results. This strategy is naïve and inefficient. Also, make note of the query execution time. In our case in the screenshot below, it took 9 seconds to complete.
+6.  After the query executes, select the **Execution plan** tab. As the plan shows, SQL Server adopts a simple strategy here: for every tuple in the `Customer` table, invoke the UDF and output the results (single line from the clustered index scan to compute scalar). This strategy is naïve and inefficient, especially with more complex queries.
 
     ![This screenshot shows the query execution plan using the legacy method.](media/ssms-udf-inlining-old.png 'Query execution plan with legacy method')
 
-11. Clear the query window, or open a new one, then paste the following query that makes use of the scalar UDF inlining QP feature. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
+7.  Clear the query window, or open a new one, then paste the following query that makes use of the scalar UDF inlining QP feature. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
 
     ```sql
     USE ContosoAutoDW;
@@ -425,66 +395,21 @@ Read more about [intelligent query processing](https://docs.microsoft.com/sql/re
     OPTION (RECOMPILE);
     ```
 
-12. After the query executes, select the **Execution plan** tab once again. With scalar UDF inlining, this UDF is transformed into equivalent scalar subqueries, which are substituted in the calling query in place of the UDF.
+8.  After the query executes, select the **Execution plan** tab once again. With scalar UDF inlining, this UDF is transformed into equivalent scalar subqueries, which are substituted in the calling query in place of the UDF.
 
     ![This screenshot shows the query execution plan using the new QP feature.](media/ssms-udf-inlining-new.png 'Query execution plan with new method')
 
     > As you can see, the query plan no longer has a user-defined function operator, but its effects are now observable in the plan, like views or inline TVFs. Here are some key observations from the above plan:
 
-    1. SQL Server has inferred the implicit join between `CUSTOMER` and `ORDERS` and made that explicit via a join operator.
-    2. SQL Server has also inferred the implicit `GROUP BY O_CUSTKEY on ORDERS` and has used the IndexSpool + StreamAggregate to implement it.
-    3. SQL Server is now using parallelism across all operators.
+    A. SQL Server has inferred the implicit join between `Dimension.Customer` and `Fact.OrderHistory` and made that explicit via a join operator.
+
+    B. SQL Server has also inferred the implicit `GROUP BY [Customer Key] on Fact.OrderHistory` and has used the IndexSpool + StreamAggregate to implement it.
 
     > Depending upon the complexity of the logic in the UDF, the resulting query plan might also get bigger and more complex. As we can see, the operations inside the UDF are now no longer a black box, and hence the query optimizer is able to cost and optimize those operations. Also, since the UDF is no longer in the plan, iterative UDF invocation is replaced by a plan that completely avoids function call overhead.
 
-13. Either highlight and delete everything in the query window, or open a new query window. Paste the following query. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
+9.  Either highlight and delete everything in the query window, or open a new query window. Paste the following query that makes use of the table variable deferred compilation feature, since the database compatibility level is set to 150. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
 
     ```sql
-    USE [master];
-    GO
-
-    ALTER DATABASE [ContosoAutoDW] SET COMPATIBILITY_LEVEL = 140;
-    GO
-
-    USE [ContosoAutoDW];
-    GO
-
-    DECLARE @Order TABLE
-      ([Order Key] BIGINT NOT NULL,
-      [Quantity] INT NOT NULL
-      );
-
-    INSERT @Order
-    SELECT [Order Key], [Quantity]
-    FROM [Fact].[OrderHistory]
-    WHERE  [Quantity] > 99;
-
-    -- Look at estimated rows, speed, join algorithm
-    SELECT oh.[Order Key], oh.[Order Date Key],
-        oh.[Unit Price], o.Quantity
-    FROM Fact.OrderHistoryExtended AS oh
-    INNER JOIN @Order AS o
-      ON o.[Order Key] = oh.[Order Key]
-    WHERE oh.[Unit Price] > 0.10
-    ORDER BY oh.[Unit Price] DESC;
-    GO
-    ```
-
-    > The script above assigns a table variable, `@Order`, storing the `Order Key` and `Quantity` fields from the `OrderHistory` table to be used in an INNER JOIN further below. Since the database compatibility level was set to 140, the table variable deferred compilation QP feature is not used (more on this below).
-
-14. After the query executes, select the **Execution Plan** tab. There are two plans. The one you want to observe is the second query plan. Hover over the second INNER JOIN to view the estimated number of rows and the output list, which shows the join algorithm. The estimated number of rows should be around 1. Also, observe the execution time. In our case, it took 11 seconds to complete.
-
-    ![This screenshot shows the query execution plan using the legacy method.](media/ssms-tvdc-old.png 'Query execution plan with old method')
-
-15. Either highlight and delete everything in the query window, or open a new query window. Paste the following query that makes use of the table variable deferred compilation feature by setting the compatibility level to 150. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
-
-    ```sql
-    USE [master]
-    GO
-
-    ALTER DATABASE [ContosoAutoDW] SET COMPATIBILITY_LEVEL = 150
-    GO
-
     USE [ContosoAutoDW]
     GO
 
@@ -509,13 +434,25 @@ Read more about [intelligent query processing](https://docs.microsoft.com/sql/re
     GO
     ```
 
-16. After the query executes, select the **Execution plan** tab once again. Notice this time that the join algorithm is a hash match, and that the overall query execution plan looks different. When you hover over the INNER JOIN, notice that there is a high value for estimated number of rows and that the output list shows the use of hash keys and an optimized join algorithm. Once again, observe the execution time. In our case, it took 5 seconds to complete, which is less than half the time it took to execute without the table variable deferred compilation feature.
+    > The script above assigns a table variable, `@Order`, storing the `Order Key` and `Quantity` fields from the `OrderHistory` table to be used in an INNER JOIN further below.
+
+    **Old method**
+
+    In prior versions of SQL Server (compatibility level of 140 or lower), the table variable deferred compilation QP feature is not used (more on this below).
+
+    There are two plans. The one you want to observe is the second query plan. When we over the second INNER JOIN to view the estimated number of rows and the output list, which shows the join algorithm. The estimated number of rows is around 1. Also, observe the execution time. In our case, it took 11 seconds to complete.
+
+    ![This screenshot shows the query execution plan using the legacy method.](media/ssms-tvdc-old.png 'Query execution plan with old method')
+
+    **New method**
+
+    After the query executes, select the **Execution plan** tab once again. Since our database compatibility level is set to 150,notice that the join algorithm is a hash match, and that the overall query execution plan looks different. When you hover over the INNER JOIN, notice that there is a high value for estimated number of rows and that the output list shows the use of hash keys and an optimized join algorithm. Once again, observe the execution time. In our case, it took 5 seconds to complete, which is less than half the time it took to execute without the table variable deferred compilation feature.
 
     ![This screenshot shows the query execution plan using the new method.](media/ssms-tvdc-new.png 'Query execution plan with new method')
 
     > Table variable deferred compilation improves plan quality and overall performance for queries that reference table variables. During optimization and initial compilation, this feature propagates cardinality estimates that are based on actual table variable row counts. This accurate row count information optimizes downstream plan operations. Table variable deferred compilation defers compilation of a statement that references a table variable until the first actual run of the statement. This deferred compilation behavior is the same as that of temporary tables. This change results in the use of actual cardinality instead of the original one-row guess. _For more information, see [Table variable deferred compilation](https://docs.microsoft.com/sql/t-sql/data-types/table-transact-sql?view=sql-server-2017#table-variable-deferred-compilation)._
 
-17. Either highlight and delete everything in the query window, or open a new query window. Paste the following query to simulate out-of-date statistics on the `OrderHistory` table, followed by a query that executes a hash match. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
+10. Either highlight and delete everything in the query window, or open a new query window. Paste the following query to simulate out-of-date statistics on the `OrderHistory` table, followed by a query that executes a hash match. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
 
     ```sql
     ALTER DATABASE ContosoAutoDW SET COMPATIBILITY_LEVEL = 150;
@@ -542,11 +479,11 @@ Read more about [intelligent query processing](https://docs.microsoft.com/sql/re
       AND si.[Lead Time Days] > 19;
     ```
 
-18. After the query executes, select the **Execution plan** tab. Hover over the Hash Match step of the execution plan. You should see a warning toward the bottom of the Hash Match dialog showing spilled data. Also observe the execution time. In our case, this query took 26 seconds to execute.
+11. After the query executes, select the **Execution plan** tab. Hover over the Hash Match step of the execution plan. You should see a warning toward the bottom of the Hash Match dialog showing spilled data. Also observe the execution time. In our case, this query took 26 seconds to execute.
 
     ![The Hash Match dialog shows spilled data warnings.](media/ssms-memory-grant-feedback.png 'Query execution plan showing spilled data')
 
-19. Either highlight and delete everything in the query window, or open a new query window. Paste the following query to execute the select query that contains the hash match once more. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
+12. Either highlight and delete everything in the query window, or open a new query window. Paste the following query to execute the select query that contains the hash match once more. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
 
     ```sql
     USE ContosoAutoDW;
@@ -562,7 +499,7 @@ Read more about [intelligent query processing](https://docs.microsoft.com/sql/re
       AND si.[Lead Time Days] > 19;
     ```
 
-20. After the query executes, select the **Execution plan** tab. Hover over the Hash Match step of the execution plan. You should **no longer** see a warning about spilled data. Also observe the execution time. In our case, this query took 4 seconds to execute.
+13. After the query executes, select the **Execution plan** tab. Hover over the Hash Match step of the execution plan. You should **no longer** see a warning about spilled data. Also observe the execution time. In our case, this query took 4 seconds to execute.
 
     ![The Hash Match dialog no longer contains spilled data warnings.](media/ssms-memory-grant-feedback-fixed.png 'Query execution plan with no spilled data')
 
@@ -589,6 +526,10 @@ In this exercise, you will run the SQL Data Discovery & Classification tool agai
 3.  When the tool runs, it will analyze all of the columns within all of the tables and recommend appropriate data classifications for each. What you should see is the Data Classification dashboard showing no currently classified columns, and a classification recommendations box at the top showing that there are 34 columns that the tool identified as containing sensitive (PII) or GDPR-related data. **Click** on this classification recommendations box.
 
     ![The data classification recommendations box is highlighted.](media/ssms-classification-recommendations-box.png 'Data classification recommendations box')
+
+    > **Important note**: Since this is a shared database with other attendees, you may see that these columns have already been classified and that there are no classification recommendations. If this is the case, **skip ahead to step 7** to view the report.
+
+    ![The highlighted note shows that there are no classification recommendations.](media/ssms-already-classified.png 'Already classified')
 
 4.  The list of recommendations displays the schema, table, column, type of information, and recommended sensitivity label for each identified column. You can change the information type and sensitivity labels for each if desired. In this case, accept all recommendations by **checking the checkbox** in the recommendations table header.
 
@@ -624,10 +565,10 @@ In this task, you will apply dynamic data masking to one of the database fields 
 
     ![The ContosoAutoDW database and New Query menu item are highlighted.](media/ssms-contosoautodw-new-query.png 'New Query')
 
-3.  Add a dynamic data mask to the existing `Dimension.Customer.Postal Code` field by pasting the below query into the new query window:
+3.  Add a dynamic data mask to the existing `Dimension.Customer.Postal Code` field by pasting the below query into the new query window. Replace `YOUR_UNIQUE_IDENTIFIER` with the unique identifier assigned to you for this lab so you modify just your copy of the table:
 
     ```sql
-    ALTER TABLE Dimension.Customer
+    ALTER TABLE Dimension.Customer_YOUR_UNIQUE_IDENTIFIER
     ALTER COLUMN [Postal Code] ADD MASKED WITH (FUNCTION = 'partial(2,"XXX",0)');
     ```
 
@@ -637,28 +578,40 @@ In this task, you will apply dynamic data masking to one of the database fields 
 
     ![The dynamic data mask query is shown and the Execute button is highlighted above.](media/ssms-execute-ddm-query.png 'Execute query')
 
-5.  Clear the query window and replace the previous query with the following, selecting the first 50 rows:
+5.  Clear the query window and replace the previous query with the following, selecting the first 50 rows (Replace `YOUR_UNIQUE_IDENTIFIER` with the unique identifier assigned to you for this lab):
 
     ```sql
-    SELECT TOP 50 * FROM Dimension.Customer
+    SELECT TOP 50 * FROM Dimension.Customer_YOUR_UNIQUE_IDENTIFIER
     ```
 
     ![The query results are shown with no mask applied to the Postal Code field.](media/ssms-ddm-results-no-mask.png 'Query results')
 
-6.  Notice that the full Postal Code values are visible. That is because the user you are logged in as a privileged user. Let's create a new user and execute the query again.
+6.  Notice that the full Postal Code values are visible. That is because the user you are logged in as a privileged user. Let's create a new user and execute the query again (Replace `YOUR_UNIQUE_IDENTIFIER` with the unique identifier assigned to you for this lab).
 
     ```sql
     CREATE USER TestUser WITHOUT LOGIN;
-    GRANT SELECT ON Dimension.Customer TO TestUser;
+    GRANT SELECT ON Dimension.Customer_YOUR_UNIQUE_IDENTIFIER TO TestUser;
 
     EXECUTE AS USER = 'TestUser';
-    SELECT TOP 50 * FROM Dimension.Customer;
+    SELECT TOP 50 * FROM Dimension.Customer_YOUR_UNIQUE_IDENTIFIER;
     REVERT;
     ```
 
 7.  Execute the query by clicking the **Execute** button. Notice this time that the Postal Code values are masked (`90XXX`).
 
     ![The query results are shown with the mask applied to the Postal Code field.](media/ssms-ddm-results-mask.png 'Query results')
+
+## Wrap-up
+
+Thank you for participating in the SQL Server 2019 Big Data Clusters experience! We hope you are excited about the new capabilities, and will refer back to this experience to learn more about these features.
+
+To recap, you experienced:
+
+1. How to minimize or remove the need for ETL through **data virtualization** with [relational data sources](https://docs.microsoft.com/sql/relational-databases/polybase/data-virtualization?toc=%2fsql%2fbig-data-cluster%2ftoc.json&view=sql-server-ver15) and [CSV files](https://docs.microsoft.com/sql/relational-databases/polybase/data-virtualization-csv?view=sql-server-ver15), by being able to query against these alongside internal SQL 2019 tables with no data movement required.
+2. Training a machine learning model by running a Jupyter notebook on the Big Data cluster, then scoring data with the trained model and saving it as an external table for easy access.
+3. Running different queries to see how the [intelligent query processing](https://docs.microsoft.com/sql/relational-databases/performance/intelligent-query-processing?view=sql-server-ver15) (QP) features optimize and improve the performance of your queries for you.
+4. Using the [SQL Data Discovery & Classification](https://docs.microsoft.com/sql/relational-databases/security/sql-data-discovery-and-classification?view=sql-server-ver15) tool to identify and tag PII and GDPR-related compliance issues.
+5. Used dynamic data masking to automatically protect sensitive data from unauthorized users.
 
 ## Resources and more information
 
