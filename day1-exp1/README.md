@@ -515,21 +515,17 @@ With SQL Server Management Studio, they are able to identify, classify, and gene
 - **Labeling** - Sensitivity classification labels can be persistently tagged on columns.
 - **Visibility** - The database classification state can be viewed in a detailed report that can be printed/exported to be used for compliance & auditing purposes, as well as other needs.
 
-In this exercise, you will run the SQL Data Discovery & Classification tool against their data warehouse, which includes personnel, customer, and sales data.
+In this exercise, you will run the SQL Data Discovery & Classification tool against their customer database, which includes personal, demographic, and sales data.
 
 1.  Open SQL Server Management Studio (SSMS) and connect to your SQL Server 2019 cluster.
 
-2.  Right-click on the **ContosoAutoDW** database, then choose **Tasks > Classify Data...**.
+2.  Right-click on the **sales_YOUR_UNIQUE_IDENTIFIER** database, then choose **Tasks > Classify Data...**.
 
-    ![The ContosoAutoDW database, Tasks menu, and Classify Data items are highlighted.](media/ssms-classify-data-link.png 'Data Classification')
+    ![The sales database, Tasks menu, and Classify Data items are highlighted.](media/ssms-classify-data-link.png 'Data Classification')
 
-3.  When the tool runs, it will analyze all of the columns within all of the tables and recommend appropriate data classifications for each. What you should see is the Data Classification dashboard showing no currently classified columns, and a classification recommendations box at the top showing that there are 34 columns that the tool identified as containing sensitive (PII) or GDPR-related data. **Click** on this classification recommendations box.
+3.  When the tool runs, it will analyze all of the columns within all of the tables and recommend appropriate data classifications for each. What you should see is the Data Classification dashboard showing no currently classified columns, and a classification recommendations box at the top showing that there are 45 columns that the tool identified as containing sensitive (PII) or GDPR-related data. **Click** on this classification recommendations box.
 
     ![The data classification recommendations box is highlighted.](media/ssms-classification-recommendations-box.png 'Data classification recommendations box')
-
-    > **Important note**: Since this is a shared database with other attendees, you may see that these columns have already been classified and that there are no classification recommendations. If this is the case, **skip ahead to step 7** to view the report.
-
-    ![The highlighted note shows that there are no classification recommendations.](media/ssms-already-classified.png 'Already classified')
 
 4.  The list of recommendations displays the schema, table, column, type of information, and recommended sensitivity label for each identified column. You can change the information type and sensitivity labels for each if desired. In this case, accept all recommendations by **checking the checkbox** in the recommendations table header.
 
@@ -553,7 +549,7 @@ In this exercise, you will run the SQL Data Discovery & Classification tool agai
 
 ## Task 5: Fix compliance issues with dynamic data masking
 
-Some of the columns identified by the Data Discovery & Classification tool as containing sensitive (PII/GDPR) information include phone numbers and addresses. One way to ensure compliance with various rules and regulations that enforce policies to protect such sensitive data is to prevent those who are not authorized from seeing it. An example would be displaying `XXX-XXX-XX95` instead of `123-555-2695` when outputting a phone number within a SQL query result, report, web page, etc. This is commonly called data masking. Traditionally, modifying systems and applications to implement data masking can be challenging. This is especially true when the masking has to apply all the way down to the data source level. Fortunately, SQL Server and its cloud-related product, Azure SQL Database, provides a feature named [dynamic data masking](https://docs.microsoft.com/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver15) (DDD) to automatically protect this sensitive data from non-privileged users.
+Some of the columns identified by the Data Discovery & Classification tool as containing sensitive (PII/GDPR) information include phone numbers, email addresses, billing addresses, and credit card numbers. One way to ensure compliance with various rules and regulations that enforce policies to protect such sensitive data is to prevent those who are not authorized from seeing it. An example would be displaying `XXX-XXX-XX95` instead of `123-555-2695` when outputting a phone number within a SQL query result, report, web page, etc. This is commonly called data masking. Traditionally, modifying systems and applications to implement data masking can be challenging. This is especially true when the masking has to apply all the way down to the data source level. Fortunately, SQL Server and its cloud-related product, Azure SQL Database, provides a feature named [dynamic data masking](https://docs.microsoft.com/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver15) (DDD) to automatically protect this sensitive data from non-privileged users.
 
 Dynamic data masking helps prevent unauthorized access to sensitive data by enabling customers to designate how much of the sensitive data to reveal with minimal impact on the application layer. DDM can be configured on the database to hide sensitive data in the result sets of queries over designated database fields, while the data in the database is not changed. Dynamic data masking is easy to use with existing applications, since masking rules are applied in the query results. Many applications can mask sensitive data without modifying existing queries.
 
@@ -561,15 +557,15 @@ In this task, you will apply dynamic data masking to one of the database fields 
 
 1.  Open SQL Server Management Studio (SSMS) and connect to your SQL Server 2019 cluster.
 
-2.  Expand the databases list, right-click on **ContosoAutoDW**, then select **New Query**.
+2.  Expand the databases list, right-click on **sales_YOUR_UNIQUE_IDENTIFIER**, then select **New Query**.
 
-    ![The ContosoAutoDW database and New Query menu item are highlighted.](media/ssms-contosoautodw-new-query.png 'New Query')
+    ![The sales database and New Query menu item are highlighted.](media/ssms-sales-new-query.png 'New Query')
 
-3.  Add a dynamic data mask to the existing `Dimension.Customer.Postal Code` field by pasting the below query into the new query window. Replace `YOUR_UNIQUE_IDENTIFIER` with the unique identifier assigned to you for this lab so you modify just your copy of the table:
+3.  Add a dynamic data mask to the existing `dbo.customer.c_last_name` field by pasting the below query into the new query window:
 
     ```sql
-    ALTER TABLE Dimension.Customer_YOUR_UNIQUE_IDENTIFIER
-    ALTER COLUMN [Postal Code] ADD MASKED WITH (FUNCTION = 'partial(2,"XXX",0)');
+    ALTER TABLE dbo.customer
+    ALTER COLUMN c_last_name ADD MASKED WITH (FUNCTION = 'partial(2,"XXX",0)');
     ```
 
     > The `partial` custom string masking method above exposes the first two characters and adds a custom padding string after for the remaining characters. The parameters are: `prefix,[padding],suffix`
@@ -578,26 +574,35 @@ In this task, you will apply dynamic data masking to one of the database fields 
 
     ![The dynamic data mask query is shown and the Execute button is highlighted above.](media/ssms-execute-ddm-query.png 'Execute query')
 
-5.  Clear the query window and replace the previous query with the following, selecting the first 50 rows (Replace `YOUR_UNIQUE_IDENTIFIER` with the unique identifier assigned to you for this lab):
+5.  Clear the query window and replace the previous query with the following to add a dynamic data mask to the `dbo.customer.c_email_address` field:
 
     ```sql
-    SELECT TOP 50 * FROM Dimension.Customer_YOUR_UNIQUE_IDENTIFIER
+    ALTER TABLE dbo.customer
+    ALTER COLUMN c_email_address ADD MASKED WITH (FUNCTION = 'email()');
+    ```
+
+    > The `email` masking method exposes the first letter of an email address and the constant suffix ".com", in the form of an email address: `aXXX@XXXX.com`.
+
+6.  Clear the query window and replace the previous query with the following, selecting all rows from the customer table:
+
+    ```sql
+    SELECT * FROM dbo.customer
     ```
 
     ![The query results are shown with no mask applied to the Postal Code field.](media/ssms-ddm-results-no-mask.png 'Query results')
 
-6.  Notice that the full Postal Code values are visible. That is because the user you are logged in as a privileged user. Let's create a new user and execute the query again (Replace `YOUR_UNIQUE_IDENTIFIER` with the unique identifier assigned to you for this lab).
+7.  Notice that the full last name and email address values are visible. That is because the user you are logged in as a privileged user. Let's create a new user and execute the query again:
 
     ```sql
     CREATE USER TestUser WITHOUT LOGIN;
-    GRANT SELECT ON Dimension.Customer_YOUR_UNIQUE_IDENTIFIER TO TestUser;
+    GRANT SELECT ON dbo.customer TO TestUser;
 
     EXECUTE AS USER = 'TestUser';
-    SELECT TOP 50 * FROM Dimension.Customer_YOUR_UNIQUE_IDENTIFIER;
+    SELECT * FROM dbo.customer;
     REVERT;
     ```
 
-7.  Execute the query by clicking the **Execute** button. Notice this time that the Postal Code values are masked (`90XXX`).
+8.  Execute the query by clicking the **Execute** button. Notice this time that the Postal Code values are masked (`90XXX`).
 
     ![The query results are shown with the mask applied to the Postal Code field.](media/ssms-ddm-results-mask.png 'Query results')
 
