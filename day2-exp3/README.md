@@ -98,7 +98,7 @@ In this task, you will deploy all of these Azure dependencies as well as configu
 
 3. Copy and paste the command below into the command prompt, then hit `Enter`. This will change directories to the Virtual Assistant automotive bot project folder:
 
-   `cd C:\lab-files\bot\skills\automotiveskill\automotiveskill`
+   `cd C:\lab-files\ai\3\skills\automotiveskill\automotiveskill`
 
 4. This next command requires two of your custom values you saved in the previous task when you registered your Azure App. **Copy** the command below and paste it into Notepad or other text editor. Replace `YOUR-APP-ID` with the Azure App's Application Id value, and replace `YOUR-APP-SECRET` with the App secret you copied. Make certain that your app secret value is surrounded by double quotes (").
 
@@ -138,14 +138,14 @@ As you will see, most of this work is already done for you! Additional work that
 
 For now, let's explore how this bot is created and how LUIS is trained with the sets of utterances, intents, and entities as described.
 
-1.  Open Windows Explorer and navigate to `C:\lab-files\bot`. Double-click on **VirtualAssistant.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure credentials you are using for this lab.
+1.  Open Windows Explorer and navigate to `C:\lab-files\ai\3`. Double-click on **VirtualAssistant.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure credentials you are using for this lab.
 
     ![The VirtualAssistant.sln file is highlighted in Windows Explorer.](media/windows-explorer-solution.png "Windows Explorer")
 
     The Visual Studio solution contains the following:
 
     - **Skills** solution folder containing various skills projects that work with the Virtual Assistant.
-      - **AutomativeSkill** folder contains the Automotive skill you are deploying, as well as its test project.
+      - **AutomotiveSkill** folder contains the Automotive skill you are deploying, as well as its test project.
       - **CalendarSkill** folder contains the Calendar skill that enables the Virtual Assistant to help users manage their connected O365 calendar.
       - **EmailSkill** folder contains the Email skill that enables the Virtual Assistant to help users manage their connected email account.
       - **PointsOfInterestSkill** folder contains the Points of Interest skill that provides point of interest and navigation-related capabilities to the Virtual Assistant. It does this through integrations with [Azure Maps](https://azure.microsoft.com/en-us/services/azure-maps/) and [Foursquare](https://developer.foursquare.com/docs/api).
@@ -402,7 +402,7 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
     ![The Browse button is highlighted.](media/bot-framework-emulator-open-dialog.png "Open a bot")
 
-10. Within the Open file browser, navigate to `C:\lab-files\bot\skills\automotiveskill\automotiveskill`, select your generated bot file, then click **Open**.
+10. Within the Open file browser, navigate to `C:\lab-files\ai\3\skills\automotiveskill\automotiveskill`, select your generated bot file, then click **Open**.
 
     ![The file browser is displayed.](media/bot-framework-emulator-browse.png "Browse")
 

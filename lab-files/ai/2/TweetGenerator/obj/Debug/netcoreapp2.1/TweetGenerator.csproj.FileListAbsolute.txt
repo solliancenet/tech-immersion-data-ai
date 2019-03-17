@@ -1,0 +1,16 @@
+C:\lab-files\CognitiveSearch\TweetGenerator\bin\Debug\netcoreapp2.1\Microsoft.Azure.Documents.ServiceInterop.dll
+C:\lab-files\CognitiveSearch\TweetGenerator\bin\Debug\netcoreapp2.1\TweetGenerator.deps.json
+C:\lab-files\CognitiveSearch\TweetGenerator\bin\Debug\netcoreapp2.1\TweetGenerator.runtimeconfig.json
+C:\lab-files\CognitiveSearch\TweetGenerator\bin\Debug\netcoreapp2.1\TweetGenerator.runtimeconfig.dev.json
+C:\lab-files\CognitiveSearch\TweetGenerator\bin\Debug\netcoreapp2.1\TweetGenerator.dll
+C:\lab-files\CognitiveSearch\TweetGenerator\bin\Debug\netcoreapp2.1\TweetGenerator.pdb
+C:\lab-files\CognitiveSearch\TweetGenerator\bin\Debug\netcoreapp2.1\Twitter.Common.dll
+C:\lab-files\CognitiveSearch\TweetGenerator\bin\Debug\netcoreapp2.1\Twitter.Common.pdb
+C:\lab-files\CognitiveSearch\TweetGenerator\obj\Debug\netcoreapp2.1\TweetGenerator.csprojAssemblyReference.cache
+C:\lab-files\CognitiveSearch\TweetGenerator\obj\Debug\netcoreapp2.1\TweetGenerator.csproj.CoreCompileInputs.cache
+C:\lab-files\CognitiveSearch\TweetGenerator\obj\Debug\netcoreapp2.1\TweetGenerator.AssemblyInfoInputs.cache
+C:\lab-files\CognitiveSearch\TweetGenerator\obj\Debug\netcoreapp2.1\TweetGenerator.AssemblyInfo.cs
+C:\lab-files\CognitiveSearch\TweetGenerator\obj\Debug\netcoreapp2.1\TweetGenerator.csproj.CopyComplete
+C:\lab-files\CognitiveSearch\TweetGenerator\obj\Debug\netcoreapp2.1\TweetGenerator.dll
+C:\lab-files\CognitiveSearch\TweetGenerator\obj\Debug\netcoreapp2.1\TweetGenerator.pdb
+C:\lab-files\CognitiveSearch\TweetGenerator\bin\Debug\netcoreapp2.1\appsettings.json

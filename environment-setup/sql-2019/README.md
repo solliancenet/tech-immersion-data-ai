@@ -301,9 +301,15 @@ This lab requires the database compatibility level to be set to 150, and uses a 
     GO
     ```
 
-### Create a copy of the Customer table for each attendee
+### Create a copy of the ContosoAutoDW Customer table for each attendee
 
 Although we are using a single instance of the ContosoAutoDW database for all attendees, each attendee needs their own copy of the `Dimension.Customer` table. The name pattern should be `Dimension.Customer_YOUR_UNIQUE_IDENTIFIER`, where `YOUR_UNIQUE_IDENTIFIER` is a value assigned to each attendee that is unique to them. Perhaps it is part of their username.
+
+TODO: Add steps to perform this function.
+
+### Create copies of the Sales database for each attendee
+
+Each attendee needs their own copy of the Sales database. The name pattern should be `sales_YOUR_UNIQUE_IDENTIFIER`, where `YOUR_UNIQUE_IDENTIFIER` is a value assigned to each attendee that is unique to them. Perhaps it is part of their username.
 
 TODO: Add steps to perform this function.
 

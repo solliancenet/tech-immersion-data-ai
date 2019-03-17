@@ -1,0 +1,11 @@
+C:\lab-files\CognitiveSearch\PipelineEnhancer\bin\Debug\netcoreapp2.1\PipelineEnhancer.deps.json
+C:\lab-files\CognitiveSearch\PipelineEnhancer\bin\Debug\netcoreapp2.1\PipelineEnhancer.runtimeconfig.json
+C:\lab-files\CognitiveSearch\PipelineEnhancer\bin\Debug\netcoreapp2.1\PipelineEnhancer.runtimeconfig.dev.json
+C:\lab-files\CognitiveSearch\PipelineEnhancer\bin\Debug\netcoreapp2.1\PipelineEnhancer.dll
+C:\lab-files\CognitiveSearch\PipelineEnhancer\bin\Debug\netcoreapp2.1\PipelineEnhancer.pdb
+C:\lab-files\CognitiveSearch\PipelineEnhancer\obj\Debug\netcoreapp2.1\PipelineEnhancer.csprojAssemblyReference.cache
+C:\lab-files\CognitiveSearch\PipelineEnhancer\obj\Debug\netcoreapp2.1\PipelineEnhancer.csproj.CoreCompileInputs.cache
+C:\lab-files\CognitiveSearch\PipelineEnhancer\obj\Debug\netcoreapp2.1\PipelineEnhancer.AssemblyInfoInputs.cache
+C:\lab-files\CognitiveSearch\PipelineEnhancer\obj\Debug\netcoreapp2.1\PipelineEnhancer.AssemblyInfo.cs
+C:\lab-files\CognitiveSearch\PipelineEnhancer\obj\Debug\netcoreapp2.1\PipelineEnhancer.dll
+C:\lab-files\CognitiveSearch\PipelineEnhancer\obj\Debug\netcoreapp2.1\PipelineEnhancer.pdb
