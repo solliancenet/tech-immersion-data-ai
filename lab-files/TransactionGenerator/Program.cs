@@ -309,7 +309,7 @@ namespace TransactionGenerator
                     WriteLineInColor($"The collection will cost an estimated ${estimatedCostPerHour:0.00} per hour (${estimatedCostPerMonth:0.00} per month (per write region))", ConsoleColor.Green);
                 }
 
-                // Start sending data to both Event Hubs and Cosmos DB.
+                // Start sending data to Cosmos DB.
                 SendData(100, taskWaitTime, cancellationToken, progress).Wait();
             }
 

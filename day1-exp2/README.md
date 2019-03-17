@@ -12,6 +12,8 @@ In this experience, you will use Azure Cosmos DB to ingest streaming vehicle tel
   - [Task 4: Configure Azure Function App](#task-4-configure-azure-function-app)
   - [Task 5: Publish Function App and run data generator](#task-5-publish-function-app-and-run-data-generator)
   - [Task 6: Create Power BI dashboard](#task-6-create-power-bi-dashboard)
+  - [Wrap-up](#wrap-up)
+  - [Resources and more information](#resources-and-more-information)
 
 ## Experience requirements
 
@@ -21,11 +23,37 @@ In this experience, you will use Azure Cosmos DB to ingest streaming vehicle tel
 
 ## Task 1: Configure Cosmos DB
 
+[Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction) provides a multi-model, globally available NoSQL database with high concurrency, low latency, and predictable results. One of its biggest strengths is that it transparently synchronizes data to all regions around the globe, which can quickly and easily be added at any time. This adds value by reducing the amount of development required to read and write the data and removes any need for synchronization. The speed in which Cosmos DB can ingest as well as return data, coupled with its ability to do so at a global scale, makes it ideal for both ingesting real-time data and serving that data to consumers worldwide.
+
+When storing and delivering your data on a global scale, there are some things to consider. Most distributed databases offer two consistency levels: strong and eventual. These live at different ends of a spectrum, where strong consistency often results in slower transactions because it synchronously writes data to each replica set. This guarantees that the reader will always see the most recent committed version of the data. Eventual consistency, on the other hand, asynchronously writes to each replica set with no ordering guarantee for reads. The replicas eventually converge, but the risk is that it can take several reads to retrieve the most up-to-date data.
+
+Azure Cosmos DB was designed with control over the tradeoffs between read consistency, availability, latency, and throughput. This is why Cosmos DB offers five consistency levels: strong, bounded staleness, session, consistent prefix, and eventual. As a general rule of thumb, you can get about 2x read throughput for session, consistent prefix, and eventual consistency models compared to bounded staleness or strong consistency.
+
+The Session consistency level is the default, and is suitable for most operations. It provides strong consistency for the session (application or connection), where all reads are current with writes from that session. Data from other sessions come in the correct order, but aren't guaranteed to be current. Session consistency level provides a balance of good performance and good availability at half the cost of both strong consistency and bounded staleness. As mentioned before, session provides about 2x read throughput compared to these two stronger consistency levels as well.
+
+For this scenario, Contoso Auto does not need to ingest and serve their data globally just yet. Right now, they are working on a POC to rapidly ingest vehicle telemetry data, process that data as it arrives, and visualize the processed data through a real-time dashboard. Cosmos DB gives them the flexibility to add regions in the future either programmatically through its APIs, or through the "Replicate data globally" Cosmos DB settings in the portal.
+
+To do this, go to the "Replicate data globally" settings, select the option to add a region, then choose the region you wish to add.
+
+![The Add Region button is highlighted.](media/cosmos-add-region.png 'Configure regions')
+
+Once you are finished adding regions, simply select the Save button to apply your changes. You will see the regions highlighted on a map.
+
+![A map is displayed showing the regions that were added.](media/cosmos-region-map.png 'Regions')
+
+To ensure high write and read availability, configure your Cosmos account to span at least two regions with multiple-write regions. This configuration will provide the availability, lowest latency, and scalability for both reads and writes backed by SLAs. To learn more, see [how to configure your Cosmos account with multiple write-regions](https://docs.microsoft.com/en-us/azure/cosmos-db/tutorial-global-distribution-sql-api). To configure multi-master in your applications, see [How to configure multi-master](https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-multi-master).
+
+You may be wondering how you can control the throughput, or speed at which data can be written to or read from Cosmos DB at a global level. In Azure Cosmos DB, provisioned throughput is represented as request units/second (RUs). RUs measure the cost of both read and write operations against your Cosmos DB container. Because Cosmos DB is designed with transparent horizontal scaling (e.g., scale out) and multi-master replication, you can very quickly and easily increase or decrease the number of RUs to handle thousands to hundreds of millions of requests per second around the globe with a single API call.
+
+Cosmos DB allows you to increment/decrement the RUs in small increments of 1000 at the database level, and in even smaller increments of 100 RU/s at the container level. It is recommended that you configure throughput at the container granularity for guaranteed performance for the container all the time, backed by SLAs. Other guarantees that Cosmos DB delivers are 99.999% read and write availability all around the world, with those reads and writes being served in less than 10 milliseconds at the 99th percentile.
+
+When you set a number of RUs for a container, Cosmos DB ensures that those RUs are available in all regions associated with your Cosmos DB account. When you scale out the number of regions by adding a new one, Cosmos will automatically provision the same quantity of RUs in the newly added region. You cannot selectively assign different RUs to a specific region. These RUs are provisioned for a container (or database) for all associated regions.
+
 In this task, you will create a new Cosmos DB database and collection, set the throughput units, and obtain the connection details.
 
 1.  To start, open a new web browser window and navigate to <https://portal.azure.com>. Log in with the credentials provided to you for this lab.
 
-2.  After logging into the Azure portal, select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion**.
+2.  After logging into the Azure portal, select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion-YOUR_UNIQUE_IDENTIFIER**. The `YOUR_UNIQUE_IDENTIFIER` portion of the name is the unique identifier assigned to you for this lab.
 
     ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
 
@@ -49,9 +77,11 @@ In this task, you will create a new Cosmos DB database and collection, set the t
     - **Partition key:** Enter "/vin".
     - **Throughput:** Enter 15000.
 
-    > The /vin partition was selected because the data will most likely include this value, and it allows us to partition by location from which the transaction originated. This field also contains a wide range of values, which is preferable for partitions.
+    > The /vin partition was selected because the data will include this value, and it allows us to partition by vehicle from which the transaction originated. This field also contains a wide range of values, which is preferable for partitions.
 
     ![The Add Collection form is filled out with the previously mentioned settings entered into the appropriate fields.](media/cosmos-db-new-collection.png 'Add Collection')
+
+    On the subject of partitions, choosing an appropriate partition key for Cosmos DB is a critical step for ensuring balanced reads and writes, scaling, and, in this case, in-order change feed processing per partition. While there are no limits, per se, on the number of logical partitions, a single logical partition is allowed an upper limit of 10 GB of storage. Logical partitions cannot be split across physical partitions. For the same reason, if the partition key chosen is of bad cardinality, you could potentially have skewed storage distribution. For instance, if one logical partition becomes larger faster than the others and hits the maximum limit of 10 GB, while the others are nearly empty, the physical partition housing the maxed out logical partition cannot split and could cause an application downtime. This is why we specified `vin` as the partition key. It has good cardinality for this data set.
 
 7.  Select **OK** on the bottom of the form when you are finished entering the values.
 
@@ -69,11 +99,13 @@ In this task, you will create a new Cosmos DB database and collection, set the t
 
 ## Task 2: Configure Event Hubs
 
+Azure Event Hubs is a Big Data streaming platform and event ingestion service, capable of receiving and processing millions of events per second. We are using it to temporarily store vehicle telemetry data that is processed and ready to be sent to the real-time dashboard. As data flows into Event Hubs, Azure Stream Analytics will query the data, applying aggregates and tagging anomalies, then send it to Power BI.
+
 In this task, you will create and configure a new event hub within the provided Event Hubs namespace. This will be used to capture vehicle telemetry after it has been processed and enriched by the Azure function you will create later on.
 
 1.  Navigate to the [Azure portal](https://portal.azure.com).
 
-2.  Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion**.
+2.  Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion-YOUR_UNIQUE_IDENTIFIER**.
 
     ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
 
@@ -150,11 +182,13 @@ In this task, you will create and configure a new event hub within the provided 
 
 ## Task 3: Configure Stream Analytics
 
-In this task, you will create and configure a new event hub within the provided Event Hubs namespace. This will be used to capture vehicle telemetry after it has been processed and enriched by the Azure function you will create later on.
+Azure Stream Analytics is an event-processing engine that allows you to examine high volumes of data streaming from devices. Incoming data can be from devices, sensors, web sites, social media feeds, applications, and more. It also supports extracting information from data streams, identifying patterns, and relationships. You can then use these patterns to trigger other actions downstream, such as create alerts, feed information to a reporting tool, or store it for later use.
+
+In this task, you will configure Stream Analytics to use the event hub you created as a source, query and analyze that data, then send it to Power BI for reporting.
 
 1.  Navigate to the [Azure portal](https://portal.azure.com).
 
-2.  Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion**.
+2.  Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion-YOUR_UNIQUE_IDENTIFIER**.
 
     ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
 
@@ -299,11 +333,27 @@ In this task, you will create and configure a new event hub within the provided 
 
 ## Task 4: Configure Azure Function App
 
+Azure Functions is a solution for easily running small pieces of code, or "functions," in the cloud. You can write just the code you need for the problem at hand, without worrying about a whole application or the infrastructure to run it. Functions can make development even more productive, and you can use your development language of choice, such as C#, F#, Node.js, Java, or PHP.
+
+When you use the Azure Functions consumption plan, you only pay for the time your code runs. Azure automatically handles scaling your functions to meet demand.
+
+Azure Functions uses special bindings that allow you to automatically trigger the function when an event happens (a document is added to Azure Cosmos DB, a file is uploaded to blob storage, an event is added to Event Hubs, an HTTP request to the function is made, etc.), as well as to retrieve or send information to and from various Azure services. In the case of our function for this solution, we are using the `CosmosDBTrigger` to automatically trigger the function through the Cosmos DB change feed. This trigger supplies an input binding of type `IReadOnlyList<Document>` we name "input", that contains the records that triggered the function. This removes any code you would have to otherwise write to query that data. We also have an output binding to the event hub, of type `IAsyncCollector<EventData>`, which we name "eventHubOutput". Again, this reduces code by automatically sending data added to this collection to the specified event hub.
+
+![The Cosmos DB trigger, input binding, and output binding are highlighted.](media/function-definition.png 'Azure function')
+
+The function code itself is very lightweight, lending to the resource bindings and the `TelemetryProcessing.ProcessEvent` method that it calls:
+
+![The function code is very lightweight.](media/function-code.png 'Function code')
+
+The `TelemetryProcessing` class contains a simple method named `ProcessEvent` that evaluates the vehicle telemetry data sent by Cosmos DB and enriches it with the region name based on a simple map.
+
+![Source code for the ProcessEvent method.](media/function-process-event.png 'TelemetryProcessing.ProcessEvent method')
+
 In this task, you will configure the Function App with the Azure Cosmos DB and Event Hubs connection strings.
 
 1.  Navigate to the [Azure portal](https://portal.azure.com).
 
-2.  Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion**.
+2.  Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion-YOUR_UNIQUE_IDENTIFIER**.
 
     ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
 
@@ -335,6 +385,8 @@ In this task, you will configure the Function App with the Azure Cosmos DB and E
 
 ## Task 5: Publish Function App and run data generator
 
+The data generator console application creates and sends simulated vehicle sensor telemetry for an array of vehicles (denoted by VIN (vehicle identification number)) directly to Cosmos DB. For this to happen, you first need to configure it with the Cosmos DB connection string.
+
 In this task, you will open the lab solution in Visual Studio, publish the Function App, and configure and run the data generator. The data generator saves simulated vehicle telemetry data to Cosmos DB, which triggers the Azure function to run and process the data, sending it to Event Hubs, prompting your Stream Analytics job to aggregate and analyze the enriched data and send it to Power BI. The final step will be to create the Power BI report in the task that follows.
 
 1.  Open Windows Explorer and navigate to `C:\lab-files`. Double-click on **TechImmersion.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure credentials you are using for this lab.
@@ -359,7 +411,7 @@ In this task, you will open the lab solution in Visual Studio, publish the Funct
 
     ![The Select Existing radio button and Publish button are highlighted.](media/vs-publish-target.png 'Pick a publish target')
 
-5.  In the App Service dialog that follows, make sure your Azure **Subscription** for this lab is selected, then find and expand the **tech-immersion** resource group. Select your Function App, then click **OK** on the bottom of the dialog window
+5.  In the App Service dialog that follows, make sure your Azure **Subscription** for this lab is selected, then find and expand the **tech-immersion-YOUR_UNIQUE_IDENTIFIER** resource group. Select your Function App, then click **OK** on the bottom of the dialog window
 
     ![The Function App and OK button are highlighted.](media/vs-publish-app-service.png 'App Service')
 
@@ -388,6 +440,26 @@ In this task, you will open the lab solution in Visual Studio, publish the Funct
     ![Screenshot of the console window.](media/vs-console.png 'Console window')
 
     The top of the output displays information about the Cosmos DB collection you created (telemetry), the requested RU/s as well as estimated hourly and monthly cost. After every 1,000 records are requested to be sent, you will see output statistics.
+
+---
+
+Some key areas to point out about the data generator code are as follows:
+
+Within the `Program.cs` file, we instantiate a new Cosmos DB client (`DocumentClient`), passing in the Cosmos DB service endpoint, authorization key, and connection policy (direct connect over TCP for fastest results). Next, we retrieve the Cosmos DB collection information and create an offer query (`CreateOfferQuery`) to pull statistics about the offered throughput in RU/s so we can estimate the monthly and hourly cost. Finally, we call the `SendData` method to start sending telemetry data to Cosmos DB.
+
+![The telemetry generator code is displayed showing the Cosmos DB client instantiation.](media/telemetry-generator-code.png 'Telemetry generator code')
+
+The `SendData` method outputs statistics about how much data was sent to Cosmos DB and how long it took to send, which varies based on your available system resources and internet bandwidth. It sends the telemetry data (`carEvent`) in one line of code:
+
+```csharp
+// Send to Cosmos DB:
+var response = await _cosmosDbClient.CreateDocumentAsync(collectionUri, carEvent)
+    .ConfigureAwait(false);
+```
+
+The last bit of interesting code within the generator is where we create the Cosmos DB database and collection if it does not exist. We also specify the collection partition key, indexing policy, and the throughput set to 15,000 RU/s:
+
+![The InitializeCosmosDB method code.](media/telemetry-generator-initialize-cosmos.png 'InitializeCosmosDB method')
 
 ## Task 6: Create Power BI dashboard
 
@@ -492,3 +564,26 @@ In this task, you will use Power BI to create a report showing captured vehicle 
 25. The live dashboard will automatically refresh and update while data is being captured. You can hover over any point on a chart to view information about the item. Select one of the regions in the legend above the average speed chart. All other charts will filter by that region automatically. Click on a blank area of the chart to clear the filter.
 
     ![The live dashboard view.](media/pbi-dashboard.png 'Dashboard')
+
+## Wrap-up
+
+Thank you for participating in the Leveraging Cosmos DB for near real-time analytics experience! There are many aspects of Cosmos DB that make it suitable for ingesting and serving real-time data at a global scale, some of which we have covered here today. Of course, there are other services that work alongside Cosmos DB to complete the processing pipeline.
+
+To recap, you experienced:
+
+- How to configure and send real-time data to Cosmos DB.
+- Processing data as it is saved to Cosmos DB through the use of Azure functions, with the convenience of the Cosmos DB trigger to reduce code and automatically handle kicking off the processing logic as data arrives.
+- Ingesting processed data with Event Hubs and querying and reshaping that data with Azure Stream Analytics, then sending it to Power BI for reporting.
+- Rapidly creating a real-time dashboard in Power BI with interesting visualizations to view and explore vehicle anomaly data.
+
+## Resources and more information
+
+- [Introduction to Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction)
+- [Overview of the Cosmos DB change feed](https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed)
+- [High availability with Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/high-availability)
+- [Scaling throughput in Azure Cosmos DB](https://docs.microsoft.com/azure/cosmos-db/scaling-throughput)
+- [Partitioning and horizontal scaling](https://docs.microsoft.com/azure/cosmos-db/partition-data) in Azure Cosmos DB, plus [guide for scaling throughput](https://docs.microsoft.com/azure/cosmos-db/scaling-throughput)
+- [About Event Hubs](https://docs.microsoft.com/azure/event-hubs/event-hubs-about)
+- [What is Azure Stream Analytics?](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-introduction)
+- [Intro to Stream Analytics windowing functions](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-window-functions)
+- [Trigger Azure Functions from Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed-functions)

@@ -301,6 +301,12 @@ This lab requires the database compatibility level to be set to 150, and uses a 
     GO
     ```
 
+### Create a copy of the Customer table for each attendee
+
+Although we are using a single instance of the ContosoAutoDW database for all attendees, each attendee needs their own copy of the `Dimension.Customer` table. The name pattern should be `Dimension.Customer_YOUR_UNIQUE_IDENTIFIER`, where `YOUR_UNIQUE_IDENTIFIER` is a value assigned to each attendee that is unique to them. Perhaps it is part of their username.
+
+TODO: Add steps to perform this function.
+
 ### Connect with Azure Data Studio
 
 1.  On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **Azure Data Studio**, then select the Azure Data Studio desktop app in the search results.
