@@ -1,6 +1,6 @@
 # Bot framework setup
 
-Complete the steps below to prepare the environment for the [Day 2, Experience 3](../../day2-exp3/) lab.
+Complete the steps below to prepare the environment for the [Day 2, Experience 3](../../../day2-exp3/) lab.
 
 ## Pre-requisites
 
