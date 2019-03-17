@@ -22,6 +22,12 @@ The computer or VM on which the attendee completes the lab requires the followin
 - SQL Server 2019 login credentials provided for the lab environment
 - Azure SQL Database login credentials provided for the lab environment
 
+## Regional limitations
+
+**L Series VMs** (required for SQL 2019 Big Data Clusters): East US 2, West US, West US 2, and a limited set of others worldwide
+
+**Azure Machine Learning service**: East US, East US 2, West US 2, West Central US, South Central US, and a limited set of others worldwide
+
 ## Deployment steps
 
 Open PowerShell and execute the following to deploy the clusters in preparation for the lab. **Note:** these steps should be run for each student.
