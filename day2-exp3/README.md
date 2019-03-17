@@ -5,26 +5,14 @@ Contoso Auto is interested in building bots to help automate certain tasks in a 
 In this experience, you will use Microsoft's [Virtual Assistant Solution](https://docs.microsoft.com/azure/bot-service/bot-builder-virtual-assistant-introduction?view=azure-bot-service-4.0) accelerator to quickly develop this capability on top of foundational capabilities. By following the tasks below, you will explore and run the Automotive skill bot locally to experience the natural language-driven conversations with the bot, powered by the LUIS Cognitive Service, with the conversation control flow managed by the bot. You will end off by evaluating how LUIS is trained to understand a user's intent based on what they typed in, and read some ideas of how this project can be expanded to meet Contoso Auto's stretch goals.
 
 - [Day 2, Experience 3 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator](#day-2-experience-3---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator)
-  - [Experience requirements](#experience-requirements)
   - [Task 1: Sign in to LUIS to retrieve the Authoring Key](#task-1-sign-in-to-luis-to-retrieve-the-authoring-key)
   - [Task 2: Register a new Azure App](#task-2-register-a-new-azure-app)
   - [Task 3: Deployment](#task-3-deployment)
   - [Task 4: Load and explore the automotive Virtual Assistant starter solution](#task-4-load-and-explore-the-automotive-virtual-assistant-starter-solution)
   - [Task 5: Open the generated bot file in the Bot Framework Emulator](#task-5-open-the-generated-bot-file-in-the-bot-framework-emulator)
   - [Task 6: Open LUIS to view the generated apps](#task-6-open-luis-to-view-the-generated-apps)
+  - [Wrap-up](#wrap-up)
   - [Next steps](#next-steps)
-
-## Experience requirements
-
-- Azure subscription
-- Visual Studio 2017 Community (or better)
-- Latest version of [.NET Core](https://www.microsoft.com/net/download)
-- [Node.js](https://nodejs.org/) version 8.5 or higher
-- [Bot Framework Emulator](https://github.com/Microsoft/BotFramework-Emulator/releases/latest)
-- Azure Bot Service command line (CLI) tools
-- [Azure Command Line Tools (CLI)](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest) version **2.0.59** or later
-- AZ Extension for Bot Service
-- Retrieve your LUIS Authoring Key
 
 ## Task 1: Sign in to LUIS to retrieve the Authoring Key
 
@@ -56,7 +44,7 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
 The Bot Framework SDK uses what's called an Azure application for authentication and authorization between the published bot and its required Azure services. In this task, you will create a new app and retrieve its application Id that you will use when you run the bot creation script.
 
-1. Navigate to <https://apps.dev.microsoft.com/> and sign in with your same Azure account you are using for this experience.
+1. Navigate to <https://apps.dev.microsoft.com/> and sign in with your same Azure Active Directory account you are using for this experience.
 
 2. After signing in, you will see a page named "My applications". Select **Add an app**.
 
@@ -64,7 +52,7 @@ The Bot Framework SDK uses what's called an Azure application for authentication
 
 3. In the New Application Registration dialog, enter `tech-immersion-vehicle` into the **Name** field, then select **Create application**.
 
-   ![The New Applicatino Registration dialog is displayed.](media/app-portal-new-application.png 'New Application Registration')
+   ![The New Application Registration dialog is displayed.](media/app-portal-new-application.png 'New Application Registration')
 
 4. After a moment, your application will be created and its properties will be displayed. Select **Generate New Password** underneath the Application Secrets section.
 
@@ -86,25 +74,21 @@ The Virtual Assistant automotive bot requires the following Azure dependencies f
 - Azure Cosmos DB (maintains the state of all conversations)
 - Azure Cognitive Services - Language Understanding (LUIS)
 
-In this task, you will deploy all of these Azure dependencies as well as configure and train [LUIS](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis) with thousands of text entries. Fortunately, we supply a script to do this for you.
+In this task, you will deploy all of these Azure dependencies as well as configure and train [LUIS](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis) with thousands of text entries. We supply a script to do this for you.
 
 1. On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **cmd**, then either press Enter or select the Command Prompt desktop app in the search results.
 
    ![The search box has "cmd" entered into it and the desktop app is highlighted in the results.](media/launch-cmd.png 'Launch Command Prompt')
 
-2. Within the command prompt, type in the following, then hit `Enter`:
-
-   `cd\`
-
-3. Copy and paste the command below into the command prompt, then hit `Enter`. This will change directories to the Virtual Assistant automotive bot project folder:
+2. Copy and paste the command below into the command prompt, then hit `Enter`. This will change directories to the Virtual Assistant automotive bot project folder:
 
    `cd C:\lab-files\ai\3\skills\automotiveskill\automotiveskill`
 
-4. This next command requires two of your custom values you saved in the previous task when you registered your Azure App. **Copy** the command below and paste it into Notepad or other text editor. Replace `YOUR-APP-ID` with the Azure App's Application Id value, and replace `YOUR-APP-SECRET` with the App secret you copied. Make certain that your app secret value is surrounded by double quotes (").
+3. This next command requires two of your custom values you saved in the previous task when you registered your Azure App. **Copy** the command below and paste it into Notepad or other text editor. Replace `YOUR-APP-ID` with the Azure App's Application Id value, and replace `YOUR-APP-SECRET` with the App secret you copied. Make certain that your app secret value is surrounded by double quotes (").
 
    `PowerShell.exe -ExecutionPolicy Bypass -File DeploymentScripts\deploy_bot.ps1 --appId YOUR-APP-ID --% --appSecret "YOUR-APP-SECRET"`
 
-5. Copy and paste your _edited_ command into the command prompt, then hit `Enter`. Supply the following values when prompted:
+4. Copy and paste your _edited_ command into the command prompt, then hit `Enter`. Supply the following values when prompted:
 
    - **name:** Enter a unique name that starts with `tech-immersion-bot-` and ends with your initials followed by a random 2-3 digit number. Example: `tech-immersion-bot-jdh77`. This value must be all lower case, contain no spaces and no special characters except for dashes (-) and underscores (\_).
    - **location:** Enter `westus`.
@@ -112,17 +96,17 @@ In this task, you will deploy all of these Azure dependencies as well as configu
 
    ![The bot creation script and parameters are highlighted.](media/cmd-bot-script.png 'Command Prompt')
 
-6. This script will take around 10 minutes to run. **Important:** Keep the window open. There is a value you will need to copy once it is complete. For now, please move on to the next task.
+5. This script will take around 10 minutes to run. **Important:** Keep the window open. There is a value you will need to copy once it is complete. For now, please move on to the next task.
 
 ## Task 4: Load and explore the automotive Virtual Assistant starter solution
 
 To accelerate Contoso Auto's development efforts, they have decided to use Microsoft's [Virtual Assistant Solution](https://docs.microsoft.com/azure/bot-service/bot-builder-virtual-assistant-introduction?view=azure-bot-service-4.0) accelerator. One of the projects included in the Visual Studio solution is the Automotive Skill. This skill demonstrates a set of capabilities to help enable Automotive scenarios. At the moment, this skill focuses on vehicle settings, specifically climate Control, safety, and basic audio controls.
 
-Vehicle Control is a complicated problem. Although there are only a limited set of car inputs for climate control there are a large number of ways that a human can describe a given setting. For example, "I'm feeling chilly", "My feet are cold", and "It's cold here in the back" all relate to a decrease in temperature but to different parts of the car and perhaps even different fan settings. If you were to program the bot to try and account for all of these variations in user requests, you would have a very long set if conditional logic in your code, and likely miss some common phrases in the process.
+Vehicle Control is a complicated problem. Although there are only a limited set of car inputs for climate control there are a large number of ways that a human can describe a given setting. For example, "I'm feeling chilly", "My feet are cold", and "It's cold here in the back" all relate to a decrease in temperature but to different parts of the car and perhaps even different fan settings. If you were to program the bot to try and account for all of these variations in user requests, you would have a very long set of conditional logic in your code, and likely miss some common phrases in the process.
 
 This is where having a trained natural language machine learning model comes in handy. Microsoft's [Language Understanding (LUIS)](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis) API service allows you to train this type of machine learning model (LUIS models) through configuration, with **no programming or data scientists** required. This results in allowing end users to use conversational, natural language text to issue commands whose overall meaning are predicted by LUIS and whose relevant and detailed information is used by the bot to perform actions related to the requests.
 
-The LUIS model begins with categories of user intentions called [intents](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-concept-intent). Each intent needs examples of user [utterances](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-concept-utterance) (something a user sould say). Each utterance can provide a variety of data that needs to be extracted with [entities](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-concept-entity-types).
+The LUIS model begins with categories of user intentions called [intents](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-concept-intent). Each intent needs examples of user [utterances](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-concept-utterance) (something a user should say). Each utterance can provide a variety of data that needs to be extracted with [entities](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-concept-entity-types).
 
 Here are some examples of user utterances the LUIS models for the Automotive skill are trained to understand:
 
@@ -132,13 +116,13 @@ Here are some examples of user utterances the LUIS models for the Automotive ski
 | "Set **temperature** to **67** **degrees**" | VEHICLE_SETTINGS_CHANGE      | SETTING, AMOUNT, UNIT |
 | "It's way too **loud** in here."            | VEHICLE_SETTINGS_DECLARATIVE | VALUE                 |
 
-LUIS models help understand the intent and entities, then matches potential settings and actions to the available vehicle settings to then suggest a course of action. At this time, changes to vehicle settings are supported through the VEHICLE_SETTINGS_CHANGE and VEHICLE_SETTINGS_DECLARATIVE intents. The former enables questions such as "change the temperature to 27 degrees" whereas the latter intent enables scenarios such as "I'm feeling cold" which require additional processing steps.
+LUIS models help understand the intent and entities, then matches potential settings and actions to the available vehicle settings to then suggest a course of action. At this time, changes to vehicle settings are supported through the VEHICLE_SETTINGS_CHANGE and VEHICLE_SETTINGS_DECLARATIVE intents. The former enables commands such as "change the temperature to 27 degrees" whereas the latter intent enables scenarios such as "I'm feeling cold" which require additional processing steps.
 
 As you will see, most of this work is already done for you! Additional work that would need to be done to integrate this bot into a vehicle includes customizing the bot's activities to integrate with the telematics solution of an OEM for a given vehicle.
 
 For now, let's explore how this bot is created and how LUIS is trained with the sets of utterances, intents, and entities as described.
 
-1.  Open Windows Explorer and navigate to `C:\lab-files\ai\3`. Double-click on **VirtualAssistant.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure credentials you are using for this lab.
+1.  Open Windows Explorer and navigate to `C:\lab-files\ai\3`. Double-click on **VirtualAssistant.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab.
 
     ![The VirtualAssistant.sln file is highlighted in Windows Explorer.](media/windows-explorer-solution.png "Windows Explorer")
 
@@ -218,12 +202,10 @@ For now, let's explore how this bot is created and how LUIS is trained with the 
     - i am {VALUE=frozen} in {SETTING=left front}
     - i am too friggin {VALUE=frosty} in the {SETTING=driver side}
     - i am {VALUE=warm}
-    - i am way too damn {VALUE=cool} in this {SETTING=passenger's side}
-    - i are as {VALUE=shivering} as a willy
     - i feel a bit {VALUE=cold} on the {SETTING=right}
     - i feel a bit {VALUE=shivering}
-    - i feel a little darn {VALUE=warm}
-    - i feel a little friggin {VALUE=burning up} in here
+    - i feel a little bit {VALUE=warm}
+    - i feel a little {VALUE=burning up} in here
     - i feel as {VALUE=frosty} as an oven in this {SETTING=right}
     - i feel {VALUE=balmy} in here
     - i feel like my {SETTING=co-driver} is gotten kind of {VALUE=cold}
@@ -585,6 +567,19 @@ If you recall, the bot deployment script created Azure services, generated a .bo
 11. The bottom of the dashboard shows detailed model view charts with the intent and entity breakdowns by utterance. This can give you an idea of which intents and entities are used in the most utterances. Hover over any section of the chart to view its label.
 
     ![The Detailed Model View of the Dashboard id shown.](media/luis-detailed-model-view.png "Dashboard: Detailed Model View")
+
+## Wrap-up
+
+Thank you for participating in the Bot solutions experience! We hope that you are excited about how you can use the Virtual Assistant Solution Accelerator alongside our bot services to create some interesting solutions of your own. Please feel free to refer back to this experience at any time to learn more about the solution accelerator, LUIS, and other Azure services that make these capabilities shine.
+
+To recap, you experienced:
+
+1. How to quickly get started with [LUIS](https://www.luis.ai/) to add natural language processing to your solutions.
+2. Using the deployment scripts that come with the Virtual Assistant Solution Accelerator to create all of the Azure resources for you, as well as to train LUIS with thousands of text entries.
+3. Exploring the Virtual Assistant starter solution, learning how things are laid out, which skills are included, and where to make modifications to the Automotive Skill if needed.
+4. Using the Bot Framework Emulator to test your bot locally and examine the data being sent back and forth between your bot and its related services.
+5. Exploring LUIS to see how intents, entities, and utterances are stored and relate to one another.
+6. Viewing usage reports in LUIS to see how users are sending commands and how those commands translate to the most-used intents and entities, giving you insight into where to make improvements.
 
 ## Next steps
 

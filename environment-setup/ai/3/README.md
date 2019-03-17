@@ -20,4 +20,10 @@ The computer or VM on which you run the scripts to deploy the cluster and restor
   az extension add -n botservice
   ```
 
+### Azure resources
+
+Users will need to be able to sign into [LUIS](https://www.luis.ai/) with their Azure Active Directory account and create a new LUIS app.
+
+Users will also need to be able to register a new Azure App (<https://apps.dev.microsoft.com/>) with their Azure Active Directory account. If they do not have permissions to do this step, then an Azure App will need to be created for them and they will need to be supplied with both the **Application Id** and **generated password** (application secret) for the application. The steps to do this can be found [here](../../../day2-exp3#task-2-register-a-new-azure-app).
+
 Lab attendees will run a script to deploy required Azure resources during the lab, using the Azure account provided to them.
