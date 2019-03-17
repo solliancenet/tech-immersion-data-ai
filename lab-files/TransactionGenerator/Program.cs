@@ -346,9 +346,9 @@ namespace TransactionGenerator
             // and used to store up to 250 GB of data.
             var collectionDefinition = new DocumentCollection { Id = CollectionName };
 
-            // Create a partition based on the ipCountryCode value from the Transactions data set.
-            // This partition was selected because the data will most likely include this value, and
-            // it allows us to partition by location from which the transaction originated. This field
+            // Create a partition based on the VIN value of the vehicle.
+            // This partition was selected because the data will include this value, and
+            // it allows us to partition by the vehicle from which the transaction originated. This field
             // also contains a wide range of values, which is preferable for partitions.
             collectionDefinition.PartitionKey.Paths.Add($"/{PartitionKey}");
 
