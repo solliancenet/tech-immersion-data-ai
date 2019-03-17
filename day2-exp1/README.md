@@ -67,4 +67,4 @@ To recap, you experienced:
 5. Registering the best model with the Model Registry, which enables versioning and makes the model file available for deployment to a web service.
 6. Creating and deploying a web service to Azure Kubernetes Service that uses the best model for scoring.
 
-To learn more about the Azure Machine Learning service, visit the [documentation](https://docs.microsoft.com/en-us/azure/machine-learning/service)
+To learn more about the Azure Machine Learning service, visit the [documentation](https://docs.microsoft.com/azure/machine-learning/service)
