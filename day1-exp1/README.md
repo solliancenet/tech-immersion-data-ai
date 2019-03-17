@@ -1,5 +1,20 @@
 # Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters
 
+- [Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters](#day-1-experience-1---handling-big-data-with-sql-server-2019-big-data-clusters)
+  - [SQL Server 2019 overview](#sql-server-2019-overview)
+  - [Scenario overview](#scenario-overview)
+  - [Experience requirements](#experience-requirements)
+  - [Before the lab: Connecting to SQL Server 2019](#before-the-lab-connecting-to-sql-server-2019)
+    - [Connect with Azure Data Studio](#connect-with-azure-data-studio)
+    - [Connect with SQL Server Management Studio](#connect-with-sql-server-management-studio)
+  - [Task 1: Query and join data from flat files, data from external database systems, and SQL Server](#task-1-query-and-join-data-from-flat-files-data-from-external-database-systems-and-sql-server)
+  - [Task 2: Train a machine learning model, score and save data as external table](#task-2-train-a-machine-learning-model-score-and-save-data-as-external-table)
+  - [Task 3: Query performance improvements with intelligent query processing](#task-3-query-performance-improvements-with-intelligent-query-processing)
+  - [Task 4: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS](#task-4-identify-pii-and-gdpr-related-compliance-issues-using-data-discovery--classification-in-ssms)
+  - [Task 5: Fix compliance issues with dynamic data masking](#task-5-fix-compliance-issues-with-dynamic-data-masking)
+  - [Wrap-up](#wrap-up)
+  - [Resources and more information](#resources-and-more-information)
+
 ## SQL Server 2019 overview
 
 SQL Server 2019 brings innovative security and compliance features, industry leading performance, mission-critical availability, and advanced analytics to all data workloads, now with support for big data built-in.
@@ -27,21 +42,6 @@ SQL Server 2019 also has powerful tools for Business Intelligence including Anal
 Contoso Auto stores data in several data stores, including relational databases, NoSQL databases, data warehouses, and unstructured data stored in a data lake. They have heard of data virtualization in SQL Server 2019, and are interested to see whether this feature will allow them to more easily access their data stored in these disparate locations. They have heard of the new Big Data Clusters that can be scaled out to handle their Big Data workloads, including machine learning tasks and advanced analytics. They are also interested in any performance improvements against their internal SQL tables by moving to 2019, since the overall amount of data is growing at a rapid pace.
 
 This experience will highlight the new features of SQL Server 2019 with a focus on Big Data Clusters and data virtualization. You will gain hands-on experience with querying both structured and unstructured data in a unified way using T-SQL. This capability will be illustrated by joining different data sets, such as product stock data in flat CSV files in Azure Storage, product reviews stored in Azure SQL Database, and transactional data in SQL Server 2019 for exploratory data analysis within Azure Data Studio. This joined data will be prepared into a table used for reporting, highlighting query performance against this table due to intelligent query processing. With the inclusion of Apache Spark packaged with Big Data Clusters, it is now possible to use Spark to train machine learning models over data lakes and use those models in SQL Server in one system. You will learn how to use Azure Data Studio to work with Jupyter notebooks to train a simple model that can predict vehicle battery lifetime, score new data and save the result as an external table. Finally, you will experience the data security and compliance features provided by SQL Server 2019 by using the Data Discovery & Classification tool in SSMS to identify tables and columns with PII and GDPR-related compliance issues, then address the issues by layering on dynamic data masking to identified columns.
-
-- [Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters](#day-1-experience-1---handling-big-data-with-sql-server-2019-big-data-clusters)
-  - [SQL Server 2019 overview](#sql-server-2019-overview)
-  - [Scenario overview](#scenario-overview)
-  - [Experience requirements](#experience-requirements)
-  - [Before the lab: Connecting to SQL Server 2019](#before-the-lab-connecting-to-sql-server-2019)
-    - [Connect with Azure Data Studio](#connect-with-azure-data-studio)
-    - [Connect with SQL Server Management Studio](#connect-with-sql-server-management-studio)
-  - [Task 1: Query and join data from flat files, data from external database systems, and SQL Server](#task-1-query-and-join-data-from-flat-files-data-from-external-database-systems-and-sql-server)
-  - [Task 2: Train a machine learning model, score and save data as external table](#task-2-train-a-machine-learning-model-score-and-save-data-as-external-table)
-  - [Task 3: Query performance improvements with intelligent query processing](#task-3-query-performance-improvements-with-intelligent-query-processing)
-  - [Task 4: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS](#task-4-identify-pii-and-gdpr-related-compliance-issues-using-data-discovery--classification-in-ssms)
-  - [Task 5: Fix compliance issues with dynamic data masking](#task-5-fix-compliance-issues-with-dynamic-data-masking)
-  - [Wrap-up](#wrap-up)
-  - [Resources and more information](#resources-and-more-information)
 
 ## Experience requirements
 
