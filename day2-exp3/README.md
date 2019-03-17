@@ -200,7 +200,7 @@ For now, let's explore how this bot is created and how LUIS is trained with the 
     - i am a little {VALUE=cool} in {SETTING=right side}
     - i am {VALUE=cold} in here
     - i am {VALUE=frozen} in {SETTING=left front}
-    - i am too friggin {VALUE=frosty} in the {SETTING=driver side}
+    - i am too {VALUE=frosty} in the {SETTING=driver side}
     - i am {VALUE=warm}
     - i feel a bit {VALUE=cold} on the {SETTING=right}
     - i feel a bit {VALUE=shivering}
