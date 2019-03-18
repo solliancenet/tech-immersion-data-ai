@@ -1,0 +1,45 @@
+{
+  "$schema": "https://immtest-web.azurewebsites.net/schemas/0.0.6/ImmersionStoryMetadata.json",
+  "unique_id": "a81c9bb4-3446-480f-860d-272346dae6b9",
+  "permissions": ["everybody"],
+  "audiences": ["IT Administrator & Implementer"],
+  "topics": ["Azure", "Featured", "Management Tools"],
+  "products": [
+    "Microsoft Azure Portal",
+    "Azure Data Studio",
+    "SQL Server 2019",
+    "SQL Server Management Studio"
+  ],
+  "jobroles": ["IT Infrastructure Specialist", "Systems Administrator"],
+  "level": "200",
+  "duration_minutes": 45,
+  "access_time_minutes": 43200,
+  "title": "Handling Big Data with SQL Server 2019 Big Data Clusters",
+  "short_title": "Handling Big Data with SQL Server 2019 Big Data Clusters",
+  "description": "",
+  "regions": ["westus", "westus2", "eastus2"],
+  "date_created": "2019-03-18",
+  "story_type": "HandsOnLab",
+
+  "persona_role": "DBA",
+  "resources": {},
+  "presentation_mode": "html5Rdp",
+  "presentation_startup": "azurePortal",
+  "display_web_guide": true,
+  "primary_template": "template.json",
+  "depends_on": ["story://content-private/content/ti-data/datashared"],
+  "parameters": {
+    "facilitator": "template.parameters.json",
+    "student": "template.parameters.json",
+    "standalone": "template.parameters.json"
+  },
+  "post_deploy_script": "SetUserRole.ps1",
+  "requires_long_running_script_sentinel": false,
+  "requires_office365_trial": false,
+  "warmup_time_minutes": 5,
+  "deployment_time_minutes": 0,
+  "additional_azuread_accounts": 0,
+  "requires_rsa_keypair": 0,
+  "has_personas": false,
+  "public_lab_number": "TI-DA100000"
+}

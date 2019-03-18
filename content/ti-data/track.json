@@ -1,0 +1,19 @@
+{
+  "$schema": "https://immtest-web.azurewebsites.net/schemas/0.0.6/ImmersionTrackMetadata.json",
+  "unique_id": "6e83bd3d-3c10-45e5-bd5a-cb287752a075",
+  "title": "Tech Immersion 2019 Experience: Data",
+  "short_title": "Tech Immersion 2019 Experience: Data",
+  "description": "-",
+  "experience_ids": [
+    "experience://Content-Private/content/ti-data/1-sql2019bigdataclusters",
+    "experience://Content-Private/content/ti-data/2-cosmosdbanalytics",
+    "experience://Content-Private/content/ti-data/3-azuresqlmanagedinstance",
+    "experience://Content-Private/content/ti-data/4-moderndatawarehouse"
+  ],
+  "solution_area": "dataandai",
+  "category": "data",
+  "sort_index": 0,
+  "permissions": ["everybody"],
+  "allow_rdp_shutdown": true,
+  "public_course_number": "TIAPP00001"
+}
