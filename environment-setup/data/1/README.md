@@ -4,6 +4,24 @@ Complete the steps below to deploy and configure SQL Server 2019 for the [Day 1,
 
 ## Pre-requisites
 
+
+  - Expect event to have one SQL Big Data Cluster pre-provisioned
+  - Output of `deploy-sql-big-data-aks.py` script needs to be captured and processed to acquire SQL Server master instance IP/port and the HDFS/KNOX IP/port.
+  - The following databases are used:
+    - `ContosoAutoDW` - one instance of this database to be used for all attendees on the cluster. Attendees will need full permissions on this database (?).
+    - `sales` - multiple instances of this database, one instance for each attendee, each attendee has full permissions. (?)
+      - Permissions needed to create external tables:
+        CREATE TABLE
+        ALTER ANY SCHEMA
+        ALTER ANY EXTERNAL DATA SOURCE
+        ALTER ANY EXTERNAL FILE FORMAT
+        CONTROL DATABASE
+    - `CA_Commerce` - one instance of this Azure SQL Database needs to be deployed for all attendees. Attendees should only have read-only access to the `Reviews` table.
+  - The following data needs to be pre-loaded on HDFS:
+    - `data/stockitemholdings.csv` 
+    - `data/training-formatted.csv`
+    - `data/fleet-formatted.csv`
+
 The computer or VM on which you run the scripts to deploy the cluster and restore the databases requires the following:
 
 - PowerShell
