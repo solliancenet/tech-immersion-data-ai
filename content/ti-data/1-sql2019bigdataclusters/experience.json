@@ -1,7 +1,7 @@
 {
   "$schema": "https://immtest-web.azurewebsites.net/schemas/0.0.6/ImmersionExperienceMetadata.json",
   "unique_id": "d907440b-f1ce-4709-be56-1a7024b2b198",
-  "title": "Handling Big Data with SQL Server 2019 Big Data Clusters",
+  "title": "Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters",
   "description": "-",
   "story_ids": [
     "story://Content-Private/content/ti-data/1-sql2019bigdataclusters/a_sql2019bigdataclusters"

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://immtest-web.azurewebsites.net/schemas/0.0.6/ImmersionExperienceMetadata.json",
+  "unique_id": "fd553f58-f2a0-4f22-a81a-eff307d827e9",
+  "title": "Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance",
+  "description": "-",
+  "story_ids": [
+    "story://Content-Private/content/ti-data/3-azuresqlmanagedinstance/a_azuresqlmanagedinstance"
+  ],
+  "permissions": ["everybody"],
+  "public_chapter_number": "EX003"
+}
