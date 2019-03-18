@@ -10,8 +10,8 @@ Each attendee will have a resource group with:
 
 - Cosmos DB
 - Azure Search  
-- Cognitive Services All-in-one instance, S0 Standard
-- App Service Plan
+- Cognitive Services All-in-one instance (S0 Standard)
+- App Service Plan (associated with Function App)
 - Azure Function App
 - Translator Text (S1 Standard)
 
