@@ -68,7 +68,7 @@ In this task, you will quickly set up your ADLS Gen2 filesystem using a Databric
 
    ![Import is highlighted in the context menu for the Shared workspace in Databricks.](media/databricks-workspace-shared-import.png "Import")
 
-6. On the Import Notebooks dialog, select **Browse** and select the **`Tech-Immersion.dbc`** file located in the `C:\lab-files\` folder on your lab VM, and then select **Import**.
+6. On the Import Notebooks dialog, select **Browse** and select the **`Tech-Immersion.dbc`** file located in the `C:\lab-files\data\4` folder on your lab VM, and then select **Import**.
 
    ![The Import Notebooks dialog is displayed, with the `Tech-Immersion.dbc` file listed in the import box.](media/databricks-workspace-import-notebooks.png "Import notebooks")
 
@@ -118,7 +118,7 @@ The data generator console application creates and sends simulated vehicle senso
 
 In this task, you will configure and run the data generator to save simulated vehicle telemetry data to a `telemetry` collection in Cosmos DB.
 
-1. Open Windows Explorer and navigate to `C:\lab-files\TelemetryGenerator`. Open `appsettings.json` with a text editor, such as Notepad.exe.
+1. Open Windows Explorer and navigate to `C:\lab-files\data\4\TelemetryGenerator`. Open `appsettings.json` with a text editor, such as Notepad.exe.
 
     ![The `appsettings.json` file is highlighted in the C:\lab-files\data\4\TelemetryGenerator folder.](media/windows-explorer-appsettings-json.png "Windows explorer")
 
@@ -159,7 +159,7 @@ In this task, you will configure and run the data generator to save simulated ve
 
 8. Save the `appsettings.json` file.
 
-9. In your open Windows Explorer window, locate and double-click the `TransactionGenerator.exe` file (located in the same `C:\lab-files\TelemetryGenerator` folder as `appsettings.json`) to launch the console application.
+9. In your open Windows Explorer window, locate and double-click the `TransactionGenerator.exe` file (located in the same `C:\lab-files\data\4\TelemetryGenerator` folder as `appsettings.json`) to launch the console application.
 
     ![Screenshot of the console window.](media/telemetry-generator-console.png "Console window")
 
@@ -350,11 +350,11 @@ In this task, you will use Power BI Desktop to read data from Azure SQL DW to cr
 
 ## Wrap-up
 
-Like many organizations, ContosoAuto generates data from numerous system, each of which has its own location and format, including structured, unstructured, and semi-structured data. They would like the ability to combine and analyze these disparate datasets in order to gain actionable insights that can help them operate their business more efficiently.
+In this experience, ​​you used Azure Data Factory (ADF), Azure Databricks, and Azure SQL Data Warehouse (SQL DW)  together to build a modern data warehouse.
 
-In this experience, ​​you will see how Azure Data Factory (ADF), Azure Databricks, and Azure SQL Data Warehouse (SQL DW) can be used together to build a modern data warehouse. You will start by using Azure Data Factory (ADF) to automate the movement of data in various formats gathered from various sources, including Cosmos DB, into a centralized repository, Azure Data Lake Storage Gen2 (ADLS Gen2) in this case. You will then use Azure Databricks to prepare and analyze those data, and finally write the aggregations to Azure SQL Data Warehouse (SQL DW).
+You started by using Azure Data Factory (ADF) to automate the movement of data in various formats gathered from various sources, including Cosmos DB, into Azure Data Lake Storage Gen2 (ADLS Gen2). You then used Azure Databricks to prepare, analyze and visualize those data. Next, you used Spark Structured Streaming, in connection with the Azure Cosmos DB Spark Connector, to query streaming data from the Cosmos DB Change Feed, demonstrating how you can easily include near real-time data in your queries and aggregations in Databricks. You wrote aggregations of both static and streaming data into Azure SQL Data Warehouse (SQL DW).
 
-As part of the process, you will also use Databricks to connect to the Cosmos DB Change Feed to stream near-real-time vehicle telemetry data directly into your SQL DW using Spark Structured Streaming.
+You ended the modern data warehouse experience by using Power BI Desktop to connect to your SQL DW, and building a dashboard to provide visualizations of vehicle telemetry data.
 
 ## Additional resources and more information
 
@@ -363,8 +363,9 @@ To continue learning and expand your understanding of building modern data wareh
 1. [More information about Azure SQL Data Warehouse](https://azure.microsoft.com/en-us/services/sql-data-warehouse/)
 2. [Azure SQL Data Warehouse documentation](https://docs.microsoft.com/en-us/azure/sql-data-warehouse/)
 3. [More information about Azure Data Factory](https://azure.microsoft.com/en-us/services/data-factory/)
-4. [Azure Data Factory documentation](https://docs.microsoft.com/en-us/azure/data-factory/)
-5. [More information about Azure Databricks](https://azure.microsoft.com/en-us/services/databricks/)
-6. [Azure Databricks documentation](https://docs.microsoft.com/en-us/azure/azure-databricks/)
-7. [Power BI product page](https://powerbi.microsoft.com/en-us/)
-8. [Power BI documentation](https://docs.microsoft.com/en-us/power-bi/)
+4. [Modern data warehouse architecture](https://azure.microsoft.com/en-us/solutions/architecture/modern-data-warehouse/)
+5. [Azure Data Factory documentation](https://docs.microsoft.com/en-us/azure/data-factory/)
+6. [More information about Azure Databricks](https://azure.microsoft.com/en-us/services/databricks/)
+7. [Azure Databricks documentation](https://docs.microsoft.com/en-us/azure/azure-databricks/)
+8. [Power BI product page](https://powerbi.microsoft.com/en-us/)
+9. [Power BI documentation](https://docs.microsoft.com/en-us/power-bi/)
