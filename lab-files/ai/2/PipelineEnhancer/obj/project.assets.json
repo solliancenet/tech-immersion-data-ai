@@ -3792,11 +3792,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Y:\\tech-immersion-data-ai\\lab-files\\CognitiveSearch\\PipelineEnhancer\\PipelineEnhancer.csproj",
+      "projectUniqueName": "Y:\\tech-immersion-data-ai\\lab-files\\ai\\2\\PipelineEnhancer\\PipelineEnhancer.csproj",
       "projectName": "PipelineEnhancer",
-      "projectPath": "Y:\\tech-immersion-data-ai\\lab-files\\CognitiveSearch\\PipelineEnhancer\\PipelineEnhancer.csproj",
+      "projectPath": "Y:\\tech-immersion-data-ai\\lab-files\\ai\\2\\PipelineEnhancer\\PipelineEnhancer.csproj",
       "packagesPath": "C:\\Users\\Kyle\\.nuget\\packages\\",
-      "outputPath": "Y:\\tech-immersion-data-ai\\lab-files\\CognitiveSearch\\PipelineEnhancer\\obj\\",
+      "outputPath": "Y:\\tech-immersion-data-ai\\lab-files\\ai\\2\\PipelineEnhancer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -3816,8 +3816,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "Y:\\tech-immersion-data-ai\\lab-files\\CognitiveSearch\\Search.Common\\Search.Common.csproj": {
-              "projectPath": "Y:\\tech-immersion-data-ai\\lab-files\\CognitiveSearch\\Search.Common\\Search.Common.csproj"
+            "Y:\\tech-immersion-data-ai\\lab-files\\ai\\2\\Search.Common\\Search.Common.csproj": {
+              "projectPath": "Y:\\tech-immersion-data-ai\\lab-files\\ai\\2\\Search.Common\\Search.Common.csproj"
             }
           }
         }
