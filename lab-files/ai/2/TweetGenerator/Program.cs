@@ -22,7 +22,7 @@ namespace TweetGenerator
 
         private const string DatabaseName = "ContosoAuto";
         private const string CollectionName = "tweets";
-        private const string PartitionKey = "/user/location";
+        private const string PartitionKey = "user/location";
 
         private static readonly object LockObject = new object();
         // AutoResetEvent to signal when to exit the application.
@@ -351,11 +351,11 @@ namespace TweetGenerator
             // Use the recommended indexing policy which supports range queries/sorting on strings.
             collectionDefinition.IndexingPolicy = new IndexingPolicy(new RangeIndex(DataType.String) { Precision = -1 });
 
-            // Create with a throughput of 15000 RU/s.
+            // Create with a throughput of 1000 RU/s.
             await _cosmosDbClient.CreateDocumentCollectionIfNotExistsAsync(
                 UriFactory.CreateDatabaseUri(DatabaseName),
                 collectionDefinition,
-                new RequestOptions { OfferThroughput = 15000 });
+                new RequestOptions { OfferThroughput = 1000 });
         }
 
         /// <summary>
