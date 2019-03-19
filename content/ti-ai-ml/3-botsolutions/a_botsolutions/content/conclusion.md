@@ -11,7 +11,7 @@ To recap, you experienced:
 5. Exploring LUIS to see how intents, entities, and utterances are stored and relate to one another.
 6. Viewing usage reports in LUIS to see how users are sending commands and how those commands translate to the most-used intents and entities, giving you insight into where to make improvements.
 
-## Next steps
+## Additional resources and more information
 
 The Virtual Assistant solution accelerator is a great starting point for adding many new skills or updating existing ones to your bot. To address some of Contoso Auto's requirements, you may consider doing the following:
 

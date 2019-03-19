@@ -9,7 +9,7 @@ To recap, you experienced:
 - Ingesting processed data with Event Hubs and querying and reshaping that data with Azure Stream Analytics, then sending it to Power BI for reporting.
 - Rapidly creating a real-time dashboard in Power BI with interesting visualizations to view and explore vehicle anomaly data.
 
-## Resources and more information
+## Additional resources and more information
 
 - [Introduction to Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction)
 - [Overview of the Cosmos DB change feed](https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed)
