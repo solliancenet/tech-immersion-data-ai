@@ -1,0 +1,11 @@
+{
+    "$schema": "https://immtest-web.azurewebsites.net/schemas/0.0.6/ImmersionExperienceMetadata.json",
+    "unique_id": "5a883a24-dbca-4405-9ca0-446ce9a9037b",
+    "title": "Day 2, Experience 4 - Making deep learning portable with ONNX",
+    "description": "-",
+    "story_ids": [
+        "story://Content-Private/content/ti-ai-ml/4-deeplearningonnx/a_deeplearningonnx"
+    ],
+    "permissions": ["everybody"],
+    "public_chapter_number": "EX004"
+}

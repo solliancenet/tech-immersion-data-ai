@@ -1,0 +1,11 @@
+{
+    "$schema": "https://immtest-web.azurewebsites.net/schemas/0.0.6/ImmersionExperienceMetadata.json",
+    "unique_id": "a529b747-1d25-417a-a21b-b9eef81b2030",
+    "title": "Day 2, Experience 1 - Better models made easy with Automated Machine Learning",
+    "description": "-",
+    "story_ids": [
+        "story://Content-Private/content/ti-ai-ml/1-automatedmachinelearning/a_automatedmachinelearning"
+    ],
+    "permissions": ["everybody"],
+    "public_chapter_number": "EX001"
+}

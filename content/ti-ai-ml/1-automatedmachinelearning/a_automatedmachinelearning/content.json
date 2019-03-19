@@ -1,24 +1,20 @@
 {
   "$schema": "https://immtest-web.azurewebsites.net/schemas/0.0.6/ImmersionStoryMetadata.json",
-  "unique_id": "c51f0863-6284-44ec-8031-b41d1d8a2919",
+  "unique_id": "3f1ea281-cf89-4e70-9263-09ba8cbf78af",
   "permissions": ["everybody"],
   "audiences": ["IT Administrator & Implementer"],
   "topics": ["Azure", "Machine Learning", "Artificial Intelligence", "Data"],
   "products": [
     "Microsoft Azure Portal",
-    "Azure Active Directory",
-    "Azure Web App",
-    "Azure Storage Account",
-    "Azure Application Insights",
-    "Azure Cosmos DB",
-    "Azure Cognitive Services - Language Understanding (LUIS)"
+    "Azure Databricks",
+    "Azure Machine Learning"
   ],
   "jobroles": ["Data Architect", "Data Engineer", "Data Scientist"],
   "level": "200",
   "duration_minutes": 45,
   "access_time_minutes": 43200,
-  "title": "Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator",
-  "short_title": "Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator",
+  "title": "Better models made easy with Automated Machine Learning",
+  "short_title": "Better models made easy with Automated Machine Learning",
   "description": "",
   "regions": ["westus", "westus2", "eastus2"],
   "date_created": "2019-03-18",
@@ -43,5 +39,5 @@
   "additional_azuread_accounts": 0,
   "requires_rsa_keypair": 0,
   "has_personas": false,
-  "public_lab_number": "TI-AI300000"
+  "public_lab_number": "TI-AI100000"
 }
