@@ -1,0 +1,9 @@
+\\Mac\Home\tech-immersion-data-ai\lab-files\TechImmersion.Common\bin\Debug\netstandard2.0\TechImmersion.Common.deps.json
+\\Mac\Home\tech-immersion-data-ai\lab-files\TechImmersion.Common\bin\Debug\netstandard2.0\TechImmersion.Common.dll
+\\Mac\Home\tech-immersion-data-ai\lab-files\TechImmersion.Common\bin\Debug\netstandard2.0\TechImmersion.Common.pdb
+\\Mac\Home\tech-immersion-data-ai\lab-files\TechImmersion.Common\obj\Debug\netstandard2.0\TechImmersion.Common.csprojAssemblyReference.cache
+\\Mac\Home\tech-immersion-data-ai\lab-files\TechImmersion.Common\obj\Debug\netstandard2.0\TechImmersion.Common.csproj.CoreCompileInputs.cache
+\\Mac\Home\tech-immersion-data-ai\lab-files\TechImmersion.Common\obj\Debug\netstandard2.0\TechImmersion.Common.AssemblyInfoInputs.cache
+\\Mac\Home\tech-immersion-data-ai\lab-files\TechImmersion.Common\obj\Debug\netstandard2.0\TechImmersion.Common.AssemblyInfo.cs
+\\Mac\Home\tech-immersion-data-ai\lab-files\TechImmersion.Common\obj\Debug\netstandard2.0\TechImmersion.Common.dll
+\\Mac\Home\tech-immersion-data-ai\lab-files\TechImmersion.Common\obj\Debug\netstandard2.0\TechImmersion.Common.pdb

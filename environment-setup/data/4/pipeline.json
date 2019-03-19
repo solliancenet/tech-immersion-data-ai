@@ -1,0 +1,150 @@
+{
+    "name": "CopyData",
+    "properties": {
+        "activities": [
+            {
+                "name": "CopyVehicleInfoFromStorage",
+                "type": "Copy",
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [
+                    {
+                        "name": "Source",
+                        "value": "day1-exp3-data/@{concat('VehicleInfo', '.csv')}"
+                    },
+                    {
+                        "name": "Destination",
+                        "value": "contosoauto/@{concat('VehicleInfo','.csv')}"
+                    }
+                ],
+                "typeProperties": {
+                    "source": {
+                        "type": "BlobSource",
+                        "recursive": true
+                    },
+                    "sink": {
+                        "type": "AzureBlobFSSink"
+                    },
+                    "enableStaging": false
+                },
+                "inputs": [
+                    {
+                        "referenceName": "AzureBlob",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "FileName": "VehicleInfo"
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "AdlsGen2Vehicles",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "FileName": "VehicleInfo"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "CopyTelemetryDataFromCosmos",
+                "type": "Copy",
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [
+                    {
+                        "name": "Source",
+                        "value": "telemetry"
+                    },
+                    {
+                        "name": "Destination",
+                        "value": "contosoauto/VehicleTelemetry.json"
+                    }
+                ],
+                "typeProperties": {
+                    "source": {
+                        "type": "DocumentDbCollectionSource",
+                        "query": "SELECT c.vin, c.city, c.outsideTemperature, c.engineTemperature, c.speed, c.fuel, c.engineoil, c.tirepressure, c.odometer, c.accelerator_pedal_position, c.parking_brake_status, c.brake_pedal_status, c.headlamp_status, c.transmission_gear_position, c.ignition_status, c.windshield_wiper_status, c.abs, c.timestamp FROM c",
+                        "nestingSeparator": ""
+                    },
+                    "sink": {
+                        "type": "AzureBlobFSSink"
+                    },
+                    "enableStaging": false
+                },
+                "inputs": [
+                    {
+                        "referenceName": "TelemetryCosmosDb",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "AdlsGen2VehicleTelemetry",
+                        "type": "DatasetReference"
+                    }
+                ]
+            },
+            {
+                "name": "CopyCarDataFromStorage",
+                "type": "Copy",
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [
+                    {
+                        "name": "Source",
+                        "value": "day1-exp3-data/@{concat('Cars', '.csv')}"
+                    },
+                    {
+                        "name": "Destination",
+                        "value": "contosoauto/@{concat('Cars','.csv')}"
+                    }
+                ],
+                "typeProperties": {
+                    "source": {
+                        "type": "BlobSource",
+                        "recursive": true
+                    },
+                    "sink": {
+                        "type": "AzureBlobFSSink"
+                    },
+                    "enableStaging": false
+                },
+                "inputs": [
+                    {
+                        "referenceName": "AzureBlob",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "FileName": "Cars"
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "AdlsGen2Vehicles",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "FileName": "Cars"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}
