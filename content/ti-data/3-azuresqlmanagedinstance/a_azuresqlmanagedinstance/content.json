@@ -4,7 +4,13 @@
   "permissions": ["everybody"],
   "audiences": ["IT Administrator & Implementer"],
   "topics": ["Azure", "Featured", "Management Tools"],
-  "products": ["Microsoft Azure Portal", "SQL Managed Instance"],
+  "products": [
+    "Microsoft Azure Portal",
+    "Azure SQL Database Managed Instance",
+    "Microsoft Data Migration Assistant",
+    "Azure App Service",
+    "SQL Server 2008 R2"
+  ],
   "jobroles": ["IT Infrastructure Specialist", "Systems Administrator"],
   "level": "200",
   "duration_minutes": 45,
@@ -15,7 +21,6 @@
   "regions": ["westus", "westus2", "eastus2"],
   "date_created": "2019-03-18",
   "story_type": "HandsOnLab",
-
   "persona_role": "DBA",
   "resources": {},
   "presentation_mode": "html5Rdp",
