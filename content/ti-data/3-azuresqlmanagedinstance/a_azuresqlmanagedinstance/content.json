@@ -9,7 +9,8 @@
     "Azure SQL Database Managed Instance",
     "Microsoft Data Migration Assistant",
     "Azure App Service",
-    "SQL Server 2008 R2"
+    "SQL Server 2008 R2",
+    "SQL Server Management Studio"
   ],
   "jobroles": ["IT Infrastructure Specialist", "Systems Administrator"],
   "level": "200",
