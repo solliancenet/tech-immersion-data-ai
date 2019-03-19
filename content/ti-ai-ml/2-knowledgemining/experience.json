@@ -1,0 +1,11 @@
+{
+    "$schema": "https://immtest-web.azurewebsites.net/schemas/0.0.6/ImmersionExperienceMetadata.json",
+    "unique_id": "bbe402a2-ffd6-4de0-b35b-4c120f4772cf",
+    "title": "Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search",
+    "description": "-",
+    "story_ids": [
+        "story://Content-Private/content/ti-ai-ml/2-knowledgemining/a_knowledgemining"
+    ],
+    "permissions": ["everybody"],
+    "public_chapter_number": "EX002"
+}

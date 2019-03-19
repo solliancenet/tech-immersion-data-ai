@@ -1,0 +1,20 @@
+# Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search
+
+## Technology overview
+
+Cognitive search is an AI feature in Azure Search, used to extract text from images, blobs, and other unstructured data sources - enriching the content to make it more searchable in an Azure Search index. Extraction and enrichment are implemented through cognitive skills attached to an indexing pipeline. AI enrichments are supported in the following ways:
+
+- **Natural language processing** skills include [entity recognition](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-entity-recognition), [language detection](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-language-detection), [key phrase extraction](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-keyphrases), text manipulation, and [sentiment detection](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-sentiment). With these skills, unstructured text can assume new forms, mapped as searchable and filterable fields in an index.
+- **Image processing** skills include [Optical Character Recognition (OCR)](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-ocr) and identification of [visual features](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-image-analysis), such as facial detection, image interpretation, image recognition (famous people and landmarks) or attributes like colors or image orientation. You can create text-representations of image content, searchable using all the query capabilities of Azure Search.
+
+![Cognitive Search diagram](imgs/cognitive-search-diagram.png "Cognitive Search")
+
+Cognitive skills in Azure Search are based on machine learning models in Cognitive Services APIs: [Computer Vision](https://docs.microsoft.com/azure/cognitive-services/computer-vision/) and [Text Analysis](https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview).
+
+Natural language and image processing is applied during the data ingestion phase, with results becoming part of a document's composition in a searchable index in Azure Search. Data is sourced as an Azure data set and then pushed through an indexing pipeline using whichever built-in skills you need. The architecture is extensible so if the [built-in skills](https://docs.microsoft.com/en-us/azure/search/cognitive-search-predefined-skills) are not sufficient, you can create and attach [custom skills](https://docs.microsoft.com/en-us/azure/search/cognitive-search-create-custom-skill-example) to integrate custom processing. Examples might be a custom entity module or document classifier targeting a specific domain such as finance, scientific publications, or medicine.
+
+## Scenario overview
+
+ContosoAuto is interested in using their unstructured data to gain further insights into how customers perceive their business, and the key things their customers are talking about. They are looking for a pilot that would use tweets streamed from Twitter into a `tweets` collection in their Cosmos DB instance to better understand what customers are saying about their organization on the platform. They are also looking to get a better understanding of whether the trend of messages is positive, negative, or neutral by performing sentiment analysis on the tweets.
+
+In this experience, you will learn the mechanics of using Cognitive Search and Knowledge Mining to yield rapid insights into unstructured data. Using a combination of preconfigured and custom cognitive skills in Azure Search, you will create a Cognitive Search indexing pipeline that enriches source data in route to an index. Cognitive skills are natural language processing (NLP) and image analysis operations that extract text and text representations of an image, detect language, entities, key phrases, and more. The end result is rich additional content in an Azure Search index, created by a cognitive search indexing pipeline. The output is a full-text searchable index on Azure Search.

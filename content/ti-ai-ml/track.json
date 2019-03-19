@@ -5,10 +5,10 @@
   "short_title": "Tech Immersion 2019 Experience: AI & Machine Learning",
   "description": "-",
   "experience_ids": [
-    "experience://Content-Private/content/ti-data/1-automatedmachinelearning",
-    "experience://Content-Private/content/ti-data/2-knowledgemining",
-    "experience://Content-Private/content/ti-data/3-botsolutions",
-    "experience://Content-Private/content/ti-data/4-deeplearningonnx"
+    "experience://Content-Private/content/ti-ai-ml/1-automatedmachinelearning",
+    "experience://Content-Private/content/ti-ai-ml/2-knowledgemining",
+    "experience://Content-Private/content/ti-ai-ml/3-botsolutions",
+    "experience://Content-Private/content/ti-ai-ml/4-deeplearningonnx"
   ],
   "solution_area": "dataandai",
   "category": "data",
