@@ -7,9 +7,14 @@
   "products": [
     "Microsoft Azure Portal",
     "Azure Cosmos DB",
+    "Azure Cosmos DB Spark connector",
+    "Azure SQL Data Warehouse connector",
+    "Azure Data Lake Storage Gen2",
     "Azure Data Factory",
     "Azure Databricks",
     "Azure SQL Data Warehouse",
+    "Databricks Delta",
+    "Spark Structured Streaming",
     "Power BI Desktop"
   ],
   "jobroles": ["IT Infrastructure Specialist", "Systems Administrator"],
