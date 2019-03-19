@@ -360,12 +360,14 @@ You ended the modern data warehouse experience by using Power BI Desktop to conn
 
 To continue learning and expand your understanding of building modern data warehouses, use the links below.
 
-1. [More information about Azure SQL Data Warehouse](https://azure.microsoft.com/en-us/services/sql-data-warehouse/)
-2. [Azure SQL Data Warehouse documentation](https://docs.microsoft.com/en-us/azure/sql-data-warehouse/)
-3. [More information about Azure Data Factory](https://azure.microsoft.com/en-us/services/data-factory/)
-4. [Modern data warehouse architecture](https://azure.microsoft.com/en-us/solutions/architecture/modern-data-warehouse/)
-5. [Azure Data Factory documentation](https://docs.microsoft.com/en-us/azure/data-factory/)
-6. [More information about Azure Databricks](https://azure.microsoft.com/en-us/services/databricks/)
-7. [Azure Databricks documentation](https://docs.microsoft.com/en-us/azure/azure-databricks/)
-8. [Power BI product page](https://powerbi.microsoft.com/en-us/)
-9. [Power BI documentation](https://docs.microsoft.com/en-us/power-bi/)
+- [Azure Modern Data Warehouse](https://azure.microsoft.com/en-us/solutions/data-warehouse/)
+- [Introduction to Azure SQL Data Warehouse](https://www.youtube.com/watch?v=7MDCWgxPnVY) (video)
+- [More information about Azure SQL Data Warehouse](https://azure.microsoft.com/en-us/services/sql-data-warehouse/)
+- [Azure SQL Data Warehouse documentation](https://docs.microsoft.com/en-us/azure/sql-data-warehouse/)
+- [More information about Azure Data Factory](https://azure.microsoft.com/en-us/services/data-factory/)
+- [Modern data warehouse architecture](https://azure.microsoft.com/en-us/solutions/architecture/modern-data-warehouse/)
+- [Azure Data Factory documentation](https://docs.microsoft.com/en-us/azure/data-factory/)
+- [More information about Azure Databricks](https://azure.microsoft.com/en-us/services/databricks/)
+- [Azure Databricks documentation](https://docs.microsoft.com/en-us/azure/azure-databricks/)
+- [Power BI product page](https://powerbi.microsoft.com/en-us/)
+- [Power BI documentation](https://docs.microsoft.com/en-us/power-bi/)
