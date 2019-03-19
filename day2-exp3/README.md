@@ -1,6 +1,8 @@
 # Day 2, Experience 3 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator
 
 - [Day 2, Experience 3 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator](#day-2-experience-3---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator)
+  - [Technology overview](#technology-overview)
+  - [Scenario overview](#scenario-overview)
   - [Task 1: Sign in to LUIS to retrieve the Authoring Key](#task-1-sign-in-to-luis-to-retrieve-the-authoring-key)
   - [Task 2: Register a new Azure App](#task-2-register-a-new-azure-app)
   - [Task 3: Deployment](#task-3-deployment)
@@ -8,7 +10,11 @@
   - [Task 5: Open the generated bot file in the Bot Framework Emulator](#task-5-open-the-generated-bot-file-in-the-bot-framework-emulator)
   - [Task 6: Open LUIS to view the generated apps](#task-6-open-luis-to-view-the-generated-apps)
   - [Wrap-up](#wrap-up)
-  - [Next steps](#next-steps)
+  - [Additional resources and more information](#additional-resources-and-more-information)
+
+## Technology overview
+
+## Scenario overview
 
 Contoso Auto is interested in building bots to help automate certain tasks in a way that feels similar to dealing with a real person. The motivation for this is to add self-service capabilities in their automobiles that will help drivers and passengers interact with their vehicles in a more natural way, through voice-driven commands and simple visual feedback and prompts, without needing to involve a live person. They would like to build a proof of concept that will support their users through speech actions, such as controlling the vehicle's climate settings and radio. As a stretch goal, they would like to take this capability further by automatically monitoring car sensor data and alerting the driver when there is a potential problem with the vehicle, offering an incentive such as a gift card when the driver selects a recommended service and makes an appointment with a service center.
 
@@ -581,7 +587,7 @@ To recap, you experienced:
 5. Exploring LUIS to see how intents, entities, and utterances are stored and relate to one another.
 6. Viewing usage reports in LUIS to see how users are sending commands and how those commands translate to the most-used intents and entities, giving you insight into where to make improvements.
 
-## Next steps
+## Additional resources and more information
 
 The Virtual Assistant solution accelerator is a great starting point for adding many new skills or updating existing ones to your bot. To address some of Contoso Auto's requirements, you may consider doing the following:
 
