@@ -440,7 +440,7 @@ In this task, you will configure the Function App with the Azure Cosmos DB and E
 
 7.  Select **Add new setting** underneath the new application setting you just added to add a new one.
 
-8.  Enter **EventHubsConnectionString** into the **Name** field, then paste your Event Hubs connection string into the **Value** field. If you cannot locate your connection string, refer to Task 2, step 17.
+8.  Enter **EventHubsConnectionString** into the **Name** field, then paste your Event Hubs connection string into the **Value** field. This is the connection string for the **Write** shared access policy you created. If you cannot locate your connection string, refer to Task 2, step 17.
 
     ![The EventHubsConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-event-hubs.png 'Application settings')
 
@@ -454,7 +454,7 @@ The data generator console application creates and sends simulated vehicle senso
 
 In this task, you will open the lab solution in Visual Studio, publish the Function App, and configure and run the data generator. The data generator saves simulated vehicle telemetry data to Cosmos DB, which triggers the Azure function to run and process the data, sending it to Event Hubs, prompting your Stream Analytics job to aggregate and analyze the enriched data and send it to Power BI. The final step will be to create the Power BI report in the task that follows.
 
-1.  Open Windows Explorer and navigate to `C:\lab-files`. Double-click on **TechImmersion.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure credentials you are using for this lab.
+1.  Open Windows Explorer and navigate to `C:\lab-files\data\2`. Double-click on **TechImmersion.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure credentials you are using for this lab.
 
     ![The TechImmersion.sln file is highlighted in the C:\tech-immersion folder.](media/vs-solution.png 'Windows explorer')
 
