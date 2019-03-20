@@ -47,10 +47,6 @@
             "type": "string",
             "defaultValue": "contosoauto"
         },
-        "ADLSGen2_properties_typeProperties_url": {
-            "type": "string",
-            "defaultValue": "https://techimmersionadlsgen2.dfs.core.windows.net"
-        },
         "AzureBlob_properties_typeProperties_fileName": {
             "type": "string",
             "defaultValue": "@concat(dataset().FileName, '.csv')"
@@ -58,6 +54,10 @@
         "AzureBlob_properties_typeProperties_folderPath": {
             "type": "string",
             "defaultValue": "day1-exp3-data"
+        },
+        "ADLSGen2_properties_typeProperties_url": {
+            "type": "string",
+            "defaultValue": "https://techimmersionadlsgen2.dfs.core.windows.net"
         }
     },
     "variables": {
@@ -308,6 +308,43 @@
             ]
         },
         {
+            "name": "[concat(parameters('factoryName'), '/AzureBlob')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "FileName": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "type": "AzureBlob",
+                "typeProperties": {
+                    "format": {
+                        "type": "TextFormat",
+                        "columnDelimiter": ",",
+                        "rowDelimiter": "",
+                        "nullValue": "",
+                        "treatEmptyAsNull": true,
+                        "skipLineCount": 0,
+                        "firstRowAsHeader": true
+                    },
+                    "fileName": {
+                        "value": "[parameters('AzureBlob_properties_typeProperties_fileName')]",
+                        "type": "Expression"
+                    },
+                    "folderPath": "[parameters('AzureBlob_properties_typeProperties_folderPath')]"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
+            ]
+        },
+        {
             "name": "[concat(parameters('factoryName'), '/SqlServer2019')]",
             "type": "Microsoft.DataFactory/factories/linkedServices",
             "apiVersion": "2018-06-01",
@@ -386,43 +423,6 @@
                 }
             },
             "dependsOn": []
-        },
-        {
-            "name": "[concat(parameters('factoryName'), '/AzureBlob')]",
-            "type": "Microsoft.DataFactory/factories/datasets",
-            "apiVersion": "2018-06-01",
-            "properties": {
-                "linkedServiceName": {
-                    "referenceName": "AzureBlobStorage",
-                    "type": "LinkedServiceReference"
-                },
-                "parameters": {
-                    "FileName": {
-                        "type": "String"
-                    }
-                },
-                "annotations": [],
-                "type": "AzureBlob",
-                "typeProperties": {
-                    "format": {
-                        "type": "TextFormat",
-                        "columnDelimiter": ",",
-                        "rowDelimiter": "",
-                        "nullValue": "",
-                        "treatEmptyAsNull": true,
-                        "skipLineCount": 0,
-                        "firstRowAsHeader": true
-                    },
-                    "fileName": {
-                        "value": "[parameters('AzureBlob_properties_typeProperties_fileName')]",
-                        "type": "Expression"
-                    },
-                    "folderPath": "[parameters('AzureBlob_properties_typeProperties_folderPath')]"
-                }
-            },
-            "dependsOn": [
-                "[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
-            ]
         },
         {
             "name": "[concat(parameters('factoryName'), '/AzureBlobStorage')]",

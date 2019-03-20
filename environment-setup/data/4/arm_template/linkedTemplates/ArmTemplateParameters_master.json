@@ -35,14 +35,20 @@
         "AdlsGen2Vehicles_properties_typeProperties_folderPath": {
             "value": "contosoauto"
         },
-        "ADLSGen2_properties_typeProperties_url": {
-            "value": "https://techimmersionadlsgen2.dfs.core.windows.net"
-        },
         "AzureBlob_properties_typeProperties_fileName": {
             "value": "@concat(dataset().FileName, '.csv')"
         },
         "AzureBlob_properties_typeProperties_folderPath": {
             "value": "day1-exp3-data"
+        },
+        "ADLSGen2_properties_typeProperties_url": {
+            "value": "https://techimmersionadlsgen2.dfs.core.windows.net"
+        },
+        "containerUri": {
+            "value": ""
+        },
+        "containerSasToken": {
+            "value": ""
         }
     }
 }
