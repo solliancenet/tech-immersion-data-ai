@@ -16,7 +16,7 @@
   - [Task 5: Publish Function App and run data generator](#task-5-publish-function-app-and-run-data-generator)
   - [Task 6: Create Power BI dashboard](#task-6-create-power-bi-dashboard)
   - [Wrap-up](#wrap-up)
-  - [Resources and more information](#resources-and-more-information)
+  - [Additional resources and more information](#additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -641,7 +641,7 @@ To recap, you experienced:
 - Ingesting processed data with Event Hubs and querying and reshaping that data with Azure Stream Analytics, then sending it to Power BI for reporting.
 - Rapidly creating a real-time dashboard in Power BI with interesting visualizations to view and explore vehicle anomaly data.
 
-## Resources and more information
+## Additional resources and more information
 
 - [Introduction to Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction)
 - [Overview of the Cosmos DB change feed](https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed)

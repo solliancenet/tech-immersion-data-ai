@@ -1,7 +1,7 @@
 # Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters
 
 - [Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters](#day-1-experience-1---handling-big-data-with-sql-server-2019-big-data-clusters)
-  - [SQL Server 2019 overview](#sql-server-2019-overview)
+  - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
   - [Experience requirements](#experience-requirements)
   - [Before the lab: Connecting to SQL Server 2019](#before-the-lab-connecting-to-sql-server-2019)
@@ -13,9 +13,9 @@
   - [Task 4: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS](#task-4-identify-pii-and-gdpr-related-compliance-issues-using-data-discovery--classification-in-ssms)
   - [Task 5: Fix compliance issues with dynamic data masking](#task-5-fix-compliance-issues-with-dynamic-data-masking)
   - [Wrap-up](#wrap-up)
-  - [Resources and more information](#resources-and-more-information)
+  - [Additional resources and more information](#additional-resources-and-more-information)
 
-## SQL Server 2019 overview
+## Technology overview
 
 SQL Server 2019 brings innovative security and compliance features, industry leading performance, mission-critical availability, and advanced analytics to all data workloads, now with support for big data built-in.
 
@@ -618,7 +618,7 @@ To recap, you experienced:
 4. Using the [SQL Data Discovery & Classification](https://docs.microsoft.com/sql/relational-databases/security/sql-data-discovery-and-classification?view=sql-server-ver15) tool to identify and tag PII and GDPR-related compliance issues.
 5. Used dynamic data masking to automatically protect sensitive data from unauthorized users.
 
-## Resources and more information
+## Additional resources and more information
 
 - [What's new in SQL Server 2019 preview](https://docs.microsoft.com/en-us/sql/sql-server/what-s-new-in-sql-server-ver15?view=sql-server-ver15)
 - [SQL Server 2019 big data clusters overview and architecture](https://docs.microsoft.com/en-us/sql/big-data-cluster/big-data-cluster-overview?view=sql-server-ver15)

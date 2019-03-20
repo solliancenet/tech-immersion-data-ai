@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "value": "tech-immersion-data-factory"
+        },
+        "SqlServer2019_connectionString": {
+            "value": ""
+        },
+        "SqlServer2019SalesDb_connectionString": {
+            "value": ""
+        },
+        "CosmosDb_connectionString": {
+            "value": ""
+        },
+        "ADLSGen2_accountKey": {
+            "value": ""
+        },
+        "AzureDatabricks_accessToken": {
+            "value": ""
+        },
+        "AzureBlobStorage_connectionString": {
+            "value": ""
+        },
+        "AdlsGen2VehicleTelemetry_properties_typeProperties_fileName": {
+            "value": "VehicleTelemetry.json"
+        },
+        "AdlsGen2VehicleTelemetry_properties_typeProperties_folderPath": {
+            "value": "contosoauto"
+        },
+        "AdlsGen2Vehicles_properties_typeProperties_fileName": {
+            "value": "@concat(dataset().FileName,'.csv')"
+        },
+        "AdlsGen2Vehicles_properties_typeProperties_folderPath": {
+            "value": "contosoauto"
+        },
+        "AzureBlob_properties_typeProperties_fileName": {
+            "value": "@concat(dataset().FileName, '.csv')"
+        },
+        "AzureBlob_properties_typeProperties_folderPath": {
+            "value": "day1-exp3-data"
+        },
+        "ADLSGen2_properties_typeProperties_url": {
+            "value": "https://techimmersionadlsgen2.dfs.core.windows.net"
+        },
+        "containerUri": {
+            "value": ""
+        },
+        "containerSasToken": {
+            "value": ""
+        }
+    }
+}
