@@ -1,0 +1,441 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory Name",
+            "defaultValue": "tech-immersion-data-factory"
+        },
+        "SqlServer2019_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'SqlServer2019'"
+        },
+        "SqlServer2019SalesDb_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'SqlServer2019SalesDb'"
+        },
+        "CosmosDb_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'CosmosDb'"
+        },
+        "ADLSGen2_accountKey": {
+            "type": "secureString",
+            "metadata": "Secure string for 'accountKey' of 'ADLSGen2'"
+        },
+        "AzureDatabricks_accessToken": {
+            "type": "secureString",
+            "metadata": "Secure string for 'accessToken' of 'AzureDatabricks'"
+        },
+        "AzureBlobStorage_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'AzureBlobStorage'"
+        },
+        "ADLSGen2_properties_typeProperties_url": {
+            "type": "string",
+            "defaultValue": "https://techimmersionadlsgen2.dfs.core.windows.net"
+        },
+        "AdlsGen2VehicleTelemetry_properties_typeProperties_fileName": {
+            "type": "string",
+            "defaultValue": "VehicleTelemetry.json"
+        },
+        "AdlsGen2VehicleTelemetry_properties_typeProperties_folderPath": {
+            "type": "string",
+            "defaultValue": "contosoauto"
+        },
+        "AdlsGen2Vehicles_properties_typeProperties_fileName": {
+            "type": "string",
+            "defaultValue": "@concat(dataset().FileName,'.csv')"
+        },
+        "AdlsGen2Vehicles_properties_typeProperties_folderPath": {
+            "type": "string",
+            "defaultValue": "contosoauto"
+        },
+        "AzureBlob_properties_typeProperties_fileName": {
+            "type": "string",
+            "defaultValue": "@concat(dataset().FileName, '.csv')"
+        },
+        "AzureBlob_properties_typeProperties_folderPath": {
+            "type": "string",
+            "defaultValue": "day1-exp3-data"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/SqlServer2019')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "SqlServer",
+                "typeProperties": {
+                    "connectionString": "[parameters('SqlServer2019_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SqlServer2019SalesDb')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "SqlServer",
+                "typeProperties": {
+                    "connectionString": "[parameters('SqlServer2019SalesDb_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CosmosDb')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "CosmosDb",
+                "typeProperties": {
+                    "connectionString": "[parameters('CosmosDb_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/ADLSGen2')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobFS",
+                "typeProperties": {
+                    "url": "[parameters('ADLSGen2_properties_typeProperties_url')]",
+                    "accountKey": {
+                        "type": "SecureString",
+                        "value": "[parameters('ADLSGen2_accountKey')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureDatabricks')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureDatabricks",
+                "typeProperties": {
+                    "domain": "https://eastus2.azuredatabricks.net",
+                    "accessToken": {
+                        "type": "SecureString",
+                        "value": "[parameters('AzureDatabricks_accessToken')]"
+                    },
+                    "newClusterNodeType": "Standard_DS4_v2",
+                    "newClusterNumOfWorker": "2:8",
+                    "newClusterSparkEnvVars": {
+                        "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+                    },
+                    "newClusterVersion": "5.2.x-scala2.11",
+                    "newClusterInitScripts": []
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureBlobStorage')]",
+            "type": "Microsoft.DataFactory/factories/linkedServices",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "type": "AzureBlobStorage",
+                "typeProperties": {
+                    "connectionString": "[parameters('AzureBlobStorage_connectionString')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/TelemetryCosmosDb')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "CosmosDb",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "DocumentDbCollection",
+                "typeProperties": {
+                    "collectionName": "telemetry"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/CosmosDb')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AdlsGen2VehicleTelemetry')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "ADLSGen2",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureBlobFSFile",
+                "typeProperties": {
+                    "format": {
+                        "type": "JsonFormat",
+                        "filePattern": "setOfObjects"
+                    },
+                    "fileName": "[parameters('AdlsGen2VehicleTelemetry_properties_typeProperties_fileName')]",
+                    "folderPath": "[parameters('AdlsGen2VehicleTelemetry_properties_typeProperties_folderPath')]"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/ADLSGen2')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AdlsGen2Vehicles')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "ADLSGen2",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "FileName": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "type": "AzureBlobFSFile",
+                "typeProperties": {
+                    "format": {
+                        "type": "TextFormat",
+                        "columnDelimiter": ",",
+                        "rowDelimiter": "",
+                        "nullValue": "",
+                        "treatEmptyAsNull": true,
+                        "skipLineCount": 0,
+                        "firstRowAsHeader": true
+                    },
+                    "fileName": {
+                        "value": "[parameters('AdlsGen2Vehicles_properties_typeProperties_fileName')]",
+                        "type": "Expression"
+                    },
+                    "folderPath": "[parameters('AdlsGen2Vehicles_properties_typeProperties_folderPath')]"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/ADLSGen2')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/AzureBlob')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorage",
+                    "type": "LinkedServiceReference"
+                },
+                "parameters": {
+                    "FileName": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "type": "AzureBlob",
+                "typeProperties": {
+                    "format": {
+                        "type": "TextFormat",
+                        "columnDelimiter": ",",
+                        "rowDelimiter": "",
+                        "nullValue": "",
+                        "treatEmptyAsNull": true,
+                        "skipLineCount": 0,
+                        "firstRowAsHeader": true
+                    },
+                    "fileName": {
+                        "value": "[parameters('AzureBlob_properties_typeProperties_fileName')]",
+                        "type": "Expression"
+                    },
+                    "folderPath": "[parameters('AzureBlob_properties_typeProperties_folderPath')]"
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyData')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "CopyVehicleInfoFromStorage",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "day1-exp3-data/@{concat('VehicleInfo', '.csv')}"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "contosoauto/@{concat('VehicleInfo','.csv')}"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "BlobSource",
+                                "recursive": true
+                            },
+                            "sink": {
+                                "type": "AzureBlobFSSink"
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "AzureBlob",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "FileName": "VehicleInfo"
+                                }
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "AdlsGen2Vehicles",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "FileName": "VehicleInfo"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "CopyTelemetryDataFromCosmos",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "telemetry"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "contosoauto/VehicleTelemetry.json"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "DocumentDbCollectionSource",
+                                "query": "SELECT c.vin, c.city, c.outsideTemperature, c.engineTemperature, c.speed, c.fuel, c.engineoil, c.tirepressure, c.odometer, c.accelerator_pedal_position, c.parking_brake_status, c.brake_pedal_status, c.headlamp_status, c.transmission_gear_position, c.ignition_status, c.windshield_wiper_status, c.abs, c.timestamp FROM c",
+                                "nestingSeparator": ""
+                            },
+                            "sink": {
+                                "type": "AzureBlobFSSink"
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "TelemetryCosmosDb",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "AdlsGen2VehicleTelemetry",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "CopyCarDataFromStorage",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "day1-exp3-data/@{concat('Cars', '.csv')}"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "contosoauto/@{concat('Cars','.csv')}"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "BlobSource",
+                                "recursive": true
+                            },
+                            "sink": {
+                                "type": "AzureBlobFSSink"
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "AzureBlob",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "FileName": "Cars"
+                                }
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "AdlsGen2Vehicles",
+                                "type": "DatasetReference",
+                                "parameters": {
+                                    "FileName": "Cars"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "annotations": []
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/datasets/AzureBlob')]",
+                "[concat(variables('factoryId'), '/datasets/AdlsGen2Vehicles')]",
+                "[concat(variables('factoryId'), '/datasets/TelemetryCosmosDb')]",
+                "[concat(variables('factoryId'), '/datasets/AdlsGen2VehicleTelemetry')]"
+            ]
+        }
+    ]
+}
