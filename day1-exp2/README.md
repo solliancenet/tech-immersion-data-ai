@@ -16,31 +16,37 @@
   - [Task 5: Publish Function App and run data generator](#task-5-publish-function-app-and-run-data-generator)
   - [Task 6: Create Power BI dashboard](#task-6-create-power-bi-dashboard)
   - [Wrap-up](#wrap-up)
-  - [Resources and more information](#resources-and-more-information)
+  - [Additional resources and more information](#additional-resources-and-more-information)
 
 ## Technology overview
 
 ### Azure Cosmos DB
 
-[Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db) was built from the ground up with global distribution and horizontal scale at its core. It offers turnkey [global distribution](https://docs.microsoft.com/en-us/azure/cosmos-db/distribute-data-globally) across any number of Azure regions by transparently scaling and replicating your data wherever your users are. You can [elastically scale](https://docs.microsoft.com/en-us/azure/cosmos-db/request-units) your reads and writes all around the globe and pay only for what you need. Azure Cosmos DB provides native support for NoSQL and OSS APIs including MongoDB, Cassandra, Gremlin and SQL, offers multiple well-defined consistency models, guarantees single-digit-millisecond read and write latencies at the 99th percentile, and guarantees 99.999 high availability with multi-homing anywhere in the world - [all backed by industry-leading, comprehensive service level agreements (SLAs)](https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/v1_2/).
+Develop high-concurrency, low-latency applications with Azure Cosmos DB, a fully managed database service that supports NoSQL APIs and can scale out [multi-master](https://docs.microsoft.com/en-us/azure/cosmos-db/multi-region-writer) workloads anywhere in the world. Ensure blazing fast performance with [industry-leading service level agreements (SLAs)](https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/v1_2/) for single-digit-millisecond reads and writes, data consistency and throughput, and 99.999% high availability. Transparent [horizontally-partitioning](https://docs.microsoft.com/en-us/azure/cosmos-db/partitioning-overview) provides elastic scaling, matching capacity with demand to controls costs and ensures your applications maintains high performance during peak traffic.
 
-Azure Cosmos DB provides turnkey global data distribution, allowing you to easily build planet-scale, always-on, highly responsive, multi-homed applications without the hassle of complex, multiple-datacenter configurations. Designed as a [globally distributed database system](https://docs.microsoft.com/en-us/azure/cosmos-db/distribute-data-globally), Azure Cosmos DB allows you to write to and read from the local replicas of your Cosmos DB database, which is replicated across any number of Azure regions.
+Azure Cosmos DB offers built-in, cloud-native capabilities to simplify app development and boost developer productivity, including five well-defined consistency models, [auto-indexing](https://docs.microsoft.com/en-us/azure/cosmos-db/index-policy), and multiple data models. Easily migrate existing NoSQL data with open-source APIs for [MongoDB](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction), [Cassandra](https://docs.microsoft.com/en-us/azure/cosmos-db/cassandra-introduction), Gremlin (Graph), and others. Developers can work with tools to build microservices and the languages of their choice, while enjoying seamless integration with Azure services for IoT, advanced analytics, AI and machine learning, and business intelligence.
 
-Azure Cosmos DB provides limitless and [elastic scalability](https://docs.microsoft.com/en-us/azure/cosmos-db/request-units) of reads and writes, enabling you to elastically scales reads and writes globally and pay only for the throughput and storage you need. Designed with transparent [horizontally-partitioning](https://docs.microsoft.com/en-us/azure/cosmos-db/partitioning-overview), and multi-master replication, Azure Cosmos DB offers unprecedented elastic scalability for your writes and reads, all around the globe!
+Azure Cosmos DB enables you to innovate with IoT data to build enhanced user experiences and turn insights into action:
 
-You can build highly responsive, planet scale applications. With its novel [multi-master replication](https://docs.microsoft.com/en-us/azure/cosmos-db/multi-region-writers) protocol and latch-free and [write-optimized database engine](https://docs.microsoft.com/en-us/azure/cosmos-db/index-policy), Azure Cosmos DB guarantees less than 10ms latencies for both, reads and (indexed) writes at the 99th percentile, all around the world.
+- Ingest and query diverse IoT data easily using Azure Cosmos DB's global presence to capture data from anywhere.
+- Scale elastically to accommodate real-time fluctuations in IoT data.
+- Seamlessly integrate into tools like Azure Event Hub, Azure IoT Hub and Azure Functions to ingest and stream data.
 
-By using Azure Cosmos DB you no longer have to make the extreme [tradeoffs](https://docs.microsoft.com/en-us/azure/cosmos-db/consistency-levels-tradeoffs) between consistency, availability, latency and programmability. Azure Cosmos DB's [multi-master replication protocol](https://docs.microsoft.com/en-us/azure/cosmos-db/multi-region-writers) is carefully designed to offer five [well-defined consistency choices](https://docs.microsoft.com/en-us/azure/cosmos-db/consistency-levels) (strong, bounded staleness, consistent-prefix, session, and eventual) for an intuitive programming model with low latency and high availability for your globally distributed app.
+Performing real-time analytics on data of any size or type from anywhere, using a Lambda architecture, and easy integration with Azure Databricks.
 
-Azure Cosmos DB allows you to model real-world data using key-value, graph, column-family, and document data models. You don’t have to deal with the hassle of managing schemas and secondary indexes as Azure Cosmos DB [automatically indexes all data at the time of ingestion](https://docs.microsoft.com/en-us/azure/cosmos-db/index-policy). You can also use your favorite API including SQL, [Apache® Cassandra](https://docs.microsoft.com/en-us/azure/cosmos-db/cassandra-introduction), Gremlin, Table Storage, and [Azure Cosmos DB for MongoDB](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction) API to access your data stored in your Cosmos DB database.
+- Source and serve data quickly through integration with other Azure services for real-time insights.
+- Run in-depth queries over diverse data sets to understand trends and make better decisions.
+- Apply Analytics, Machine Learning, and Cognitive capabilities to your NoSQL data.
 
-Azure Cosmos DB gives you enterprise-grade security and compliance, and is the first and only service to offer [industry-leading comprehensive SLAs](https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/) for 99.999% high availability, latency at the 99th percentile, guaranteed throughput and consistency.
+By using Azure Cosmos DB you no longer have to make the extreme [tradeoffs](https://docs.microsoft.com/en-us/azure/cosmos-db/consistency-levels-tradeoffs) between consistency, availability, latency and programmability. You can choose from five well-defined consistency choices (strong, bounded staleness, consistent-prefix, session, and eventual) to better control your user’s experience through consistency, availability, latency and programmability.
+
+Focus your time and attention on developing great apps while Azure handles management and optimization of infrastructure and databases. Deploy databases in a fraction of the time on Microsoft’s platform as a service and leverage built-in configuration options to get up and running fast. You can rest assured your apps are running on a fully managed database service built on world-class infrastructure with enterprise-grade security and compliance
 
 ### Azure Functions
 
 [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview) enables you to easily build the apps you need using simple, serverless functions that [scale](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale) to meet demand.
 
-Azure Functions allows you to focus running great apps, instead of the infrastructure on which they run. You don’t need to worry about provisioning and maintaining servers. Azure Functions provides a fully managed compute platform with high reliability and security. With [scale](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale) on demand, your code gets the compute resources it needs, when it needs them, freeing you of capacity planning concerns.
+Azure Functions allows you to focus on running great apps, instead of the infrastructure on which they run. You don’t need to worry about provisioning and maintaining servers. Azure Functions provides a fully managed compute platform with high reliability and security. With [scale](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale) on demand, your code gets the compute resources it needs, when it needs them, freeing you of capacity planning concerns.
 
 Write code only for what truly matters to your business. Utilize innovative programming model for everything else such as [communicating with other services](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale), building [HTTP-based API](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook) or orchestrating complex workflows. Azure Functions naturally leads you to a microservices-friendly approach for building more scalable and stable applications.
 
@@ -64,11 +70,13 @@ Azure Stream Analytics can be used to allow you to quickly build real-time dashb
 
 ### Serverless computing using Azure Cosmos DB and Azure Functions
 
+![The diagram shows events being fed into Cosmos DB, and the change feed triggering Azure functions.](media/cosmos-db-and-azure-functions.png 'Azure Cosmos DB and Functions')
+
 Serverless computing is all about the ability to focus on individual pieces of logic that are repeatable and stateless. These pieces require no infrastructure management and they consume resources only for the seconds, or milliseconds, they run for. At the core of the serverless computing movement are functions, which are made available in the Azure ecosystem by Azure Functions. To learn about other serverless execution environments in Azure see ‘serverless in Azure’ page.
 
-With the native integration between [Azure Cosmos DB and Azure Functions](https://docs.microsoft.com/en-us/azure/cosmos-db/serverless-computing-database), you can create database triggers, input bindings and output bindings directly from your Azure Cosmos DB account.
+With the native integration between [Azure Cosmos DB and Azure Functions](https://docs.microsoft.com/en-us/azure/cosmos-db/serverless-computing-database), you can create database triggers, input bindings, and output bindings directly from your Azure Cosmos DB account.
 
-Azure Functions and Azure Cosmos DB allow you can create, deploy and easily managed great low-latency event-driven serverless apps based on rich data, and serving a globally distributed user base seamlessly.
+Azure Functions and Azure Cosmos DB allow you can create, deploy, and easily manage great low-latency event-driven serverless apps based on rich data, and serving a globally distributed user base seamlessly.
 
 ![Use an Azure Cosmos DB trigger to invoke an Azure Function.](media/cosmos-db-azure-function.png 'Cosmos DB and Azure Functions')
 
@@ -440,7 +448,7 @@ In this task, you will configure the Function App with the Azure Cosmos DB and E
 
 7.  Select **Add new setting** underneath the new application setting you just added to add a new one.
 
-8.  Enter **EventHubsConnectionString** into the **Name** field, then paste your Event Hubs connection string into the **Value** field. If you cannot locate your connection string, refer to Task 2, step 17.
+8.  Enter **EventHubsConnectionString** into the **Name** field, then paste your Event Hubs connection string into the **Value** field. This is the connection string for the **Write** shared access policy you created. If you cannot locate your connection string, refer to Task 2, step 17.
 
     ![The EventHubsConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-event-hubs.png 'Application settings')
 
@@ -454,7 +462,7 @@ The data generator console application creates and sends simulated vehicle senso
 
 In this task, you will open the lab solution in Visual Studio, publish the Function App, and configure and run the data generator. The data generator saves simulated vehicle telemetry data to Cosmos DB, which triggers the Azure function to run and process the data, sending it to Event Hubs, prompting your Stream Analytics job to aggregate and analyze the enriched data and send it to Power BI. The final step will be to create the Power BI report in the task that follows.
 
-1.  Open Windows Explorer and navigate to `C:\lab-files`. Double-click on **TechImmersion.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure credentials you are using for this lab.
+1.  Open Windows Explorer and navigate to `C:\lab-files\data\2`. Double-click on **TechImmersion.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab.
 
     ![The TechImmersion.sln file is highlighted in the C:\tech-immersion folder.](media/vs-solution.png 'Windows explorer')
 
@@ -543,6 +551,8 @@ In this task, you will use Power BI to create a report showing captured vehicle 
 4.  Select the **Datasets** tab on top of the workspace. Locate the dataset named **VehicleAnomalies**, then select the **Create Report** action button to the right of the name. If you do not see the dataset, you may need to wait a few minutes and refresh the page.
 
     ![The Datasets tab is selected in My Workspace and the VehicleAnomalies dataset is highlighted.](media/pbi-my-workspace.png 'Datasets')
+
+    > **Note:** It can take several minutes for the dataset to appear. You may need to periodically refresh the page before you see the Datasets tab.
 
 5.  You should see a new blank report for VehicleAnomalies with the field list on the far right.
 
@@ -641,7 +651,7 @@ To recap, you experienced:
 - Ingesting processed data with Event Hubs and querying and reshaping that data with Azure Stream Analytics, then sending it to Power BI for reporting.
 - Rapidly creating a real-time dashboard in Power BI with interesting visualizations to view and explore vehicle anomaly data.
 
-## Resources and more information
+## Additional resources and more information
 
 - [Introduction to Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction)
 - [Overview of the Cosmos DB change feed](https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed)
