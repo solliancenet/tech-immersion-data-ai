@@ -175,7 +175,7 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
     FROM [sales_YOUR_UNIQUE_IDENTIFIER].[dbo].[Reviews]
     ```
 
-13. The next data source we will be virtualizing is a CSV file that was uploaded HDFS.
+13. The next data source we will be virtualizing is a CSV file that was uploaded to HDFS.
 
 14. Within Azure Data Studio, scroll down below the list of SQL Server 2019 databases to find the **Data Services** folder. Expand that folder, expand the **HDFS** folder, then expand the **data** subfolder. Right-click on the `stockitemholdings.csv` file, then select **Create External Table From CSV Files**.
 
