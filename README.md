@@ -14,7 +14,7 @@
 
   Show how databases previously prevented from using PaaS services can be migrated to SQL MI and take advantage of features only available in Azure. Migrate an on-premises parts catalog database, currently running on SQL Server 2012 and using Service Broker, to SQL MI. Create an online secondary database for reporting on operations and finance using SQL MI, using transactional replication.
 
-- **Day 1, Experience 4** - [Delivering the Modern Data Warehouse with Azure Data Factory, Azure SQL Data Warehouse, Azure Databricks, and Power BI](./day1-exp4/)
+- **Day 1, Experience 4** - [Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI](./day1-exp4/)
 
   Demonstrate how to use ADF to automate the movement and transformation of data gathered from various sources, including Cosmos DB, into ADLS Gen2, Azure Databricks and Azure SQL DW to build a modern data warehouse.
 
@@ -24,7 +24,7 @@
 
   Show how automated ML capability in Azure Machine Learning can be used for Life Cycle Management of the manufactured vehicles and how AML helps in creation of better vehicle maintenance plans. Attendees will train a Linear Regression model to predict the number of days until battery failure using Automated Machine Learning in Jupyter Notebooks.
 
-- **Day 2, Experience 2** - [Yield quick insights from unstructured data with Knowledge Mining, Cognitive Services, and Power BI](./day2-exp2/)
+- **Day 2, Experience 2** - [Yield quick insights from unstructured data with Knowledge Mining and Cognitive Services](./day2-exp2/)
 
   Show how building a cognitive search pipeline using Cognitive Services and Knowledge Mining can yield quick insights on unstructured data.
 
