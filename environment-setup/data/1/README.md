@@ -36,7 +36,8 @@ The computer or VM on which the attendee completes the lab requires the followin
 
 - [SQL Server Management Studio](https://go.microsoft.com/fwlink/?linkid=2078638) (SSMS) v18.0 (Preview 7) or greater
 - [Azure Data Studio](https://docs.microsoft.com/sql/azure-data-studio/download?view=sql-server-ver15)
-  - [SQL Server 2019 extension](https://docs.microsoft.com/sql/azure-data-studio/sql-server-2019-extension?view=sql-server-ver15)
+  - [SQL Server 2019 extension](sql-vnext-0.10.2-win-x64.vsix)
+    - Be sure to load version **0.10.2**. The latest version has a breaking change!
 - SQL Server 2019 login credentials provided for the lab environment
 - Azure SQL Database login credentials provided for the lab environment
 
