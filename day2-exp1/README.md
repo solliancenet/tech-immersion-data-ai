@@ -100,23 +100,23 @@ In this task, you will deploy all of these Azure dependencies as well as configu
 
     ![Screenshot of the command to set the account.](media/cmd-az-account.png "Command Prompt")
 
-2. Copy and paste the command below into the command prompt, then hit `Enter`. This will change directories to the Virtual Assistant automotive bot project folder:
+5.  Copy and paste the command below into the command prompt, then hit `Enter`. This will change directories to the Virtual Assistant automotive bot project folder:
 
-   `cd C:\lab-files\ai\1\skills\automotiveskill\automotiveskill`
+    `cd C:\lab-files\ai\1\skills\automotiveskill\automotiveskill`
 
-3. This next command requires two of your custom values you saved in the previous task when you registered your Azure App. **Copy** the command below and paste it into Notepad or other text editor. Replace `YOUR-APP-ID` with the Azure App's Application Id value, and replace `YOUR-APP-SECRET` with the App secret you copied. Make certain that your app secret value is surrounded by double quotes (").
+6.  This next command requires two of your custom values you saved in the previous task when you registered your Azure App. **Copy** the command below and paste it into Notepad or other text editor. Replace `YOUR-APP-ID` with the Azure App's Application Id value, and replace `YOUR-APP-SECRET` with the App secret you copied. Make certain that your app secret value is surrounded by double quotes (").
 
-   `PowerShell.exe -ExecutionPolicy Bypass -File DeploymentScripts\deploy_bot.ps1 --appId YOUR-APP-ID --% --appSecret "YOUR-APP-SECRET"`
+    `PowerShell.exe -ExecutionPolicy Bypass -File DeploymentScripts\deploy_bot.ps1 --appId YOUR-APP-ID --% --appSecret "YOUR-APP-SECRET"`
 
-4. Copy and paste your _edited_ command into the command prompt, then hit `Enter`. Supply the following values when prompted:
+7.  Copy and paste your _edited_ command into the command prompt, then hit `Enter`. Supply the following values when prompted:
 
-   - **name:** Enter a unique name that starts with `tech-immersion-bot-` and ends with your initials followed by a random 2-3 digit number. Example: `tech-immersion-bot-jdh77`. This value must be all lower case, contain no spaces and no special characters except for dashes (-) and underscores (\_).
-   - **location:** Enter `westus`.
-   - **luisAuthoringKey:** Paste the LUIS Authoring Key you copied at the end of Task 1 above.
+    - **name:** Enter your unique Resource Group name provided to you for this lab. Example: `tech-immersion-YOUR_UNIQUE_IDENTIFIER`. It should exactly match your Resource Group name, be all lower case, contain no spaces and no special characters except for dashes (-) and underscores (\_).
+    - **location:** Enter `westus`.
+    - **luisAuthoringKey:** Paste the LUIS Authoring Key you copied at the end of Task 1 above.
 
-   ![The bot creation script and parameters are highlighted.](media/cmd-bot-script.png 'Command Prompt')
+    ![The bot creation script and parameters are highlighted.](media/cmd-bot-script.png 'Command Prompt')
 
-5. This script will take around 10 minutes to run. **Important:** Keep the window open. There is a value you will need to copy once it is complete. For now, please move on to the next task.
+8.  This script will take around 10 minutes to run. **Important:** Keep the window open. There is a value you will need to copy once it is complete. For now, please move on to the next task.
 
 ## Task 4: Load and explore the automotive Virtual Assistant starter solution
 
@@ -353,7 +353,7 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
       }
     ```
 
-    - Finally, add the .bot file paths for each of your language configurations (English only at this time). You can find the bot file under the **LocalseConfigurations** folder.
+    - Finally, add the .bot file paths for each of your language configurations (English only at this time). You can find the bot file under the **LocaleConfigurations** folder.
 
     ```
     "defaultLocale": "en-us",
