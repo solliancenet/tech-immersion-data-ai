@@ -24,7 +24,7 @@ In this experience, you will use Microsoft's [Virtual Assistant Solution](https:
 
 The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com/services/cognitive-services/language-understanding-intelligent-service/), which is a natural language understanding service, to process and interpret user language to a set of actions or goals. One of the goals of building a bot is to have it interact with users in as human a way as possible. Understanding casual text or voice commands is an increasingly natural way to interact with bots and other virtual assistants. Before we can begin, we must first sign in to the LUIS website and obtain an authoring key that allows the service to be called by your bot.
 
-1. If you will be running your bot services in the United States, navigate to [www.luis.ai](https://www.luis.ai/) and sign in with the Azure account you are using for this experience. If you are outside of the US, sign in to the LUIS site for your [region](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-reference-regions).
+1. If you will be running your bot services in the United States, navigate to [www.luis.ai](https://www.luis.ai/) and sign in with the Azure Active Directory account you are using for this experience. If you are outside of the US, sign in to the LUIS site for your [region](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-reference-regions).
 
 2. If it is your first time signing in, you may see a "Permission requested" dialog. If so, select **Accept**.
 
@@ -85,6 +85,20 @@ In this task, you will deploy all of these Azure dependencies as well as configu
 1. On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **cmd**, then either press Enter or select the Command Prompt desktop app in the search results.
 
    ![The search box has "cmd" entered into it and the desktop app is highlighted in the results.](media/launch-cmd.png 'Launch Command Prompt')
+
+2.  The first thing you need to do is to log in to the Azure CLI with your provided account credentials. To do that, copy and paste the command below into the command prompt, then hit `Enter`. This will open a web browser window where you will sign in with the provided Azure Active Directory credentials for this experience.
+
+    `az login`
+
+3.  After logging in, you may be shown that you have more than one Azure subscription associated with your account.
+
+    ![The az login command is shown.](media/cmd-az-login.png "Command Prompt")
+
+4.  Copy and paste the command below into the command prompt **Replacing YOUR_SUBSCRIPTION_ID** with the Azure Subscription ID provided to your for this experience, then hit `Enter`:
+
+    `az account set --subscription YOUR_SUBSCRIPTION_ID`
+
+    ![Screenshot of the command to set the account.](media/cmd-az-account.png "Command Prompt")
 
 2. Copy and paste the command below into the command prompt, then hit `Enter`. This will change directories to the Virtual Assistant automotive bot project folder:
 
