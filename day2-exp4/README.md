@@ -67,7 +67,7 @@ In this task, you will train a deep learning model to classify the descriptions 
 
     ![Import the notebook](media/04.png 'Import Notebooks')
 
-5. The notebook should appear. This is the notebook you will use in completing this lab. Follow the instructions in the notebook, and then return to this guide to complete the experience.
+5. The notebook should appear in the list. Double-click this notebook to open it. This is the notebook you will use in completing this lab. Follow the instructions in the notebook, and then return to this guide to complete the experience.
 
 ## Wrap-up
 
