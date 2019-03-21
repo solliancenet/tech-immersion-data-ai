@@ -35,7 +35,7 @@ In this exercise, you will use compute resources provided by Azure Machine Learn
 
     ![The Sign In button](media/01.png 'Sign In')
 
-3. Within the Microsoft Azure Notebooks portal, select **My Projects** from the menu at the top.
+3. Dismiss the dialog to create the user ID (you will not need this). Within the Microsoft Azure Notebooks portal, select **My Projects** from the menu at the top.
 
     ![The My Projects button](media/02.png 'My Projects')
 
@@ -51,7 +51,7 @@ In this exercise, you will use compute resources provided by Azure Machine Learn
 
     ![The Upload menu](media/05.png 'Upload')
 
-7. In the Upload files from Computer dialog, select **Choose Files** and then select the `predict-battery-life-with-AML.ipynb` from lab starter files (C:\lab-files\ai\1). Select **Done** to upload the notebook.
+7. In the Upload files from Computer dialog, select **Choose Files** and then select the `predict-battery-life-with-AML.ipynb` from lab starter files (C:\lab-files\ai\1). Select **Uploade** to upload the notebook and then select **Done** to dismiss the dialog.
 
     ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
