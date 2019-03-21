@@ -1,6 +1,6 @@
-# Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure Data Factory, Azure SQL Data Warehouse, Azure Databricks, and Power BI
+# Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI
 
-- [Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure Data Factory, Azure SQL Data Warehouse, Azure Databricks, and Power BI](#day-1-experience-4---delivering-the-modern-data-warehouse-with-azure-data-factory-azure-sql-data-warehouse-azure-databricks-and-power-bi)
+- [Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI](#day-1-experience-4---delivering-the-modern-data-warehouse-with-azure-sql-data-warehouse-azure-databricks-azure-data-factory-and-power-bi)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
   - [Task 1: Execute ADF Pipeline to copy data](#task-1-execute-adf-pipeline-to-copy-data)
