@@ -20,17 +20,17 @@
 
 ## Day 2: AI & Machine Learning-focused
 
-- **Day 2, Experience 1** - [Better models made easy with Automated Machine Learning](./day2-exp1/)
+- **Day 2, Experience 1** - [Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator](./day2-exp1/)
 
-  Show how automated ML capability in Azure Machine Learning can be used for Life Cycle Management of the manufactured vehicles and how AML helps in creation of better vehicle maintenance plans. Attendees will train a Linear Regression model to predict the number of days until battery failure using Automated Machine Learning in Jupyter Notebooks.
+  Show how the Virtual Assistant Solution accelerator can rapidly accelerate developing conversation bots. This exercise will use the automotive Virtual Assistant starter solution, which converts the user’s speech to actions, such as controlling the vehicle’s climate settings and radio. Attendees will register a new skill that monitors car sensor data and alerts the driver when there is a potential problem with the vehicle. Part of the process is to create an Adaptive Card to show vehicle data, recommendation for service (call out to function to get battery replacement prediction), and an option to contact the nearest service center. To entice the driver to service the car at that time, the bot will have them select a gift card of their choice that will give them a promo code for a coupon at that service center.
 
 - **Day 2, Experience 2** - [Yield quick insights from unstructured data with Knowledge Mining and Cognitive Services](./day2-exp2/)
 
   Show how building a cognitive search pipeline using Cognitive Services and Knowledge Mining can yield quick insights on unstructured data.
 
-- **Day 2, Experience 3** - [Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator](./day2-exp3/)
+- **Day 2, Experience 3** - [Better models made easy with Automated Machine Learning](./day2-exp3/)
 
-  Show how the Virtual Assistant Solution accelerator can rapidly accelerate developing conversation bots. This exercise will use the automotive Virtual Assistant starter solution, which converts the user’s speech to actions, such as controlling the vehicle’s climate settings and radio. Attendees will register a new skill that monitors car sensor data and alerts the driver when there is a potential problem with the vehicle. Part of the process is to create an Adaptive Card to show vehicle data, recommendation for service (call out to function to get battery replacement prediction), and an option to contact the nearest service center. To entice the driver to service the car at that time, the bot will have them select a gift card of their choice that will give them a promo code for a coupon at that service center.
+  Show how automated ML capability in Azure Machine Learning can be used for Life Cycle Management of the manufactured vehicles and how AML helps in creation of better vehicle maintenance plans. Attendees will train a Linear Regression model to predict the number of days until battery failure using Automated Machine Learning in Jupyter Notebooks.
 
 - **Day 2, Experience 4** - [Making deep learning portable with ONNX](./day2-exp4/)
 

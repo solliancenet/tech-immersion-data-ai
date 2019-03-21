@@ -1,18 +1,32 @@
-# Automated Machine Learning setup
+# Bot framework setup
 
 Complete the steps below to prepare the environment for the [Day 2, Experience 1](../../../day2-exp1/) lab.
 
 ## Pre-requisites
 
-  - In addition to their AAD account used to access Azure, attendees will need a Microsoft Account (e.g., Live ID/Passport) provided by the hosting environment to sign in to Azure Notebooks.
-  - Attendees will want ready access to their: subscription ID and resource group name. 
-  - A shared AKS Cluster that attendees can attach their AML workspace to.
-    - Kubernetes Cluster Name: my-aks-cluster  (must be provided to attendees, default used is a shown)
-    - Resource Group Name: ti-aks (must be provided to attendees, default used is a shown)
-    - VM Size: STANDARD_D3_V2 (total of at least 12 cores)
-    - Kubernetes Version: 1.11.8
-    - Node Count: 3 
-  - Resource group should contain:
-    - AML Workspace
-    - AML Compute Cluster (tied to AML Workspace). This will be created dynamically by each attendee within the lab as their is no way for them to attach to a pre-created instance.
-  - Prepare ipynb (with all outputs) for inclusion in PDF/Word doc.
+The computer or VM on which you run the scripts to deploy the cluster and restore the databases requires the following:
+
+- Visual Studio 2017 Community (or better)
+- Latest version of [.NET Core](https://www.microsoft.com/net/download)
+- [Node.js](https://nodejs.org/) version 8.5 or higher
+- [Bot Framework Emulator](https://github.com/Microsoft/BotFramework-Emulator/releases/latest)
+- Azure Bot Service command line (CLI) tools. It's important to do this even if you have earlier versions as the Virtual Assistant makes use of new deployment capabilities. **Minimum version 4.3.2 required for msbot, and minimum version 1.1.0 required for ludown.**
+
+  ```shell
+  npm install -g botdispatch chatdown ludown luis-apis luisgen msbot qnamaker
+  ```
+
+- [Azure Command Line Tools (CLI)](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest) version **2.0.59** or later
+- Install the AZ Extension for Bot Service
+
+  ```shell
+  az extension add -n botservice
+  ```
+
+### Azure resources
+
+Users will need to be able to sign into [LUIS](https://www.luis.ai/) with their Azure Active Directory account and create a new LUIS app.
+
+Users will also need to be able to register a new Azure App (<https://apps.dev.microsoft.com/>) with their Azure Active Directory account. If they do not have permissions to do this step, then an Azure App will need to be created for them and they will need to be supplied with both the **Application Id** and **generated password** (application secret) for the application. The steps to do this can be found [here](../../../day2-exp3#task-2-register-a-new-azure-app).
+
+Lab attendees will run a script to deploy required Azure resources during the lab, using the Azure account provided to them.
