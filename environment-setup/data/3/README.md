@@ -64,7 +64,7 @@ After provisioning the SQL Server 2008 R2 on Windows 2008 VM, the SQL Server 200
 
 - Open port 1433 using an Inbound port rule added to the VM firewall in the Azure portal.
 - Open port 1433 on the VM's Windows firewall using an inbound port rule on the VM.
-- Add the **ContosoAutoDb** database to each attendees VM by restoring from the provided `ContosoAutoDb.bak` file.
+- Add the **ContosoAutoDb** database to the VM by restoring from the provided `ContosoAutoDb.bak` file.
 - Reset the `sa` password, enable mixed mode authentication, enable Service broker, and create the `WorkshopUser` account by running the `configure-sql-2008.sql` script found under lab-files/data/3.
 
 ### Blob Storage account configuration
