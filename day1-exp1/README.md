@@ -58,9 +58,15 @@ Follow the steps below to connect to your SQL Server 2019 cluster with both Azur
 
 ### Connect with Azure Data Studio
 
+A link to Azure Data Studio should already be on the desktop of the VM. If not, follow the instructions in Step 1 below.
+
+![Azure Data Studio is highlighted on the desktop.](media/ads-desktop.png 'Desktop')
+
 1.  On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **Azure Data Studio**, then select the Azure Data Studio desktop app in the search results.
 
     ![The search box has "Azure Data Studio" entered into it and the desktop app is highlighted in the results.](media/launch-azure-data-studio.png 'Launch Azure Data Studio')
+
+    > **Please note:** If Azure Data Studio prompts you to update, please **do not apply** the update at this time. The lab has been tested with the software and library versions loaded in the provided environment.
 
 2.  Within Azure Data Studio, select **Servers** from the top of the left-hand menu, then select **New Connection** from the top toolbar to the right of the menu.
 
