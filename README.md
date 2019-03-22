@@ -16,7 +16,7 @@
 
 - **Day 1, Experience 4** - [Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI](./day1-exp4/README.md)
 
-  Demonstrate how to use ADF to automate the movement and transformation of data gathered from various sources, including Cosmos DB, into ADLS Gen2, Azure Databricks and Azure SQL DW to build a modern data warehouse.
+  A modern data warehouse lets you bring together all your data at any scale easily, and to get insights through analytical dashboards, operational reports, or advanced analytics for all your users. In this experience we will demonstrate how to use Azure Data Factory (ADF) to automate the movement and transformation of data gathered from various sources, including Cosmos DB, into Azure Data Lake Storage Gen2, Azure Databricks and Azure SQL DW to build a modern data warehouse.
 
 ## Day 2: AI & Machine Learning-focused
 
@@ -26,7 +26,7 @@
 
 - **Day 2, Experience 2** - [Yield quick insights from unstructured data with Knowledge Mining and Cognitive Services](./day2-exp2/README.md)
 
-  Show how building a cognitive search pipeline using Cognitive Services and Knowledge Mining can yield quick insights on unstructured data.
+  Show how building a cognitive search pipeline using Cognitive Services and Knowledge Mining can yield quick insights on unstructured data. Cognitive search is an AI feature in Azure Search, used to extract text from images, blobs, and other unstructured data sources - enriching the content to make it more searchable in an Azure Search index. Attendees will create a cognitive search pipeline in Azure Search, using Cosmos DB as a data source, and applying pre-configured and custom cognitive skills to enrich the data in the indexing pipeline.
 
 - **Day 2, Experience 3** - [Better models made easy with Automated Machine Learning](./day2-exp3/README.md)
 

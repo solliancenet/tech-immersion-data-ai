@@ -512,7 +512,7 @@ In this task, you will open the lab solution in Visual Studio, publish the Funct
 
     ![Screenshot of the console window.](media/vs-console.png 'Console window')
 
-    The top of the output displays information about the Cosmos DB collection you created (telemetry), the requested RU/s as well as estimated hourly and monthly cost. After every 1,000 records are requested to be sent, you will see output statistics.
+    The top of the output displays information about the Cosmos DB collection you created (telemetry), the requested RU/s as well as estimated hourly and monthly cost. After every 500 records are requested to be sent, you will see output statistics.
 
 ---
 

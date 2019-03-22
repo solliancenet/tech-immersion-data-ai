@@ -275,7 +275,7 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
     "COGNITIVE_SERVICES_KEY": "872353ecac8d43a7bf5a60c3ece9ff4a"
     ```
 
-14. The final settings you need to retrieve are those for your Azure Function App. In the Azure portal, navigate to your **tech-immersion-functions-XXXXX** Function App (where XXXXX is the unique identifier assigned to you for this workshop), and copy the **URL** on the Overview blade.
+14. The final settings you need to retrieve are those for your Azure Function App. In the Azure portal, navigate to your **ti-function-day2-XXXXX** Function App (where XXXXX is the unique identifier assigned to you for this workshop), and copy the **URL** on the Overview blade.
 
     ![The URL field is highlighted on the overview blade of the Function App.](media/function-app-url.png "Function App")
 
@@ -514,7 +514,7 @@ In addition to predefined Cognitive skills, you can also integrate custom skills
 
    ![Select Existing is highlighted and selected on the Pick a publish target dialog. The publish button is highlighted.](media/visual-studio-function-publish-target.png "Pick a publish target")
 
-9. On the **App service** dialog, select your Subscription and locate the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) in the list. Select your **tech-immersion-functions** Function App from this list of resources.
+9. On the **App service** dialog, select your Subscription and locate the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) in the list. Select the Function App named **ti-function-day2-XXXXX** from the list of resources (where XXXXX is the unique identifier assigned to you for this workshop).
 
    ![The tech-immersion-functions Function App is highlighted in the search results.](media/visual-studio-function-publish-app-service.png "App service")
 
