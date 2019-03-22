@@ -1,0 +1,639 @@
+<h1 id="day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-database-managed-instance">Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance</h1>
+<ul>
+<li><a href="#day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-database-managed-instance">Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance</a>
+<ul>
+<li><a href="#technology-overview">Technology overview</a>
+<ul>
+<li><a href="#migrate-your-sql-server-databases-without-changing-your-apps">Migrate your SQL Server databases without changing your apps</a></li>
+<li><a href="#accelerate-your-database-migration">Accelerate your database migration</a></li>
+<li><a href="#maximize-roi-by-migrating-to-the-cloud">Maximize ROI by migrating to the cloud</a></li>
+</ul></li>
+<li><a href="#scenario-overview">Scenario overview</a></li>
+<li><a href="#task-1-perform-database-assessments-for-migration">Task 1: Perform database assessments for migration</a></li>
+<li><a href="#task-2-migrate-the-database-to-sql-mi">Task 2: Migrate the database to SQL MI</a></li>
+<li><a href="#task-3-update-the-web-application-to-use-the-new-sql-mi-database">Task 3: Update the web application to use the new SQL MI database</a></li>
+<li><a href="#task-4-enable-dynamic-data-masking">Task 4: Enable Dynamic Data Masking</a></li>
+<li><a href="#task-5-add-clustered-columnstore-index">Task 5: Add clustered columnstore index</a></li>
+<li><a href="#task-6-use-online-secondary-for-read-only-queries">Task 6: Use online secondary for read-only queries</a></li>
+<li><a href="#task-7-review-advanced-data-security-vulnerability-assessment">Task 7: Review Advanced Data Security Vulnerability Assessment</a></li>
+<li><a href="#task-8-sql-data-discovery-and-classification">Task 8: SQL Data Discovery and Classification</a></li>
+<li><a href="#wrap-up">Wrap-up</a></li>
+<li><a href="#additional-resources-and-more-information">Additional resources and more information</a></li>
+</ul></li>
+</ul>
+<h2 id="technology-overview">Technology overview</h2>
+<h3 id="migrate-your-sql-server-databases-without-changing-your-apps">Migrate your SQL Server databases without changing your apps</h3>
+<p><a href="https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance">Azure SQL Database Managed Instance</a> (SQL MI) is a new deployment option of Azure SQL Database which enables the migration of existing on-premises SQL Server databases to the cloud with minimal or no application and database changes. With SQL MI, you get the broadest SQL Server engine compatibility and native virtual network (VNET) support. This option gives you the best of SQL Server, plus the operational and cost benefits of an intelligent, fully managed service. SQL MI is ideal for migrating a large number of existing SQL Server databases from on-premises or virtual machines to SQL Database.</p>
+<figure>
+<img src="media/azure-sql-database-managed-instance.png" title="What is SQL MI?" alt="Diagram outlining the key features of managed instances." /><figcaption>Diagram outlining the key features of managed instances.</figcaption>
+</figure>
+<h3 id="accelerate-your-database-migration">Accelerate your database migration</h3>
+<p>Reduce the complexity of your cloud migration by using a single comprehensive service instead of multiple tools. <a href="https://docs.microsoft.com/azure/dms/dms-overview">Azure Database Migration Service</a> is designed as a seamless, end-to-end solution for moving on-premises SQL Server databases to the cloud. Use the <a href="https://datamigration.microsoft.com/">Database Migration Guide</a> for recommendations, step-by-step guidance, and expert tips on your specific database migration.</p>
+<h3 id="maximize-roi-by-migrating-to-the-cloud">Maximize ROI by migrating to the cloud</h3>
+<p>Reduce the burden of data-tier management and save time and costs by migrating workloads to the cloud. <a href="https://azure.microsoft.com/pricing/hybrid-benefit/">Azure Hybrid Benefit</a> for SQL Server provides a cost-effective path for migrating hundreds or thousands of SQL Server databases with minimal effort. Use your SQL Server licenses with Software Assurance to pay a reduced rate when migrating to the cloud. Save up to 55 percent with Azure Hybrid Benefit, and up to 80 percent with <a href="https://docs.microsoft.com/azure/sql-database/sql-database-reserved-capacity">reserved capacity</a>. Learn how <a href="https://azure.microsoft.com/resources/forrester-tei-sql-database-managed-instance/">customers have increased productivity</a> by up to 40 percent by migrating to Azure SQL Database.</p>
+<h2 id="scenario-overview">Scenario overview</h2>
+<p>ContosoAuto runs their operations and finance database, <code>ContosoAutoDb</code>, on an on-premises SQL Server 2008 R2 database. This system is vital to the company’s daily activities and as SQL Server 2008 R2 is approaching end of support, they are looking at options for migrating this database into Azure. They have read about some of the advanced security and performance tuning options that are available only in Azure and would prefer to a migrate the database into a platform-as-a-service (PaaS) offering, if possible.</p>
+<p>ContosoAuto is using the Service Broker feature of SQL Server within the <code>ContosoAutoDb</code> database. Service Broker is a feature of SQL Server used for sending and receiving guaranteed, asynchronous messages by using extensions to the Transact-SQL Data Manipulation Language (DML). This functionality is being used for several critical business processes, and they cannot afford to lose this capability when migrating their operations database to the cloud. They have also stated that, at this time, they do not have the resources to rearchitect the solution to use an alternative message broker.</p>
+<p>In this experience, you will use the Microsoft Data Migration Assistant (DMA) to perform assessments of feature parity and compatibility against both Azure SQL Database and Azure SQL Database Managed Instance, with the goal of migrating the <code>ContosoAutoDb</code> database into an Azure PaaS offering with minimal or no changes. After completing the assessments, you will perform the database migration and then update ContosoAuto’s operations web application to use the new database. Once that is complete, you will review and enable some of the database features that are only available in Azure.</p>
+<h2 id="task-1-perform-database-assessments-for-migration">Task 1: Perform database assessments for migration</h2>
+<p>In this task, you will use the Microsoft <a href="https://docs.microsoft.com/sql/dma/dma-overview?view=azuresqldb-mi-current">Data Migration Assistant</a> (DMA) to perform assessments on the <code>ContosoAutoDb</code> database. You will create two assessments, one for a migration to Azure SQL Database, and then a second for SQL MI. These assessments will provide reports about any feature parity and compatibility issues between the on-premises database and the Azure managed SQL database service options.</p>
+<blockquote>
+<p>DMA helps you upgrade to a modern data platform by detecting compatibility issues that can impact database functionality in your new version of SQL Server or Azure SQL Database. DMA recommends performance and reliability improvements for your target environment and allows you to move your schema, data, and uncontained objects from your source server to your target server.</p>
+</blockquote>
+<ol type="1">
+<li><p>Launch the Microsoft Data Migration Assistant from the Windows Start menu within your lab environment.</p>
+<figure>
+<img src="media/windows-start-menu-dma.png" title="Data Migration Assistant" alt="The Microsoft Data Migration Assistant is highlighted in the Windows start menu." /><figcaption>The Microsoft Data Migration Assistant is highlighted in the Windows start menu.</figcaption>
+</figure></li>
+<li><p>In the DMA dialog, select <strong>+</strong> from the left-hand menu to create a new project.</p>
+<figure>
+<img src="media/dma-new.png" title="New DMA project" alt="The new project icon is highlighted in DMA." /><figcaption>The new project icon is highlighted in DMA.</figcaption>
+</figure></li>
+<li><p>In the New project pane, set the following:</p>
+<ul>
+<li><strong>Project type</strong>: Select Assessment.</li>
+<li><strong>Project name</strong>: Enter ToAzureSqlDb.</li>
+<li><strong>Source server type</strong>: Select SQL Server.</li>
+<li><strong>Target server type</strong>: Select Azure SQL Database.</li>
+</ul>
+<figure>
+<img src="media/dma-new-project-to-azure-sql-db.png" title="New project settings" alt="New project settings for doing an assessment of a migration from SQL Server to Azure SQL Database." /><figcaption>New project settings for doing an assessment of a migration from SQL Server to Azure SQL Database.</figcaption>
+</figure></li>
+<li><p>Select <strong>Create</strong>.</p></li>
+<li><p>On the <strong>Options</strong> screen, ensure <strong>Check database compatibility</strong> and <strong>Check feature parity</strong> are both checked, and then select <strong>Next</strong>.</p>
+<figure>
+<img src="media/dma-options.png" title="DMA options" alt="Check database compatibility and check feature parity are checked on the Options screen." /><figcaption>Check database compatibility and check feature parity are checked on the Options screen.</figcaption>
+</figure></li>
+<li><p>On the <strong>Sources</strong> screen, enter the following into the <strong>Connect to a server</strong> dialog that appears on the right-hand side:</p>
+<ul>
+<li><strong>Server name</strong>: Enter the DNS name of the shared sqlServer2008R2 VM, <strong><code>sqlserver2008r2.westus.cloudapp.azure.com</code></strong>.</li>
+<li><strong>Authentication type</strong>: Select <strong>SQL Server Authentication</strong>.</li>
+<li><strong>Username</strong>: Enter <strong>WorkshopUser</strong>.</li>
+<li><strong>Password</strong>: Enter <strong>Password.1!!</strong>.</li>
+<li><strong>Encrypt connection</strong>: Check this box.</li>
+<li><strong>Trust server certificate</strong>: Check this box.</li>
+</ul>
+<figure>
+<img src="media/dma-connect-to-a-server.png" title="Connect to a server" alt="In the Connect to a server dialog, the values specified above are entered into the appropriate fields." /><figcaption>In the Connect to a server dialog, the values specified above are entered into the appropriate fields.</figcaption>
+</figure></li>
+<li><p>Select <strong>Connect</strong>.</p></li>
+<li><p>On the <strong>Add sources</strong> dialog that appears next, check the box for <strong>ContosoAutoDb</strong> and select <strong>Add</strong>.</p>
+<figure>
+<img src="media/dma-add-sources.png" title="Add sources" alt="The ContosoAutoDb box is checked on the Add sources dialog." /><figcaption>The ContosoAutoDb box is checked on the Add sources dialog.</figcaption>
+</figure></li>
+<li><p>Select <strong>Start Assessment</strong>.</p>
+<figure>
+<img src="media/dma-start-assessment-to-azure-sql-db.png" title="Start assessment" alt="Start assessment" /><figcaption>Start assessment</figcaption>
+</figure></li>
+<li><p>Review the assessment of ability to migrate to Azure SQL Database.</p>
+<figure>
+<img src="media/dma-feature-parity-service-broker-not-supported.png" title="Database feature parity" alt="For a target platform of Azure SQL Database, feature parity shows two features which are not supported in Azure SQL Database. The Service broker feature is selected on the left and on the right Service Broker feature is not supported in Azure SQL Database is highlighted." /><figcaption>For a target platform of Azure SQL Database, feature parity shows two features which are not supported in Azure SQL Database. The Service broker feature is selected on the left and on the right Service Broker feature is not supported in Azure SQL Database is highlighted.</figcaption>
+</figure>
+<blockquote>
+<p>The DMA assessment for a migrating the <code>ContosoAutoDb</code> database to a target platform of Azure SQL Database shows two features in use which are not supported in Azure SQL Database. These features, cross-database references and Service broker, will prevent ContosoAuto from being able to migrate to the Azure SQL Database PaaS offering.</p>
+</blockquote></li>
+<li><p>With one PaaS offering ruled out due to feature parity, you will now perform a second assessment, this time for a migration to Azure SQL Database Managed Instance (SQL MI). To get started, select <strong>+</strong> on the left-hand menu in DMA to create another new project.</p>
+<figure>
+<img src="media/dma-new.png" title="New DMA project" alt="The new project icon is highlighted in DMA." /><figcaption>The new project icon is highlighted in DMA.</figcaption>
+</figure></li>
+<li><p>In the New project pane, set the following:</p>
+<ul>
+<li><strong>Project type</strong>: Select Assessment.</li>
+<li><strong>Project name</strong>: Enter ToAzureSqlMi.</li>
+<li><strong>Source server type</strong>: Select SQL Server.</li>
+<li><strong>Target server type</strong>: Select Azure SQL Database Managed Instance.</li>
+</ul>
+<figure>
+<img src="media/dma-new-project-to-azure-sql-mi.png" title="New project settings" alt="New project settings for doing an assessment of a migration from SQL Server to Azure SQL Database Managed Instance." /><figcaption>New project settings for doing an assessment of a migration from SQL Server to Azure SQL Database Managed Instance.</figcaption>
+</figure></li>
+<li><p>Select <strong>Create</strong>.</p></li>
+<li><p>On the <strong>Options</strong> screen, ensure <strong>Check database compatibility</strong> and <strong>Check feature parity</strong> are both checked, and then select <strong>Next</strong>.</p>
+<figure>
+<img src="media/dma-options.png" title="DMA options" alt="Check database compatibility and check feature parity are checked on the Options screen." /><figcaption>Check database compatibility and check feature parity are checked on the Options screen.</figcaption>
+</figure></li>
+<li><p>On the <strong>Sources</strong> screen, enter the following into the <strong>Connect to a server</strong> dialog that appears on the right-hand side:</p>
+<ul>
+<li><strong>Server name</strong>: Enter the DNS name of the shared sqlServer2008R2 VM, <strong><code>sqlserver2008r2.westus.cloudapp.azure.com</code></strong>.</li>
+<li><strong>Authentication type</strong>: Select <strong>SQL Server Authentication</strong>.</li>
+<li><strong>Username</strong>: Enter <strong>WorkshopUser</strong>.</li>
+<li><strong>Password</strong>: Enter <strong>Password.1!!</strong>.</li>
+<li><strong>Encrypt connection</strong>: Check this box.</li>
+<li><strong>Trust server certificate</strong>: Check this box.</li>
+</ul>
+<figure>
+<img src="media/dma-connect-to-a-server.png" title="Connect to a server" alt="In the Connect to a server dialog, the values specified above are entered into the appropriate fields." /><figcaption>In the Connect to a server dialog, the values specified above are entered into the appropriate fields.</figcaption>
+</figure></li>
+<li><p>Select <strong>Connect</strong>.</p></li>
+<li><p>On the <strong>Add sources</strong> dialog that appears next, check the box for <strong>ContosoAutoDb</strong> and select <strong>Add</strong>.</p>
+<figure>
+<img src="media/dma-add-sources.png" title="Add sources" alt="The ContosoAutoDb box is checked on the Add sources dialog." /><figcaption>The ContosoAutoDb box is checked on the Add sources dialog.</figcaption>
+</figure></li>
+<li><p>Select <strong>Start Assessment</strong>.</p>
+<figure>
+<img src="media/dma-start-assessment-to-azure-sql-mi.png" title="Start assessment" alt="Start assessment" /><figcaption>Start assessment</figcaption>
+</figure></li>
+<li><p>Review the assessment of ability to migrate to Azure SQL Database Managed Instance.</p>
+<figure>
+<img src="media/dma-feature-parity-azure-sql-mi.png" title="Database feature parity" alt="For a target platform of Azure SQL Database Managed Instance, there are no feature parity issues found." /><figcaption>For a target platform of Azure SQL Database Managed Instance, there are no feature parity issues found.</figcaption>
+</figure>
+<blockquote>
+<p>The assessment report for a migrating the <code>ContosoAutoDb</code> database to a target platform of Azure SQL Database Managed Instance shows no feature parity. The database, including the cross-database references and Service broker features, can be migrated as is, providing the opportunity for ContosoAuto to have a fully managed PaaS database instance running in Azure. Previously, their options for migrating a database using features, such as Service Broker, incompatible with Azure SQL Database, were to deploy the database to a virtual machine running in Azure (IaaS) or modify their database and applications to not use the unsupported features. The introduction of Azure SQL MI, however, provides the ability to migrate databases into a managed Azure SQL database with near 100% compatibility, including the features that prevented them from using Azure SQL Database.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-2-migrate-the-database-to-sql-mi">Task 2: Migrate the database to SQL MI</h2>
+<p>In this task, you will migrate the <code>ContosoAutoDb</code> database from the on-premises SQL 2008 R2 database to SQL MI, targeting the <a href="https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance#managed-instance-service-tiers">Business Critical service tier</a>.</p>
+<blockquote>
+<p>The Business Critical service tier is designed for business applications with the highest performance and high-availability (HA) requirements.</p>
+</blockquote>
+<p>To migrate the <code>ContosoAutoDb</code> database from SQL 2008 R2 to SQL MI you will use a backup of the database stored in an Azure Blob storage account. <code>RESTORE</code> of native backups (.bak files) taken from SQL Server on-premises or SQL Server on Virtual Machines, available on Azure Storage, is one of key capabilities of the managed instance deployment option that enables quick and easy offline database migration. The following diagram provides a high-level overview of the process:</p>
+<figure>
+<img src="media/sql-mi-native-restore.png" title="Native RESTORE" alt="Diagram of the native RESTORE from URL capability." /><figcaption>Diagram of the native RESTORE from URL capability.</figcaption>
+</figure>
+<ol type="1">
+<li><p>Open <strong>SQL Server Management Studio 17</strong> (SSMS) from the Microsoft SQL Server Tools 17 folder in the Windows Start menu and connect to your SQL MI database. On the connection dialog enter the following:</p>
+<ul>
+<li><strong>Server name</strong>: Enter the name of the shared SQL MI server, <strong><code>tech-immersion-sqlmi-shared.521f7783692d.database.windows.net</code></strong>.</li>
+<li><strong>Authentication</strong>: Select <strong>SQL Server Authentication</strong>.</li>
+<li><strong>Login</strong>: Enter <strong>tiuser</strong>.</li>
+<li><strong>Password</strong>: Enter <strong>Password.1234567890</strong>.</li>
+<li>Check the <strong>Remember password</strong> box.</li>
+</ul>
+<figure>
+<img src="media/ssms-connect-sql-mi.png" title="SSMS" alt="Connection dialog for SSMS." /><figcaption>Connection dialog for SSMS.</figcaption>
+</figure></li>
+<li><p>Select <strong>Connect</strong>.</p></li>
+<li><p>To start the <code>RESTORE</code> process, select <strong>New Query</strong> from the SSMS toolbar. In the new query window, paste the following SQL code.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">CREATE</span> CREDENTIAL [https:<span class="op">//</span>techimmersion.<span class="dt">blob</span>.core.windows.net<span class="op">/</span>labfiles<span class="op">/</span><span class="kw">data</span><span class="op">/</span><span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">WITH</span> IDENTITY <span class="op">=</span> <span class="st">&#39;SHARED ACCESS SIGNATURE&#39;</span>,</a>
+<a class="sourceLine" id="cb1-3" title="3">SECRET <span class="op">=</span> <span class="st">&#39;sv=2018-03-28</span><span class="ch">&amp;ss</span><span class="st">=bfqt</span><span class="ch">&amp;srt</span><span class="st">=sco</span><span class="ch">&amp;sp</span><span class="st">=rwdlacup</span><span class="ch">&amp;se</span><span class="st">=2099-03-22T05:33:07Z</span><span class="ch">&amp;st</span><span class="st">=2019-03-21T21:33:07Z</span><span class="ch">&amp;spr</span><span class="st">=https</span><span class="ch">&amp;sig</span><span class="st">=xCq7hZfgdtM1UaN9%2FToz04GT5d5RsKaeb1JjWrpuKHE%3D&#39;</span></a></code></pre></div>
+<blockquote>
+<p>The script above uses a pre-configured storage account and SAS token to <a href="https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017">create a credential</a> in your Managed Instance. This essentially creates a connection from your SQL MI database to the Blob storage account, allowing you to access files stored in the target container, <code>database-backup</code>.</p>
+</blockquote></li>
+<li><p>Select <strong>Execute</strong> on the SSMS toolbar. You will see a message that the command completed successfully in the output window.</p>
+<figure>
+<img src="media/ssms-sql-mi-create-credential.png" title="SSMS" alt="Script to create a credential in SSMS." /><figcaption>Script to create a credential in SSMS.</figcaption>
+</figure></li>
+<li><p>To verify your credential’s access to the Blob storage account, select <strong>New Query</strong> again from the SSMS toolbar, paste the following SQL script to get a backup file list from the storage account into the new query window and select <strong>Execute</strong> from the toolbar.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb2-1" title="1">RESTORE FILELISTONLY <span class="kw">FROM</span> URL <span class="op">=</span> <span class="st">&#39;https://techimmersion.blob.core.windows.net/labfiles/data/3/ContosoAutoDb.bak&#39;</span></a></code></pre></div>
+<figure>
+<img src="media/ssms-sql-mi-restore-filelistonly.png" title="SSMS" alt="Script to list files in a backup file in Blob storage." /><figcaption>Script to list files in a backup file in Blob storage.</figcaption>
+</figure></li>
+<li><p>You are now ready to restore the <code>ContosoAutoDb</code> database in SQL MI. Select <strong>New Query</strong> on the SSMS toolbar again, then paste the following SQL script into the new query window. <strong>Replace the <code>XXXXX</code> value</strong> with the unique identifier assigned to your for this workshop.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb3-1" title="1">RESTORE <span class="kw">DATABASE</span> [ContosoAutoDb<span class="op">-</span>XXXXX] <span class="kw">FROM</span> URL <span class="op">=</span> <span class="st">&#39;https://techimmersion.blob.core.windows.net/labfiles/data/3/ContosoAutoDb.bak&#39;</span></a></code></pre></div>
+<blockquote>
+<p>The database name in the above query should look something like <code>ContosoAutoDb-01234</code>.</p>
+</blockquote></li>
+<li><p>Select <strong>Execute</strong> on the SSMS toolbar.</p></li>
+<li><p>The restore will take 1 - 2 minutes to complete. You will receive a “Commands completed successfully” message when it is done.</p></li>
+<li><p>When the restore completes, expand <strong>Databases</strong> in the Object Explorer, and then expand <strong>ContosoAutoDb-XXXXX</strong> (where XXXXX is the unique identifier assigned to you for this workshop) and <strong>Tables</strong>. You will see that the tables are all listed, and the SQL Server 2008 R2 database has been successfully restored into SQL MI.</p>
+<figure>
+<img src="media/ssms-sql-mi-object-explorer.png" title="SSMS Object Explorer" alt="The Object Explorer is displayed with Databases, ContosoAutoDb, and Tables expanded." /><figcaption>The Object Explorer is displayed with Databases, ContosoAutoDb, and Tables expanded.</figcaption>
+</figure>
+<blockquote>
+<p>NOTE: Your database name will differ from the above screen shot, in that it will contain the unique identifier assigned to you for this workshop, such as <code>ContosoAutoDb-01234</code>. The SQL Managed Instance is shared for all workshop participants, so you may also see databases for other participants.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-3-update-the-web-application-to-use-the-new-sql-mi-database">Task 3: Update the web application to use the new SQL MI database</h2>
+<p>With the <code>ContosoAutoDb</code> database now running on SQL MI in Azure, the next step is to make the required modifications to the ContosoAuto operations web application. The operations web app is currently running an <a href="https://docs.microsoft.com/azure/app-service/environment/intro">Azure App Service Environment</a>, which was provisioned in the same virtual network as the SQL Managed Instance.</p>
+<blockquote>
+<p>SQL Managed Instance has private IP address in its own VNet, so to connect an application you need to configure access to the VNet where Managed Instance is deployed. To learn more, read <a href="https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance-connect-app">Connect your application to Azure SQL Database Managed Instance</a>.</p>
+</blockquote>
+<p>In this task, you will make updates to the ContosoAuto operations web application to enable it to connect to and utilize the SQL MI database.</p>
+<ol type="1">
+<li><p>Using a web browser, navigate to the <a href="https://portal.azure.com">Azure portal</a>, select <strong>Resource groups</strong> from the left-hand menu, and then select the resource group named <strong>tech-immersion-XXXXX</strong> (where XXXXX is the unique identifier assigned to you for this workshop).</p>
+<figure>
+<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
+</figure></li>
+<li><p>Select the <strong>Tech Immersion Web App Service</strong> ending with your unique identifier (e.g., techimmersionwebapp01234) from the list of resources.</p>
+<figure>
+<img src="media/tech-immersion-rg-appservice.png" title="Tech Immersion resource group" alt="The App Service resource is selected from the list of resources in the tech-immersion resource group." /><figcaption>The App Service resource is selected from the list of resources in the tech-immersion resource group.</figcaption>
+</figure></li>
+<li><p>On the App Service blade, select <strong>Application settings</strong> under Settings on the left-hand side.</p>
+<figure>
+<img src="media/tech-immersion-app-service-app-settings.png" title="Application settings" alt="The Application settings item is selected under Settings." /><figcaption>The Application settings item is selected under Settings.</figcaption>
+</figure></li>
+<li><p>On the Application settings blade, scroll down and locate the <strong>Connection strings</strong> section. Paste the connection string value below into the value for the <code>ContosoAutoDbContext</code> connection string.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb4-1" title="1">Server<span class="op">=</span>tcp<span class="ch">:tech</span><span class="op">-</span>immersion<span class="op">-</span>sqlmi<span class="op">-</span><span class="kw">shared</span><span class="fl">.521</span>f7783692d.<span class="kw">database</span>.windows.net,<span class="dv">1433</span>;Persist Security Info<span class="op">=</span><span class="kw">False</span>;<span class="fu">User</span> <span class="kw">ID</span><span class="op">=</span>tiuser;<span class="kw">Password</span><span class="op">=</span><span class="kw">Password</span><span class="fl">.1234567890</span>;MultipleActiveResultSets<span class="op">=</span><span class="kw">False</span>;Encrypt<span class="op">=</span><span class="kw">True</span>;TrustServerCertificate<span class="op">=</span><span class="kw">False</span>;Connection <span class="kw">Timeout</span><span class="op">=</span><span class="dv">30</span>;</a></code></pre></div>
+<figure>
+<img src="media/app-service-app-settings-connection-strings.png" title="Connection strings" alt="The copied SQL MI connection string is pasted into the value for the ContosoAutoDbContext connection string." /><figcaption>The copied SQL MI connection string is pasted into the value for the ContosoAutoDbContext connection string.</figcaption>
+</figure></li>
+<li><p>Repeat the previous step, this time pasting the same connection string into the <code>ContosoAutoDbReadOnlyContext</code> connection string.</p>
+<figure>
+<img src="media/app-service-app-settings-connection-strings-read-only.png" title="Connection strings" alt="Read-only connection string." /><figcaption>Read-only connection string.</figcaption>
+</figure></li>
+<li><p>Select <strong>Save</strong> at the top of the Application settings blade.</p>
+<figure>
+<img src="media/application-settings-save.png" title="Save" alt="The save button on the Application settings blade is highlighted." /><figcaption>The save button on the Application settings blade is highlighted.</figcaption>
+</figure>
+<blockquote>
+<p>NOTE: The astute reader may have noticed in the above steps that the Web App continues to query a database called <code>ContosoAutoDb</code> and not the database that was just restored. This is intended only to shorten the application configuration steps. Rest assured that the changes you made to the database connection string would enable your application to reach any of the databases loaded on to the SQL Server Managed Instance.</p>
+</blockquote></li>
+<li><p>Select <strong>Overview</strong> to the left of the Application settings blade to return to the overview blade of your App Service.</p>
+<figure>
+<img src="media/app-service-overview-menu-item.png" title="Overview menu item" alt="Overview is highlighted on the left-hand menu for App Service" /><figcaption>Overview is highlighted on the left-hand menu for App Service</figcaption>
+</figure></li>
+<li><p>On the overview blade, click the <strong>URL</strong> of your App service to launch the website. This will open the URL in a browser window.</p>
+<figure>
+<img src="media/app-service-url.png" title="App service URL" alt="The App service URL is highlighted." /><figcaption>The App service URL is highlighted.</figcaption>
+</figure></li>
+<li><p>Verify that the web site and data is loaded correctly. The page should look similar to the following:</p>
+<figure>
+<img src="media/contosoauto-web-app.png" title="ContosoAuto Web" alt="Screenshot of the ContosoAuto Operations Web App." /><figcaption>Screenshot of the ContosoAuto Operations Web App.</figcaption>
+</figure></li>
+</ol>
+<blockquote>
+<p>That is it. You were able to successfully connect your application to the new SQL MI database by simply updating the application’s connection string. No code changes or other updates are needed!</p>
+</blockquote>
+<h2 id="task-4-enable-dynamic-data-masking">Task 4: Enable Dynamic Data Masking</h2>
+<p><a href="https://docs.microsoft.com/azure/sql-database/sql-database-dynamic-data-masking-get-started">Dynamic Data Masking</a> (DDM) limits sensitive data exposure by masking it to non-privileged users. This feature helps prevent unauthorized access to sensitive data by enabling customers to designate how much of the sensitive data to reveal with minimal impact on the application layer. It’s a policy-based security feature that hides the sensitive data in the result set of a query over designated database fields, while the data in the database is not changed.</p>
+<blockquote>
+<p>For example, a service representative at a call center may identify callers by several digits of their credit card number, but those data items should not be fully exposed to the service representative. A masking rule can be defined that masks all but the last four digits of any credit card number in the result set of any query. As another example, an appropriate data mask can be defined to protect personally identifiable information (PII) data, so that a developer can query production environments for troubleshooting purposes without violating compliance regulations.</p>
+</blockquote>
+<p>In this task, you will enable DDM on the <code>CardNumber</code> field in the <code>CreditCard</code> table in the <code>ContosoAutoDb</code> database, to prevent queries against that table from returning the full credit card number.</p>
+<ol type="1">
+<li><p>Return to the SQL Server Management Studio (SSMS) window you opened previously.</p></li>
+<li><p>Expand <strong>Tables</strong> under the <strong>ContosoAutoDb-XXXXX</strong> (where XXXXX is the unique identifier assigned to you for this workshop) and locate the <code>Sales.CreditCard</code> table. Expand the table columns and observe that there is a column named <code>CardNumber</code>. Right-click the table, and choose <strong>Select Top 1000 Rows</strong> from the context menu.</p>
+<figure>
+<img src="media/ssms-sql-mi-credit-card-table-select.png" title="Select Top 1000 Rows" alt="The Select Top 1000 Rows item is highlighted in the context menu for the Sales.CreditCard table." /><figcaption>The Select Top 1000 Rows item is highlighted in the context menu for the Sales.CreditCard table.</figcaption>
+</figure></li>
+<li><p>In the query window that opens, review the Results, including the <code>CardNumber</code> field. Notice it is displayed in plain text, making the data available to anyone with access to query the database.</p>
+<figure>
+<img src="media/ssms-sql-mi-credit-card-table-select-results.png" title="Results" alt="Plain text credit card numbers are highlighted in the query results." /><figcaption>Plain text credit card numbers are highlighted in the query results.</figcaption>
+</figure></li>
+<li><p>So we can test the mask being applied to the <code>CardNumber</code> field, you will first create a user in the database that will be used for testing the masked field. In SSMS, select <strong>New Query</strong> and paste the following SQL script into the new query window, replacing <code>XXXXX</code> with your unique ID:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<a class="sourceLine" id="cb5-2" title="2">GO</a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="kw">CREATE</span> <span class="fu">USER</span> DDMUser <span class="kw">WITHOUT</span> LOGIN;</a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> [Sales].[CreditCard] <span class="kw">TO</span> DDMUser;</a></code></pre></div>
+<figure>
+<img src="media/ssms-sql-mi-ddm-create-user.png" title="Create User" alt="A Create User query is pasted into the new query window." /><figcaption>A Create User query is pasted into the new query window.</figcaption>
+</figure>
+<blockquote>
+<p>The SQL script above create a new user in the database named <code>DDMUser</code>, and grants that user <code>SELECT</code> rights on the <code>Sales.CreditCard</code> table.</p>
+</blockquote></li>
+<li><p>Select <strong>Execute</strong> from the SSMS toolbar to run the query. You will get a message that the commands completed successfully in the Messages pane.</p></li>
+<li><p>With the new user created, let’s run a quick query to verify the results. Select <strong>New Query</strong> again, and paste the following into the new query window. Replace <code>XXXXX</code> in the <code>USE</code> statement to include the proper name of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<a class="sourceLine" id="cb6-2" title="2">GO</a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw">EXECUTE</span> <span class="kw">AS</span> <span class="fu">USER</span> <span class="op">=</span> <span class="ot">&quot;DDMUser&#39;;</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> [Sales].[CreditCard];</a>
+<a class="sourceLine" id="cb6-6" title="6">REVERT;</a></code></pre></div>
+<figure>
+<img src="media/ssms-sql-mi-ddm-select-unmasked.png" title="Select Unmasked" alt="The SQL query above is pasted into the new query window in SSMS." /><figcaption>The SQL query above is pasted into the new query window in SSMS.</figcaption>
+</figure></li>
+<li><p>Select <strong>Execute</strong> from the toolbar, and examine the Results pane. Notice the credit card number, as above, is visible in clear text.</p>
+<figure>
+<img src="media/ssms-sql-mi-ddm-results-unmasked.png" title="Query results" alt="The credit card number is unmasked in the query results." /><figcaption>The credit card number is unmasked in the query results.</figcaption>
+</figure></li>
+<li><p>You will now apply DDM on the <code>CardNumber</code> field to prevent it from being viewed in query results. Select <strong>New Query</strong> from the SSMS toolbar and paste the following query into the query window to apply a mask to the <code>CardNumber</code> field, replacing <code>XXXXX</code> with your unique ID. Select <strong>Execute</strong> to run the query.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<a class="sourceLine" id="cb7-2" title="2">GO</a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="kw">ALTER</span> <span class="kw">TABLE</span> [Sales].[CreditCard]</a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="kw">ALTER</span> <span class="kw">COLUMN</span> [CardNumber] <span class="dt">NVARCHAR</span>(<span class="dv">25</span>) MASKED <span class="kw">WITH</span> (<span class="kw">FUNCTION</span> <span class="op">=</span> <span class="ot">&quot;partial(0,&quot;</span>xxx<span class="op">-</span>xxx<span class="op">-</span>xxx<span class="op">-</span><span class="ot">&quot;,4)&quot;</span>)</a></code></pre></div>
+<figure>
+<img src="media/ssms-sql-mi-ddm-add-mask.png" title="Add DDM Mask" alt="The SQL script above is pasted into the new query window. The Execute button is highlighted and a success message is displayed in the Messages pane." /><figcaption>The SQL script above is pasted into the new query window. The Execute button is highlighted and a success message is displayed in the Messages pane.</figcaption>
+</figure></li>
+<li><p>Run the <code>SELECT</code> query you opened in step 7 above again, and observe the results, specifically inspect the output in the <code>CardNumber</code> field. For reference the query is below. You replaced <code>XXXXX</code> in the <code>USE</code> statement to include the proper name of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<a class="sourceLine" id="cb8-2" title="2">GO</a>
+<a class="sourceLine" id="cb8-3" title="3"></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="kw">EXECUTE</span> <span class="kw">AS</span> <span class="fu">USER</span> <span class="op">=</span> <span class="ot">&quot;DDMUser&#39;;</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> [Sales].[CreditCard];</a>
+<a class="sourceLine" id="cb8-6" title="6">REVERT;</a></code></pre></div>
+<figure>
+<img src="media/ssms-sql-mi-ddm-results-masked.png" title="Query results" alt="The credit card number is masked in the query results." /><figcaption>The credit card number is masked in the query results.</figcaption>
+</figure>
+<blockquote>
+<p>The <code>CardNumber</code> is now displayed using the mask applied to it, so only the last four digits of the card number are visible. Dynamic Data Masking is a powerful feature that enables you to prevent unauthorized users from viewing sensitive or restricted information. It’s a policy-based security feature that hides the sensitive data in the result set of a query over designated database fields, while the data in the database is not changed.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-5-add-clustered-columnstore-index">Task 5: Add clustered columnstore index</h2>
+<p>ContosoAuto is looking to take advantage of some of the performance improvement features available in Azure SQL MI. In particular, they are interested in optimizing performance by using <a href="https://docs.microsoft.com/azure/sql-database/sql-database-in-memory">In-Memory technologies</a>.</p>
+<p>In this task, you will create a new table based on the existing <code>[Sales].[SalesOrderDetail]</code> table and apply a <a href="https://docs.microsoft.com/sql/relational-databases/indexes/columnstore-indexes-overview?view=azuresqldb-mi-current">ColumnStore index</a>.</p>
+<blockquote>
+<p>Columnstore indexes are the standard for storing and querying large data warehousing fact tables. This index uses column-based data storage and query processing to achieve gains up to <strong>10 times the query performance</strong> in your data warehouse over traditional row-oriented storage. You can also achieve gains up to <strong>10 times the data compression</strong> over the uncompressed data size.</p>
+</blockquote>
+<ol type="1">
+<li><p>In SSMS, ensure you are connected to the Azure SQL Database Managed Instance.</p></li>
+<li><p>Open a new query window by selecting <strong>New Query</strong> from the toolbar.</p>
+<figure>
+<img src="./media/ssms-toolbar-new-query.png" title="SSMS New Query" alt="The New Query icon is highlighted on the SSMS toolbar." /><figcaption>The New Query icon is highlighted on the SSMS toolbar.</figcaption>
+</figure></li>
+<li><p>Copy the script below, and paste it into the query window. Replace <code>XXXXX</code> in the <code>USE</code> statement to include the proper name of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<a class="sourceLine" id="cb9-2" title="2">GO</a>
+<a class="sourceLine" id="cb9-3" title="3"></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="kw">SELECT</span> <span class="op">*</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="kw">INTO</span> [Sales].[ColumnStore_SalesOrderDetail]</a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="kw">FROM</span> [Sales].[SalesOrderDetail]</a>
+<a class="sourceLine" id="cb9-7" title="7">GO</a></code></pre></div></li>
+<li><p>Select <strong>Execute</strong> on the toolbar to run the query, and create a new table named <code>[Sales].[ColumnStore_SalesOrderDetail]</code>, populated with data from the <code>[Sales].[SalesOrderDetail]</code> table.</p>
+<figure>
+<img src="./media/ssms-toolbar-execute-query.png" title="Select Execute" alt="The Execute icon is highlighted on the SSMS toolbar." /><figcaption>The Execute icon is highlighted on the SSMS toolbar.</figcaption>
+</figure></li>
+<li><p>Select <strong>New Query</strong> in the toolbar again, and paste the following query into the new query window. The query contains multiple parts; one to get the size of the <code>ColumnStore_SalesOrderDetail</code> table, a second to create a clustered ColumnStore index on the <code>[Sales].[ColumnStore_SalesOrderDetail]</code> table, and then the size query is repeated to get the size after adding the clustered ColumnStore index. Replace <code>XXXXX</code> in the <code>USE</code> statement to include the proper name of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<a class="sourceLine" id="cb10-2" title="2">GO</a>
+<a class="sourceLine" id="cb10-3" title="3"></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="co">-- Get the Size of the [Sales].[ColumnStore_SalesOrderDetail] table</span></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="kw">SELECT</span></a>
+<a class="sourceLine" id="cb10-6" title="6">t.Name <span class="kw">AS</span> TableName,</a>
+<a class="sourceLine" id="cb10-7" title="7">p.<span class="kw">rows</span> <span class="kw">AS</span> RowCounts,</a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="fu">CAST</span>(<span class="fu">ROUND</span>((<span class="fu">SUM</span>(a.total_pages) <span class="op">/</span> <span class="fl">128.00</span>), <span class="dv">2</span>) <span class="kw">AS</span> <span class="dt">NUMERIC</span>(<span class="dv">36</span>, <span class="dv">2</span>)) <span class="kw">AS</span> Size_MB</a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="kw">FROM</span> sys.<span class="kw">tables</span> t</a>
+<a class="sourceLine" id="cb10-10" title="10"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.<span class="kw">indexes</span> i <span class="kw">ON</span> t.OBJECT_ID <span class="op">=</span> i.object_id</a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.<span class="kw">partitions</span> p <span class="kw">ON</span> i.object_id <span class="op">=</span> p.OBJECT_ID <span class="kw">AND</span> i.index_id <span class="op">=</span> p.index_id</a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.allocation_units a <span class="kw">ON</span> p.partition_id <span class="op">=</span> a.container_id</a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="kw">WHERE</span> t.Name <span class="op">=</span> <span class="ot">&quot;ColumnStore_SalesOrderDetail&#39;</span></a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="kw">GROUP</span> <span class="kw">BY</span> t.Name, p.<span class="kw">Rows</span></a>
+<a class="sourceLine" id="cb10-15" title="15">GO</a>
+<a class="sourceLine" id="cb10-16" title="16"></a>
+<a class="sourceLine" id="cb10-17" title="17"><span class="co">-- Create a clustered columnstore index on the [Sales].[ColumnStore_SalesOrderDetail] table</span></a>
+<a class="sourceLine" id="cb10-18" title="18"><span class="kw">CREATE</span> CLUSTERED COLUMNSTORE <span class="kw">INDEX</span> [cci_SalesOrderDetail]</a>
+<a class="sourceLine" id="cb10-19" title="19"><span class="kw">ON</span> [Sales].[ColumnStore_SalesOrderDetail]</a>
+<a class="sourceLine" id="cb10-20" title="20">GO</a>
+<a class="sourceLine" id="cb10-21" title="21"></a>
+<a class="sourceLine" id="cb10-22" title="22"><span class="co">-- Get the Size of the [Sales].[ColumnStore_SalesOrderDetail] table</span></a>
+<a class="sourceLine" id="cb10-23" title="23"><span class="kw">SELECT</span></a>
+<a class="sourceLine" id="cb10-24" title="24">t.Name <span class="kw">AS</span> TableName,</a>
+<a class="sourceLine" id="cb10-25" title="25">p.<span class="kw">rows</span> <span class="kw">AS</span> RowCounts,</a>
+<a class="sourceLine" id="cb10-26" title="26"><span class="fu">CAST</span>(<span class="fu">ROUND</span>((<span class="fu">SUM</span>(a.total_pages) <span class="op">/</span> <span class="fl">128.00</span>), <span class="dv">2</span>) <span class="kw">AS</span> <span class="dt">NUMERIC</span>(<span class="dv">36</span>, <span class="dv">2</span>)) <span class="kw">AS</span> Size_MB</a>
+<a class="sourceLine" id="cb10-27" title="27"><span class="kw">FROM</span> sys.<span class="kw">tables</span> t</a>
+<a class="sourceLine" id="cb10-28" title="28"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.<span class="kw">indexes</span> i <span class="kw">ON</span> t.OBJECT_ID <span class="op">=</span> i.object_id</a>
+<a class="sourceLine" id="cb10-29" title="29"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.<span class="kw">partitions</span> p <span class="kw">ON</span> i.object_id <span class="op">=</span> p.OBJECT_ID <span class="kw">AND</span> i.index_id <span class="op">=</span> p.index_id</a>
+<a class="sourceLine" id="cb10-30" title="30"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.allocation_units a <span class="kw">ON</span> p.partition_id <span class="op">=</span> a.container_id</a>
+<a class="sourceLine" id="cb10-31" title="31"><span class="kw">WHERE</span> t.Name <span class="op">=</span> <span class="ot">&quot;ColumnStore_SalesOrderDetail&#39;</span></a>
+<a class="sourceLine" id="cb10-32" title="32"><span class="kw">GROUP</span> <span class="kw">BY</span> t.Name, p.<span class="kw">Rows</span></a>
+<a class="sourceLine" id="cb10-33" title="33">GO</a></code></pre></div></li>
+<li><p>Select <strong>Execute</strong> on the toolbar to run the query.</p></li>
+<li><p>In the query results, observe the <code>Size_MB</code> value of the table before and after the creation of the clustered ColumnStore index. The first value is the size before the index was created, and the second value is the size after the ColumnStore index was created.</p>
+<figure>
+<img src="media/ssms-sql-mi-columnstore-size-reduction.png" title="ColumnStore_SalesOrderDetail size query results" alt="The SSMS results pane is displayed, with the size of the [Sales].[ColumnStore_SalesOrderDetail] table highlighted both before and after the creation of the clustered ColumnStore index." /><figcaption>The SSMS results pane is displayed, with the size of the [Sales].[ColumnStore_SalesOrderDetail] table highlighted both before and after the creation of the clustered ColumnStore index.</figcaption>
+</figure></li>
+<li><p>Create another new query window by selecting <strong>New Query</strong> from the toolbar, and then select <strong>Include Actual Execution Plan</strong> by selecting its button in the toolbar.</p>
+<figure>
+<img src="./media/ssms-toolbar-include-actual-execution-plan.png" title="Select the Include Actual Execution Plan" alt="The Include Actual Execution Plan icon is highlighted on the New Query the toolbar." /><figcaption>The Include Actual Execution Plan icon is highlighted on the New Query the toolbar.</figcaption>
+</figure></li>
+<li><p>Paste the queries below into the new query window, replace <code>XXXXX</code> with your unique ID, and select <strong>Execute</strong> on the toolbar:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<a class="sourceLine" id="cb11-2" title="2">GO</a>
+<a class="sourceLine" id="cb11-3" title="3"></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="kw">SELECT</span> ProductId, LineTotal</a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="kw">FROM</span> [Sales].[ColumnStore_SalesOrderDetail]</a>
+<a class="sourceLine" id="cb11-6" title="6"></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="kw">SELECT</span> ProductId, LineTotal</a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="kw">FROM</span> [Sales].[SalesOrderDetail]</a></code></pre></div>
+<blockquote>
+<p>Running queries against both the <code>SalesOrderDetail</code> and <code>ColumnStore_SalesOrderDetail</code> will allow you to compare the query execution plans between tables with and without a columnstore index.</p>
+</blockquote></li>
+<li><p>In the Results pane, select the <strong>Execution Plan</strong> tab. Check the <em>Query cost (relative to the batch)</em> percentage value of the two queries and compare them.</p>
+<figure>
+<img src="./media/ssms-query-results-execution-plan-columnstore-index.png" title="Compare the two queries" alt="The Execution Plan tab is highlighted in the Results pane, 12% is highlighted for Query 1, and 88% is highlighted for Query 2." /><figcaption>The Execution Plan tab is highlighted in the Results pane, 12% is highlighted for Query 1, and 88% is highlighted for Query 2.</figcaption>
+</figure>
+<blockquote>
+<p>From the query cost, it is clear the query against the table with the columnstore index was more performant. Using a columnstore index, queries get an order of magnitude better performance boost with <em>BatchMode</em> processing, a unique value proposition in SQL Server. The basic idea of batch mode processing is to process multiple values, hence the term ‘batch’, together instead of one value at a time. Batch mode processing is perfectly suited for analytics where a large number of rows need to be processed, for example, to compute aggregates or apply filter predicates.</p>
+</blockquote></li>
+<li><p>Run the same queries again, but this time set statistics IO on in the query by adding the following to the top of the query window:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">SET</span> <span class="kw">STATISTICS</span> IO <span class="kw">ON</span></a>
+<a class="sourceLine" id="cb12-2" title="2">GO</a></code></pre></div></li>
+<li><p>Your finaly query should look like, with <code>XXXXX</code> replaced with your unique ID:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<a class="sourceLine" id="cb13-2" title="2">GO</a>
+<a class="sourceLine" id="cb13-3" title="3"></a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="kw">SET</span> <span class="kw">STATISTICS</span> IO <span class="kw">ON</span></a>
+<a class="sourceLine" id="cb13-5" title="5">GO</a>
+<a class="sourceLine" id="cb13-6" title="6"></a>
+<a class="sourceLine" id="cb13-7" title="7"><span class="kw">SELECT</span> ProductId, LineTotal</a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="kw">FROM</span> [Sales].[ColumnStore_SalesOrderDetail]</a>
+<a class="sourceLine" id="cb13-9" title="9"></a>
+<a class="sourceLine" id="cb13-10" title="10"><span class="kw">SELECT</span> ProductId, LineTotal</a>
+<a class="sourceLine" id="cb13-11" title="11"><span class="kw">FROM</span> [Sales].[SalesOrderDetail]</a></code></pre></div></li>
+<li><p>Select <strong>Execute</strong> from the toolbar to run the query.</p>
+<blockquote>
+<p>Statistics IO reports on the amount of logical pages that are read in order to return the query results.</p>
+</blockquote></li>
+<li><p>Select the <strong>Messages</strong> tab of the Results pane, and compare two numbers, logical reads and lob logical reads. You should see a significant drop in total number of logical reads on the columns store table.</p>
+<figure>
+<img src="./media/ssms-query-results-messages-stastics-io.png" title="Compare the information" alt="Various information is highlighted on the Messages tab of the Results pane." /><figcaption>Various information is highlighted on the Messages tab of the Results pane.</figcaption>
+</figure></li>
+</ol>
+<h2 id="task-6-use-online-secondary-for-read-only-queries">Task 6: Use online secondary for read-only queries</h2>
+<p>In this task, you will look at how you can use the automatically created online secondary for reporting, without feeling the impacts of a heavy transactional load on the primary database. Each database in the SQL MI Business Critical tier is automatically provisioned with several AlwaysON replicas to support the availability SLA.</p>
+<blockquote>
+<p>High availability in this architectural model is achieved by replication of compute (SQL Server Database Engine process) and storage (locally attached SSD) deployed in 4-node cluster, using technology similar to SQL Server <a href="https://docs.microsoft.com/sql/database-engine/availability-groups/windows/overview-of-always-on-availability-groups-sql-server">Always On Availability Groups</a>. You can read more in the <a href="https://docs.microsoft.com/azure/sql-database/sql-database-high-availability#premium-and-business-critical-service-tier-availability">SQL Database high availability</a> documentation.</p>
+</blockquote>
+<p><a href="https://docs.microsoft.com/azure/sql-database/sql-database-read-scale-out"><strong>Read Scale-Out</strong></a> allows you to load balance Azure SQL Database read-only workloads using the capacity of one read-only replica. This way the read-only workload will be isolated from the main read-write workload and will not affect its performance. To learn more, check out the <a href="https://docs.microsoft.com/azure/sql-database/sql-database-read-scale-out">SQL Database Read Scale-Out documentation</a>.</p>
+<figure>
+<img src="media/sql-mi-read-scale-out.png" title="Read Scale-Out" alt="Business Critical service tier: collocated compute and storage." /><figcaption>Business Critical service tier: collocated compute and storage.</figcaption>
+</figure>
+<blockquote>
+<p>The feature is intended for the applications that include logically separated read-only workloads, such as analytics, and therefore could gain performance benefits using this additional capacity at no extra cost.</p>
+</blockquote>
+<p>When you enable Read Scale-Out for a database, the <code>ApplicationIntent</code> option in the connection string provided by the client dictates whether the connection is routed to the write replica or to a read-only replica. Specifically, if the <code>ApplicationIntent</code> value is <code>ReadWrite</code> (the default value), the connection will be directed to the database’s read-write replica. This is identical to existing behavior. If the <code>ApplicationIntent</code> value is <code>ReadOnly</code>, the connection is routed to a read-only replica.</p>
+<p>For example, the following connection string connects the client to a read-only replica of the <code>tech-immersion-sql-mi</code> database:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb14-1" title="1">Server<span class="op">=</span>tcp<span class="ch">:tech</span><span class="op">-</span>immersion<span class="op">-</span>sql<span class="op">-</span>mi<span class="fl">.3e134</span>c88d9f6.<span class="kw">database</span>.windows.net;<span class="kw">Database</span><span class="op">=</span>ContosoAutoDb;<span class="fu">User</span> <span class="kw">ID</span><span class="op">=</span>tiuser;<span class="kw">Password</span><span class="op">=</span><span class="kw">Password</span><span class="fl">.1234567890</span>;Trusted_Connection<span class="op">=</span><span class="kw">False</span>;Encrypt<span class="op">=</span><span class="kw">True</span>;ApplicationIntent<span class="op">=</span>ReadOnly;</a></code></pre></div>
+<blockquote>
+<p>Note the addition of <code>ApplicationIntent=ReadOnly;</code> to the end of the connection string.</p>
+</blockquote>
+<ol type="1">
+<li><p>Using a web browser, navigate to the <a href="https://portal.azure.com">Azure portal</a>, select <strong>Resource groups</strong> from the left-hand menu, and then select the resource group named <strong>tech-immersion</strong>.</p>
+<figure>
+<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
+</figure></li>
+<li><p>In the tech-immersion resource group, select the <strong>tech-immersion-web App Service</strong> from the list of resources.</p>
+<figure>
+<img src="media/tech-immersion-rg-appservice.png" title="Tech Immersion resource group" alt="The App Service resource is selected from the list of resources in the tech-immersion resource group." /><figcaption>The App Service resource is selected from the list of resources in the tech-immersion resource group.</figcaption>
+</figure></li>
+<li><p>On the App Service overview blade, select the <strong>URL</strong> to open the web application in a browser window.</p>
+<figure>
+<img src="media/app-service-url.png" title="App service URL" alt="The App service URL is highlighted." /><figcaption>The App service URL is highlighted.</figcaption>
+</figure></li>
+<li><p>In the ContosoAuto web app, select <strong>Reports</strong> from the menu.</p>
+<figure>
+<img src="media/contosoauto-web-reports-read-write.png" title="ContosoAuto Web App" alt="READ_WRITE is highlighted on the Reports page." /><figcaption>READ_WRITE is highlighted on the Reports page.</figcaption>
+</figure>
+<blockquote>
+<p>Note the <code>READ_WRITE</code> string on the page. This is the output from reading the <code>Updateability</code> propertry associated with the <code>ApplicationIntent</code> option on the target database. This can be retrieved using the SQL query <code>SELECT DATABASEPROPERTYEX(DB_NAME(), "Updateability")</code>.</p>
+</blockquote></li>
+<li><p>Return to the App Service blade, and then select <strong>Application settings</strong> under Settings on the left-hand side.</p>
+<figure>
+<img src="media/tech-immersion-app-service-app-settings.png" title="Application settings" alt="The Application settings item is selected under Settings." /><figcaption>The Application settings item is selected under Settings.</figcaption>
+</figure></li>
+<li><p>On the Application settings blade, scroll down and locate the connection string named <code>ContosoAutoDbReadOnlyContext</code> within the <strong>Connection strings</strong> section.</p>
+<figure>
+<img src="media/tech-immersion-app-settings-conn-string-read-only.png" title="Connection strings" alt="The read-only connection string is highlighted." /><figcaption>The read-only connection string is highlighted.</figcaption>
+</figure></li>
+<li><p>Select the <strong>Value</strong> for the <code>ContosoAutoDbReadOnlyContext</code> and paste the following parameter to end of the connection string.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb15-1" title="1">ApplicationIntent<span class="op">=</span>ReadOnly;</a></code></pre></div></li>
+<li><p>Your <code>ContosoAutoDbReadOnlyContext</code> connection string should now look something like the following:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb16-1" title="1">Server<span class="op">=</span>tcp<span class="ch">:tech</span><span class="op">-</span>immersion<span class="op">-</span>sqlmi<span class="op">-</span><span class="kw">shared</span><span class="fl">.521</span>f7783692d.<span class="kw">database</span>.windows.net,<span class="dv">1433</span>;Persist Security Info<span class="op">=</span><span class="kw">False</span>;<span class="kw">Database</span><span class="op">=</span>ContosoAutoDb;<span class="fu">User</span> <span class="kw">ID</span><span class="op">=</span>tiuser;<span class="kw">Password</span><span class="op">=</span><span class="kw">Password</span><span class="fl">.1234567890</span>;MultipleActiveResultSets<span class="op">=</span><span class="kw">False</span>;Encrypt<span class="op">=</span><span class="kw">True</span>;TrustServerCertificate<span class="op">=</span><span class="kw">False</span>;Connection <span class="kw">Timeout</span><span class="op">=</span><span class="dv">30</span>;ApplicationIntent<span class="op">=</span>ReadOnly;</a></code></pre></div></li>
+<li><p>Select <strong>Save</strong> at the top of the Application settings blade.</p>
+<figure>
+<img src="media/application-settings-save.png" title="Save" alt="The save button on the Application settings blade is highlighted." /><figcaption>The save button on the Application settings blade is highlighted.</figcaption>
+</figure></li>
+<li><p>Return to the ContosoAuto operations website you opened previously, and refresh the <strong>Reports</strong> page. The page should now look similar to the following:</p>
+<figure>
+<img src="media/contosoauto-web-reports-read-only.png" title="ContosoAuto Web App" alt="READ_ONLY is highlighted on the Reports page." /><figcaption>READ_ONLY is highlighted on the Reports page.</figcaption>
+</figure>
+<blockquote>
+<p>Notice the <code>updability</code> option is now displaying as <code>READ_ONLY</code>. With a simple addition to your database connection string, you are able to send read-only queries to the online secondary of your SQL MI database, allowing you to load-balance read-only workloads using the capacity of one read-only replica. The SQL MI Business Critical cluster has built-in Read Scale-Out capability that provides free-of charge built-in read-only node that can be used to run read-only queries that should not affect performance of your primary workload.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-7-review-advanced-data-security-vulnerability-assessment">Task 7: Review Advanced Data Security Vulnerability Assessment</h2>
+<p><a href="https://docs.microsoft.com/azure/sql-database/sql-database-advanced-data-security">SQL Database Advance Data Security</a> (ADS) provides advanced SQL security capabilities, including functionality for discovering and classifying sensitive data, surfacing and mitigating potential database vulnerabilities, and detecting anomalous activities that could indicate a threat to your database. ADS is enabled at the managed instance level by selecting <strong>ON</strong> on the <strong>Advanced Data Security</strong> blade for your managed instance. This turns ADS on for all databases on the managed instance. ADS uses an Azure Blob Storage account to save the associated outputs (e.g., assessment and vulnerability reports). In the interest of time for this workshop, the steps to enable ADS have already been performed on the shared SQL MI.</p>
+<p>In this task, you will review an assessment report generated by <a href="https://docs.microsoft.com/azure/sql-database/sql-database-advanced-data-security">Advance Data Security</a> for the <code>ContosoAutoDb</code> database and take action to remediate one of the findings in your copy of the <code>ContosoAutoDb</code> database.</p>
+<ol type="1">
+<li><p>To review the Advanced Data Security assessment for the <code>ContosoAutoDb</code> database. Select <strong>Overview</strong> from the left-hand menu.</p>
+<figure>
+<img src="media/sql-mi-overview-menu.png" title="Overview" alt="The Overview menu item is highlighted." /><figcaption>The Overview menu item is highlighted.</figcaption>
+</figure></li>
+<li><p>On the SQL MI Overview blade, scroll down and locate the list of databases on the Managed Instance, and then select your copy of the <strong>ContosoAutoDb</strong> database, which will be named <code>ContosoAutoDb-your-unique-identifier</code> (e.g., ContosoAutoDb-0123).</p>
+<figure>
+<img src="media/sql-mi-database-list.png" title="Manged Instance databases" alt="ContosoAutoDb is highlighted in the list of databases on the SQL MI." /><figcaption>ContosoAutoDb is highlighted in the list of databases on the SQL MI.</figcaption>
+</figure></li>
+<li><p>On the <strong>ContosoAutoDb-your-unique-identifier</strong> Managed database blade, select <strong>Advanced Data Security</strong> under Security in the left-hand menu and then select the <strong>Vulnerability Assessment</strong> tile.</p>
+<figure>
+<img src="media/sql-mi-contosoautodb-ads.png" title="Advanced Data Security" alt="Advanced Data Security is selected in the left-hand menu, and the Vulnerability tile is highlighted." /><figcaption>Advanced Data Security is selected in the left-hand menu, and the Vulnerability tile is highlighted.</figcaption>
+</figure>
+<blockquote>
+<p>The <a href="https://docs.microsoft.com/azure/sql-database/sql-vulnerability-assessment">SQL Vulnerability Assessment service</a> is a service that provides visibility into your security state, and includes actionable steps to resolve security issues, and enhance your database security.</p>
+</blockquote></li>
+<li><p>On the Vulnerability Assessment blade, you will see a dashboard, displaying the number of failing checks, passing checks, and a breakdown of the risk summary by severity level.</p>
+<figure>
+<img src="media/sql-mi-vulnerability-assessment-dashboard.png" title="Vulnerability Assessment dashboard" alt="The Vulnerability Assessment dashboard is displayed." /><figcaption>The Vulnerability Assessment dashboard is displayed.</figcaption>
+</figure></li>
+<li><p>Take a few minutes to browse both the Failed and Passed checks, and review the types of checks that are performed. In the <strong>Failed</strong> the list, locate the security check for <strong>Transparent data encryption</strong>. This check has an ID of <strong>VA1219</strong>.</p>
+<figure>
+<img src="media/sql-mi-vulnerability-assessment-failed-va1219.png" title="Vulnerability assessment" alt="The VA1219 finding for Transparent data encryption is highlighted." /><figcaption>The VA1219 finding for Transparent data encryption is highlighted.</figcaption>
+</figure></li>
+<li><p>Select the <strong>VA1219</strong> finding to view the detailed description.</p>
+<figure>
+<img src="media/sql-mi-vulnerability-assessment-failed-va1219-details.png" title="Vulnerability Assessment" alt="The details of the VA1219 - Transparent data encryption should be enabled finding are displayed with the description, impact, and remediation fields highlighted." /><figcaption>The details of the VA1219 - Transparent data encryption should be enabled finding are displayed with the description, impact, and remediation fields highlighted.</figcaption>
+</figure>
+<blockquote>
+<p>The details for each finding provide more insight into the reason for the finding. Of note are the fields describing the finding, the impact of the recommeneded settings, and details on remediation for the finding.</p>
+</blockquote></li>
+<li><p>Let’s now act on the recommendation remediation steps for the finding, and enable <a href="https://docs.microsoft.com/azure/sql-database/transparent-data-encryption-azure-sql">Transparent Data Encryption</a> for the <code>ContosoAutoDb</code> database. To accomplish this, you will switch back to using SSMS for the next few steps.</p>
+<blockquote>
+<p>Transparent data encryption (TDE) needs to be manually enabled for Azure SQL Managed Instance. TDE helps protect Azure SQL Database, Azure SQL Managed Instance, and Azure Data Warehouse against the threat of malicious activity. It performs real-time encryption and decryption of the database, associated backups, and transaction log files at rest without requiring changes to the application.</p>
+</blockquote></li>
+<li><p>In SSMS, select <strong>New Query</strong> from the toolbar, paste the following SQL script into the new query window. Replace <code>&lt;your-unique-identifier&gt;</code> in the <code>ALTER DATABASE</code> statement to include the proper name of your database which will be <code>ContosoAutoDb-your-unique-identifier</code> (e.g., ContosoAutoDb-0123).</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">ALTER</span> <span class="kw">DATABASE</span> ContosoAutoDb<span class="op">-&lt;</span>your<span class="op">-</span><span class="kw">unique</span><span class="op">-</span><span class="kw">identifier</span><span class="op">&gt;</span> <span class="kw">SET</span> ENCRYPTION <span class="kw">ON</span></a></code></pre></div>
+<figure>
+<img src="media/ssms-sql-mi-enable-tde.png" title="New query" alt="A new query window is displayed, with the script above pasted into it." /><figcaption>A new query window is displayed, with the script above pasted into it.</figcaption>
+</figure>
+<blockquote>
+<p>You turn transparent data encryption on and off on the database level. To enable transparent data encryption on a database in Azure SQL Managed Instance use must use T-SQL.</p>
+</blockquote></li>
+<li><p>Select <strong>Execute</strong> from the SSMS toolbar. After a few seconds, you will see a message that the “Commands completed successfully.”</p>
+<figure>
+<img src="media/ssms-sql-mi-enable-tde-success.png" title="Execute" alt="The Excute button is highlighted on the SSMS toolbar, and the Commands completed successfully message is highlighted in the output window." /><figcaption>The Excute button is highlighted on the SSMS toolbar, and the Commands completed successfully message is highlighted in the output window.</figcaption>
+</figure></li>
+<li><p>You can verify the encryption state and view information the associated encryption keys by using the <a href="https://docs.microsoft.com/sql/relational-databases/system-dynamic-management-views/sys-dm-database-encryption-keys-transact-sql">sys.dm_database_encryption_keys view</a>. Select <strong>New Query</strong> on the SSMS toolbar again, and paste the following query into the new query window:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> sys.dm_database_encryption_keys</a></code></pre></div>
+<figure>
+<img src="media/ssms-sql-mi-database-encryption-keys.png" title="New query" alt="The query above is pasted into a new query window in SSMS." /><figcaption>The query above is pasted into a new query window in SSMS.</figcaption>
+</figure></li>
+<li><p>Select <strong>Execute</strong> from the SSMS toolbar. You will see two records in the Results window, which provide information about the encryption state and keys used for encryption.</p>
+<figure>
+<img src="media/ssms-sql-mi-database-encryption-keys-results.png" title="Results" alt="The Execute button on the SSMS toolbar is highlighted, and in the Results pane the two records about the encryption state and keys for the ContosoAutoDb database are highlighted." /><figcaption>The Execute button on the SSMS toolbar is highlighted, and in the Results pane the two records about the encryption state and keys for the ContosoAutoDb database are highlighted.</figcaption>
+</figure>
+<blockquote>
+<p>By default, service-managed transparent data encryption is used. A transparent data encryption certificate is automatically generated for the server that contains the database.</p>
+</blockquote></li>
+<li><p>Return to the Azure portal and the Vulnerability Assessment blade for your copy of the <code>ContosoAutoDb</code> managed database (e.g, ContosoAutoDb-0123). On the toolbar, select <strong>Scan</strong> to start a new assessment of the database.</p>
+<figure>
+<img src="media/sml-mi-vulnerability-assessment-scan.png" title="Scan" alt="The Scan button on the SQL MI Vulnerability Assessment dialog is highlighted." /><figcaption>The Scan button on the SQL MI Vulnerability Assessment dialog is highlighted.</figcaption>
+</figure></li>
+<li><p>When the scan completes, notice that the numbers for failing and passing checks has changed. The number of failing checks has been reduced by 1 and the number of passing checks has increased by 1.</p>
+<figure>
+<img src="media/sql-mi-vulnerability-assessment-checks-totals.png" title="Vulnerability Assessment" alt="The total number of failing and passing checks is highlighted." /><figcaption>The total number of failing and passing checks is highlighted.</figcaption>
+</figure></li>
+<li><p>On the <strong>Failed</strong> tab, enter <strong>VA1219</strong> into the search filter box, and observe that the previous failure is no longer in the Failed list.</p>
+<figure>
+<img src="media/sql-mi-vulnerability-assessment-failed-filter-va1219.png" title="Failed" alt="The Failed tab is highlighted and VA1219 is entered into the search filter. The list displays no results." /><figcaption>The Failed tab is highlighted and VA1219 is entered into the search filter. The list displays no results.</figcaption>
+</figure></li>
+<li><p>Now, select the <strong>Passed</strong> tab, and observe the <strong>VA1219</strong> check is listed with a status of PASS.</p>
+<figure>
+<img src="media/sql-mi-vulnerability-assessment-passed-va1219.png" title="Passed" alt="The Passed tab is highlighted and VA1219 is entered into the search filter. VA1219 with a status of PASS is highlighted in the results." /><figcaption>The Passed tab is highlighted and VA1219 is entered into the search filter. VA1219 with a status of PASS is highlighted in the results.</figcaption>
+</figure>
+<blockquote>
+<p>Using the SQL Vulnerability Assessment it is simple to identify and remediate potential database vulnerabilities, allowing you to proactively improve your database security.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-8-sql-data-discovery-and-classification">Task 8: SQL Data Discovery and Classification</h2>
+<p>In this task, you will look at another <strong>Advanced Data Security</strong> feature available within the SQL MI database, <a href="https://docs.microsoft.com/sql/relational-databases/security/sql-data-discovery-and-classification?view=sql-server-2017">SQL Data Discovery and Classification</a>. Data Discovery &amp; Classification introduces a new tool built into SQL Server Management Studio (SSMS) for discovering, classifying, labeling &amp; reporting the sensitive data in your databases. It introduces a set of advanced services, forming a new SQL Information Protection paradigm aimed at protecting the data in your database, not just the database. Discovering and classifying your most sensitive data (business, financial, healthcare, etc.) can play a pivotal role in your organizational information protection stature.</p>
+<pre><code>&gt; This functionality is not currently available for SQL MI through the Azure portal, so you return to SSMS to use this capability.</code></pre>
+<ol type="1">
+<li><p>In SSMS, right-click the <code>ContosoAutoDb-&lt;your-unique-identifier&gt;</code> database (e.g., ContosoAutoDb-0123) in the Object Explorer, and then select <strong>Tasks</strong> and <strong>Classify Data</strong> in the context menus.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-menu.png" title="Classify Data" alt="The Tasks &gt; Classify Data context menu items are highlighted for the ContosoAutoDb database in SSMS." /><figcaption>The Tasks &gt; Classify Data context menu items are highlighted for the ContosoAutoDb database in SSMS.</figcaption>
+</figure></li>
+<li><p>In the Data Classification - ContosoAutoDb window, select the info link with the message <em>39 columns with classification recommendations (click to view)</em>.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-recommendations-link.png" title="Recommendations" alt="The link to classification recommendations is displayed." /><figcaption>The link to classification recommendations is displayed.</figcaption>
+</figure></li>
+<li><p>In the list of classification recommendations, select the recommendation for the <strong>NationalIDNumber</strong> field, and then expand the <strong>Sensitivity Label</strong> drop down list. You can see the list of built-is sensitivity classification, including those related to compliance requirements around GDPR.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-recommendations-labels.png" title="Recommendations" alt="The NationalIDNumber field is highlighted within the recommenations list, and the Sensitivity Label drop down is expanded and highlighted." /><figcaption>The NationalIDNumber field is highlighted within the recommenations list, and the Sensitivity Label drop down is expanded and highlighted.</figcaption>
+</figure></li>
+<li><p>Select the check box at the top of the list to select all of the recommended classifications, and then select <strong>Accept selected recommendations</strong>.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-accept-recommendations.png" title="Recommendations" alt="All the recommended classifications are checked and the Accept selected recommendations button is highlighted." /><figcaption>All the recommended classifications are checked and the Accept selected recommendations button is highlighted.</figcaption>
+</figure></li>
+<li><p>Select <strong>Save</strong> on the toolbar of the Data Classification window.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-save.png" title="Save" alt="Save the updates to the classified columns list." /><figcaption>Save the updates to the classified columns list.</figcaption>
+</figure></li>
+<li><p>Select <strong>View Report</strong> on the Data Classification window to generate a report with a full summary of the database classification state.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-view-report.png" title="View report" alt="The View Report button is highlighted on the toolbar." /><figcaption>The View Report button is highlighted on the toolbar.</figcaption>
+</figure></li>
+<li><p>View the report.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-report.png" title="SQL Data Classification Report" alt="The SQL Data Classification Report is displayed." /><figcaption>The SQL Data Classification Report is displayed.</figcaption>
+</figure></li>
+</ol>
+<h2 id="wrap-up">Wrap-up</h2>
+<p>In this experience you unlocked new capabilities for a SQL Server 2008 R2 database by performing a friction-free migration to Azure SQL Database Managed Instance. You learned how Azure SQL Database Managed Instance enables you to migrate on-premises databases quickly and easily into a fully-managed PaaS database running in Azure, with no application code changes. SQL MI provides a migration path for databases using features, such as Service broker, which previously prevented them from running in Azure SQL Database.</p>
+<p>After you migrated the database into SQL MI, you explored some of advanced SQL features available only in Azure, including Advanced Data Security Vulnerability Assessments and Data Classification and Discovery. In addition, you enabled Dynamic Data Masking and created a ColumnStore index on a table in the database, demonstrating how SQL MI allows you to utilize features unavailable in SQL Server 2008 R2. You also examined how to connect to an online secondary replica of your database, which provides a free read-only copy of your database. This feature takes advantage of one the high-availability features of the Azure SQL MI Business Critical service tier.</p>
+<p>This experience was meant to provided a brief introduction to Azure SQL Database Managed Instance. There are many more features of SQL MI that you can now explore, including <a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-threat-detection-overview">Advanced Threat Detection</a> and <a href="https://docs.microsoft.com/azure/sql-database/replication-with-sql-database-managed-instance">Transactional replication</a>. Threat detection for Azure SQL Database Managed Instance detects anomalous activities indicating unusual and potentially harmful attempts to access or exploit databases. Transactional replication allows you to replicate data into an Azure SQL MI database from a remote SQL Server database or another instance database. You an also use it to push changes made in an instance database in SQL MI to a remote SQL Server database, to a single database in Azure SQL Database, or to a pooled database in an Azure SQL Database elastic pool.</p>
+<h2 id="additional-resources-and-more-information">Additional resources and more information</h2>
+<p>Use the links below as a starting point to continue learning about the capabilities and features available with Azure SQL Database Managed Instance.</p>
+<ul>
+<li><a href="https://azure.microsoft.com/services/sql-database/">Azure SQL Database</a>
+<ul>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-service-tiers-general-purpose-business-critical">Service tiers</a></li>
+</ul></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance-index">What is Azure SQL Database Managed Instance?</a></li>
+<li><a href="https://datamigration.microsoft.com/">Database Migration Guide</a>
+<ul>
+<li><a href="https://docs.microsoft.com/sql/dma/dma-overview?view=azuresqldb-mi-current">Database Migration Assistant</a></li>
+<li><a href="https://docs.microsoft.com/azure/dms/dms-overview">Azure Database Migration Service</a></li>
+</ul></li>
+<li><a href="https://datamigration.microsoft.com/scenario/sql-to-azuresqldbmi">Migrate SQL Server to an Azure SQL Database Managed Instance</a></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-paas">SQL Database Platform as a Service</a>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-business-continuity">Business continuity</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-high-availability">High availability</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-automated-backups">Automated backups</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-long-term-retention">Long-term back retention</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-auto-failover-group">Geo-replication</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-scale-resources">Scale resources</a></li>
+</ul></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-howto">How to use Azure SQL Database</a></li>
+<li><a href="https://azure.microsoft.com/en-us/updates/?product=sql-database">Azure updates for Azure SQL Database</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/sql-database/managed/">Azure SQL Database pricing</a></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-security-overview">Overview of Azure SQL Database security capabilities</a>
+<ul>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-advanced-data-security">Advanced data security</a></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-data-discovery-and-classification">Data discovery and classification</a></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-vulnerability-assessment">SQL Vulnerability Assessment service</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-threat-detection-overview">Threat detection</a></li>
+</ul></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-read-scale-out">SQL Database Read Scale-Out</a></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance-connect-app">Connect an application to Azure SQL Database Managed Instance</a></li>
+</ul>
