@@ -137,7 +137,7 @@ namespace TransactionGenerator
                 );
                 #endregion Write to Cosmos DB
 
-                if (_totalMessages % 1000 == 0)
+                if (_totalMessages % 500 == 0)
                 {
                     eventHubsTimer.Stop();
                     cosmosTimer.Stop();
@@ -150,6 +150,7 @@ namespace TransactionGenerator
 
                     // Random delay every 1000 messages that are sent.
                     //await Task.Delay(random.Next(100, 1000), externalCancellationToken).ConfigureAwait(false);
+                    await Task.Delay(5000, externalCancellationToken);
 
                     // The obvious and recommended method for sending a lot of data is to do so in batches. This method can
                     // multiply the amount of data sent with each request by hundreds or thousands. However, the point of
@@ -272,7 +273,7 @@ namespace TransactionGenerator
             WriteLineInColor("Vehicle Telemetry Generator", ConsoleColor.White);
             Console.WriteLine("======");
             WriteLineInColor("Press Ctrl+C or Ctrl+Break to cancel.", ConsoleColor.Cyan);
-            Console.WriteLine("Statistics for generated vehicle telemetry data will be updated for every 1000 sent");
+            Console.WriteLine("Statistics for generated vehicle telemetry data will be updated for every 500 sent");
             Console.WriteLine(string.Empty);
 
             ThreadPool.SetMinThreads(100, 100);
