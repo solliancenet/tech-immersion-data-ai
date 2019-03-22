@@ -1,0 +1,619 @@
+<h1 id="day-2-experience-2---yield-quick-insights-from-unstructured-data-with-knowledge-mining-and-cognitive-search">Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search</h1>
+<ul>
+<li><a href="#day-2-experience-2---yield-quick-insights-from-unstructured-data-with-knowledge-mining-and-cognitive-search">Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search</a>
+<ul>
+<li><a href="#technology-overview">Technology overview</a></li>
+<li><a href="#scenario-overview">Scenario overview</a></li>
+<li><a href="#task-1-populate-cosmos-db-with-tweets-from-a-generator">Task 1: Populate Cosmos DB with tweets from a generator</a></li>
+<li><a href="#task-2-create-a-basic-cognitive-search-pipeline-using-the-azure-portal">Task 2: Create a basic Cognitive Search pipeline using the Azure portal</a></li>
+<li><a href="#task-3-enhance-the-cognitive-search-pipeline">Task 3: Enhance the Cognitive Search pipeline</a></li>
+<li><a href="#task-4-deploy-a-custom-skill">Task 4: Deploy a custom skill</a></li>
+<li><a href="#task-5-integrate-custom-skill-into-pipeline">Task 5: Integrate custom skill into pipeline</a></li>
+<li><a href="#task-6-run-indexer-and-query-data">Task 6: Run indexer and query data</a></li>
+<li><a href="#wrap-up">Wrap-up</a></li>
+<li><a href="#additional-resources-and-more-information">Additional resources and more information</a></li>
+</ul></li>
+</ul>
+<h2 id="technology-overview">Technology overview</h2>
+<p>Cognitive search is an AI feature in Azure Search, used to extract text from images, blobs, and other unstructured data sources - enriching the content to make it more searchable in an Azure Search index. Extraction and enrichment are implemented through cognitive skills attached to an indexing pipeline. AI enrichments are supported in the following ways:</p>
+<ul>
+<li><strong>Natural language processing</strong> skills include <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-entity-recognition">entity recognition</a>, <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-language-detection">language detection</a>, <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-keyphrases">key phrase extraction</a>, text manipulation, and <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-sentiment">sentiment detection</a>. With these skills, unstructured text can assume new forms, mapped as searchable and filterable fields in an index.</li>
+<li><strong>Image processing</strong> skills include <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-ocr">Optical Character Recognition (OCR)</a> and identification of <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-image-analysis">visual features</a>, such as facial detection, image interpretation, image recognition (famous people and landmarks) or attributes like colors or image orientation. You can create text-representations of image content, searchable using all the query capabilities of Azure Search.</li>
+</ul>
+<figure>
+<img src="media/cognitive-search-diagram.png" title="Cognitive Search" alt="Cognitive Search diagram" /><figcaption>Cognitive Search diagram</figcaption>
+</figure>
+<p>Cognitive skills in Azure Search are based on machine learning models in Cognitive Services APIs: <a href="https://docs.microsoft.com/azure/cognitive-services/computer-vision/">Computer Vision</a> and <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview">Text Analysis</a>.</p>
+<p>Natural language and image processing is applied during the data ingestion phase, with results becoming part of a document’s composition in a searchable index in Azure Search. Data is sourced as an Azure data set and then pushed through an indexing pipeline using whichever built-in skills you need. The architecture is extensible so if the <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-predefined-skills">built-in skills</a> are not sufficient, you can create and attach <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-create-custom-skill-example">custom skills</a> to integrate custom processing. Examples might be a custom entity module or document classifier targeting a specific domain such as finance, scientific publications, or medicine.</p>
+<h2 id="scenario-overview">Scenario overview</h2>
+<p>ContosoAuto is interested in using their unstructured data to gain further insights into how customers perceive their business, and the key things their customers are talking about. They are looking for a pilot that would use tweets streamed from Twitter into a <code>tweets</code> collection in their Cosmos DB instance to better understand what customers are saying about their organization on the platform. They are also looking to get a better understanding of whether the trend of messages is positive, negative, or neutral by performing sentiment analysis on the tweets.</p>
+<p>In this experience, you will learn the mechanics of using Cognitive Search and Knowledge Mining to yield rapid insights into unstructured data. Using a combination of preconfigured and custom cognitive skills in Azure Search, you will create a Cognitive Search indexing pipeline that enriches source data in route to an index. Cognitive skills are natural language processing (NLP) and image analysis operations that extract text and text representations of an image, detect language, entities, key phrases, and more. The end result is rich additional content in an Azure Search index, created by a cognitive search indexing pipeline. The output is a full-text searchable index on Azure Search.</p>
+<h2 id="task-1-populate-cosmos-db-with-tweets-from-a-generator">Task 1: Populate Cosmos DB with tweets from a generator</h2>
+<p>For this experience, you will be using the <code>tweets</code> collection in ContosoAuto’s Cosmos DB as the data source for your Cognitive Search pipeline. In order to use Cosmos DB as a data source, documents must exist in the target collection prior to creating the Data Source in Azure Search. In this task, you will populate the <code>tweets</code> collection in your Cosmos DB <code>ContosoAuto</code> database using a tweet generator application running in Visual Studio.</p>
+<ol type="1">
+<li><p>Open Windows Explorer and navigate to <code>C:\lab-files\ai\2</code>. Double-click on <strong><code>CognitiveSearch.sln</code></strong> to open the solution in Visual Studio. If you are prompted about how to open the file, choose <strong>Visual Studio 2017</strong>. If you are prompted by Visual Studio to log in, use the Azure credentials you are using for this workshop.</p>
+<figure>
+<img src="media/windows-explorer-cognitive-search-sln.png" title="Windows Explorer" alt="Windows Explorer window with CognitiveSearch.sln file highlighted." /><figcaption>Windows Explorer window with <code>CognitiveSearch.sln</code> file highlighted.</figcaption>
+</figure>
+<p>The Visual Studio solution contains the following projects:</p>
+<ul>
+<li><strong>PipelineEnhancer</strong>: Console app that interacts with Azure Search Service REST APIs to enhance the Cognitive Search pipeline.</li>
+<li><strong>Search.Common</strong>: Common library containing models and structs used by the <code>PipelineEnhancer</code> to communicate with the Azure Search Service APIs.</li>
+<li><strong>TextTranslateFunction</strong>: Azure Function with an HTTP Trigger that will be used translate non-English tweets to English.</li>
+<li><strong>TweetGenerator</strong>: Console app that generates simulated tweets and sends them to Cosmos DB.</li>
+<li><strong>Twitter.Common</strong>: Common library containing models and structs used by the other projects within the solution.</li>
+</ul></li>
+<li><p>In the Solution Explorer on the left-hand side of Visual Studio, expand the <strong>TweetGenerator</strong> project, and then locate and open the <code>appsettings.json</code> file.</p>
+<figure>
+<img src="media/visual-studio-solution-explorer-appsettings.png" title="Solution Explorer" alt="In the Solution Explorer, appsettings.json is highlighted in the TweetGenerator project." /><figcaption>In the Solution Explorer, <code>appsettings.json</code> is highlighted in the TweetGenerator project.</figcaption>
+</figure></li>
+<li><p>Next, you need to retrieve your Cosmos DB connection string. This will be used to enable the TweetGenerator to write data into your <code>tweets</code> collection. In the <a href="https://portal.azure.com">Azure portal</a>, select <strong>Resource groups</strong> from the left-hand menu, and then select the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop).</p>
+<figure>
+<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
+</figure></li>
+<li><p>Select your <strong>Azure Cosmos DB account</strong> from the list of resources.</p>
+<figure>
+<img src="media/tech-immersion-rg-cosmosdb.png" title="Tech Immersion resource group" alt="The Azure Cosmos DB account resource is selected from the list of resources in the tech-immersion resource group." /><figcaption>The Azure Cosmos DB account resource is selected from the list of resources in the tech-immersion resource group.</figcaption>
+</figure></li>
+<li><p>On your Cosmos DB blade, select <strong>Keys</strong> from the left-hand menu.</p>
+<figure>
+<img src="media/cosmos-db-keys-link.png" title="Keys link" alt="The Keys link on the left-hand menu is highlighted." /><figcaption>The Keys link on the left-hand menu is highlighted.</figcaption>
+</figure></li>
+<li><p>Copy the <strong>Primary Connection String</strong> value by selecting the copy button to the right of the field.</p>
+<figure>
+<img src="media/cosmos-db-keys.png" title="Keys" alt="The Primary Connection String key is copied." /><figcaption>The Primary Connection String key is copied.</figcaption>
+</figure></li>
+<li><p>Return to the <code>appsettings.json</code> file in Visual Studio and paste the Primary Connection String into the value for the <code>COSMOS_DB_CONNECTION_STRING</code> setting. Your <code>appsettings.json</code> file should look similar to the following:</p>
+<figure>
+<img src="media/appsettings-json-file.png" title="appsettings.json" alt="Screenshot of the appsettings.json file." /><figcaption>Screenshot of the <code>appsettings.json</code> file.</figcaption>
+</figure></li>
+<li><p>Save <code>appsettings.json</code>.</p></li>
+<li><p>Right-click on the <code>TweetGenerator</code> project, and select <strong>Set as StartUp Project</strong> from the context menu.</p>
+<figure>
+<img src="media/visual-studio-solution-explorer-tweetgenerator-set-as-startup-project.png" title="Set as Startup Project" alt="Set as Startup Project is highlighted on the context menu for the TweetGenerator project." /><figcaption>Set as Startup Project is highlighted on the context menu for the TweetGenerator project.</figcaption>
+</figure></li>
+<li><p>Run the console app by selecting the button in the toolbar with the green arrow and text of <strong>TweetGenerator</strong>.</p></li>
+</ol>
+<figure>
+<img src="media/visual-studio-run-tweetgenerator.png" title="Run TweetGenerator" alt="The Run TweetGenerator button is displayed." /><figcaption>The Run TweetGenerator button is displayed.</figcaption>
+</figure>
+<blockquote>
+<p>Leave the <code>TweetGenerator</code> console app running in the background while you move on to the remaining tasks in this experience. The app will run for 10 minutes, sending random tweets into your Cosmos DB <code>tweets</code> collection, so you have data to work with in the remaining tasks of this experience. In the next task, you will set up an Azure Search Index which points to the <code>tweets</code> collection in Cosmos DB, so as new tweets are added, they will be indexed.</p>
+</blockquote>
+<h2 id="task-2-create-a-basic-cognitive-search-pipeline-using-the-azure-portal">Task 2: Create a basic Cognitive Search pipeline using the Azure portal</h2>
+<p>With data now streaming into your Cosmos DB <code>tweets</code> collection, you are ready to set up a basic Cognitive Search pipeline using the Azure portal. In this task, you will create an Azure Search Index and configure an Azure Search Indexer to read tweets from your Cosmos DB collection. You will also include several pre-configured skills linked to your Cognitive Services account to extract more information out of the tweets being indexed.</p>
+<ol type="1">
+<li><p>Return to your Azure Cosmos DB account blade in the <a href="https://portal.azure.com">Azure portal</a>, and select <strong>Data Explorer</strong> from the toolbar on the overview blade.</p>
+<figure>
+<img src="media/cosmos-db-toolbar-data-explorer.png" title="Cosmos DB toolbar" alt="Data Explorer is highlighted in the Cosmos DB toolbar in the Azure portal." /><figcaption>Data Explorer is highlighted in the Cosmos DB toolbar in the Azure portal.</figcaption>
+</figure></li>
+<li><p>Under the <code>ContosoAuto</code> database, expand the <strong>tweets</strong> collection and then select <strong>Documents</strong>.</p>
+<figure>
+<img src="media/cosmos-db-tweets-collection-documents.png" title="Documents" alt="Documents is selected and highlighted under the tweets collection in the ContosoAuto Cosmos DB database." /><figcaption>Documents is selected and highlighted under the tweets collection in the <code>ContosoAuto</code> Cosmos DB database.</figcaption>
+</figure></li>
+<li><p>In the documents pane, select any of the documents listed and inspect a tweet document. Documents are stored in JSON (JavaScript Object Notation) format in Cosmos.</p>
+<figure>
+<img src="media/cosmos-db-tweet-document.png" title="Tweet document" alt="A tweet document is displayed." /><figcaption>A tweet document is displayed.</figcaption>
+</figure>
+<blockquote>
+<p>The <code>text</code> field, which contains the content of the tweet, and is what you will be using as you begin building your Cognitive Search pipeline. You will be using other fields later, such as the <code>user</code> entity, so take time to review these structures in the document as well.</p>
+</blockquote></li>
+<li><p>With a better understanding of the structure of the tweet documents stored in Cosmos DB, let’s move on to creating a basic Cognitive Search pipeline. From your Cosmos DB blade in the Azure portal, select <strong>Add Azure Search</strong> from the left-hand menu, select your <strong>tech-immersion</strong> search service, and then select <strong>Next: Connect to your data</strong>.</p>
+<figure>
+<img src="media/cosmos-db-add-azure-search-select-search-service.png" title="Select a search service" alt="Add Azure Search is selected and highlighted on the left-hand menu and the tech-immersion search service is highlighted in the list of search services." /><figcaption>Add Azure Search is selected and highlighted on the left-hand menu and the tech-immersion search service is highlighted in the list of search services.</figcaption>
+</figure></li>
+<li><p>On the <strong>Connect to your data</strong> tab, enter the following:</p>
+<ul>
+<li><p><strong>Data source</strong>: This should be pre-populated with <strong>Cosmos DB</strong>. The data source object tells Azure Search how to retrieve external source data.</p></li>
+<li><p><strong>Name</strong>: Enter <strong>tweets-cosmosdb</strong>.</p></li>
+<li><p><strong>Cosmos DB account</strong>: This should be pre-populated with the connection string for your Cosmos DB account.</p></li>
+<li><p><strong>Database</strong>: Select the <strong>ContosoAuto</strong> database.</p></li>
+<li><p><strong>Collection</strong>: Select the <strong>tweets</strong> collection.</p></li>
+<li><p><strong>Query</strong>: Paste the SQL statement below into the field.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> c <span class="kw">WHERE</span> c._ts <span class="op">&gt;</span> @HighWaterMark <span class="kw">ORDER</span> <span class="kw">BY</span> c._ts</a></code></pre></div></li>
+<li><p><strong>Query results ordered by _ts</strong>: Check this box.</p></li>
+</ul>
+<figure>
+<img src="media/cosmos-db-add-azure-search-connect-to-data.png" title="Connect to your data" alt="The Connect to your data tab is displayed, with the settings specified above entered into the form." /><figcaption>The Connect to your data tab is displayed, with the settings specified above entered into the form.</figcaption>
+</figure></li>
+<li><p>Select <strong>Next: Add cognitive search (Optional)</strong>.</p>
+<blockquote>
+<p>In this step, you will add a set of enrichment steps to the data being ingested from Cosmos DB. In a Cognitive Search pipeline, individual enrichment steps are called <em>skills</em>, and the collection of enrichment steps is a <em>skillset</em>. The predefined skills available at this step through the UI use pre-trained models to extract additional information from the documents. The <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-entity-recognition">EntityRecognitionSkill</a> extracts entities (people, location, organization, emails, URLs, DateTime fields) from the document. The <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-language-detection">LanguageDetectionSkill</a> is used to detect the primary language used in the document, and the <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-keyphrases">KeyPhraseExtractionSkill</a> detects important phrases based on term placement, linguistic rules, proximity to other terms, and how unusual the term is within the source data. Read about all of the available <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-predefined-skills">predefined cognitive skills</a> to learn more.</p>
+</blockquote></li>
+<li><p>On the <strong>Add cognitive search (Optional)</strong> tab:</p>
+<ul>
+<li>Expand <strong>Attached Cognitive Services</strong> and select your <strong>tech-immersion-cog-services</strong> instance. This will associate your Cognitive Services account with the Skillset you are creating.</li>
+<li>Expand <strong>Add Enrichments</strong>, enter <strong>tweet-skillset</strong> as the name, and select <strong>text</strong> as the source data field. Check the box next to Cognitive Skills to select all of the options.</li>
+</ul>
+<figure>
+<img src="media/cosmos-db-add-azure-search-add-cognitive-search.png" title="Add cognitive search" alt="The Add cognitive search tab is displayed, with the settings specified above entered into the form." /><figcaption>The Add cognitive search tab is displayed, with the settings specified above entered into the form.</figcaption>
+</figure>
+<blockquote>
+<p>Cognitive search is an AI feature in Azure Search, used to extract text from images, blobs, and other unstructured data sources - enriching the content to make it more searchable in an Azure Search index. Extraction and enrichment are implemented through cognitive skills attached to an indexing pipeline. Cognitive skills in Azure Search are based on machine learning models in Cognitive Services APIs: <a href="https://docs.microsoft.com/azure/cognitive-services/computer-vision/">Computer Vision</a> and <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview">Text Analysis</a>. To learn more, read <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-concept-intro">What is “cognitive search” in Azure Search</a>.</p>
+</blockquote></li>
+<li><p>Select <strong>Next: Customize target index</strong>.</p></li>
+<li><p>On the <strong>Customize target index</strong> tab, do the following:</p>
+<ul>
+<li><strong>Name</strong>: Enter <strong>tweet-index</strong>.</li>
+<li><strong>Key</strong>: Leave this set to <strong>rid</strong>.</li>
+<li><strong>Suggester name</strong>: Leave this blank.</li>
+<li><strong>Search mode</strong>: Leave this blank.</li>
+<li>Use the image below to set the checkboxes and settings for each field.</li>
+</ul>
+<figure>
+<img src="media/cosmos-db-add-azure-search-customize-target-index.png" title="Customize target index" alt="The Customize target index tab is displayed, with the settings specified above entered into the form." /><figcaption>The Customize target index tab is displayed, with the settings specified above entered into the form.</figcaption>
+</figure>
+<blockquote>
+<p>On the Index page, you are presented with a list of fields with a data type and a series of checkboxes for setting index attributes. You can bulk-select attributes by clicking the checkbox at the top of an attribute column. Choose Retrievable and Searchable for every field that should be returned to a client app and subject to full text search processing. You’ll notice that integers are not full text or fuzzy searchable (numbers are evaluated verbatim and are often useful in filters). Read the description of <a href="https://docs.microsoft.com/en-us/rest/api/searchservice/create-index#bkmk_indexAttrib">index attributes</a> for more information.</p>
+</blockquote></li>
+<li><p>Select <strong>Next: Create an indexer</strong>.</p></li>
+<li><p>On the <strong>Create an indexer</strong> tab, set the following:</p>
+<ul>
+<li><strong>Name</strong>: Enter <strong>tweet-indexer</strong>.</li>
+<li><strong>Schedule</strong>: Select <strong>Custom</strong>, and enter <strong>5</strong> into the <strong>Interval (minutes)</strong> field.</li>
+</ul>
+<figure>
+<img src="media/cosmos-db-add-azure-search-create-indexer.png" title="Create an indexer" alt="The Create an indexer tab is displayed, with the settings specified above entered into the form." /><figcaption>The Create an indexer tab is displayed, with the settings specified above entered into the form.</figcaption>
+</figure>
+<blockquote>
+<p>An indexer in Azure Search is a crawler that extracts searchable data and metadata from an external Azure data source and populates an index based on field-to-field mappings between the index and your data source. This approach is sometimes referred to as a "pull model’ because the service pulls data in without you having to write any code that adds data to an index.</p>
+</blockquote></li>
+<li><p>Select <strong>Submit</strong>.</p></li>
+<li><p>Next, navigate to your <strong>Azure Search Service</strong> in the Azure portal by selecting it from the list of resources in the <strong>tech-immersion</strong> resource group.</p>
+<figure>
+<img src="media/tech-immersion-resource-group-search-service.png" title="Resource group" alt="The tech-immersion Search Service is highlighted in the tech-immersion resource group." /><figcaption>The tech-immersion Search Service is highlighted in the tech-immersion resource group.</figcaption>
+</figure></li>
+<li><p>On the Azure Search service blade, select <strong>Indexers</strong>.</p>
+<figure>
+<img src="media/azure-search-indexers.png" title="Indexers" alt="Indexers is selected on the Azure Search service blade." /><figcaption>Indexers is selected on the Azure Search service blade.</figcaption>
+</figure></li>
+<li><p>Your indexer was scheduled to run every 5 minutes, which is the minimum allowable time. If your indexer has a status of <strong>No history</strong>, you can bypass the scheduled time, and force the indexer to run, by selecting the indexer, and then selecting <strong>Run</strong> on the Indexer blade.</p>
+<figure>
+<img src="media/azure-search-indexers-run.png" title="Indexer" alt="The Run button is highlighted on the Indexer blade." /><figcaption>The Run button is highlighted on the Indexer blade.</figcaption>
+</figure></li>
+<li><p>Once your Indexer has run, select <strong>Search explorer</strong> on the Search Service toolbar.</p>
+<figure>
+<img src="media/azure-search-service-toolbar-search-explorer.png" title="Search Service toolbar" alt="The Search explorer button on the Search Service toolbar is highlighted." /><figcaption>The Search explorer button on the Search Service toolbar is highlighted.</figcaption>
+</figure></li>
+<li><p>On the Search explorer tab, select <strong>Search</strong> and observe the results.</p>
+<figure>
+<img src="media/azure-search-index-search.png" title="Search" alt="The Search button is highlighted on the Azure Search Index blade." /><figcaption>The Search button is highlighted on the Azure Search Index blade.</figcaption>
+</figure></li>
+<li><p>Looking at the items in the search results, you will see that they are resemble the following:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb2-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">&quot;@search.score&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">&quot;created_at&quot;</span><span class="fu">:</span> <span class="st">&quot;3/7/2019 6:11:28 PM&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="dt">&quot;id_str&quot;</span><span class="fu">:</span> <span class="st">&quot;707132469&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-5" title="5">  <span class="dt">&quot;text&quot;</span><span class="fu">:</span> <span class="st">&quot;@ContosoAuto Thank you for the amazing service at the Phoenix, AZ service center #Tesla #Model3&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-6" title="6">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;d9f80431-a1da-4cb8-84d8-093e9bdf9a8b&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-7" title="7">  <span class="dt">&quot;rid&quot;</span><span class="fu">:</span> <span class="st">&quot;YmpnZEFKMUhibTAtQUFBQUFBQUFBQT090&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-8" title="8">  <span class="dt">&quot;people&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-9" title="9">  <span class="dt">&quot;organizations&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-10" title="10">  <span class="dt">&quot;locations&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Phoenix&quot;</span><span class="ot">,</span> <span class="st">&quot;AZ&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-11" title="11">  <span class="dt">&quot;keyphrases&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb2-12" title="12">    <span class="st">&quot;amazing service&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb2-13" title="13">    <span class="st">&quot;AZ service center&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb2-14" title="14">    <span class="st">&quot;Phoenix&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb2-15" title="15">    <span class="st">&quot;Tesla&quot;</span></a>
+<a class="sourceLine" id="cb2-16" title="16">  <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-17" title="17">  <span class="dt">&quot;language&quot;</span><span class="fu">:</span> <span class="st">&quot;en&quot;</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="fu">}</span></a></code></pre></div>
+<blockquote>
+<p>You may notice that several of the fields available in the <code>tweet</code> documents stored in Cosmos DB are not in the search result JSON object. For example, the <code>user</code> entity, which is a child object of a <code>tweet</code>, is not available to add to your search index when using the UI. To leverage the full capabilities of Cognitive Search in Azure, you will need to use the REST APIs. To learn more about using the REST API and how to use them for building a more robust Cognitive Search pipeline, you can review the <a href="https://docs.microsoft.com/en-us/rest/api/searchservice/">Azure Search Service REST API documentation</a>.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-3-enhance-the-cognitive-search-pipeline">Task 3: Enhance the Cognitive Search pipeline</h2>
+<p>In the previous task, you created the beginnings of your Cognitive Search pipeline when you added Cognitive Skills for extracting people, organization and location names, key phrases and for detecting the primary language. In this task, you will enhance your Cognitive Search pipeline using functionality available only through the <a href="https://docs.microsoft.com/en-us/rest/api/searchservice/">Azure Search Service REST APIs</a>.</p>
+<ol type="1">
+<li><p>First, you will run a simple Visual Studio console application, <code>PipelineEnhancer</code>, which will make calls to the Azure Search Service REST APIs to update your Skillset, Index, and Indexer to accommodate the a new field named <code>sentiment</code>.</p></li>
+<li><p>To prepare the console application, you need to update the <code>appsettings.json</code> file for the project in information about your search service. Return to Visual Studio, and open the <code>appsettings.json</code> file located under the <code>PipelineEnhanceer</code> project.</p>
+<figure>
+<img src="media/visual-studio-solution-explorer-pipeline-enhancer.png" title="Solution explorer" alt="appsettings.json is highlighted under the PipelineEnhancer solution." /><figcaption><code>appsettings.json</code> is highlighted under the PipelineEnhancer solution.</figcaption>
+</figure>
+<p>The <code>appsettings.json</code> file will look like the following, and here you can see the values that you need to retrieve before moving on.</p>
+<figure>
+<img src="media/appsettings-json-empty.png" title="App settings" alt="The list of key values needed from appsettings.json." /><figcaption>The list of key values needed from <code>appsettings.json</code>.</figcaption>
+</figure></li>
+<li><p>To retrieve values for the required settings for your Azure Search Service, navigate to your Azure Search Service in the Azure portal by selecting it from the list of resources in the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop).</p>
+<figure>
+<img src="media/tech-immersion-resource-group-search-service.png" title="Resource group" alt="The tech-immersion Search Service is highlighted in the tech-immersion resource group." /><figcaption>The tech-immersion Search Service is highlighted in the tech-immersion resource group.</figcaption>
+</figure></li>
+<li><p>On the overview blade of your search service, copy the <strong>Url</strong> field.</p>
+<figure>
+<img src="media/azure-search-url.png" title="Azure Search Service URL" alt="Azure Search Service URL" /><figcaption>Azure Search Service URL</figcaption>
+</figure></li>
+<li><p>Return to Visual Studio, and in the <code>appsettings.json</code> file, locate the line that looks like the following:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb3-1" title="1"><span class="er">&quot;AZURE_SEARCH_SERVICE_URL&quot;:</span> <span class="er">&quot;&lt;enter</span> <span class="er">your</span> <span class="er">Azure</span> <span class="er">Search</span> <span class="er">Service</span> <span class="er">URL</span> <span class="er">here&gt;&quot;</span></a></code></pre></div></li>
+<li><p>Replace the value of the <code>AZURE_SEARCH_SERVICE_URL</code> setting by pasting the copied URL within double-quotes. The line should now look similar to this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb4-1" title="1"><span class="er">&quot;AZURE_SEARCH_SERVICE_URL&quot;:</span> <span class="er">&quot;https://tech-immersion.search.windows.net&quot;</span></a></code></pre></div></li>
+<li><p>Return to your Search Service blade in the Azure portal, select <strong>Keys</strong> from the left-hand menu, and the select the <strong>Copy</strong> button for the <strong>PRIMARY ADMIN KEY</strong>.</p>
+<figure>
+<img src="media/azure-search-keys.png" title="Keys" alt="Azure search keys." /><figcaption>Azure search keys.</figcaption>
+</figure></li>
+<li><p>Return to Visual Studio and the <code>appsettings.json</code> file, and locate the <code>AZURE_SEARCH_SERVICE_KEY</code> setting. Paste the key you copied into the value for this setting. It should look similar to:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb5-1" title="1"><span class="er">&quot;AZURE_SEARCH_SERVICE_KEY&quot;:</span> <span class="er">&quot;B54E21DC49EB3B5A322190851F22BA8E&quot;</span></a></code></pre></div></li>
+<li><p>Return to the Azure portal, and select your <strong>Cognitive Services</strong> account from the list of resources under the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop).</p>
+<figure>
+<img src="media/tech-immersion-resource-group-cog-services.png" title="Cognitive Services resource" alt="The Cognitive Services resource is highlighted in the tech-immersion resource group." /><figcaption>The Cognitive Services resource is highlighted in the tech-immersion resource group.</figcaption>
+</figure></li>
+<li><p>On the Cognitive Services blade, select <strong>Properties</strong> from the left-hand menu, and then copy the value for the <strong>Resource ID</strong> field by selecting the copy button to the right of the field.</p>
+<figure>
+<img src="media/cog-services-properties.png" title="Properties" alt="Cognitive Services properties blade." /><figcaption>Cognitive Services properties blade.</figcaption>
+</figure></li>
+<li><p>Return to Visual Studio and in the <code>appsettings.json</code> file, paste the <strong>Resource ID</strong> value into the <code>COGNITIVE_SERVICES_RESOURCE_ID</code> field value. It should look like the following:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb6-1" title="1"><span class="er">&quot;COGNITIVE_SERVICES_RESOURCE_ID&quot;:</span> <span class="er">&quot;/subscriptions/30fc406c-c745-44f0-be2d-63b1c860cde0/resourceGroups/tech-immersion/providers/Microsoft.CognitiveServices/accounts/tech-immersion-cog-services&quot;</span></a></code></pre></div></li>
+<li><p>Return to your Cognitive Services account in the Azure portal, and select <strong>Keys</strong> from the left-hand menu. On the Keys blade, copy the <strong>Key 1</strong> value by selecting the copy button to the right of the field.</p>
+<figure>
+<img src="media/cog-services-keys.png" title="Keys" alt="Cognitive Services keys." /><figcaption>Cognitive Services keys.</figcaption>
+</figure></li>
+<li><p>Return to Visual Studio and in the <code>appsettings.json</code> file, paste the Cognitive Services Key 1 value into the value for the <code>COGNITIVE_SERVICES_KEY</code> field. It will looks similar to the following.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb7-1" title="1"><span class="er">&quot;COGNITIVE_SERVICES_KEY&quot;:</span> <span class="er">&quot;872353ecac8d43a7bf5a60c3ece9ff4a&quot;</span></a></code></pre></div></li>
+<li><p>The final settings you need to retrieve are those for your Azure Function App. In the Azure portal, navigate to your <strong>tech-immersion-functions-XXXXX</strong> Function App (where XXXXX is the unique identifier assigned to you for this workshop), and copy the <strong>URL</strong> on the Overview blade.</p>
+<figure>
+<img src="media/function-app-url.png" title="Function App" alt="The URL field is highlighted on the overview blade of the Function App." /><figcaption>The URL field is highlighted on the overview blade of the Function App.</figcaption>
+</figure></li>
+<li><p>Return to the <code>appsettings.json</code> file for the <code>PipelineEnhancer</code> project in Visual Studio, and paste the value into the <code>AZURE_FUNCTION_APP_URL</code> setting. It should look similar to:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb8-1" title="1"><span class="er">&quot;AZURE_FUNCTION_APP_URL&quot;:</span> <span class="er">&quot;https://tech-immersion-functions.azurewebsites.net&quot;</span></a></code></pre></div></li>
+<li><p>Back in the Azure portal, select <strong>Function app settings</strong> on the Overview blade.</p>
+<figure>
+<img src="media/function-app-settings.png" title="Function app settings" alt="Function app settings link." /><figcaption>Function app settings link.</figcaption>
+</figure></li>
+<li><p>On the Function app settings tab, select the <strong>Copy</strong> button next to the <strong>default</strong> Host Key.</p>
+<figure>
+<img src="media/function-app-default-host-key.png" title="Function app settings default host key" alt="The default host key copy button is highlighted." /><figcaption>The default host key copy button is highlighted.</figcaption>
+</figure></li>
+<li><p>Return to Visual Studio and the <code>appsettings.json</code> file for the <code>PipelineEnhancer</code> project, and paste default host key value into the <code>AZURE_FUNCTION_APP_DEFAULT_HOST_KEY</code> setting. It will look similar to the following:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb9-1" title="1"><span class="er">&quot;AZURE_FUNCTION_APP_DEFAULT_HOST_KEY&quot;:</span> <span class="er">&quot;IMsboDWGI9brkZHFpL8aFCVxuPVLnVAr6l6f2D6eqlLZ511MK50JbQ==&quot;</span></a></code></pre></div></li>
+<li><p>Save <code>appsettings.json</code>. The file should now look like the following.</p>
+<figure>
+<img src="media/pipeline-enhancer-app-settings-search-service.png" title="App settings" alt="Search service values entered into the appsettings.json file." /><figcaption>Search service values entered into the appsettings.json file.</figcaption>
+</figure></li>
+<li><p>You are now ready to move on to adding the enhancements to your pipeline. The <a href="https://docs.microsoft.com/en-us/rest/api/searchservice/create-skillset">create skillset API</a> uses the following endpoint:</p>
+<pre class="http"><code>PUT https://[servicename].search.windows.net/skillsets/[skillset name]?api-version=2017-11-11-Preview
+api-key: [admin key]
+Content-Type: application/json</code></pre></li>
+<li><p>To add the <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-sentiment">sentiment analysis pre-built skill</a> to your search pipeline, the <code>PipelineEnhancer</code> app will append the following JSON to the body of the Skillset you created through the Azure portal UI.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb11-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb11-2" title="2">  <span class="dt">&quot;@odata.type&quot;</span><span class="fu">:</span> <span class="st">&quot;#Microsoft.Skills.Text.SentimentSkill&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb11-3" title="3">  <span class="dt">&quot;inputs&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb11-4" title="4">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb11-5" title="5">      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;text&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb11-6" title="6">      <span class="dt">&quot;source&quot;</span><span class="fu">:</span> <span class="st">&quot;/document/text&quot;</span></a>
+<a class="sourceLine" id="cb11-7" title="7">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb11-8" title="8">  <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb11-9" title="9">  <span class="dt">&quot;outputs&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb11-10" title="10">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb11-11" title="11">      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;score&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb11-12" title="12">      <span class="dt">&quot;targetName&quot;</span><span class="fu">:</span> <span class="st">&quot;sentiment&quot;</span></a>
+<a class="sourceLine" id="cb11-13" title="13">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb11-14" title="14">  <span class="ot">]</span></a>
+<a class="sourceLine" id="cb11-15" title="15"><span class="fu">}</span></a></code></pre></div>
+<blockquote>
+<p>In the above JSON, the <code>inputs</code> specify the field in the source data document to send for analysis. The <code>outputs</code> section dictates that the <code>score</code> value returned by the Text Analytics in Cognitive Services should be output into a field named <code>sentiment</code> in the search results. This is sent into the REST API, along with the JSON from the previously built skillset to update or create the skillset.</p>
+</blockquote></li>
+<li><p>To add sentiment analysis to your pipeline you will run the <code>PipelineEnhancer</code> project within the <strong>CognitiveSearch</strong> solution in Visual Studio. To run the project, right-click the <code>PipelineEnhancer</code> project in Visual Studio and select <strong>Set as StartUp Project</strong>.</p>
+<figure>
+<img src="media/visual-studio-pipeline-enhancer-startup-project.png" title="Pipeline Enhancer" alt="In the Solution Explorer, PipelineEnhancer is highlighted, and the right-click contenxt menu is displayed. Set as StartUp Project is highlighted in the context menu." /><figcaption>In the Solution Explorer, PipelineEnhancer is highlighted, and the right-click contenxt menu is displayed. Set as StartUp Project is highlighted in the context menu.</figcaption>
+</figure></li>
+<li><p>Now, select the run button on the Visual Studio toolbar, which is the one with a green arrow followed by the text “PipelineEnhancer.”</p>
+<figure>
+<img src="media/visual-studio-run-pipeline-enhancer.png" title="Run button" alt="The run button is displayed for PipelineEnhancer." /><figcaption>The run button is displayed for PipelineEnhancer.</figcaption>
+</figure></li>
+<li><p>At the command prompt for the console app, enter <strong>1</strong> to incorporate the Sentiment cognitive skill to your pipeline.</p>
+<figure>
+<img src="media/pipeline-enhancer-1.png" title="Pipeline Enhancer" alt="1 is entered at the prompt in the pipeline enhancer" /><figcaption>1 is entered at the prompt in the pipeline enhancer</figcaption>
+</figure></li>
+<li><p>When the console app completes you will receive a message stating that the sentiment analysis skill was successfully added.</p>
+<figure>
+<img src="media/pipeline-enhancer-sentiment-analysis-success.png" title="Pipeline enhancer" alt="A success message is displayed in the PipelineEnhancer console window." /><figcaption>A success message is displayed in the PipelineEnhancer console window.</figcaption>
+</figure>
+<blockquote>
+<p>In addition to updating the Skillset JSON, the Indexer and Index were also be updated to include a new field named <code>sentiment</code>.</p>
+</blockquote></li>
+<li><p>The process above deleted and recreated your Index, Indexer and Skillset, so you may need to select <strong>Indexers</strong> and the <strong>tweet-indexer</strong> on your Azure Search Service blade, and then select <strong>Run</strong> to force the Indexer to run against your tweet data again before attempting to run a search against the index in the next step.</p></li>
+<li><p>Return to your Azure Search service in the Azure portal and select <strong>Search explorer</strong> on the Search Service toolbar.</p>
+<figure>
+<img src="media/azure-search-service-toolbar-search-explorer.png" title="Search Service toolbar" alt="The Search explorer button on the Search Service toolbar is highlighted." /><figcaption>The Search explorer button on the Search Service toolbar is highlighted.</figcaption>
+</figure></li>
+<li><p>On the Search explorer tab, select <strong>Search</strong> and inspect one of the records in the search results.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb12-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb12-2" title="2">  <span class="dt">&quot;@search.score&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-3" title="3">  <span class="dt">&quot;text&quot;</span><span class="fu">:</span> <span class="st">&quot;@ContosoAuto Thank you for the amazing service at the Phoenix, AZ service center #Tesla #Model3&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-4" title="4">  <span class="dt">&quot;rid&quot;</span><span class="fu">:</span> <span class="st">&quot;YmpnZEFKMUhibTAtQUFBQUFBQUFBQT090&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-5" title="5">  <span class="dt">&quot;people&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-6" title="6">  <span class="dt">&quot;organizations&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-7" title="7">  <span class="dt">&quot;locations&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Phoenix&quot;</span><span class="ot">,</span> <span class="st">&quot;AZ&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-8" title="8">  <span class="dt">&quot;keyphrases&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb12-9" title="9">    <span class="st">&quot;amazing service&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb12-10" title="10">    <span class="st">&quot;AZ service center&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb12-11" title="11">    <span class="st">&quot;Phoenix&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb12-12" title="12">    <span class="st">&quot;Tesla&quot;</span></a>
+<a class="sourceLine" id="cb12-13" title="13">  <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-14" title="14">  <span class="dt">&quot;language&quot;</span><span class="fu">:</span> <span class="st">&quot;en&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-15" title="15">  <span class="dt">&quot;sentiment&quot;</span><span class="fu">:</span> <span class="fl">0.994744300842285</span></a>
+<a class="sourceLine" id="cb12-16" title="16"><span class="fu">}</span></a></code></pre></div>
+<blockquote>
+<p>Notice the addition of the <code>sentiment</code> field to the bottom of the record. The value contained in this field is a numeric prediction made by a machine learning model about the sentiment of the contents of the <code>text</code> field in the tweet. Scores range from 0 to 1. Scores close to 1 indicate positive sentiment, and scores close to 0 indicate negative sentiment. Scores in the middle are considered to be neutral in the expression of sentiment. In the record above, the sentiment was determined to be very positive by the ML model.</p>
+</blockquote></li>
+<li><p>Next, let’s move on to adding user information from tweets to our search results. To accomplish this, you will use the <a href="https://docs.microsoft.com/en-us/rest/api/searchservice/delete-index">delete index</a> and <a href="https://docs.microsoft.com/en-us/rest/api/searchservice/delete-indexer">delete indexer</a> APIs to drop the index and indexer, and then use the <a href="https://docs.microsoft.com/en-us/rest/api/searchservice/create-index">create index</a> and <a href="https://docs.microsoft.com/en-us/rest/api/searchservice/create-indexer">create indexer</a> APIs to recreate them with a few fields added which point to the <code>user</code> object in the JSON tweet documents in Cosmos DB.</p>
+<blockquote>
+<p>For this workshop, we are going to add the user’s <code>location</code> and <code>name</code> fields to our search index.</p>
+</blockquote>
+<p>For the Index, the following JSON will be added to what was generated using the Azure portal UI:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb13-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb13-2" title="2">  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;userLocation&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-3" title="3">  <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;Edm.String&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-4" title="4">  <span class="dt">&quot;searchable&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-5" title="5">  <span class="dt">&quot;filterable&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-6" title="6">  <span class="dt">&quot;retrievable&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-7" title="7">  <span class="dt">&quot;sortable&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-8" title="8">  <span class="dt">&quot;facetable&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-9" title="9">  <span class="dt">&quot;key&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-10" title="10">  <span class="dt">&quot;indexAnalyzer&quot;</span><span class="fu">:</span> <span class="kw">null</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-11" title="11">  <span class="dt">&quot;searchAnalyzer&quot;</span><span class="fu">:</span> <span class="kw">null</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-12" title="12">  <span class="dt">&quot;analyzer&quot;</span><span class="fu">:</span> <span class="st">&quot;standard.lucene&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-13" title="13">  <span class="dt">&quot;synonymMaps&quot;</span><span class="fu">:</span> <span class="ot">[]</span></a>
+<a class="sourceLine" id="cb13-14" title="14"><span class="fu">}</span><span class="er">,</span></a>
+<a class="sourceLine" id="cb13-15" title="15"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb13-16" title="16">  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;userName&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-17" title="17">  <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;Edm.String&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-18" title="18">  <span class="dt">&quot;searchable&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-19" title="19">  <span class="dt">&quot;filterable&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-20" title="20">  <span class="dt">&quot;retrievable&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-21" title="21">  <span class="dt">&quot;sortable&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-22" title="22">  <span class="dt">&quot;facetable&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-23" title="23">  <span class="dt">&quot;key&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-24" title="24">  <span class="dt">&quot;indexAnalyzer&quot;</span><span class="fu">:</span> <span class="kw">null</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-25" title="25">  <span class="dt">&quot;searchAnalyzer&quot;</span><span class="fu">:</span> <span class="kw">null</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-26" title="26">  <span class="dt">&quot;analyzer&quot;</span><span class="fu">:</span> <span class="st">&quot;standard.lucene&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-27" title="27">  <span class="dt">&quot;synonymMaps&quot;</span><span class="fu">:</span> <span class="ot">[]</span></a>
+<a class="sourceLine" id="cb13-28" title="28"><span class="fu">}</span></a></code></pre></div>
+<blockquote>
+<p>For each new field, <code>userLocation</code> and <code>userName</code>, the index properties are indicated by the additional fields.</p>
+</blockquote>
+<p>For the Indexer, this JSON code will be added:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb14-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb14-2" title="2">  <span class="dt">&quot;sourceFieldName&quot;</span><span class="fu">:</span> <span class="st">&quot;/document/user/location&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb14-3" title="3">  <span class="dt">&quot;targetFieldName&quot;</span><span class="fu">:</span> <span class="st">&quot;userLocation&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb14-4" title="4">  <span class="dt">&quot;mappingFunction&quot;</span><span class="fu">:</span> <span class="kw">null</span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="fu">}</span><span class="er">,</span></a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb14-7" title="7">  <span class="dt">&quot;sourceFieldName&quot;</span><span class="fu">:</span> <span class="st">&quot;/document/user/name&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb14-8" title="8">  <span class="dt">&quot;targetFieldName&quot;</span><span class="fu">:</span> <span class="st">&quot;userName&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb14-9" title="9">  <span class="dt">&quot;mappingFunction&quot;</span><span class="fu">:</span> <span class="kw">null</span></a>
+<a class="sourceLine" id="cb14-10" title="10"><span class="fu">}</span></a></code></pre></div>
+<blockquote>
+<p>For each new field, <code>userLocation</code> and <code>userName</code>, an entry is added which maps the source field in the <code>tweet</code> document to an output field name.</p>
+</blockquote></li>
+<li><p>Return to the <code>PipelineEnhancer</code> console app and enter <strong>2</strong> at the prompt to add the new user-related fields to your pipeline.</p>
+<figure>
+<img src="media/pipeline-enhancer-2.png" title="Pipeline Enhancer" alt="2 is entered at the prompt in the pipeline enhancer" /><figcaption>2 is entered at the prompt in the pipeline enhancer</figcaption>
+</figure></li>
+<li><p>When the console app completes you will receive a success message. Navigate to your Azure Search service in the Azure portal and select <strong>Search explorer</strong>.</p>
+<blockquote>
+<p>As before, the console app deleted and recreated your Index and Indexer. You may need to select <strong>Indexers</strong> and the <strong>tweet-indexer</strong>, and then select <strong>Run</strong> to force the Indexer to run against your tweet data again before attempting to run a search against the index.</p>
+</blockquote></li>
+<li><p>On the Search explorer blade, select <strong>Search</strong> and inspect one of the records in the search results.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb15-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb15-2" title="2">  <span class="dt">&quot;@search.score&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-3" title="3">  <span class="dt">&quot;text&quot;</span><span class="fu">:</span> <span class="st">&quot;@ContosoAuto Thank you for the amazing service at the Phoenix, AZ service center #Tesla #Model3&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-4" title="4">  <span class="dt">&quot;rid&quot;</span><span class="fu">:</span> <span class="st">&quot;YmpnZEFKMUhibTAtQUFBQUFBQUFBQT090&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-5" title="5">  <span class="dt">&quot;people&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-6" title="6">  <span class="dt">&quot;organizations&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-7" title="7">  <span class="dt">&quot;locations&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;the Phoenix&quot;</span><span class="ot">,</span> <span class="st">&quot;AZ&quot;</span><span class="ot">,</span> <span class="st">&quot;Tesla&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-8" title="8">  <span class="dt">&quot;keyphrases&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb15-9" title="9">    <span class="st">&quot;amazing service&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb15-10" title="10">    <span class="st">&quot;AZ service center&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb15-11" title="11">    <span class="st">&quot;Phoenix&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb15-12" title="12">    <span class="st">&quot;Tesla&quot;</span></a>
+<a class="sourceLine" id="cb15-13" title="13">  <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-14" title="14">  <span class="dt">&quot;language&quot;</span><span class="fu">:</span> <span class="st">&quot;en&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-15" title="15">  <span class="dt">&quot;sentiment&quot;</span><span class="fu">:</span> <span class="fl">0.994744300842285</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-16" title="16">  <span class="dt">&quot;userLocation&quot;</span><span class="fu">:</span> <span class="st">&quot;Sacramento, CA&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-17" title="17">  <span class="dt">&quot;userName&quot;</span><span class="fu">:</span> <span class="st">&quot;Ellis Maginnis&quot;</span></a>
+<a class="sourceLine" id="cb15-18" title="18"><span class="fu">}</span></a></code></pre></div>
+<blockquote>
+<p>Note the addition of the <code>userLocation</code> and <code>userName</code> fields to the bottom of the record. The values in these fields are pulled directly from the <code>tweet</code> documents being indexed from Cosmos DB, but were not accessible using the Azure portal UI. Using the REST APIs, you are able to dig deeper into nested JSON documents, and index a richer set of the data stored in your documents.</p>
+</blockquote></li>
+<li><p>Return to the <code>PipelineEnhancer</code> console app, and enter <strong>X</strong> at the command prompt to exit the console application.</p></li>
+</ol>
+<h2 id="task-4-deploy-a-custom-skill">Task 4: Deploy a custom skill</h2>
+<p>In addition to predefined Cognitive skills, you can also integrate custom skills into your Cognitive Search pipeline. In this task, you will create a custom skill using the <a href="https://azure.microsoft.com/services/cognitive-services/translator-text-api/">Text Translate API</a>. The example uses an <a href="https://azure.microsoft.com/services/functions/">Azure Function</a> to wrap the Translate Text API so that it implements the custom skill interface.</p>
+<blockquote>
+<p>While this example uses an Azure Function to host a web API, you can use any approach as long as it meets the <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-custom-skill-interface">interface requirements for a cognitive skill</a>. Azure Functions, however, make it very easy to create custom skills.</p>
+</blockquote>
+<ol type="1">
+<li><p>Since you will be using the Translator Text API, you need retrieve your API key from the Azure portal, so it can be used by the Azure Function. As you’ve done with previous resources, select the <strong>Cognitive Services</strong> resource from the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop).</p>
+<figure>
+<img src="media/tech-immersion-rg-translator.png" title="Tech Immersion Resource Group - Translator" alt="The tech-immersion-translator resource is selected in the tech-immersion resource group." /><figcaption>The tech-immersion-translator resource is selected in the tech-immersion resource group.</figcaption>
+</figure></li>
+<li><p>Once on your Cognitive Services blade, select <strong>Keys</strong> from the left-hand menu, and then select the Copy button next to the value for <strong>Key 1</strong>.</p>
+<figure>
+<img src="media/cognitive-services-translator-keys.png" title="Keys" alt="The copy button for Key 1 is highlighted on the Keys blade." /><figcaption>The copy button for Key 1 is highlighted on the Keys blade.</figcaption>
+</figure></li>
+<li><p>Return to Visual Studio, and in the Solution Explorer on the right-hand side, expand the <code>TextTranslateFunction</code> project and then double-click <code>Function1.cs</code> to open the file.</p>
+<figure>
+<img src="media/visual-studio-text-translate-function-function1.png" title="Solution Explorer" alt="The Function1.cs file is highlighted in the Visual Studio Solution Explorer." /><figcaption>The <code>Function1.cs</code> file is highlighted in the Visual Studio Solution Explorer.</figcaption>
+</figure></li>
+<li><p>In the <code>Function1.cs</code> file, locate the line of code (line 22) that looks like the following:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode csharp"><code class="sourceCode cs"><a class="sourceLine" id="cb16-1" title="1"><span class="co">// NOTE: Replace this example key with a valid subscription key.</span></a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="kw">static</span> <span class="dt">string</span> key = <span class="st">&quot;&lt;enter your api key here&gt;&quot;</span>;</a></code></pre></div></li>
+<li><p>Replace the value with double-quotes (<code>&lt;enter your api key here&gt;</code>) with the API key you copied for the Translator Cognitive Service. The line should now look similar to this:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode csharp"><code class="sourceCode cs"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">static</span> <span class="dt">string</span> key = <span class="st">&quot;460a0dff9bb541ce81bc16956e119f37&quot;</span>;</a></code></pre></div></li>
+<li><p>Save <code>Function1.cs</code>.</p>
+<blockquote>
+<p>Take a few minutes to look over the code in <code>Function1.cs</code>. This file defines the Function that will be deployed to your Azure Function App. The function code receives the tweet text and the detected language from the custom skill. Only those tweets with a language determined to not be English will be translated by the Translator Text API. For all English tweets, the original text is returned unmodified.</p>
+</blockquote></li>
+<li><p>You are now ready to deploy the function into your Azure Function App. Right-click the <code>TextTranslateFunction</code> project, and select <strong>Publish</strong> from the context menu.</p>
+<figure>
+<img src="media/visual-studio-function-publish.png" title="Publish" alt="Publish is highlighted in the context menu for the TextTranslateFunction project." /><figcaption>Publish is highlighted in the context menu for the TextTranslateFunction project.</figcaption>
+</figure></li>
+<li><p>On the <strong>Pick a publish target</strong> dialog, choose <strong>Select Existing</strong> and select <strong>Publish</strong>.</p>
+<figure>
+<img src="media/visual-studio-function-publish-target.png" title="Pick a publish target" alt="Select Existing is highlighted and selected on the Pick a publish target dialog. The publish button is highlighted." /><figcaption>Select Existing is highlighted and selected on the Pick a publish target dialog. The publish button is highlighted.</figcaption>
+</figure></li>
+<li><p>On the <strong>App service</strong> dialog, select your Subscription and locate the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop) in the list. Select your <strong>tech-immersion-functions</strong> Function App from this list of resources.</p>
+<figure>
+<img src="media/visual-studio-function-publish-app-service.png" title="App service" alt="The tech-immersion-functions Function App is highlighted in the search results." /><figcaption>The tech-immersion-functions Function App is highlighted in the search results.</figcaption>
+</figure>
+<blockquote>
+<p>You may need to enter the credentials of the account you are using for this workshop before you can see any resources for your subscription.</p>
+</blockquote></li>
+<li><p>Select <strong>OK</strong>. This will start the publish process. You will see an animated progress icon next to the Publish button while the deployment is in progress.</p>
+<figure>
+<img src="media/visual-studio-function-publish-progress.png" title="Publish" alt="The progress icon is highlighted on the Publish dialog." /><figcaption>The progress icon is highlighted on the Publish dialog.</figcaption>
+</figure></li>
+<li><p>When the publish is complete, you can open the <strong>Output</strong> window at the bottom left-hand corner of the Visual Studio window to observe the results. You should see messages that the <strong>Publish Succeeded</strong> and <strong>Publish completed</strong>.</p>
+<figure>
+<img src="media/visual-studio-function-publish-output.png" title="Output" alt="The publish succeeded and publish completed messages are highlighted in the Output window." /><figcaption>The publish succeeded and publish completed messages are highlighted in the Output window.</figcaption>
+</figure>
+<blockquote>
+<p>If the Output window is not visible, you can display it by selecting the <strong>View</strong> menu in Visual Studio, and then selecting <strong>Output</strong>.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-5-integrate-custom-skill-into-pipeline">Task 5: Integrate custom skill into pipeline</h2>
+<p>With the Function App now in place to support your Text Translator custom skill, you are ready to integrate a new custom skill using the <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-custom-skill-interface">custom skill interface</a>, which is accessed by adding a <code>WebApiSkill</code> to the skillset. In this task, you will add a custom skill into the Cognitive Search pipeline you created previously.</p>
+<blockquote>
+<p>Another change that will be made as the new custom skill is added is to update all the previously added predefined skills, except the language detection skill, to use the new <code>textTranslated</code> field as input. This will allow all the Cognitive Skills to run against the English language version of the text.</p>
+</blockquote>
+<ol type="1">
+<li><p>To add the custom skill to your search pipeline the following JSON will be appended to the body of the Skillset you built with the UI by the <code>PipelineEnhancer</code> app.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb18-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-2" title="2">  <span class="dt">&quot;@odata.type&quot;</span><span class="fu">:</span> <span class="st">&quot;#Microsoft.Skills.Custom.WebApiSkill&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-3" title="3">  <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Custom translator skill&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-4" title="4">  <span class="dt">&quot;uri&quot;</span><span class="fu">:</span> <span class="st">&quot;http://&lt;your-function-app-name&gt;.azurewebsites.net/api/Translate?code=&lt;default-host-key&gt;&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-5" title="5">  <span class="dt">&quot;batchSize&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-6" title="6">  <span class="dt">&quot;context&quot;</span><span class="fu">:</span> <span class="st">&quot;/document&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-7" title="7">  <span class="dt">&quot;inputs&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb18-8" title="8">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-9" title="9">      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;text&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-10" title="10">      <span class="dt">&quot;source&quot;</span><span class="fu">:</span> <span class="st">&quot;/document/text&quot;</span></a>
+<a class="sourceLine" id="cb18-11" title="11">    <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb18-12" title="12">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-13" title="13">      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;language&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-14" title="14">      <span class="dt">&quot;source&quot;</span><span class="fu">:</span> <span class="st">&quot;/document/language&quot;</span></a>
+<a class="sourceLine" id="cb18-15" title="15">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb18-16" title="16">  <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-17" title="17">  <span class="dt">&quot;outputs&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb18-18" title="18">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-19" title="19">      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;text&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-20" title="20">      <span class="dt">&quot;targetName&quot;</span><span class="fu">:</span> <span class="st">&quot;textTranslated&quot;</span></a>
+<a class="sourceLine" id="cb18-21" title="21">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb18-22" title="22">  <span class="ot">]</span></a>
+<a class="sourceLine" id="cb18-23" title="23"><span class="fu">}</span></a></code></pre></div>
+<blockquote>
+<p>In the above JSON, the <code>inputs</code> specify the field in the source data document to send for analysis. The <code>outputs</code> section dictates that the <code>text</code> value returned by your Function App should output into a field named <code>textTranslated</code> in the search results. This is sent into the REST API, along with the JSON from the previously built skillset to update or create the skillset.</p>
+</blockquote></li>
+<li><p>Note that there are two values within the <code>uri</code> field of your custom skill that will need to be supplied to your custom skill, so it can connect to your Function app: the Function App name and default host code. You already added these values to your <code>appsettings.json</code> file.</p></li>
+<li><p>Relaunch the <code>PipelineEnhancer</code> console app by selecting the <strong>Run</strong> button on the Visual Studio toolbar.</p>
+<figure>
+<img src="media/visual-studio-run-pipelineenhancer.png" title="Run" alt="The Run PipelineEnhancer button from the Visual Studio toolbar is displayed." /><figcaption>The Run PipelineEnhancer button from the Visual Studio toolbar is displayed.</figcaption>
+</figure></li>
+<li><p>In <code>PipelineEnhancer</code> console window and enter <strong>3</strong> at the prompt. This step will incorporate the custom cognitive skill into your pipeline.</p>
+<figure>
+<img src="media/pipeline-enhancer-3.png" title="Pipeline Enhancer" alt="3 is entered at the prompt in the pipeline enhancer" /><figcaption>3 is entered at the prompt in the pipeline enhancer</figcaption>
+</figure>
+<blockquote>
+<p>In addition to updating the Skillset JSON, the Indexer and Index were also be updated to include a new field named <code>textTranslated</code>.</p>
+</blockquote></li>
+<li><p>When the console app completes, enter <strong>X</strong> at the prompt to close the application.</p>
+<figure>
+<img src="media/pipeline-enhancer-x.png" title="Pipeline Enhancer" alt="X is entered at the prompt in the pipeline enhancer" /><figcaption>X is entered at the prompt in the pipeline enhancer</figcaption>
+</figure></li>
+</ol>
+<h2 id="task-6-run-indexer-and-query-data">Task 6: Run indexer and query data</h2>
+<p>In this task, you will run your Search Indexer and then query data in the index.</p>
+<ol type="1">
+<li><p>In the Azure portal, navigate to your <strong>Search service</strong> resource and select <strong>Search explorer</strong> in the toolbar on the overview blade.</p>
+<figure>
+<img src="media/azure-search-explorer.png" title="Search explorer" alt="Azure Search Service blade is displayed, with Search explorer highlighted." /><figcaption>Azure Search Service blade is displayed, with Search explorer highlighted.</figcaption>
+</figure>
+<blockquote>
+<p>The last step of Task 5 deleted and recreated your Index, Indexer and Skillset. If you don’t see any search results, you may need to select <strong>Indexers</strong> on the Overview blade and then <strong>tweet-indexer</strong>. Select <strong>Run</strong> to force the Indexer to run against your tweet data again before attempting to run a search against the index.</p>
+</blockquote></li>
+<li><p>On the Search explorer tab, select <strong>Search</strong> and observe the results.</p>
+<figure>
+<img src="media/azure-search-index-search.png" title="Search" alt="The Search button is highlighted on the Azure Search Index blade." /><figcaption>The Search button is highlighted on the Azure Search Index blade.</figcaption>
+</figure></li>
+<li><p>You can now play around with the search functionality. Below, you will enter a few queries that simulate what an application user may enter. These queries tend to resemble natural language, so we will start there. In the Query string field, enter “language is es”, and observe the results. This will return one of the records in the search results where the language was detected as Spanish.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb19-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb19-2" title="2">  <span class="dt">&quot;@search.score&quot;</span><span class="fu">:</span> <span class="fl">0.94444835</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb19-3" title="3">  <span class="dt">&quot;text&quot;</span><span class="fu">:</span> <span class="st">&quot;@ContosoAuto Mi 2019 #Ford #Mustang es el mejor auto de todos!&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb19-4" title="4">  <span class="dt">&quot;rid&quot;</span><span class="fu">:</span> <span class="st">&quot;YmpnZEFKMUhibTN2QkFBQUFBQUFBQT090&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb19-5" title="5">  <span class="dt">&quot;userLocation&quot;</span><span class="fu">:</span> <span class="st">&quot;Boston, MA&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb19-6" title="6">  <span class="dt">&quot;userName&quot;</span><span class="fu">:</span> <span class="st">&quot;Brian Navedo&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb19-7" title="7">  <span class="dt">&quot;people&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb19-8" title="8">  <span class="dt">&quot;organizations&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Ford&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb19-9" title="9">  <span class="dt">&quot;locations&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb19-10" title="10">  <span class="dt">&quot;keyphrases&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Mustang&quot;</span><span class="ot">,</span> <span class="st">&quot;Ford&quot;</span><span class="ot">,</span> <span class="st">&quot;the best&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb19-11" title="11">  <span class="dt">&quot;language&quot;</span><span class="fu">:</span> <span class="st">&quot;es&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb19-12" title="12">  <span class="dt">&quot;sentiment&quot;</span><span class="fu">:</span> <span class="fl">0.986368536949158</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb19-13" title="13">  <span class="dt">&quot;textTranslated&quot;</span><span class="fu">:</span> <span class="st">&quot;@ContosoAuto My 2019 #Ford #Mustang is the best car of all!&quot;</span></a>
+<a class="sourceLine" id="cb19-14" title="14"><span class="fu">}</span></a></code></pre></div>
+<blockquote>
+<p>Notice the addition of the <code>textTranslated</code> field to the bottom of the record. This contains the English translation of the contents of the <code>text</code> field in the tweet. You will also notice that the <code>keyphrases</code> field contains only English words and phrases. This is because the <code>KeyPhraseExtractionSkill</code> was pointed to the new <code>textTranslated</code> field with the latest updates to the search pipeline.</p>
+</blockquote>
+<figure>
+<img src="media/azure-search-query-language-is-es.png" title="Search query" alt="Query for records where language is es." /><figcaption>Query for records where language is es.</figcaption>
+</figure>
+<blockquote>
+<p>In addition, notice that each record returned contains a <code>@search.score</code> field with a numeric value. This value indicates the confidence of the match with the search query. The higher the value, the more likely it is to be a match for the query. If you scroll down past the records where <code>"language"="es"</code>, you will see the search score values drop, as those records don’t match the query.</p>
+</blockquote></li>
+<li><p>Try another search, such as “cold battery” and observe the results.</p>
+<figure>
+<img src="media/azure-search-query-cold-battery.png" title="Search query" alt="Query for records containing “cold” and “battery”" /><figcaption>Query for records containing “cold” and “battery”</figcaption>
+</figure></li>
+<li><p>Now, let’s try a slightly more advanced search. We want to look for only records that mention a “corvette”, and we only want to retrieve the <code>text</code>, <code>userLocation</code>, and <code>sentiment</code> fields in our results. Paste the following into the Query string box, and select <strong>Search</strong>:</p>
+<pre class="http"><code>search=corvette&amp;$select=text,userLocation,sentiment&amp;$count=true</code></pre>
+<figure>
+<img src="media/azure-search-query-corvette.png" title="Search query" alt="Query for records containing corvette, and returning only the text, userLocation, and sentiment." /><figcaption>Query for records containing corvette, and returning only the text, userLocation, and sentiment.</figcaption>
+</figure>
+<blockquote>
+<p>Add <code>$select</code> limits results to the explicitly named fields for more readable output in Search explorer.</p>
+</blockquote></li>
+<li><p>You can take that query even further by adding in the <code>$filter</code> parameter. Use the <code>$filter</code> parameter when you want to specify precise criteria rather than free text search. This example searches for sentiment less than 0.25, so we can target tweets with negative sentiment in the search results.</p>
+<pre class="http"><code>search=corvette&amp;$select=text,userLocation,sentiment&amp;$filter=sentiment lt 0.25&amp;$count=true</code></pre>
+<figure>
+<img src="media/azure-search-query-filter.png" title="Filtered search query" alt="Using the $filter parameter to further refine search results." /><figcaption>Using the $filter parameter to further refine search results.</figcaption>
+</figure></li>
+<li><p>The final query we will run adds the <code>$orderBy</code> parameter, which allow you to specify the sort order of your results. In this case, let’s search for records where the sentiment is the highest, filtering for records where the sentiment is greater than 0.9, and ordering the results in descending order.</p>
+<pre class="http"><code>search=*&amp;$select=text,userLocation,sentiment&amp;$filter=sentiment gt 0.9&amp;$count=true&amp;$orderby=sentiment desc</code></pre>
+<figure>
+<img src="media/azure-search-query-orderby.png" title="Ordered search query" alt="Using the orderBy filter in a search query" /><figcaption>Using the orderBy filter in a search query</figcaption>
+</figure>
+<blockquote>
+<p>In the search results, observe that the sentiment values slowly decrease as you scroll down through the returned documents.</p>
+</blockquote></li>
+</ol>
+<h2 id="wrap-up">Wrap-up</h2>
+<p>In this experience, you learned how to leverage Azure Search and Cognitive Services to perform knowledge mining on unstructured data stored in Cosmos DB. Using a combination of preconfigured and custom cognitive skills, you built a Cognitive Search pipeline to enrich the source data in route to an Azure Search Index.</p>
+<p>Using preconfigured cognitive skills, you were able to add language detection, sentiment analysis, and key phrase and entity extraction to your search pipeline. These skills enriched your search index with additional metadata about the tweets being indexed.</p>
+<p>You then used an Azure Function App to create a custom cognitive skill, which used the Translator Text Cognitive Service to translate tweets into English. Using the Custom Web API skill, you integrated the custom skill to your cognitive search pipeline.</p>
+<p>The end result is rich additional content in an Azure Search index, created by a cognitive search indexing pipeline. The output is a full-text searchable index on Azure Search.</p>
+<h2 id="additional-resources-and-more-information">Additional resources and more information</h2>
+<p>To continue learning and expand your understanding of Knowledge Mining with Cognitive Search, use the links below.</p>
+<ul>
+<li><a href="https://docs.microsoft.com/azure/search/search-what-is-azure-search">Introduction to Azure Search</a></li>
+<li><a href="https://docs.microsoft.com/azure/cognitive-services/welcome">Introduction to Cognitive Services</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-concept-intro">Introduction to Cognitive Search</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-attach-cognitive-services">Attach a Cognitive Services resource with a skillset in Azure Search</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/search-api-preview">Azure Search Service REST API</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-predefined-skills">Predefined Cognitive Search skills</a>
+<ul>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-skill-keyphrases">Key Phrase Extraction</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-skill-language-detection">Language Detection</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-recognition">Entity Recognition</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-skill-textmerger">Text Merger</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-skill-textsplit">Text Split</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-skill-sentiment">Sentiment</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-skill-image-analysis">Image Analysis</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-skill-ocr">Optical Character Recognition (OCR)</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-skill-shaper">Shaper</a></li>
+</ul></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-custom-skill-web-api">Custom Web API skill</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-custom-skill-interface">How to add a custom skill to a cognitive search pipeline</a></li>
+<li><a href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob">Learn how to call cognitive search APIs</a></li>
+<li><a href="https://azure.github.io/LearnAI-Cognitive-Search/">Learn Cognitive Search</a></li>
+<li><a href="https://azure.github.io/LearnAI-KnowledgeMiningBootcamp/">Enterprise Knowledge Mining Bootcamp</a></li>
+<li><a href="https://azure.microsoft.com/pricing/details/search/">Azure Search pricing</a></li>
+</ul>

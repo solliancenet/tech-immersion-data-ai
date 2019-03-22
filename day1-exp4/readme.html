@@ -1,0 +1,366 @@
+<h1 id="day-1-experience-4---delivering-the-modern-data-warehouse-with-azure-sql-data-warehouse-azure-databricks-azure-data-factory-and-power-bi">Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI</h1>
+<ul>
+<li><a href="#day-1-experience-4---delivering-the-modern-data-warehouse-with-azure-sql-data-warehouse-azure-databricks-azure-data-factory-and-power-bi">Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI</a>
+<ul>
+<li><a href="#technology-overview">Technology overview</a></li>
+<li><a href="#scenario-overview">Scenario overview</a></li>
+<li><a href="#task-1-execute-adf-pipeline-to-copy-data">Task 1: Execute ADF Pipeline to copy data</a></li>
+<li><a href="#task-2-start-the-vehicle-telemetry-generator">Task 2: Start the vehicle telemetry generator</a></li>
+<li><a href="#task-3-read-streaming-data-from-cosmos-db-using-databricks">Task 3: Read streaming data from Cosmos DB using Databricks</a></li>
+<li><a href="#task-4-perform-data-aggregation-and-summarization">Task 4: Perform data aggregation and summarization</a></li>
+<li><a href="#task-5-persisting-data-to-databricks-delta-tables">Task 5: Persisting data to Databricks Delta tables</a></li>
+<li><a href="#task-6-visualizations-and-dashboards-with-databricks">Task 6: Visualizations and dashboards with Databricks</a></li>
+<li><a href="#task-7-send-summarized-data-to-azure-sql-dw">Task 7: Send summarized data to Azure SQL DW</a></li>
+<li><a href="#task-8-generate-reports-in-power-bi-with-data-from-azure-sql-dw">Task 8: Generate reports in Power BI with data from Azure SQL DW</a></li>
+<li><a href="#wrap-up">Wrap-up</a></li>
+<li><a href="#additional-resources-and-more-information">Additional resources and more information</a></li>
+</ul></li>
+</ul>
+<h2 id="technology-overview">Technology overview</h2>
+<p>A modern data warehouse lets you bring together all your data at any scale easily, and to get insights through analytical dashboards, operational reports, or advanced analytics for all your users.</p>
+<figure>
+<img src="media/solution-diagram1.png" title="Sample solution diagram" alt="Sample solution diagram." /><figcaption>Sample solution diagram.</figcaption>
+</figure>
+<ol type="1">
+<li>Combine all your structured, unstructured and semi-structured data (logs, files, and media) using Azure Data Factory to Azure Blob Storage.</li>
+<li>Leverage data in Azure Blob Storage to perform scalable analytics with Azure Databricks and achieve cleansed and transformed data.</li>
+<li>Cleansed and transformed data can be moved to Azure SQL Data Warehouse to combine with existing structured data, creating one hub for all your data. Leverage native connectors between Azure Databricks and Azure SQL Data Warehouse to access and move data at scale.</li>
+<li>Build operational reports and analytical dashboards on top of Azure Data Warehouse to derive insights from the data, and use Azure Analysis Services to serve thousands of end users.</li>
+<li>Run ad hoc queries directly on data within Azure Databricks.</li>
+</ol>
+<p>The same technologies also enable Advanced Analytics on big data, which allows customers to transform their data into actionable insights using the best-in-class machine learning tools. This architecture allows you to combine any data at any scale, and to build and deploy custom machine learning models at scale.</p>
+<figure>
+<img src="media/solution-diagram2.png" title="Sample solution diagram" alt="Sample solution diagram." /><figcaption>Sample solution diagram.</figcaption>
+</figure>
+<ol type="1">
+<li>Bring together all your structured, unstructured and semi-structured data (logs, files, and media) using Azure Data Factory to Azure Blob Storage.</li>
+<li>Use Azure Databricks to clean and transform the structureless datasets and combine them with structured data from operational databases or data warehouses.</li>
+<li>Use scalable machine learning/deep learning techniques, to derive deeper insights from this data using Python, R or Scala, with inbuilt notebook experiences in Azure Databricks.</li>
+<li>Leverage native connectors between Azure Databricks and Azure SQL Data Warehouse to access and move data at scale.</li>
+<li>Power users take advantage of the inbuilt capabilities of Azure Databricks to perform root cause determination and raw data analysis.</li>
+<li>Run ad hoc queries directly on data within Azure Databricks.</li>
+<li>Take the insights from Azure Databricks to Cosmos DB to make them accessible through web and mobile apps.</li>
+</ol>
+<h2 id="scenario-overview">Scenario overview</h2>
+<p>Like many organizations, ContosoAuto generates data from numerous system, each of which has its own location and format, including structured, unstructured, and semi-structured data. They would like the ability to combine and analyze these disparate datasets in order to gain actionable insights that can help them operate their business more efficiently.</p>
+<p>In this experience, ​​you will see how Azure Data Factory (ADF), Azure Databricks, and Azure SQL Data Warehouse (SQL DW) can be used together to build a modern data warehouse. You will start by using Azure Data Factory (ADF) to automate the movement of data in various formats gathered from various sources, including Cosmos DB, into a centralized repository, Azure Data Lake Storage Gen2 (ADLS Gen2) in this case. You will then use Azure Databricks to prepare and analyze those data, and finally write the aggregations to Azure SQL Data Warehouse (SQL DW).</p>
+<p>As part of the process, you will also use Databricks to connect to the Cosmos DB Change Feed to stream near-real-time vehicle telemetry data directly into your SQL DW using Spark Structured Streaming.</p>
+<h2 id="task-1-execute-adf-pipeline-to-copy-data">Task 1: Execute ADF Pipeline to copy data</h2>
+<p>In this task, you will quickly set up your ADLS Gen2 filesystem using a Databricks notebook, and then review and execute ADF pipelines to copy data from various sources, including Cosmos DB, in your ADLS Gen2 filesystem.</p>
+<ol type="1">
+<li><p>In a web browser, navigate to the <a href="https://portal.azure.com">Azure portal</a>, select <strong>Resource groups</strong> from the left-hand menu, and then select the resource group named <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop).</p>
+<figure>
+<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
+</figure></li>
+<li><p>Prior to using ADF to move data into your ADLS Gen2 instance, you must create a filesystem in ADLS Gen2. This will be done using an Azure Databricks notebook. Select your <strong>Azure Databricks Service</strong> resource from the list of resources in the resource group. This will be named <strong>XXXXX</strong> (where XXXXX is the unique identifier assigned to you for this workshop).</p>
+<figure>
+<img src="media/tech-immersion-rg-databricks.png" title="Tech Immersion resource group" alt="The Databricks resource is selected from the list of resources in the tech-immersion resource group." /><figcaption>The Databricks resource is selected from the list of resources in the tech-immersion resource group.</figcaption>
+</figure></li>
+<li><p>On the Azure Databricks Service blade, select <strong>Launch Workspace</strong>.</p>
+<figure>
+<img src="media/tech-immersion-databricks-launch-workspace.png" title="Launch Workspace" alt="Databricks Launch Workspace" /><figcaption>Databricks Launch Workspace</figcaption>
+</figure></li>
+<li><p>In your Databricks workspace, select <strong>Clusters</strong> from the left-hand menu, and then select the <strong>Start</strong> button for the cluster. Select <strong>Confirm</strong> in the dialog to start the cluster.</p>
+<figure>
+<img src="media/databricks-cluster-start.png" title="Clusters" alt="The start button for the cluster is highlighted on the Clusters page in Databricks." /><figcaption>The start button for the cluster is highlighted on the Clusters page in Databricks.</figcaption>
+</figure>
+<blockquote>
+<p>It will take 2-4 minutes for the cluster to start. You can move on to the next steps while the cluster is starting up.</p>
+</blockquote></li>
+<li><p>Select <strong>Workspace</strong> from the left-hand menu, and then select <strong>Shared</strong>.</p></li>
+<li><p>Select the drop down arrow next to Shared, and select <strong>Import</strong> from the context menu.</p>
+<figure>
+<img src="media/databricks-workspace-shared-import.png" title="Import" alt="Import is highlighted in the context menu for the Shared workspace in Databricks." /><figcaption>Import is highlighted in the context menu for the Shared workspace in Databricks.</figcaption>
+</figure></li>
+<li><p>On the Import Notebooks dialog, select <strong>Browse</strong> and select the <strong><code>Tech-Immersion.dbc</code></strong> file located in the <code>C:\lab-files\data\4</code> folder on your lab VM, and then select <strong>Import</strong>.</p>
+<figure>
+<img src="media/databricks-workspace-import-notebooks.png" title="Import notebooks" alt="The Import Notebooks dialog is displayed, with the Tech-Immersion.dbc file listed in the import box." /><figcaption>The Import Notebooks dialog is displayed, with the <code>Tech-Immersion.dbc</code> file listed in the import box.</figcaption>
+</figure></li>
+<li><p>In the shared workspace, select the <strong>Tech-Immersion</strong> folder, followed by the <strong>Day-1</strong> and <strong>Experience-4</strong> folders. Then select the notebook named <strong>1-Environment-Setup</strong>.</p>
+<figure>
+<img src="media/databricks-workspace-day1-exp4-notebook1.png" title="Notebooks in the shared workspace" alt="In the shared workspace, the 1-Environment-Setup notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder." /><figcaption>In the shared workspace, the 1-Environment-Setup notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.</figcaption>
+</figure></li>
+<li><p>In the <strong>1-Environment-Setup</strong> notebook, follow the instructions contained in the notebook, and then return here to complete the remaining steps of this task.</p></li>
+<li><p>In the Azure portal, navigate to the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop) as you did in step 1 above, and then select <strong>tech-immersion-data-factory</strong> from the list of resources.</p></li>
+</ol>
+<figure>
+<img src="media/tech-immersion-rg-data-factory.png" title="Tech Immersion resource group" alt="The Data Factory resource is selected from the list of resources in the tech-immersion resource group." /><figcaption>The Data Factory resource is selected from the list of resources in the tech-immersion resource group.</figcaption>
+</figure>
+<ol start="11" type="1">
+<li><p>On the Data Factory blade, select the <strong>Author &amp; Monitor</strong> tile to launch the Azure Data Factory management page.</p>
+<figure>
+<img src="media/data-factory-author-and-monitor.png" title="Author &amp; Monitor" alt="The Author &amp; Monitor tile is highlighted on the Data Factory overview blade." /><figcaption>The Author &amp; Monitor tile is highlighted on the Data Factory overview blade.</figcaption>
+</figure></li>
+<li><p>On the Azure Data Factory page, select the <strong>Author</strong> (pencil) icon from the left-hand menu.</p>
+<figure>
+<img src="media/data-factory-home-author.png" title="Data Factory Author icon" alt="The Author icon is highlighted on the left-hand menu of the Azure Data Factory page." /><figcaption>The Author icon is highlighted on the left-hand menu of the Azure Data Factory page.</figcaption>
+</figure></li>
+<li><p>On the ADF Author page, select <strong>Pipelines</strong> to expand the list, and then select the <strong>CopyData</strong> pipeline from the list.</p>
+<figure>
+<img src="media/data-factory-pipelines-copydata.png" title="ADF pipelines" alt="Azure Data Factory pipelines" /><figcaption>Azure Data Factory pipelines</figcaption>
+</figure>
+<blockquote>
+<p>The <code>CopyData</code> pipeline consists of three copy activities. Two of the activities connect to your Azure SQL Database instance to retrieve vehicle data from tables there. The third connects to Cosmos DB to retrieve batch vehicle telemetry data. Each of the copy activities writes data into files in ADLS Gen2.</p>
+</blockquote></li>
+<li><p>On the pipeline toolbar, select <strong>Trigger</strong> to run the <code>CopyData</code> pipeline, and then select <strong>Finish</strong> on the Pipeline Run dialog. You will receive a notification that they <code>CopyData</code> pipeline is running.</p>
+<figure>
+<img src="media/data-factory-pipeline-toolbar.png" title="Data Factory pipeline toolbar" alt="Trigger is highlighted in the Data Factory pipeline toolbar." /><figcaption>Trigger is highlighted in the Data Factory pipeline toolbar.</figcaption>
+</figure></li>
+<li><p>To observe the pipeline run, select the <strong>Monitor</strong> icon from the left-hand menu, which will bring up a list of active and recent pipeline runs.</p>
+<figure>
+<img src="media/data-factory-monitor-pipeline-runs.png" title="Azure Data Factory Monitor" alt="Azure Data Factory pipeline runs" /><figcaption>Azure Data Factory pipeline runs</figcaption>
+</figure>
+<blockquote>
+<p>On the pipeline runs monitor page, you can see all active and recent pipeline runs. The <strong>Status</strong> field provide and indication of the state of the pipeline run, from In Progress to Failed or Canceled. You also have the option to filter by Status and set custom date ranges to get a specific status and time period.</p>
+</blockquote></li>
+<li><p>Select the <strong>Activity Runs</strong> icon under Actions for the currently running pipeline to view the status of the individual activities which make up the pipeline.</p>
+<figure>
+<img src="media/data-factory-monitor-activity-runs.png" title="Data Factory activity runs" alt="Data Factory activity runs" /><figcaption>Data Factory activity runs</figcaption>
+</figure>
+<blockquote>
+<p>The <strong>Activity Runs</strong> view allows you to monitor individual activities within your pipelines. In this view, you can see the amount of time each activity took to execute, as well as select the various icons under Actions to view the inputs, outputs, and details of each activity run. As with pipeline runs, you are provided with the Status of each activity.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-2-start-the-vehicle-telemetry-generator">Task 2: Start the vehicle telemetry generator</h2>
+<p>The data generator console application creates and sends simulated vehicle sensor telemetry for an array of vehicles (denoted by VIN (vehicle identification number)) directly to Cosmos DB. For this to happen, you first need to configure it with the Cosmos DB connection string.</p>
+<p>In this task, you will configure and run the data generator to save simulated vehicle telemetry data to a <code>telemetry</code> collection in Cosmos DB.</p>
+<ol type="1">
+<li><p>Open Windows Explorer and navigate to <code>C:\lab-files\data\4\TelemetryGenerator</code>. Open <code>appsettings.json</code> with a text editor, such as Notepad.exe.</p>
+<figure>
+<img src="media/windows-explorer-appsettings-json.png" title="Windows explorer" alt="The appsettings.json file is highlighted in the C:-files\4folder." /><figcaption>The <code>appsettings.json</code> file is highlighted in the C:-files\4folder.</figcaption>
+</figure></li>
+<li><p>To retrieve your Cosmos DB connection string, open a web browser and navigate to the <a href="https://portal.azure.com">Azure portal</a>. Select <strong>Resource groups</strong> from the left-hand menu, and then select the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop).</p>
+<figure>
+<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
+</figure></li>
+<li><p>Select the <strong>Azure Cosmos DB account</strong> from the list of resources in your resource group.</p>
+<figure>
+<img src="media/tech-immersion-rg-cosmos-db.png" title="Tech Immersion resource group" alt="The Azure Cosmos DB account is selected in the resource group." /><figcaption>The Azure Cosmos DB account is selected in the resource group.</figcaption>
+</figure></li>
+<li><p>Select <strong>Firewall and virtual networks</strong> from the left-hand menu on your Cosmos DB blade, then select Allow access from <strong>All networks</strong>. Select <strong>Save</strong>. This will allow the vehicle telemetry generator application to send data to your Cosmos DB collection. Select <strong>Save</strong>.</p>
+<figure>
+<img src="media/cosmos-db-firewall.png" title="Firewall and virtual networks" alt="The All networks option is selected within the Firewall and virtual networks blade." /><figcaption>The All networks option is selected within the Firewall and virtual networks blade.</figcaption>
+</figure></li>
+<li><p>Next, select <strong>Keys</strong> from the left-hand menu.</p>
+<figure>
+<img src="media/cosmos-db-keys-link.png" title="Keys link" alt="The Keys link on the left-hand menu is highlighted." /><figcaption>The Keys link on the left-hand menu is highlighted.</figcaption>
+</figure></li>
+<li><p>Copy the <strong>Primary Connection String</strong> value by selecting the copy button to the right of the field.</p>
+<figure>
+<img src="media/cosmos-db-keys.png" title="Keys" alt="The Primary Connection String key is copied." /><figcaption>The Primary Connection String key is copied.</figcaption>
+</figure></li>
+<li><p>Return to the <code>appsettings.json</code> file in your text editor, and paste your Cosmos DB connection string value next to <code>COSMOS_DB_CONNECTION_STRING</code>. Make sure you have quotes ("") around the value, as shown in the example below:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">&quot;COSMOS_DB_CONNECTION_STRING&quot;</span><span class="fu">:</span> <span class="st">&quot;AccountEndpoint=https://tech-immersion.documents.azure.com:443/;AccountKey=xVXyajzdlD3q4UXHIpMnriBhtasLztTrMrGSJgvRl8D1bUu1B7wwfGN1Q8rhBu0BHBTc2jR9iGPRtYpIV3lAkQ==;&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">&quot;SECONDS_TO_LEAD&quot;</span><span class="fu">:</span> <span class="st">&quot;0&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="dt">&quot;SECONDS_TO_RUN&quot;</span><span class="fu">:</span> <span class="st">&quot;2400&quot;</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="fu">}</span></a></code></pre></div>
+<p><code>SECONDS_TO_LEAD</code> is the amount of time to wait before sending vehicle telemetry data. Default value is <code>0</code>.</p>
+<p><code>SECONDS_TO_RUN</code> is the maximum amount of time to allow the generator to run before stopping transmission of data. The default value is <code>2400</code>. Data will also stop transmitting when you enter &lt;Ctrl+C&gt; while the generator is running, or if you close the window.</p></li>
+<li><p>Save the <code>appsettings.json</code> file.</p></li>
+<li><p>In your open Windows Explorer window, locate and double-click the <code>TransactionGenerator.exe</code> file (located in the same <code>C:\lab-files\data\4\TelemetryGenerator</code> folder as <code>appsettings.json</code>) to launch the console application.</p>
+<figure>
+<img src="media/telemetry-generator-console.png" title="Console window" alt="Screenshot of the console window." /><figcaption>Screenshot of the console window.</figcaption>
+</figure></li>
+<li><p>A console window will open and you should see it start to send data after a few seconds. Once you see that it is sending data to Cosmos DB, <em>minimize</em> the window and allow it to run in the background throughout this experience.</p>
+<figure>
+<img src="media/vs-console.png" title="Console window" alt="Screenshot of the console window." /><figcaption>Screenshot of the console window.</figcaption>
+</figure>
+<blockquote>
+<p>The top of the output displays information about the Cosmos DB collection you created (telemetry), the requested RU/s as well as estimated hourly and monthly cost. After every 1,000 records are requested to be sent, you will see output statistics.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-3-read-streaming-data-from-cosmos-db-using-databricks">Task 3: Read streaming data from Cosmos DB using Databricks</h2>
+<p>You have now used ADF to move data from various sources, including Cosmos DB, into an ADLS Gen2 filesystem. In this task, you will use an Azure Databricks notebook to extend the use of Cosmos DB further. You will create a connection to your Cosmos DB instance, using the Azure Cosmos DB Spark Connector, and query streaming data from the Cosmos DB Change Feed.</p>
+<ol type="1">
+<li><p>Return to the Azure Databricks Workspace you opened previously, and in your Databricks workspace, select <strong>Workspace</strong> from the left-hand menu, and then select <strong>Shared</strong>.</p></li>
+<li><p>In the shared workspace, select the <strong>Tech-Immersion</strong> folder, followed by the <strong>Day-1</strong> and <strong>Experience-4</strong> folders. Then select the notebook named <strong>2-Cosmos-DB-Change-Feed</strong>.</p>
+<figure>
+<img src="media/databricks-workspace-day1-exp4-notebook2.png" title="Notebooks in the shared workspace" alt="In the shared workspace, the 2-Cosmos-DB-Change-Feed notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder." /><figcaption>In the shared workspace, the 2-Cosmos-DB-Change-Feed notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.</figcaption>
+</figure></li>
+<li><p>In the <strong>2-Cosmos-DB-Change-Feed</strong> notebook, follow the instructions to complete the remaining steps of this task.</p></li>
+</ol>
+<blockquote>
+<p>The notebook contains all the instructions needed to complete this task. In addition, the final cell of the notebook contains instructions on the next step, which will include a link to the notebook for the next task in this experience, or instructions to return to this document.</p>
+</blockquote>
+<h2 id="task-4-perform-data-aggregation-and-summarization">Task 4: Perform data aggregation and summarization</h2>
+<p>In this task, you will using Databricks to perform data preparation, aggregation and summarization with both batch and streaming data.</p>
+<ol type="1">
+<li><p>In your Databricks workspace, select <strong>Workspace</strong> from the left-hand menu, then select <strong>Shared</strong>.</p></li>
+<li><p>In the shared workspace, select the <strong>Tech-Immersion</strong> folder, followed by the <strong>Day 1</strong> and <strong>Experience 4</strong> folders. Then select the notebook named <strong>3-Aggregation-and-Summarization</strong>.</p>
+<figure>
+<img src="media/databricks-workspace-day1-exp4-notebook3.png" title="Notebooks in the shared workspace" alt="In the shared workspace, the 3-Aggregation-and-Summarization notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder." /><figcaption>In the shared workspace, the 3-Aggregation-and-Summarization notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.</figcaption>
+</figure></li>
+<li><p>In the <strong>3-Aggregation-and-Summarization</strong> notebook, follow the instructions to complete the remaining steps of this task.</p></li>
+</ol>
+<blockquote>
+<p>The notebook contains all the instructions needed to complete this task. In addition, the final cell of the notebook contains instructions on the next step, which will include a link to the notebook for the next task in this experience, or instructions to return to this document.</p>
+</blockquote>
+<h2 id="task-5-persisting-data-to-databricks-delta-tables">Task 5: Persisting data to Databricks Delta tables</h2>
+<p>In this task, you will see how Databricks Delta provides capabilities previous unavailable for updating records in an Hive table by using the UPSERT method to update existing records and insert new records.</p>
+<ol type="1">
+<li><p>In your Databricks workspace, select <strong>Workspace</strong> from the left-hand menu, then select <strong>Shared</strong>.</p></li>
+<li><p>In the shared workspace, select the <strong>Tech-Immersion</strong> folder, followed by the <strong>Day-1</strong> and <strong>Experience-4</strong> folders. Then select the notebook named <strong>4-Databricks-Delta</strong>.</p>
+<figure>
+<img src="media/databricks-workspace-day1-exp4-notebook4.png" title="Notebooks in the shared workspace" alt="In the shared workspace, the 4-Databricks-Delta notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder." /><figcaption>In the shared workspace, the 4-Databricks-Delta notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.</figcaption>
+</figure></li>
+<li><p>In the <strong>4-Databricks-Delta</strong> notebook, follow the instructions to complete the remaining steps of this task.</p></li>
+</ol>
+<blockquote>
+<p>The notebook contains all the instructions needed to complete this task. In addition, the final cell of the notebook contains instructions on the next step, which will include a link to the notebook for the next task in this experience, or instructions to return to this document.</p>
+</blockquote>
+<h2 id="task-6-visualizations-and-dashboards-with-databricks">Task 6: Visualizations and dashboards with Databricks</h2>
+<p>In this task, you will use visualizations configured within a Databricks notebook to build a dashboard displaying your data aggregations.</p>
+<ol type="1">
+<li><p>In your Databricks workspace, select <strong>Workspace</strong> from the left-hand menu, then select <strong>Shared</strong>.</p></li>
+<li><p>In the shared workspace, select the <strong>Tech-Immersion</strong> folder, followed by the <strong>Day-1</strong> and <strong>Experience-4</strong> folders. Then select the notebook named <strong>5-Databricks-Dashboards</strong>.</p>
+<figure>
+<img src="media/databricks-workspace-day1-exp4-notebook5.png" title="Notebooks in the shared workspace" alt="In the shared workspace, the 5-Databricks-Dashboards notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder." /><figcaption>In the shared workspace, the 5-Databricks-Dashboards notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.</figcaption>
+</figure></li>
+<li><p>In the <strong>5-Databricks-Dashboards</strong> notebook, follow the instructions to complete the remaining steps of this task.</p></li>
+</ol>
+<blockquote>
+<p>The notebook contains all the instructions needed to complete this task. In addition, the final cell of the notebook contains instructions on the next step, which will include a link to the notebook for the next task in this experience, or instructions to return to this document.</p>
+</blockquote>
+<h2 id="task-7-send-summarized-data-to-azure-sql-dw">Task 7: Send summarized data to Azure SQL DW</h2>
+<p>In this task, you will use the Azure SQL Data Warehouse connector to write aggregated data from Databricks into your SQL DW. You will also apply aggregations to streaming data from the Cosmos DB Change Feed, and stream the data directly into your Azure SQL DW from Databricks.</p>
+<ol type="1">
+<li><p>In your Databricks workspace, select <strong>Workspace</strong> from the left-hand menu, then select <strong>Shared</strong>.</p></li>
+<li><p>In the shared workspace, select the <strong>Tech-Immersion</strong> folder, followed by the <strong>Day-1</strong> and <strong>Experience-4</strong> folders. Then select the notebook named <strong>6-Write-to-SQL-DW</strong>.</p>
+<figure>
+<img src="media/databricks-workspace-day1-exp4-notebook6.png" title="Notebooks in the shared workspace" alt="In the shared workspace, the 6-Write-to-SQL-DW notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder." /><figcaption>In the shared workspace, the 6-Write-to-SQL-DW notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.</figcaption>
+</figure></li>
+<li><p>In the <strong>6-Write-to-SQL-DW</strong> notebook, follow the instructions to complete the remaining steps of this task.</p></li>
+</ol>
+<blockquote>
+<p>The notebook contains all the instructions needed to complete this task. In addition, the final cell of the notebook contains instructions on the next step, which will include a link to the notebook for the next task in this experience, or instructions to return to this document.</p>
+</blockquote>
+<h2 id="task-8-generate-reports-in-power-bi-with-data-from-azure-sql-dw">Task 8: Generate reports in Power BI with data from Azure SQL DW</h2>
+<p>In this task, you will use Power BI Desktop to read data from Azure SQL DW to create reports showing vehicle telemetry data.</p>
+<ol type="1">
+<li><p>Launch Power BI Desktop, and select <strong>Get data</strong> on the splash screen.</p>
+<figure>
+<img src="media/power-bi-desktop.png" title="Power BI Desktop splash screen" alt="The Power BI Desktop splash screen is shown with the Get data link highlighted." /><figcaption>The Power BI Desktop splash screen is shown with the Get data link highlighted.</figcaption>
+</figure></li>
+<li><p>On the Get Data dialog, select <strong>Azure</strong> on the left-hand side, select <strong>Azure SQL Data Warehouse</strong> from the list of available Azure services, and then select <strong>Connect</strong>.</p>
+<figure>
+<img src="media/power-bi-get-data-sql-dw.png" title="Power BI Get Data" alt="The Power BI Get Data dialog is displayed, with Azure selected on the left and Azure SQL Data Warehouse selected on the right. The Connect button is highlighted." /><figcaption>The Power BI Get Data dialog is displayed, with Azure selected on the left and Azure SQL Data Warehouse selected on the right. The Connect button is highlighted.</figcaption>
+</figure></li>
+<li><p>On the SQL Server database dialog that appears, enter the following:</p>
+<ul>
+<li><p><strong>Server</strong>: Copy and paste the name of your SQL DW Server from the Azure portal.</p>
+<ul>
+<li><p>In the Azure portal, navigate to the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop), and select your SQL data warehouse resource.</p>
+<figure>
+<img src="media/resources-group-sql-dw.png" title="Tech Immersion Resource Group" alt="The SQL data warehouse resource is highlighted in the tech-immersion resource group." /><figcaption>The SQL data warehouse resource is highlighted in the tech-immersion resource group.</figcaption>
+</figure></li>
+<li><p>On the SQL DW overview blade, copy the Server name.</p>
+<figure>
+<img src="media/sql-dw-server-name.png" title="SQL Server Data Warehouse" alt="The Server name is highlighted on the SQL DW overview blade." /><figcaption>The Server name is highlighted on the SQL DW overview blade.</figcaption>
+</figure></li>
+</ul></li>
+<li><p><strong>Database</strong>: Enter tech-immersion-sql-dw.</p></li>
+<li><p><strong>Data Connectivity mode</strong>: Select DirectQuery.</p></li>
+</ul>
+<figure>
+<img src="media/power-bi-sql-server-database.png" title="Power BI SQL Server database connection" alt="The Power BI SQL Server database connection dialog is displayed. The tech-immersion-sql-dw server name is entered into the Server box, and tech-immersion-sql-dw is entered into the Database field. DirectQuery is selected for the Data Connectivity mode." /><figcaption>The Power BI SQL Server database connection dialog is displayed. The tech-immersion-sql-dw server name is entered into the Server box, and tech-immersion-sql-dw is entered into the Database field. DirectQuery is selected for the Data Connectivity mode.</figcaption>
+</figure></li>
+<li><p>On the next dialog, select <strong>Database</strong> on the left-hand side, enter <strong>ti-admin</strong> as the User name and <strong>Password.1!!</strong> as the Password, and then select <strong>Connect</strong>.</p>
+<figure>
+<img src="media/power-bi-sql-dw-credentials.png" title="SQL DW Login" alt="In the SQL Server Database dialog, Database is selected and the credentials for the ti-admin account are entered into the user name and password fields." /><figcaption>In the SQL Server Database dialog, Database is selected and the credentials for the ti-admin account are entered into the user name and password fields.</figcaption>
+</figure></li>
+<li><p>After signing in, select the <strong>StreamData</strong> and <strong>VehicleTelemetry</strong> tables on the Navigator dialog, and then select <strong>Load</strong>.</p>
+<figure>
+<img src="media/power-bi-table-navigator.png" title="Power BI Table Navigator" alt="StreamData and VehicleTelemetry are checked on the Navigator dialog." /><figcaption>StreamData and VehicleTelemetry are checked on the Navigator dialog.</figcaption>
+</figure></li>
+<li><p>After a few seconds, you will see a blank report appear, with a menu of Visualizations and Fields on the right-hand side. Under <strong>Fields</strong>, expand <strong>StreamData</strong>.</p>
+<figure>
+<img src="media/power-bi-fields-stream-data.png" title="Power BI Fields" alt="StreamData is highlighted under Fields in Power BI" /><figcaption>StreamData is highlighted under Fields in Power BI</figcaption>
+</figure></li>
+<li><p>Next, select the <strong>Map</strong> visualization by clicking on it in the Visualizations section on the right.</p>
+<figure>
+<img src="media/power-bi-map-vis.png" title="Visualizations" alt="The Map visualization is highlighted." /><figcaption>The Map visualization is highlighted.</figcaption>
+</figure></li>
+<li><p>Drag the <strong>City</strong> field to <strong>Location</strong>, and <strong>Count</strong> to <strong>Size</strong>. This will place points of different sizes over cities on the map, depending on how many telemetry entries there are.</p>
+<figure>
+<img src="media/power-bi-map-fields.png" title="Map settings" alt="Screenshot displaying where to drag the fields onto the map settings." /><figcaption>Screenshot displaying where to drag the fields onto the map settings.</figcaption>
+</figure></li>
+<li><p>Your map should look similar to the following:</p>
+<figure>
+<img src="media/power-bi-map.png" title="Map" alt="The map is shown on the report." /><figcaption>The map is shown on the report.</figcaption>
+</figure></li>
+<li><p>Select a blank area on the report to deselect the map and then select the <strong>Line chart</strong> visualization.</p>
+<figure>
+<img src="media/power-bi-line-chart-vis.png" title="Visualization" alt="The Line chart visualization is highlighted." /><figcaption>The Line chart visualization is highlighted.</figcaption>
+</figure></li>
+<li><p>Drag the <strong>speed</strong> field to <strong>Axis</strong> and then drag the <strong>enginetemperature</strong> field to <strong>Values</strong>. This will allow you to visualize the relationship between speed and engine temperatures.</p>
+<figure>
+<img src="media/power-bi-line-chart-fields.png" title="Line chart settings" alt="Screenshot displaying where to drag the fields onto the line chart settings." /><figcaption>Screenshot displaying where to drag the fields onto the line chart settings.</figcaption>
+</figure></li>
+<li><p>Next, select the down arrow next to the <strong>enginetemperature</strong> field under <strong>Values</strong>. Select <strong>Average</strong> from the menu to aggregate the values by average instead of the sum.</p>
+<figure>
+<img src="media/power-bi-line-chart-average.png" title="Average engine temperature" alt="The Average menu option is highlighted for the enginetemperature value." /><figcaption>The Average menu option is highlighted for the enginetemperature value.</figcaption>
+</figure></li>
+<li><p>Your line chart should look similar to the following:</p>
+<figure>
+<img src="media/power-bi-line-chart.png" title="Line chart" alt="The line chart is shown on the report." /><figcaption>The line chart is shown on the report.</figcaption>
+</figure></li>
+<li><p>Select a blank area on the report to deselect the line chart, and then select the <strong>Area chart</strong> visualization.</p>
+<figure>
+<img src="media/power-bi-area-chart-vis.png" title="Area chart visualization" alt="The Area chart visualization is highlighted." /><figcaption>The Area chart visualization is highlighted.</figcaption>
+</figure></li>
+<li><p>Drag the <strong>city</strong> field to <strong>Axis</strong>, the <strong>Make</strong> field to <strong>Legend</strong>, and the <strong>speed</strong> field to <strong>Values</strong>. This will display an area chart with different colors indicating the region and the speed at which drivers travel over time within that region.</p>
+<figure>
+<img src="media/power-bi-area-chart-fields.png" title="Area chart settings" alt="Screenshot displaying where to drag the fields onto the area chart settings." /><figcaption>Screenshot displaying where to drag the fields onto the area chart settings.</figcaption>
+</figure></li>
+<li><p>Select the down arrow next to the <strong>speed</strong> field under <strong>Values</strong>. Select <strong>Average</strong> from the menu to aggregate the values by average instead of the sum.</p>
+<figure>
+<img src="media/power-bi-area-chart-average.png" title="Average speed" alt="The Average menu option is highlighted for the speed value." /><figcaption>The Average menu option is highlighted for the speed value.</figcaption>
+</figure></li>
+<li><p>Your area chart should look similar to the following:</p>
+<figure>
+<img src="media/power-bi-area-chart.png" title="Area chart" alt="The area chart on the report." /><figcaption>The area chart on the report.</figcaption>
+</figure></li>
+<li><p>Select a blank area on the report to deselect the area chart. Now select the <strong>Line and stacked column chart</strong> visualization.</p>
+<figure>
+<img src="media/power-bi-line-and-stacked-column-chart-vis.png" title="Line and stacked column chart visualization" alt="Line and stacked column chart visualization is highlighted." /><figcaption>Line and stacked column chart visualization is highlighted.</figcaption>
+</figure></li>
+<li><p>Drag the <strong>Make</strong> field to <strong>Shared axis</strong> and then drag the <strong>MpgCity</strong> and <strong>MpgHighway</strong> fields into both the <strong>Column values</strong> and <strong>Line values</strong> fields.</p>
+<figure>
+<img src="media/power-bi-line-and-stacked-column-chart-fields.png" title="Line and stacked column chart settings" alt="Screenshot displaying where to drag the fields onto the line and stacked column chart settings." /><figcaption>Screenshot displaying where to drag the fields onto the line and stacked column chart settings.</figcaption>
+</figure></li>
+<li><p>Select the down arrow next to the <strong>MgpCity</strong> field under <strong>Column values</strong>. Select <strong>Average</strong> from the menu to aggregate the values by average instead of the sum.</p>
+<figure>
+<img src="media/power-bi-line-and-stacked-column-chart-average.png" title="Average MpgCity" alt="The Average menu option is highlighted for the MpgCity value." /><figcaption>The Average menu option is highlighted for the MpgCity value.</figcaption>
+</figure></li>
+<li><p>Repeat the step above for <strong>MpgHighway</strong> under <strong>Column values</strong>, and then do the same for both <strong>MpgCity</strong> and <strong>MpgHighway</strong> under <strong>Line values</strong>.</p></li>
+<li><p>Your line and stacked column chart should look similar to the following:</p>
+<figure>
+<img src="media/power-bi-line-and-stacked-column-chart.png" title="Line and stacked column chart" alt="The line and stacked column chart on the report." /><figcaption>The line and stacked column chart on the report.</figcaption>
+</figure></li>
+<li><p>Select <strong>Save</strong> on the Power BI Desktop toolbar in the upper left of the window, and then select a file location and enter a name, such as “Vehicle Telemetry”, then select <strong>Save</strong>.</p></li>
+<li><p>Your final report should look similar to the following:</p>
+<figure>
+<img src="media/power-bi-report.png" title="Report" alt="The report view." /><figcaption>The report view.</figcaption>
+</figure></li>
+</ol>
+<h2 id="wrap-up">Wrap-up</h2>
+<p>In this experience, ​​you used Azure Data Factory (ADF), Azure Databricks, and Azure SQL Data Warehouse (SQL DW) together to build a modern data warehouse.</p>
+<p>You started by using Azure Data Factory (ADF) to automate the movement of data in various formats gathered from various sources, including Cosmos DB, into Azure Data Lake Storage Gen2 (ADLS Gen2). You then used Azure Databricks to prepare, analyze and visualize those data. Next, you used Spark Structured Streaming, in connection with the Azure Cosmos DB Spark Connector, to query streaming data from the Cosmos DB Change Feed, demonstrating how you can easily include near real-time data in your queries and aggregations in Databricks. You wrote aggregations of both static and streaming data into Azure SQL Data Warehouse (SQL DW).</p>
+<p>You ended the modern data warehouse experience by using Power BI Desktop to connect to your SQL DW, and building a dashboard to provide visualizations of vehicle telemetry data.</p>
+<h2 id="additional-resources-and-more-information">Additional resources and more information</h2>
+<p>To continue learning and expand your understanding of building modern data warehouses, use the links below.</p>
+<ul>
+<li><a href="https://azure.microsoft.com/en-us/solutions/data-warehouse/">Azure Modern Data Warehouse</a></li>
+<li><a href="https://www.youtube.com/watch?v=7MDCWgxPnVY">Introduction to Azure SQL Data Warehouse</a> (video)</li>
+<li><a href="https://azure.microsoft.com/en-us/services/sql-data-warehouse/">More information about Azure SQL Data Warehouse</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-data-warehouse/">Azure SQL Data Warehouse documentation</a></li>
+<li><a href="https://azure.microsoft.com/en-us/services/data-factory/">More information about Azure Data Factory</a></li>
+<li><a href="https://azure.microsoft.com/en-us/solutions/architecture/modern-data-warehouse/">Modern data warehouse architecture</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/data-factory/">Azure Data Factory documentation</a></li>
+<li><a href="https://azure.microsoft.com/en-us/services/databricks/">More information about Azure Databricks</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/azure-databricks/">Azure Databricks documentation</a></li>
+<li><a href="https://powerbi.microsoft.com/en-us/">Power BI product page</a></li>
+<li><a href="https://docs.microsoft.com/en-us/power-bi/">Power BI documentation</a></li>
+</ul>
