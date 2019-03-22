@@ -76,6 +76,7 @@ A link to Azure Data Studio should already be on the desktop of the VM. If not, 
 
     - **Connection type:** Select Microsoft SQL Server.
     - **Server:** Enter the IP address, followed by port number `31433`. For example: `123.123.123.123,31433`.
+    - **Authentication type:** Select SQL Login.
     - **Username:** Enter "sa".
     - **Password:** Enter the password provided to you for this lab.
     - **Remember password:** Checked.
@@ -96,6 +97,7 @@ The version of SQL Server Management Studio (SSMS) used in this lab is v17.x. Th
 2.  Within the Connection dialog that appears, configure the following:
 
     - **Server name:** Enter the IP address, followed by port number `31433`. For example: `123.123.123.123,31433`.
+    - **Authentication:** Select SQL Server Authentication.
     - **Login:** Enter "sa".
     - **Password:** Enter the password provided to you for this lab.
     - **Remember password:** Checked.
