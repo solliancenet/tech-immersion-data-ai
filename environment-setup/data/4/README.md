@@ -72,6 +72,8 @@ The following configuration needs to be performed on the SQL DW:
    - Password: Password.1!!
 2. Database name: tech-immersion-sql-dw
 3. Add the user's jumpbox IP address to the SQL DW firewall
+4. Create a master key in the database by running the following script against the tech-immersion-sql-dw database
+   1. `CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'Password.1!!';`
 
 ## Service Principal configuration
 

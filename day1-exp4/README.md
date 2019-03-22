@@ -3,8 +3,8 @@
 - [Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI](#day-1-experience-4---delivering-the-modern-data-warehouse-with-azure-sql-data-warehouse-azure-databricks-azure-data-factory-and-power-bi)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
-  - [Task 1: Execute ADF Pipeline to copy data](#task-1-execute-adf-pipeline-to-copy-data)
-  - [Task 2: Start the vehicle telemetry generator](#task-2-start-the-vehicle-telemetry-generator)
+  - [Task 1: Start the vehicle telemetry generator](#task-1-start-the-vehicle-telemetry-generator)
+  - [Task 2: Execute ADF Pipeline to copy data](#task-2-execute-adf-pipeline-to-copy-data)
   - [Task 3: Read streaming data from Cosmos DB using Databricks](#task-3-read-streaming-data-from-cosmos-db-using-databricks)
   - [Task 4: Perform data aggregation and summarization](#task-4-perform-data-aggregation-and-summarization)
   - [Task 5: Persisting data to Databricks Delta tables](#task-5-persisting-data-to-databricks-delta-tables)
@@ -46,79 +46,7 @@ In this experience, ​​you will see how Azure Data Factory (ADF), Azure Datab
 
 As part of the process, you will also use Databricks to connect to the Cosmos DB Change Feed to stream near-real-time vehicle telemetry data directly into your SQL DW using Spark Structured Streaming.
 
-## Task 1: Execute ADF Pipeline to copy data
-
-In this task, you will quickly set up your ADLS Gen2 filesystem using a Databricks notebook, and then review and execute ADF pipelines to copy data from various sources, including Cosmos DB, in your ADLS Gen2 filesystem.
-
-1. In a web browser, navigate to the [Azure portal](https://portal.azure.com), select **Resource groups** from the left-hand menu, and then select the resource group named **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
-
-   ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
-
-2. Prior to using ADF to move data into your ADLS Gen2 instance, you must create a filesystem in ADLS Gen2. This will be done using an Azure Databricks notebook. Select your **Azure Databricks Service** resource from the list of resources in the resource group. This will be named **XXXXX** (where XXXXX is the unique identifier assigned to you for this workshop).
-
-   ![The Databricks resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-databricks.png "Tech Immersion resource group")
-
-3. On the Azure Databricks Service blade, select **Launch Workspace**.
-
-   ![Databricks Launch Workspace](media/tech-immersion-databricks-launch-workspace.png "Launch Workspace")
-
-4. In your Databricks workspace, select **Clusters** from the left-hand menu, and then select the **Start** button for the cluster. Select **Confirm** in the dialog to start the cluster.
-
-    ![The start button for the cluster is highlighted on the Clusters page in Databricks.](media/databricks-cluster-start.png "Clusters")
-
-    > It will take 2-4 minutes for the cluster to start. You can move on to the next steps while the cluster is starting up.
-
-5. Select **Workspace** from the left-hand menu, and then select **Shared**.
-
-6. Select the drop down arrow next to Shared, and select **Import** from the context menu.
-
-   ![Import is highlighted in the context menu for the Shared workspace in Databricks.](media/databricks-workspace-shared-import.png "Import")
-
-7. On the Import Notebooks dialog, select **Browse** and select the **`Tech-Immersion.dbc`** file located in the `C:\lab-files\data\4` folder on your lab VM, and then select **Import**.
-
-   ![The Import Notebooks dialog is displayed, with the `Tech-Immersion.dbc` file listed in the import box.](media/databricks-workspace-import-notebooks.png "Import notebooks")
-
-8. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day-1** and **Experience-4** folders. Then select the notebook named **1-Environment-Setup**.
-
-   ![In the shared workspace, the 1-Environment-Setup notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.](media/databricks-workspace-day1-exp4-notebook1.png "Notebooks in the shared workspace")
-
-9.  In the **1-Environment-Setup** notebook, follow the instructions contained in the notebook, and then return here to complete the remaining steps of this task.
-
-10. In the Azure portal, navigate to the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) as you did in step 1 above, and then select **tech-immersion-data-factory** from the list of resources.
-
-   ![The Data Factory resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-data-factory.png "Tech Immersion resource group")
-
-11. On the Data Factory blade, select the **Author & Monitor** tile to launch the Azure Data Factory management page.
-
-    ![The Author & Monitor tile is highlighted on the Data Factory overview blade.](media/data-factory-author-and-monitor.png "Author & Monitor")
-
-12. On the Azure Data Factory page, select the **Author** (pencil) icon from the left-hand menu.
-
-    ![The Author icon is highlighted on the left-hand menu of the Azure Data Factory page.](media/data-factory-home-author.png "Data Factory Author icon")
-
-13. On the ADF Author page, select **Pipelines** to expand the list, and then select the **CopyData** pipeline from the list.
-
-    ![Azure Data Factory pipelines](media/data-factory-pipelines-copydata.png "ADF pipelines")
-
-    > The `CopyData` pipeline consists of three copy activities. Two of the activities connect to your Azure SQL Database instance to retrieve vehicle data from tables there. The third connects to Cosmos DB to retrieve batch vehicle telemetry data. Each of the copy activities writes data into files in ADLS Gen2.
-
-14. On the pipeline toolbar, select **Trigger** to run the `CopyData` pipeline, and then select **Finish** on the Pipeline Run dialog. You will receive a notification that they `CopyData` pipeline is running.
-
-    ![Trigger is highlighted in the Data Factory pipeline toolbar.](media/data-factory-pipeline-toolbar.png "Data Factory pipeline toolbar")
-
-15. To observe the pipeline run, select the **Monitor** icon from the left-hand menu, which will bring up a list of active and recent pipeline runs.
-
-    ![Azure Data Factory pipeline runs](media/data-factory-monitor-pipeline-runs.png "Azure Data Factory Monitor")
-
-    > On the pipeline runs monitor page, you can see all active and recent pipeline runs. The **Status** field provide and indication of the state of the pipeline run, from In Progress to Failed or Canceled. You also have the option to filter by Status and set custom date ranges to get a specific status and time period.
-
-16. Select the **Activity Runs** icon under Actions for the currently running pipeline to view the status of the individual activities which make up the pipeline.
-
-    ![Data Factory activity runs](media/data-factory-monitor-activity-runs.png "Data Factory activity runs")
-
-    > The **Activity Runs** view allows you to monitor individual activities within your pipelines. In this view, you can see the amount of time each activity took to execute, as well as select the various icons under Actions to view the inputs, outputs, and details of each activity run. As with pipeline runs, you are provided with the Status of each activity.
-
-## Task 2: Start the vehicle telemetry generator
+## Task 1: Start the vehicle telemetry generator
 
 The data generator console application creates and sends simulated vehicle sensor telemetry for an array of vehicles (denoted by VIN (vehicle identification number)) directly to Cosmos DB. For this to happen, you first need to configure it with the Cosmos DB connection string.
 
@@ -174,6 +102,78 @@ In this task, you will configure and run the data generator to save simulated ve
     ![Screenshot of the console window.](media/vs-console.png "Console window")
 
     > The top of the output displays information about the Cosmos DB collection you created (telemetry), the requested RU/s as well as estimated hourly and monthly cost. After every 1,000 records are requested to be sent, you will see output statistics.
+
+## Task 2: Execute ADF Pipeline to copy data
+
+In this task, you will quickly set up your ADLS Gen2 filesystem using a Databricks notebook, and then review and execute ADF pipelines to copy data from various sources, including Cosmos DB, in your ADLS Gen2 filesystem.
+
+1. In a web browser, navigate to the [Azure portal](https://portal.azure.com), select **Resource groups** from the left-hand menu, and then select the resource group named **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
+
+   ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
+
+2. Prior to using ADF to move data into your ADLS Gen2 instance, you must create a filesystem in ADLS Gen2. This will be done using an Azure Databricks notebook. Select your **Azure Databricks Service** resource from the list of resources in the resource group. This will be named **XXXXX** (where XXXXX is the unique identifier assigned to you for this workshop).
+
+   ![The Databricks resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-databricks.png "Tech Immersion resource group")
+
+3. On the Azure Databricks Service blade, select **Launch Workspace**.
+
+   ![Databricks Launch Workspace](media/tech-immersion-databricks-launch-workspace.png "Launch Workspace")
+
+4. In your Databricks workspace, select **Clusters** from the left-hand menu, and then select the **Start** button for the cluster. Select **Confirm** in the dialog to start the cluster.
+
+    ![The start button for the cluster is highlighted on the Clusters page in Databricks.](media/databricks-cluster-start.png "Clusters")
+
+    > It will take 2-4 minutes for the cluster to start. You can move on to the next steps while the cluster is starting up.
+
+5. Select **Workspace** from the left-hand menu, and then select **Shared**.
+
+6. Select the drop down arrow next to Shared, and select **Import** from the context menu.
+
+   ![Import is highlighted in the context menu for the Shared workspace in Databricks.](media/databricks-workspace-shared-import.png "Import")
+
+7. On the Import Notebooks dialog, select **Browse** and select the **`Tech-Immersion.dbc`** file located in the `C:\lab-files\data\4` folder on your lab VM, and then select **Import**.
+
+   ![The Import Notebooks dialog is displayed, with the `Tech-Immersion.dbc` file listed in the import box.](media/databricks-workspace-import-notebooks.png "Import notebooks")
+
+8. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day-1** and **Experience-4** folders. Then select the notebook named **1-Environment-Setup**.
+
+   ![In the shared workspace, the 1-Environment-Setup notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.](media/databricks-workspace-day1-exp4-notebook1.png "Notebooks in the shared workspace")
+
+9. In the **1-Environment-Setup** notebook, follow the instructions contained in the notebook, and then return here to complete the remaining steps of this task.
+
+10. In the Azure portal, navigate to the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) as you did in step 1 above, and then select **tech-immersion-data-factory** from the list of resources.
+
+    ![The Data Factory resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-data-factory.png "Tech Immersion resource group")
+
+11. On the Data Factory blade, select the **Author & Monitor** tile to launch the Azure Data Factory management page.
+
+    ![The Author & Monitor tile is highlighted on the Data Factory overview blade.](media/data-factory-author-and-monitor.png "Author & Monitor")
+
+12. On the Azure Data Factory page, select the **Author** (pencil) icon from the left-hand menu.
+
+    ![The Author icon is highlighted on the left-hand menu of the Azure Data Factory page.](media/data-factory-home-author.png "Data Factory Author icon")
+
+13. On the ADF Author page, select **Pipelines** to expand the list, and then select the **CopyData** pipeline from the list.
+
+    ![Azure Data Factory pipelines](media/data-factory-pipelines-copydata.png "ADF pipelines")
+
+    > The `CopyData` pipeline consists of three copy activities. Two of the activities connect to your Azure SQL Database instance to retrieve vehicle data from tables there. The third connects to Cosmos DB to retrieve batch vehicle telemetry data. Each of the copy activities writes data into files in ADLS Gen2.
+
+14. On the pipeline toolbar, select **Trigger** to run the `CopyData` pipeline, and then select **Finish** on the Pipeline Run dialog. You will receive a notification that they `CopyData` pipeline is running.
+
+    ![Trigger is highlighted in the Data Factory pipeline toolbar.](media/data-factory-pipeline-toolbar.png "Data Factory pipeline toolbar")
+
+15. To observe the pipeline run, select the **Monitor** icon from the left-hand menu, which will bring up a list of active and recent pipeline runs.
+
+    ![Azure Data Factory pipeline runs](media/data-factory-monitor-pipeline-runs.png "Azure Data Factory Monitor")
+
+    > On the pipeline runs monitor page, you can see all active and recent pipeline runs. The **Status** field provide and indication of the state of the pipeline run, from In Progress to Failed or Canceled. You also have the option to filter by Status and set custom date ranges to get a specific status and time period.
+
+16. Select the **Activity Runs** icon under Actions for the currently running pipeline to view the status of the individual activities which make up the pipeline.
+
+    ![Data Factory activity runs](media/data-factory-monitor-activity-runs.png "Data Factory activity runs")
+
+    > The **Activity Runs** view allows you to monitor individual activities within your pipelines. In this view, you can see the amount of time each activity took to execute, as well as select the various icons under Actions to view the inputs, outputs, and details of each activity run. As with pipeline runs, you are provided with the Status of each activity.
 
 ## Task 3: Read streaming data from Cosmos DB using Databricks
 
