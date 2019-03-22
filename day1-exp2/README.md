@@ -138,11 +138,15 @@ In this task, you will create a new Cosmos DB database and collection, set the t
 
     ![The Data Explorer link located in the left-hand menu is highlighted.](media/cosmos-db-data-explorer-link.png 'Data Explorer link')
 
-5.  Select **New Collection** in the top toolbar.
+5.  If the ContosoAuto database and telemetry collection already exist, **skip ahead** to step 9.
+
+    ![Screenshot shows the database and collection already exists.](media/cosmos-db-database-exists.png 'Data Explorer')
+
+6.  Select **New Collection** in the top toolbar.
 
     ![The New Collection link in the top toolbar is highlighted.](media/cosmos-db-new-collection-link.png 'New Collection link')
 
-6.  In the **Add Collection** blade, configure the following:
+7.  In the **Add Collection** blade, configure the following:
 
     - **Database id:** Select **Create new**, then enter "ContosoAuto" for the id.
     - **Provision database throughput:** Unchecked.
@@ -156,17 +160,17 @@ In this task, you will create a new Cosmos DB database and collection, set the t
 
     On the subject of partitions, choosing an appropriate partition key for Cosmos DB is a critical step for ensuring balanced reads and writes, scaling, and, in this case, in-order change feed processing per partition. While there are no limits, per se, on the number of logical partitions, a single logical partition is allowed an upper limit of 10 GB of storage. Logical partitions cannot be split across physical partitions. For the same reason, if the partition key chosen is of bad cardinality, you could potentially have skewed storage distribution. For instance, if one logical partition becomes larger faster than the others and hits the maximum limit of 10 GB, while the others are nearly empty, the physical partition housing the maxed out logical partition cannot split and could cause an application downtime. This is why we specified `vin` as the partition key. It has good cardinality for this data set.
 
-7.  Select **OK** on the bottom of the form when you are finished entering the values.
+8.  Select **OK** on the bottom of the form when you are finished entering the values.
 
-8.  Select **Firewall and virtual networks** from the left-hand menu, then select Allow access from **All networks**. Select **Save**. This will allow the vehicle telemetry generator application to send data to your Cosmos DB collection. Select **Save**.
+9.  Select **Firewall and virtual networks** from the left-hand menu, then select Allow access from **All networks**. Select **Save**. This will allow the vehicle telemetry generator application to send data to your Cosmos DB collection. Select **Save**.
 
     ![The All networks option is selected within the Firewall and virtual networks blade.](media/cosmos-db-firewall.png 'Firewall and virtual networks')
 
-9.  Select **Keys** from the left-hand menu.
+10. Select **Keys** from the left-hand menu.
 
     ![The Keys link on the left-hand menu is highlighted.](media/cosmos-db-keys-link.png 'Keys link')
 
-10. Copy the **Primary Connection String** value by selecting the copy button to the right of the field. **SAVE THIS VALUE** in Notepad or similar text editor for later.
+11. Copy the **Primary Connection String** value by selecting the copy button to the right of the field. **SAVE THIS VALUE** in Notepad or similar text editor for later.
 
     ![The Primary Connection String key is copied.](media/cosmos-db-keys.png 'Keys')
 
@@ -245,11 +249,7 @@ In this task, you will create and configure a new event hub within the provided 
 
 15. Select **Create** on the bottom of the form when you are finished entering the values.
 
-16. Select your **Read** policy from the list. Copy the **Connection string - primary key** value by selecting the Copy button to the right of the field. **SAVE THIS VALUE** in Notepad or similar text editor for later.
-
-    ![The Read policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted.](media/event-hubs-read-policy-key.png 'SAS Policy: Read')
-
-17. Now select your **Write** policy from the list. Copy the **Connection string - primary key** value by selecting the Copy button to the right of the field. **SAVE THIS VALUE** in Notepad or similar text editor for later.
+16. Select your **Write** policy from the list. Copy the **Connection string - primary key** value by selecting the Copy button to the right of the field. **SAVE THIS VALUE** in Notepad or similar text editor for later.
 
     ![The Write policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted.](media/event-hubs-write-policy-key.png 'SAS Policy: Write')
 
@@ -430,7 +430,7 @@ In this task, you will configure the Function App with the Azure Cosmos DB and E
 
     ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
 
-3.  Select the **App Service** (Azure Function App) from the list of resources in your resource group.
+3.  Select the **App Service** (Azure Function App) that includes **day1** in its name from the list of resources in your resource group.
 
     ![The App Service Function App is selected in the resource group.](media/tech-immersion-rg-function-app.png 'tech-immersion resource group')
 
@@ -442,13 +442,13 @@ In this task, you will configure the Function App with the Azure Cosmos DB and E
 
     ![The Add new setting link is highlighted on the bottom of the Application settings section.](media/function-app-app-settings-new-link.png 'Application settings')
 
-6.  Enter **CosmosDbConnectionString** into the **Name** field, then paste your Cosmos DB connection string into the **Value** field. If you cannot locate your connection string, refer to Task 1, step 10.
+6.  Enter `CosmosDbConnectionString` into the **Name** field, then paste your Cosmos DB connection string into the **Value** field. If you cannot locate your connection string, refer to Task 1, step 10.
 
     ![The CosmosDbConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-cosmos-db.png 'Application settings')
 
 7.  Select **Add new setting** underneath the new application setting you just added to add a new one.
 
-8.  Enter **EventHubsConnectionString** into the **Name** field, then paste your Event Hubs connection string into the **Value** field. This is the connection string for the **Write** shared access policy you created. If you cannot locate your connection string, refer to Task 2, step 17.
+8.  Enter `EventHubsConnectionString` into the **Name** field, then paste your Event Hubs connection string into the **Value** field. This is the connection string for the **Write** shared access policy you created. If you cannot locate your connection string, refer to Task 2, step 17.
 
     ![The EventHubsConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-event-hubs.png 'Application settings')
 
@@ -484,13 +484,13 @@ In this task, you will open the lab solution in Visual Studio, publish the Funct
 
     ![The Select Existing radio button and Publish button are highlighted.](media/vs-publish-target.png 'Pick a publish target')
 
-5.  In the App Service dialog that follows, make sure your Azure **Subscription** for this lab is selected, then find and expand the **tech-immersion-YOUR_UNIQUE_IDENTIFIER** resource group. Select your Function App, then click **OK** on the bottom of the dialog window
+5.  In the App Service dialog that follows, make sure your Azure **Subscription** for this lab is selected, then find and expand the **tech-immersion-YOUR_UNIQUE_IDENTIFIER** resource group. Select your Function App that includes **day1** in its name, then click **OK** on the bottom of the dialog window
 
     ![The Function App and OK button are highlighted.](media/vs-publish-app-service.png 'App Service')
 
 6.  The Function App will start publishing in a moment. You can watch the output window for the publish status. When it is done publishing, you should see a "Publish completed" message on the bottom of the output window.
 
-    ![The Publish Succeeded and Publish Completed messages are highlighted in the output window.](media/vs-publish-output.png 'Publish output')
+    ![The Publish Succeeded and Publish Completed messages are highlighted in the output window.](media/vs-publish-output.png 'Publish output') ![](media/vs-publish-output.png)
 
 7.  Expand the **TransactionGenerator** project within the Solution Explorer, then double-click on **appsettings.json** to open it.
 
