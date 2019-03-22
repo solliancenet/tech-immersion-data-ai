@@ -48,6 +48,11 @@ In the Azure portal, navigate to the VNet where the SQL MI is deployed, and do t
 2. Select **+ Gateway subnet** to add a Gateway subnet.
 3. Accept all the default values, and select **OK**.
 
+#### Add Virtual Network Gateway
+
+1. In the Azure portal, create a Virtual Network Gateway, and associate it to the SQL MI VNet.
+2. On the VNet Gateway, add a Point-to-site configuration with the IP range: 10.2.1.0/24 or something similar.
+
 #### Create ContosoAutoDb database
 
 - A `ContosoAutoDb` database should be created, from the **ContosoAutoDb.bak** file (found under lab-files/data/3), as a shared read-only database for attendees.
@@ -91,6 +96,7 @@ The following step should be taken for the Blob Storage account:
 The following configuration must be applied to each App Service prior to the workshop.
 
 1. Configure VNet integration with SQL MI VNet.
+   1. Will click continue when prompted about ASE VNet settings, and click configure, selecting the SQL MI VNet.
 2. Deploy the **ContosoAutoOpsWeb** application, found under `lab-files/data/3` folder.
    - Open the `ContosoAutoOpsWeb.sln` file, and deploy the application to each App Service.
 3. Add two connection string values to each web app. These should be under the Connection Strings section on the Application Settings page of each App Service.

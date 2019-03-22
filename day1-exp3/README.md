@@ -519,10 +519,10 @@ Server=tcp:tech-immersion-sql-mi.3e134c88d9f6.database.windows.net;Database=Cont
    ApplicationIntent=ReadOnly;
    ```
 
-8. Your `ContosoAutoDbReadOnlyContext` connection string should now look something like the following, with the name of your SQL MI database inserted:
+8. Your `ContosoAutoDbReadOnlyContext` connection string should now look something like the following:
 
    ```sql
-   Server=tcp:<your-sql-mi-instance-name>.database.windows.net;Database=ContosoAutoDb;User ID=tiuser;Password=Password.1234567890;Trusted_Connection=False;Encrypt=True;ApplicationIntent=ReadOnly;
+   Server=tcp:tech-immersion-sqlmi-shared.521f7783692d.database.windows.net,1433;Persist Security Info=False;Database=ContosoAutoDb;User ID=tiuser;Password=Password.1234567890;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;ApplicationIntent=ReadOnly;
    ```
 
 9. Select **Save** at the top of the Application settings blade.
