@@ -87,6 +87,8 @@ A link to Azure Data Studio should already be on the desktop of the VM. If not, 
 
 ### Connect with SQL Server Management Studio
 
+The version of SQL Server Management Studio (SSMS) used in this lab is v17.x. There is a [newer preview version (v18)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017#ssms-180-preview-7) that includes some SQL Server 2019 features, which is not included in the provided environment.
+
 1.  On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **SQL Server Management Studio**, then select the SQL Server Management Studio desktop app in the search results.
 
     ![The search box has "SQL Server Management Studio" entered into it and the desktop app is highlighted in the results.](media/launch-ssms.png 'Launch SQL Server Management Studio')
