@@ -40,6 +40,19 @@ The following services must be provisioned per attendee prior to the lab:
 
 The following configuration must be applied to the SQL MI prior to the workshop.
 
+#### Add Gateway subnet
+
+In the Azure portal, navigate to the VNet where the SQL MI is deployed, and do the following:
+
+1. Select **Subnets** from the left-hand menu.
+2. Select **+ Gateway subnet** to add a Gateway subnet.
+3. Accept all the default values, and select **OK**.
+
+#### Add Virtual Network Gateway
+
+1. In the Azure portal, create a Virtual Network Gateway, and associate it to the SQL MI VNet.
+2. On the VNet Gateway, add a Point-to-site configuration with the IP range: 10.2.1.0/24 or something similar.
+
 #### Create ContosoAutoDb database
 
 - A `ContosoAutoDb` database should be created, from the **ContosoAutoDb.bak** file (found under lab-files/data/3), as a shared read-only database for attendees.
@@ -66,6 +79,7 @@ After provisioning the SQL Server 2008 R2 on Windows 2008 VM, the SQL Server 200
 - Open port 1433 on the VM's Windows firewall using an inbound port rule on the VM.
 - Add the **ContosoAutoDb** database to the VM by restoring from the provided `ContosoAutoDb.bak` file.
 - Reset the `sa` password, enable mixed mode authentication, enable Service broker, and create the `WorkshopUser` account by running the `configure-sql-2008.sql` script found under lab-files/data/3.
+- Restart the SQL Server (MSSQLSERVER) Service using Sql Server Configuration Manager.
 
 ### Blob Storage account configuration
 
@@ -82,6 +96,7 @@ The following step should be taken for the Blob Storage account:
 The following configuration must be applied to each App Service prior to the workshop.
 
 1. Configure VNet integration with SQL MI VNet.
+   1. Will click continue when prompted about ASE VNet settings, and click configure, selecting the SQL MI VNet.
 2. Deploy the **ContosoAutoOpsWeb** application, found under `lab-files/data/3` folder.
    - Open the `ContosoAutoOpsWeb.sln` file, and deploy the application to each App Service.
 3. Add two connection string values to each web app. These should be under the Connection Strings section on the Application Settings page of each App Service.

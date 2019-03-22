@@ -1,0 +1,69 @@
+<h1 id="day-2-experience-3---better-models-made-easy-with-automated-machine-learning">Day 2, Experience 3 - Better models made easy with Automated Machine Learning</h1>
+<ul>
+<li><a href="#day-2-experience-3---better-models-made-easy-with-automated-machine-learning">Day 2, Experience 3 - Better models made easy with Automated Machine Learning</a>
+<ul>
+<li><a href="#technology-overview">Technology overview</a></li>
+<li><a href="#scenario-overview">Scenario overview</a></li>
+<li><a href="#task-1-train-and-evaluate-a-model-using-azure-machine-learning">Task 1: Train and evaluate a model using Azure Machine Learning</a></li>
+<li><a href="#wrap-up">Wrap-up</a></li>
+<li><a href="#additional-resources-and-more-information">Additional resources and more information</a></li>
+</ul></li>
+</ul>
+<h2 id="technology-overview">Technology overview</h2>
+<p>Azure Machine Learning service provides a cloud-based environment you can use to prep data, train, test, deploy, manage, and track machine learning models.</p>
+<figure>
+<img src="media/intro.png" title="Azure Machine Learning overview" alt="Azure Machine Learning overview" /><figcaption>Azure Machine Learning overview</figcaption>
+</figure>
+<p>Azure Machine Learning service fully supports open-source technologies. So you can use tens of thousands of open-source Python packages with machine learning components. Examples are PyTorch, TensorFlow, and scikit-learn. Support for rich tools makes it easy to interactively explore and prepare data and then develop and test models. Examples are <a href="https://jupyter.org">Jupyter notebooks</a> or the <a href="https://marketplace.visualstudio.com/items/itemName/ms-toolsai.vscode-ai/overview">Azure Machine Learning for Visual Studio Code</a> extension.</p>
+<p>By using Azure Machine Learning service, you can start training on your local machine and then scale out to the cloud. With many available <a href="https://docs.microsoft.com%/en-us/azure/machine-learning/service/how-to-set-up-training-targets">compute targets</a>, like Azure Machine Learning Compute and <a href="https://docs.microsoft.com/en-us/azure/azure-databricks/what-is-azure-databricks">Azure Databricks</a>, and with <a href="https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-tune-hyperparameters">advanced hyperparameter tuning services</a>, you can build better models faster by using the power of the cloud. When you have the right model, you can easily deploy it in a container such as Docker. So it’s simple to deploy to Azure Container Instances or Azure Kubernetes Service. Or you can use the container in your own deployments, either on-premises or in the cloud. For more information, see the article on <a href="https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-deploy-and-where">how to deploy and where</a>.</p>
+<p>You can manage the deployed models and track multiple runs as you experiment to find the best solution. After it’s deployed, your model can return predictions in <a href="https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-consume-web-service">real time</a> or <a href="https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-run-batch-predictions">asynchronously</a> on large quantities of data. And with advanced <a href="https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-ml-pipelines">machine learning pipelines</a>, you can collaborate on all the steps of data preparation, model training and evaluation, and deployment.</p>
+<p>Azure Machine Learning service also includes features that <a href="https://docs.microsoft.com/en-us/azure/machine-learning/service/tutorial-auto-train-models">automate model generation and tuning</a> to help you create models with ease, efficiency, and accuracy. Automated machine learning is the process of taking training data with a defined target feature, and iterating through combinations of algorithms and feature selections to automatically select the best model for your data based on the training scores. The traditional machine learning model development process is highly resource-intensive, and requires significant domain knowledge and time investment to run and compare the results of dozens of models. Automated machine learning simplifies this process by generating models tuned from the goals and constraints you defined for your experiment, such as the time for the experiment to run or which models to blacklist.</p>
+<h2 id="scenario-overview">Scenario overview</h2>
+<p>In this experience you will learn how the automated machine learning capability in Azure Machine Learning (AML) can be used for the life cycle management of the manufactured vehicles and how AML helps in creation of better vehicle maintenance plans. To accomplish this, you will train a Linear Regression model to predict the number of days until battery failure using Automated Machine Learning in Jupyter Notebooks.</p>
+<h2 id="task-1-train-and-evaluate-a-model-using-azure-machine-learning">Task 1: Train and evaluate a model using Azure Machine Learning</h2>
+<p>In this exercise, you will use compute resources provided by Azure Machine Learning to remotely train a set of models using Automated Machine Learning, evaluate performance of each model and pick the best performing model to deploy as a web service. You will perform this lab using Azure Notebooks.</p>
+<ol type="1">
+<li><p>To start, open a new web browser window and navigate to <a href="https://notebooks.azure.com" class="uri">https://notebooks.azure.com</a>.</p></li>
+<li><p>Select <strong>Sign In</strong> and then use your Microsoft Account to complete the sign in process.</p>
+<figure>
+<img src="media/01.png" title="Sign In" alt="The Sign In button" /><figcaption>The Sign In button</figcaption>
+</figure></li>
+<li><p>Dismiss the dialog to create the user ID (you will not need this). Within the Microsoft Azure Notebooks portal, select <strong>My Projects</strong> from the menu at the top.</p>
+<figure>
+<img src="media/02.png" title="My Projects" alt="The My Projects button" /><figcaption>The My Projects button</figcaption>
+</figure></li>
+<li><p>Then select <strong>New Project</strong>.</p>
+<figure>
+<img src="media/03.png" title="New Project" alt="The New Project button" /><figcaption>The New Project button</figcaption>
+</figure></li>
+<li><p>On the Create New Project dialog, provide a Project Name (this should be a user friendly description) and Project ID (this will form a part of the URL used to access this project in the browser) and uncheck Public. Select <strong>Create</strong>.</p>
+<figure>
+<img src="media/04.png" title="Create New Project" alt="The Create New Project dialog" /><figcaption>The Create New Project dialog</figcaption>
+</figure></li>
+<li><p>Select the <strong>Upload</strong> menu and then choose <strong>From Computer</strong>.</p>
+<figure>
+<img src="media/05.png" title="Upload" alt="The Upload menu" /><figcaption>The Upload menu</figcaption>
+</figure></li>
+<li><p>In the Upload files from Computer dialog, select <strong>Choose Files</strong> and then select the <code>predict-battery-life-with-AML.ipynb</code> from lab starter files (C:-files\3). Select <strong>Upload</strong> to upload the notebook and then select <strong>Done</strong> to dismiss the dialog.</p>
+<figure>
+<img src="media/06.png" title="Upload files from Computer" alt="The Upload files from Computer dialog" /><figcaption>The Upload files from Computer dialog</figcaption>
+</figure></li>
+<li><p>In the listing, select the Notebook you just uploaded (predict-battery-life-with-AML.ipynb) to open it.</p>
+<figure>
+<img src="media/07.png" title="Select the notebook" alt="Select the notebook" /><figcaption>Select the notebook</figcaption>
+</figure></li>
+<li><p>Follow the instructions within the notebook to complete the experience.</p></li>
+</ol>
+<h2 id="wrap-up">Wrap-up</h2>
+<p>Congratulations on completing the Auto ML experience. In this experience you completed an end-to-end process for training a model and deploying the model into production, all from within a Jupyter Notebook hosted in Microsoft Azure Notebooks.</p>
+<p>To recap, you experienced:</p>
+<ol type="1">
+<li>How to use Azure Machine Learning Auto ML to simplify the processs of getting to a performant model.</li>
+<li>Using Auto ML to train multiple models locally as well by using remote capabilities provided by compute targets.</li>
+<li>Capturing and querying the telemetry of training runs using an Experiment.</li>
+<li>Retrieving the best model created from an Auto ML session.</li>
+<li>Registering the best model with the Model Registry, which enables versioning and makes the model file available for deployment to a web service.</li>
+<li>Creating and deploying a web service to Azure Kubernetes Service that uses the best model for scoring.</li>
+</ol>
+<h2 id="additional-resources-and-more-information">Additional resources and more information</h2>
+<p>To learn more about the Azure Machine Learning service, visit the <a href="https://docs.microsoft.com/azure/machine-learning/service">documentation</a></p>

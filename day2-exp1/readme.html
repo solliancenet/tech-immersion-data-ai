@@ -1,0 +1,558 @@
+<h1 id="day-2-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator">Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator</h1>
+<ul>
+<li><a href="#day-2-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator">Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator</a>
+<ul>
+<li><a href="#technology-overview">Technology overview</a></li>
+<li><a href="#scenario-overview">Scenario overview</a></li>
+<li><a href="#task-1-sign-in-to-luis-to-retrieve-the-authoring-key">Task 1: Sign in to LUIS to retrieve the Authoring Key</a></li>
+<li><a href="#task-2-register-a-new-azure-app">Task 2: Register a new Azure App</a></li>
+<li><a href="#task-3-deployment">Task 3: Deployment</a></li>
+<li><a href="#task-4-load-and-explore-the-automotive-virtual-assistant-starter-solution">Task 4: Load and explore the automotive Virtual Assistant starter solution</a></li>
+<li><a href="#task-5-open-the-generated-bot-file-in-the-bot-framework-emulator">Task 5: Open the generated bot file in the Bot Framework Emulator</a></li>
+<li><a href="#task-6-open-luis-to-view-the-generated-apps">Task 6: Open LUIS to view the generated apps</a></li>
+<li><a href="#wrap-up">Wrap-up</a></li>
+<li><a href="#additional-resources-and-more-information">Additional resources and more information</a></li>
+</ul></li>
+</ul>
+<h2 id="technology-overview">Technology overview</h2>
+<h2 id="scenario-overview">Scenario overview</h2>
+<p>Contoso Auto is interested in building bots to help automate certain tasks in a way that feels similar to dealing with a real person. The motivation for this is to add self-service capabilities in their automobiles that will help drivers and passengers interact with their vehicles in a more natural way, through voice-driven commands and simple visual feedback and prompts, without needing to involve a live person. They would like to build a proof of concept that will support their users through speech actions, such as controlling the vehicle’s climate settings and radio. As a stretch goal, they would like to take this capability further by automatically monitoring car sensor data and alerting the driver when there is a potential problem with the vehicle, offering an incentive such as a gift card when the driver selects a recommended service and makes an appointment with a service center.</p>
+<p>In this experience, you will use Microsoft’s <a href="https://docs.microsoft.com/azure/bot-service/bot-builder-virtual-assistant-introduction?view=azure-bot-service-4.0">Virtual Assistant Solution</a> accelerator to quickly develop this capability on top of foundational capabilities. By following the tasks below, you will explore and run the Automotive skill bot locally to experience the natural language-driven conversations with the bot, powered by the LUIS Cognitive Service, with the conversation control flow managed by the bot. You will end off by evaluating how LUIS is trained to understand a user’s intent based on what they typed in, and read some ideas of how this project can be expanded to meet Contoso Auto’s stretch goals.</p>
+<h2 id="task-1-sign-in-to-luis-to-retrieve-the-authoring-key">Task 1: Sign in to LUIS to retrieve the Authoring Key</h2>
+<p>The bot you will be creating uses <a href="https://azure.microsoft.com/services/cognitive-services/language-understanding-intelligent-service/">Microsoft’s LUIS</a>, which is a natural language understanding service, to process and interpret user language to a set of actions or goals. One of the goals of building a bot is to have it interact with users in as human a way as possible. Understanding casual text or voice commands is an increasingly natural way to interact with bots and other virtual assistants. Before we can begin, we must first sign in to the LUIS website and obtain an authoring key that allows the service to be called by your bot.</p>
+<ol type="1">
+<li><p>If you will be running your bot services in the United States, navigate to <a href="https://www.luis.ai/">www.luis.ai</a> and sign in with the Azure Active Directory account you are using for this experience. If you are outside of the US, sign in to the LUIS site for your <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-reference-regions">region</a>.</p></li>
+<li><p>If it is your first time signing in, you may see a “Permission requested” dialog. If so, select <strong>Accept</strong>.</p>
+<figure>
+<img src="media/luis-permission-requested.png" title="Permission requested" alt="Select Accept on the Permission requested dialog to continue." /><figcaption>Select Accept on the Permission requested dialog to continue.</figcaption>
+</figure></li>
+<li><p>Again, if this is your first time signing in, you will be prompted to select your <strong>Country/Region</strong>. Select the appropriate option from the list, check the service agreement checkbox, then select <strong>Continue</strong>.</p>
+<figure>
+<img src="media/luis-accept.png" title="Accept Service Agreement" alt="The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted." /><figcaption>The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted.</figcaption>
+</figure></li>
+<li><p>If you do not currently have any LUIS apps, you will see a page explaining what LUIS is and how it works. Within this page, select <strong>Create a LUIS app now</strong>.</p>
+<figure>
+<img src="media/luis-welcome-create.png" title="Create a LUIS app now" alt="The LUIS welcome page." /><figcaption>The LUIS welcome page.</figcaption>
+</figure></li>
+<li><p>At this point, you will see a page called “My Apps”. You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select <strong>Settings</strong>.</p>
+<figure>
+<img src="media/luis-name-menu.png" title="Settings" alt="Click on your name then select Settings." /><figcaption>Click on your name then select Settings.</figcaption>
+</figure></li>
+<li><p>Copy the <strong>Authoring Key</strong> and save it to Notepad or a similar text application for later steps.</p>
+<figure>
+<img src="media/luis-authoring-key.png" title="Authoring Key" alt="The User Settings page is displayed with the Authoring Key highlighted." /><figcaption>The User Settings page is displayed with the Authoring Key highlighted.</figcaption>
+</figure></li>
+</ol>
+<h2 id="task-2-register-a-new-azure-app">Task 2: Register a new Azure App</h2>
+<p>The Bot Framework SDK uses what’s called an Azure application for authentication and authorization between the published bot and its required Azure services. In this task, you will create a new app and retrieve its application Id that you will use when you run the bot creation script.</p>
+<ol type="1">
+<li><p>Navigate to <a href="https://apps.dev.microsoft.com/" class="uri">https://apps.dev.microsoft.com/</a> and sign in with your same Azure Active Directory account you are using for this experience.</p></li>
+<li><p>After signing in, you will see a page named “My applications”. Select <strong>Add an app</strong>.</p>
+<figure>
+<img src="media/app-portal-applications.png" title="My applications" alt="The Add an app button is highlighted." /><figcaption>The Add an app button is highlighted.</figcaption>
+</figure></li>
+<li><p>In the New Application Registration dialog, enter <code>tech-immersion-vehicle</code> into the <strong>Name</strong> field, then select <strong>Create application</strong>.</p>
+<figure>
+<img src="media/app-portal-new-application.png" title="New Application Registration" alt="The New Application Registration dialog is displayed." /><figcaption>The New Application Registration dialog is displayed.</figcaption>
+</figure></li>
+<li><p>After a moment, your application will be created and its properties will be displayed. Select <strong>Generate New Password</strong> underneath the Application Secrets section.</p>
+<figure>
+<img src="media/app-portal-generate-password.png" title="Application Secrets" alt="The Generate New Password button is highlighted." /><figcaption>The Generate New Password button is highlighted.</figcaption>
+</figure></li>
+<li><p>When the “New password generated” dialog appears, <strong>copy and paste</strong> your password to Notepad or similar text application for future reference. This will be the only time you see this password. Select <strong>OK</strong>.</p>
+<figure>
+<img src="media/app-portal-new-password.png" title="New password generated" alt="The new password is displayed." /><figcaption>The new password is displayed.</figcaption>
+</figure></li>
+<li><p><strong>Copy and paste</strong> the <strong>Application Id</strong> value to Notepad or a similar text application for later steps.</p></li>
+</ol>
+<h2 id="task-3-deployment">Task 3: Deployment</h2>
+<p>The Virtual Assistant automotive bot requires the following Azure dependencies for end to end operation:</p>
+<ul>
+<li>Azure Web App (hosts the bot when published)</li>
+<li>Azure Storage Account (stores all chat transcripts)</li>
+<li>Azure Application Insights (captures bot and related services telemetry)</li>
+<li>Azure Cosmos DB (maintains the state of all conversations)</li>
+<li>Azure Cognitive Services - Language Understanding (LUIS)</li>
+</ul>
+<p>In this task, you will deploy all of these Azure dependencies as well as configure and train <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis">LUIS</a> with thousands of text entries. We supply a script to do this for you.</p>
+<ol type="1">
+<li><p>On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type <strong>cmd</strong>, then either press Enter or select the Command Prompt desktop app in the search results.</p>
+<figure>
+<img src="media/launch-cmd.png" title="Launch Command Prompt" alt="The search box has “cmd” entered into it and the desktop app is highlighted in the results." /><figcaption>The search box has “cmd” entered into it and the desktop app is highlighted in the results.</figcaption>
+</figure></li>
+<li><p>The first thing you need to do is to log in to the Azure CLI with your provided account credentials. To do that, copy and paste the command below into the command prompt, then hit <code>Enter</code>. This will open a web browser window where you will sign in with the provided Azure Active Directory credentials for this experience.</p>
+<p><code>az login</code></p></li>
+<li><p>After logging in, you may be shown that you have more than one Azure subscription associated with your account.</p>
+<figure>
+<img src="media/cmd-az-login.png" title="Command Prompt" alt="The az login command is shown." /><figcaption>The az login command is shown.</figcaption>
+</figure></li>
+<li><p>Copy and paste the command below into the command prompt <strong>Replacing YOUR_SUBSCRIPTION_ID</strong> with the Azure Subscription ID provided to your for this experience, then hit <code>Enter</code>:</p>
+<p><code>az account set --subscription YOUR_SUBSCRIPTION_ID</code></p>
+<figure>
+<img src="media/cmd-az-account.png" title="Command Prompt" alt="Screenshot of the command to set the account." /><figcaption>Screenshot of the command to set the account.</figcaption>
+</figure></li>
+<li><p>Copy and paste the command below into the command prompt, then hit <code>Enter</code>. This will change directories to the Virtual Assistant automotive bot project folder:</p>
+<p><code>cd C:\lab-files\ai\1\skills\automotiveskill\automotiveskill</code></p></li>
+<li><p>This next command requires two of your custom values you saved in the previous task when you registered your Azure App. <strong>Copy</strong> the command below and paste it into Notepad or other text editor. Replace <code>YOUR-APP-ID</code> with the Azure App’s Application Id value, and replace <code>YOUR-APP-SECRET</code> with the App secret you copied. Make certain that your app secret value is surrounded by double quotes (").</p>
+<p><code>PowerShell.exe -ExecutionPolicy Bypass -File DeploymentScripts\deploy_bot.ps1 --appId YOUR-APP-ID --% --appSecret "YOUR-APP-SECRET"</code></p></li>
+<li><p>Copy and paste your <em>edited</em> command into the command prompt, then hit <code>Enter</code>. Supply the following values when prompted:</p>
+<ul>
+<li><strong>name:</strong> Enter your unique Resource Group name provided to you for this lab. Example: <code>tech-immersion-YOUR_UNIQUE_IDENTIFIER</code>. It should exactly match your Resource Group name, be all lower case, contain no spaces and no special characters except for dashes (-) and underscores (_).</li>
+<li><strong>location:</strong> Enter <code>westus</code>.</li>
+<li><strong>luisAuthoringKey:</strong> Paste the LUIS Authoring Key you copied at the end of Task 1 above.</li>
+</ul>
+<figure>
+<img src="media/cmd-bot-script.png" title="Command Prompt" alt="The bot creation script and parameters are highlighted." /><figcaption>The bot creation script and parameters are highlighted.</figcaption>
+</figure></li>
+<li><p>This script will take around 10 minutes to run. <strong>Important:</strong> Keep the window open. There is a value you will need to copy once it is complete. For now, please move on to the next task.</p></li>
+</ol>
+<h2 id="task-4-load-and-explore-the-automotive-virtual-assistant-starter-solution">Task 4: Load and explore the automotive Virtual Assistant starter solution</h2>
+<p>To accelerate Contoso Auto’s development efforts, they have decided to use Microsoft’s <a href="https://docs.microsoft.com/azure/bot-service/bot-builder-virtual-assistant-introduction?view=azure-bot-service-4.0">Virtual Assistant Solution</a> accelerator. One of the projects included in the Visual Studio solution is the Automotive Skill. This skill demonstrates a set of capabilities to help enable Automotive scenarios. At the moment, this skill focuses on vehicle settings, specifically climate Control, safety, and basic audio controls.</p>
+<p>Vehicle Control is a complicated problem. Although there are only a limited set of car inputs for climate control there are a large number of ways that a human can describe a given setting. For example, “I’m feeling chilly”, “My feet are cold”, and “It’s cold here in the back” all relate to a decrease in temperature but to different parts of the car and perhaps even different fan settings. If you were to program the bot to try and account for all of these variations in user requests, you would have a very long set of conditional logic in your code, and likely miss some common phrases in the process.</p>
+<p>This is where having a trained natural language machine learning model comes in handy. Microsoft’s <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/luis/what-is-luis">Language Understanding (LUIS)</a> API service allows you to train this type of machine learning model (LUIS models) through configuration, with <strong>no programming or data scientists</strong> required. This results in allowing end users to use conversational, natural language text to issue commands whose overall meaning are predicted by LUIS and whose relevant and detailed information is used by the bot to perform actions related to the requests.</p>
+<p>The LUIS model begins with categories of user intentions called <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-concept-intent">intents</a>. Each intent needs examples of user <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-concept-utterance">utterances</a> (something a user should say). Each utterance can provide a variety of data that needs to be extracted with <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-concept-entity-types">entities</a>.</p>
+<p>Here are some examples of user utterances the LUIS models for the Automotive skill are trained to understand:</p>
+<table>
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 30%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Example user utterance</th>
+<th>Intent</th>
+<th>Entities</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“Why is it so <strong>hot</strong> in here?”</td>
+<td>VEHICLE_SETTINGS_DECLARATIVE</td>
+<td>VALUE</td>
+</tr>
+<tr class="even">
+<td>“Set <strong>temperature</strong> to <strong>67</strong> <strong>degrees</strong>”</td>
+<td>VEHICLE_SETTINGS_CHANGE</td>
+<td>SETTING, AMOUNT, UNIT</td>
+</tr>
+<tr class="odd">
+<td>“It’s way too <strong>loud</strong> in here.”</td>
+<td>VEHICLE_SETTINGS_DECLARATIVE</td>
+<td>VALUE</td>
+</tr>
+</tbody>
+</table>
+<p>LUIS models help understand the intent and entities, then matches potential settings and actions to the available vehicle settings to then suggest a course of action. At this time, changes to vehicle settings are supported through the VEHICLE_SETTINGS_CHANGE and VEHICLE_SETTINGS_DECLARATIVE intents. The former enables commands such as “change the temperature to 27 degrees” whereas the latter intent enables scenarios such as “I’m feeling cold” which require additional processing steps.</p>
+<p>As you will see, most of this work is already done for you! Additional work that would need to be done to integrate this bot into a vehicle includes customizing the bot’s activities to integrate with the telematics solution of an OEM for a given vehicle.</p>
+<p>For now, let’s explore how this bot is created and how LUIS is trained with the sets of utterances, intents, and entities as described.</p>
+<ol type="1">
+<li><p>Open Windows Explorer and navigate to <code>C:\lab-files\ai\1</code>. Double-click on <strong>VirtualAssistant.sln</strong> to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab.</p>
+<figure>
+<img src="media/windows-explorer-solution.png" title="Windows Explorer" alt="The VirtualAssistant.sln file is highlighted in Windows Explorer." /><figcaption>The VirtualAssistant.sln file is highlighted in Windows Explorer.</figcaption>
+</figure>
+<p>The Visual Studio solution contains the following:</p>
+<ul>
+<li><strong>Skills</strong> solution folder containing various skills projects that work with the Virtual Assistant.
+<ul>
+<li><strong>AutomotiveSkill</strong> folder contains the Automotive skill you are deploying, as well as its test project.</li>
+<li><strong>CalendarSkill</strong> folder contains the Calendar skill that enables the Virtual Assistant to help users manage their connected O365 calendar.</li>
+<li><strong>EmailSkill</strong> folder contains the Email skill that enables the Virtual Assistant to help users manage their connected email account.</li>
+<li><strong>PointsOfInterestSkill</strong> folder contains the Points of Interest skill that provides point of interest and navigation-related capabilities to the Virtual Assistant. It does this through integrations with <a href="https://azure.microsoft.com/en-us/services/azure-maps/">Azure Maps</a> and <a href="https://developer.foursquare.com/docs/api">Foursquare</a>.</li>
+<li><strong>ToDoSkill</strong> folder contains the ToDo skill, adding these capabilities to the Virtual Assistant.</li>
+</ul></li>
+<li><strong>Test</strong> solution folder containing test projects for the Microsoft.Bot.Solutions common library and the VirtualAssistant project.</li>
+<li><strong>Microsoft.Bot.Solutions</strong> project produces a common library that all skill projects use as a basis for creating new skills, and various activities such as authentication, creating bot dialogs, showing user prompts, sending telemetry, and running tests.</li>
+<li><strong>VirtualAssistant</strong> project is used to develop and deploy the Virtual Assistant bot. It is configured with the Calendar, Email, ToDO, and Points of Interest skills by default. It is possible to integrate the Automotive skill as well, but that skill was meant to be standalone.</li>
+</ul>
+<figure>
+<img src="media/vs-solution-explorer.png" title="Solution Explorer" alt="The solution projects are displayed within the Solution Explorer." /><figcaption>The solution projects are displayed within the Solution Explorer.</figcaption>
+</figure></li>
+<li><p>You will see the projects listed within the Solution Explorer in Visual Studio. Scroll to the bottom of the projects list and expand the <strong>VirtualAssistant</strong> project. Next, expand <strong>CognitiveModels</strong>, then expand <strong>LUIS</strong>. Underneath the LUIS subfolder are additional subfolders for each language. Expand <strong>en</strong>. Next, double-click on <strong>general.lu</strong>.</p>
+<figure>
+<img src="media/vs-general-lu.png" title="Solution Explorer" alt="Screenshot of the Solution Explorer." /><figcaption>Screenshot of the Solution Explorer.</figcaption>
+</figure>
+<p>Here is just a small snippet of the <strong>general.lu</strong> file:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode lua"><code class="sourceCode lua"><a class="sourceLine" id="cb1-1" title="1"><span class="op">##</span> SelectItem</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="op">-</span> choose last</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="op">-</span> choose last one</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="op">-</span> choose no<span class="dv">.2</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="op">-</span> choose the <span class="op">{</span>DirectionalReference<span class="op">=</span>bottom left<span class="op">}</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="op">-</span> choose the first choice</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="op">-</span> choose the fourth one</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="op">-</span> choose the <span class="op">{</span>DirectionalReference<span class="op">=</span><span class="fu">upper</span> left<span class="op">}</span> choice</a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="op">-</span> choose the <span class="op">{</span>DirectionalReference<span class="op">=</span><span class="fu">upper</span> right<span class="op">}</span> one</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="op">-</span> choose <span class="op">{</span>DirectionalReference<span class="op">=</span>top right<span class="op">}</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="op">-</span> choose <span class="op">{</span>DirectionalReference<span class="op">=</span>top right<span class="op">}</span> one</a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="op">-</span> i like <span class="op">{</span>DirectionalReference<span class="op">=</span>left<span class="op">}</span> one</a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="op">-</span> i like second</a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="op">-</span> i like second one</a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="op">-</span> i like the <span class="op">{</span>DirectionalReference<span class="op">=</span>bottom<span class="op">}</span> one</a></code></pre></div>
+<p>This file contains general commands used to train LUIS. These commands are common across all skills, like the Automotive skill. Therefore, when you publish a skill, not only will the skills load LUIS models that are unique to that skill, they will also load the general ones.</p>
+<p><a href="https://github.com/Microsoft/botbuilder-tools/blob/master/packages/Ludown/docs/lu-file-format.md">.lu files</a> contain simple text-based definitions for LUIS, broken down by Intents (the action the user wants to perform) and Entities (detailed information that is relevant in the utterance). In the code snippet above, <strong>SelectItem</strong> is the intent, and each item below it are example utterances that capture ways users can express this intent. Entities in .lu files are denoted using <code>{&lt;entityName&gt;=&lt;labeled value&gt;}</code> notation. Taking from our sample code once again, you can find the <code>bottom left</code> entity within the following utterance: <code>choose the {DirectionalReference=bottom left}</code>.</p>
+<p>When you ran the script earlier, one of the actions it took was to convert all of the .lu files into JSON files by using the <a href="https://github.com/Microsoft/botbuilder-tools/tree/master/packages/Ludown">LUDown</a> tool. The converted JSON files were then uploaded to LUIS to train the natural language model. You can find the generated JSON files within the <code>DeploymentScripts\en\</code> folder as <code>.luis</code> files. This is a faster and more repeatable alternative to <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-how-to-add-intents">manually configuring LUIS</a> through the web interface.</p></li>
+<li><p>Scroll up the list of projects in the Solution Explorer, then expand the <strong>AutomotiveSkill</strong> project located under the <code>Skills\AutomotiveSkill</code> solution folder. Next, expand the <code>CognitiveModels\LUIS\en</code> folders, then double-click on <strong>settings_dispatch.lu</strong>.</p>
+<figure>
+<img src="media/vs-settings-dispatch-lu.png" title="Solution Explorer" alt="Screenshot of the Solution Explorer." /><figcaption>Screenshot of the Solution Explorer.</figcaption>
+</figure></li>
+<li><p>This .lu file contains LUIS intents and entities specific to the Automotive skill. If you scroll through the list, you will see the <code>VEHICLE_SETTINGS_CHANGE</code> and <code>VEHICLE_SETTINGS_DECLARATIVE</code> intents that were illustrated above in the example user utterances table.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode lua"><code class="sourceCode lua"><a class="sourceLine" id="cb2-1" title="1"><span class="op">##</span> <span class="cn">VEHICLE_SETTINGS_CHANGE</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="op">-</span> <span class="op">{</span><span class="cn">AMOUNT</span><span class="op">=</span><span class="dv">4</span><span class="op">}</span> <span class="op">{</span><span class="cn">UNIT</span><span class="op">=</span>degrees<span class="op">}</span> <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>higher<span class="op">}</span> please</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="op">-</span> <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>activate alert brake steer<span class="op">}</span> <span class="cf">for</span> <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>automatic brake<span class="op">}</span> mechanisms</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="op">-</span> <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>activate<span class="op">}</span> <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>back cross traffic alert<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="op">-</span> <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>activate<span class="op">}</span> my <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>defroster<span class="op">}</span> mode</a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="op">-</span> <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>activate<span class="op">}</span> my <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>switch lane alert<span class="op">}</span> mechanism</a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="op">-</span> <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>activate<span class="op">}</span> the <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>forward collision response<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="op">-</span> <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>activate<span class="op">}</span> the <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>side blind spot alert<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="op">-</span> <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>activate<span class="op">}</span> the <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>side blind spot warning<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="op">-</span> adjust <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>air blower<span class="op">}</span> <span class="dv">2</span> the <span class="op">{</span><span class="cn">AMOUNT</span><span class="op">=</span>minimum<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="op">-</span> adjust <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>air fans<span class="op">}</span> to <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>speed<span class="op">}</span> <span class="op">{</span><span class="cn">AMOUNT</span><span class="op">=</span><span class="dv">1</span><span class="op">}</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="op">-</span> adjust <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>driver alerts<span class="op">}</span> to <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>impact warning seat<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="op">-</span> adjust <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>forward collision alert spacing<span class="op">}</span> control to <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>on<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="op">-</span> adjust it to <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>loud<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="op">-</span> adjust <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>media volume<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="op">-</span> adjust my <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>brake assist<span class="op">}</span> back <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>on<span class="op">}</span> please</a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="op">...</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="op">...</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="op">##</span> <span class="cn">VEHICLE_SETTINGS_DECLARATIVE</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="op">-</span> <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>body<span class="op">}</span> are a bit too <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>toasty<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="op">-</span> i am a little <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>cool<span class="op">}</span> <span class="kw">in</span> <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>right side<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="op">-</span> i am <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>cold<span class="op">}</span> <span class="kw">in</span> here</a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="op">-</span> i am <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>frozen<span class="op">}</span> <span class="kw">in</span> <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>left front<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="op">-</span> i am too <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>frosty<span class="op">}</span> <span class="kw">in</span> the <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>driver side<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="op">-</span> i am <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>warm<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-26" title="26"><span class="op">-</span> i feel a bit <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>cold<span class="op">}</span> on the <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>right<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-27" title="27"><span class="op">-</span> i feel a bit <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>shivering<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-28" title="28"><span class="op">-</span> i feel a little bit <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>warm<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-29" title="29"><span class="op">-</span> i feel a little <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>burning up<span class="op">}</span> <span class="kw">in</span> here</a>
+<a class="sourceLine" id="cb2-30" title="30"><span class="op">-</span> i feel as <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>frosty<span class="op">}</span> as an oven <span class="kw">in</span> this <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>right<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-31" title="31"><span class="op">-</span> i feel <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>balmy<span class="op">}</span> <span class="kw">in</span> here</a>
+<a class="sourceLine" id="cb2-32" title="32"><span class="op">-</span> i feel like my <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>co<span class="op">-</span>driver<span class="op">}</span> is gotten kind of <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>cold<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-33" title="33"><span class="op">-</span> i feel like my <span class="op">{</span><span class="cn">SETTING</span><span class="op">=</span>front left<span class="op">}</span> s getting <span class="op">{</span><span class="cn">VALUE</span><span class="op">=</span>shivering<span class="op">}</span></a>
+<a class="sourceLine" id="cb2-34" title="34"><span class="op">...</span></a>
+<a class="sourceLine" id="cb2-35" title="35"><span class="op">...</span></a></code></pre></div>
+<p>You will also find these top-level intents in the main <code>settings.lu</code> file. In addition, there are two supporting LUIS models, <code>settings_name</code> and <code>settings_value</code>. These are used for disambiguation scenarios to clarify setting names and values where the initial utterance doesn’t provide clear information.</p></li>
+<li><p>Now expand the <code>DeploymentScripts</code> folder located within the <strong>AutomotiveSkill</strong> project.</p>
+<figure>
+<img src="media/vs-deployment-scripts.png" title="Solution Explorer" alt="Screenshot of the Solution Explorer." /><figcaption>Screenshot of the Solution Explorer.</figcaption>
+</figure>
+<p>This folder contains the <code>deploy_bot.ps1</code> deployment script you executed in the previous task. It also contains scripts used to generate deployment scripts to publish your bot to Azure, and a script to update your published models if you add or update any of the .lu files. The <code>en</code> folder contains the generated JSON LUIS files (.luis). You may not see these yet, depending on whether the script is finished running.</p>
+<p>The <code>bot.recipe</code> files are used as a template for creating the .bot files that the script generates.</p></li>
+<li><p>Next, expand the <code>Dialogs</code> folder located within the <strong>AutomotiveSkill</strong> project.</p>
+<figure>
+<img src="media/vs-dialogs.png" title="Solution Explorer" alt="Screenshot of the Solution Explorer." /><figcaption>Screenshot of the Solution Explorer.</figcaption>
+</figure>
+<p>When you create bots using the Bot Framework, you can use dialogs to model a conversation and manage <a href="https://docs.microsoft.com/en-us/azure/bot-service/bot-service-design-conversation-flow?view=azure-bot-service-3.0">conversation flow</a>. A conversation can involve multiple dialogs. In the case of the Automotive skill, the conversation may start within the <code>Main</code> dialog, then use the <code>AutomotiveSkillDialog</code> to handle and display inputs and prompts relating to actions the user would like to take. When the user decides to change a vehicle setting, the <code>VehicleSettingsDialog</code> will be used. You may feel free to explore these dialogs to understand how the conversation flow is managed.</p>
+<p>Available vehicle settings are defined in a supporting metadata file located here <code>automotiveskill\Dialogs\VehicleSettings\Resources\available_settings.json</code>.</p>
+<p>To add an new setting along with appropriate setting values, it’s easily expressed in JSON. The example below shows a new Volume control setting with the ability to Set, Increase, Decrease and Mute the volume.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="st">&quot;allowsAmount&quot;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="st">&quot;amounts&quot;</span><span class="op">:</span> [ <span class="op">{</span> <span class="st">&quot;unit&quot;</span><span class="op">:</span> <span class="st">&quot;&quot;</span> <span class="op">}</span> ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-4" title="4">  <span class="st">&quot;canonicalName&quot;</span><span class="op">:</span> <span class="st">&quot;Set Volume&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-5" title="5">  <span class="st">&quot;values&quot;</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb3-6" title="6">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-7" title="7">      <span class="st">&quot;canonicalName&quot;</span><span class="op">:</span> <span class="st">&quot;Set&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-8" title="8">      <span class="st">&quot;requiresAmount&quot;</span><span class="op">:</span> <span class="kw">true</span></a>
+<a class="sourceLine" id="cb3-9" title="9">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-10" title="10">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-11" title="11">      <span class="st">&quot;changesSignOfAmount&quot;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-12" title="12">      <span class="st">&quot;canonicalName&quot;</span><span class="op">:</span> <span class="st">&quot;Decrease&quot;</span></a>
+<a class="sourceLine" id="cb3-13" title="13">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-14" title="14">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-15" title="15">      <span class="st">&quot;canonicalName&quot;</span><span class="op">:</span> <span class="st">&quot;Increase&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-16" title="16">      <span class="st">&quot;antonym&quot;</span><span class="op">:</span> <span class="st">&quot;Decrease&quot;</span></a>
+<a class="sourceLine" id="cb3-17" title="17">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-18" title="18">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-19" title="19">      <span class="st">&quot;canonicalName&quot;</span><span class="op">:</span> <span class="st">&quot;Mute&quot;</span></a>
+<a class="sourceLine" id="cb3-20" title="20">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb3-21" title="21">  ]</a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="op">}</span></a></code></pre></div>
+<p>For key settings, you may wish to prompt for confirmation, such as safety settings. This can be specified through a <code>requiresConfirmation</code> property as shown below.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="st">&quot;canonicalName&quot;</span><span class="op">:</span> <span class="st">&quot;Lane Change Alert&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="st">&quot;values&quot;</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb4-4" title="4">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-5" title="5">      <span class="st">&quot;canonicalName&quot;</span><span class="op">:</span> <span class="st">&quot;Off&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-6" title="6">      <span class="st">&quot;requiresConfirmation&quot;</span><span class="op">:</span> <span class="kw">true</span></a>
+<a class="sourceLine" id="cb4-7" title="7">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb4-8" title="8">    <span class="op">{</span> <span class="st">&quot;canonicalName&quot;</span><span class="op">:</span> <span class="st">&quot;On&quot;</span> <span class="op">}</span></a>
+<a class="sourceLine" id="cb4-9" title="9">  ]</a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="op">},</span></a></code></pre></div>
+<p>Speech &amp; Text responses are stored in the <code>VehicleSettingsResponses.json</code> file. Responses files offer the ability to provide a variety of responses and set the input hint on each Activity. Example:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="st">&quot;VehicleSettingsSettingValueSelection&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="st">&quot;replies&quot;</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb5-3" title="3">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-4" title="4">      <span class="st">&quot;text&quot;</span><span class="op">:</span> <span class="st">&quot;Here are the possible values for {settingName}. Which one?&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-5" title="5">      <span class="st">&quot;speak&quot;</span><span class="op">:</span> <span class="st">&quot;Here are the possible values for {settingName}. Which one?&quot;</span></a>
+<a class="sourceLine" id="cb5-6" title="6">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb5-7" title="7">  ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-8" title="8">  <span class="st">&quot;inputHint&quot;</span><span class="op">:</span> <span class="st">&quot;expectingInput&quot;</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="op">},</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="st">&quot;VehicleSettingsSettingChangeConfirmation&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-11" title="11">  <span class="st">&quot;replies&quot;</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb5-12" title="12">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-13" title="13">      <span class="st">&quot;text&quot;</span><span class="op">:</span> <span class="st">&quot;So, you want to change {settingName} to {value}. Is that correct?&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-14" title="14">      <span class="co">// Do not add a comma to the speech output, so it sounds more continuous and natural.</span></a>
+<a class="sourceLine" id="cb5-15" title="15">      <span class="st">&quot;speak&quot;</span><span class="op">:</span> <span class="st">&quot;So you want to change {settingName} to {value}. Is that correct?&quot;</span></a>
+<a class="sourceLine" id="cb5-16" title="16">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb5-17" title="17">  ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-18" title="18">  <span class="st">&quot;inputHint&quot;</span><span class="op">:</span> <span class="st">&quot;expectingInput&quot;</span></a>
+<a class="sourceLine" id="cb5-19" title="19"><span class="op">},</span></a></code></pre></div></li>
+</ol>
+<h2 id="task-5-open-the-generated-bot-file-in-the-bot-framework-emulator">Task 5: Open the generated bot file in the Bot Framework Emulator</h2>
+<p>Bots developed using the Bot Framework can be tested locally, using the Bot Framework Emulator. This emulator can be used with local .bot files or be used to test remote, or hosted, bots. Being able to test in this way saves the time needed to deploy your bot and test it using other channels, such as through a web chat dialog, Facebook, Skype, Slack, etc.</p>
+<p>Bots usually consume lots of different services, such as <a href="https://luis.ai">LUIS.ai</a>. When you are developing a bot, there is no uniform place to store the metadata about the services that are in use. This prevents us from building tooling that looks at a bot as a whole.</p>
+<p>To address this problem, we have created a <strong>.bot file</strong> to act as the place to bring all service references together in one place to enable tooling. For example, the <a href="https://github.com/Microsoft/BotFramework-Emulator/releases">Bot Framework Emulator</a> uses a the .bot file to create a unified view over the connected services your bot consumes.</p>
+<p>.bot file is <strong>not</strong> a requirement to build bots with the <a href="microsoft/botbuilder">Bot Builder SDK</a>. You can instead continue to use appsettings/ web.config/ env, KeyVault, or any mechanism you see fit to keep track of service references and keys that your bot depend on.</p>
+<p>The advantages of using .bot file are:</p>
+<ul>
+<li><a href="microsoft/botbuilder">Bot Builder V4 SDK</a> will be available in 4 platforms x languages – C#, JS, Python, Java. Each platform have their recommended way of keeping track of keys + env settings (appsettings.json, web.config, .env …).<br />
+</li>
+<li>Elegant tooling solutions around services creation and management is harder without a well defined schema (.bot file).<br />
+</li>
+<li>Bot Framework Emulator and CLI tools rely on and work great with tracking connected services in a consistent format (in a .bot file)</li>
+</ul>
+<p>In this task, you will open the generated .bot file in the Bot Framework Emulator and start testing out your bot! First, we need to make sure the script is finished running. This must be completed before continuing with this experience.</p>
+<ol type="1">
+<li><p>Switch back to your Command Prompt (console) window to make sure the script has successfully finished. If it has, <strong>scroll up</strong> until you see where you input the <strong>name</strong>, <strong>location</strong>, and <strong>luisAuthoringKey</strong> values. A few lines below that section will be the bot file secret in purple, underneath a line that says <code>The secret used to decrypt &lt;YOUR-BOT-NAME&gt;.bot is:</code>. <strong>Copy the bot file secret</strong> and save it to Notepad or similar text application.</p>
+<blockquote>
+<p>You <strong>must</strong> copy this secret now because it will not be displayed again!</p>
+</blockquote>
+<figure>
+<img src="media/cmd-script-finished.png" title="Command Prompt" alt="The bot file secret is highlighted." /><figcaption>The bot file secret is highlighted.</figcaption>
+</figure></li>
+<li><p>Now we are ready to test the bot. Before testing, you must update the <strong>appsettings.json</strong> file in the <strong>AutomotiveSkills</strong> project. To do this, switch back to the solution in Visual Studio and expand the <strong>AutomotiveSkill</strong> project in the Solution Explorer. <strong>Double-click</strong> on the <strong>appsettings.json</strong> file to open it.</p></li>
+<li><p>Update your <code>appsettings.json</code> file with the newly created .bot file name and .bot file secret. The .bot file is located in the root directory of the <strong>AutomotiveSkill</strong> project.</p>
+<pre><code>  {
+    &quot;botFilePath&quot;: &quot;./YOURBOTFILE.bot&quot;,
+    &quot;botFileSecret&quot;: &quot;YOUR_BOT_SECRET&quot;,
+  }</code></pre>
+<ul>
+<li>Finally, add the .bot file paths for each of your language configurations (English only at this time). You can find the bot file under the <strong>LocaleConfigurations</strong> folder.</li>
+</ul>
+<pre><code>&quot;defaultLocale&quot;: &quot;en-us&quot;,
+&quot;languageModels&quot;: {
+  &quot;en&quot;: {
+    &quot;botFilePath&quot;: &quot;./LocaleConfigurations/YOUR_EN_BOT_PATH.bot&quot;,
+    &quot;botFileSecret&quot;: &quot;YOUR_BOT_SECRET&quot;
+  }
+}</code></pre>
+<figure>
+<img src="media/vs-appsettings.png" title="appsettings.json" alt="Screenshot of a completed appsettings.json file." /><figcaption>Screenshot of a completed appsettings.json file.</figcaption>
+</figure></li>
+<li><p>The last file change you need to make is to update the <code>development</code> endpoint setting within the .bot file located in the <strong>AutomotiveSkill</strong> root folder. There is a bug that currently exists which adds the <code>appId</code> and <code>appPassword</code> values of your Azure App to the <code>development</code> endpoint, which is meant to be run locally. If those values are present, the Bot Framework Emulator is not able to send messages to your bot when running it locally. To edit this file, <strong>double-click</strong> on the generated .bot file that is located in the root directory of the <strong>AutomotiveSkill</strong> project in the Visual Studio Solution Explorer.</p>
+<figure>
+<img src="media/vs-bot-file.png" title="Bot file" alt="The bot file is highlighted within the Solution Explorer." /><figcaption>The bot file is highlighted within the Solution Explorer.</figcaption>
+</figure>
+<p>Find the JSON code block with the <code>type</code> set to <strong>endpoint</strong> and the <code>name</code> set to <strong>development</strong> and clear out the <code>appId</code> and <code>appPassword</code> values. The edited result should look like the following:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb8-2" title="2">    <span class="st">&quot;type&quot;</span><span class="op">:</span> <span class="st">&quot;endpoint&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb8-3" title="3">    <span class="st">&quot;id&quot;</span><span class="op">:</span> <span class="st">&quot;1&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb8-4" title="4">    <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;development&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb8-5" title="5">    <span class="st">&quot;appId&quot;</span><span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb8-6" title="6">    <span class="st">&quot;appPassword&quot;</span><span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb8-7" title="7">    <span class="st">&quot;endpoint&quot;</span><span class="op">:</span> <span class="st">&quot;http://localhost:3980/api/messages&quot;</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="op">},</span></a></code></pre></div></li>
+<li><p>Next, you must <strong>Debug</strong> the <strong>AutomotiveSkills</strong> project. To do this, <strong>right-click</strong> the <strong>AutomotiveSkills</strong> project in the Solution Explorer, then select <strong>Debug</strong> in the context menu, then <strong>Start new instance</strong>.</p>
+<figure>
+<img src="media/vs-debug.png" title="Debug" alt="The AutomotiveSkill project is highlighted, as well as the Debug and Start new instance sub-menu items." /><figcaption>The AutomotiveSkill project is highlighted, as well as the Debug and Start new instance sub-menu items.</figcaption>
+</figure></li>
+<li><p>After a few moments, a new web browser window will open, displaying web page with the message, “Your Enterprise Bot is ready!”. <strong>Leave this window open</strong> and continue to the next task.</p>
+<figure>
+<img src="media/web-browser.png" title="Web browser" alt="The Enterprise Bot Template web page is displayed." /><figcaption>The Enterprise Bot Template web page is displayed.</figcaption>
+</figure></li>
+<li><p>Oftentimes, the Bot Framework Emulator automatically launches after the bot file is created. If not, open it by clicking on the search box next to the Start Menu on the bottom-left corner of your Windows desktop. Type <strong>Bot Framework Emulator</strong>, then select the Bot Framework Emulator desktop app in the search results.</p>
+<figure>
+<img src="media/launch-emulator.png" title="Launch Command Prompt" alt="The search box has “Bot Framework Emulator” entered into it and the desktop app is highlighted in the results." /><figcaption>The search box has “Bot Framework Emulator” entered into it and the desktop app is highlighted in the results.</figcaption>
+</figure></li>
+<li><p>Within the Bot Framework Emulator window, click on <strong>Open Bot</strong>.</p>
+<figure>
+<img src="media/bot-framework-emulator.png" title="Bot Framework Emulator" alt="Th Open Bot button is highlighted on the Bot Framework Emulator home screen." /><figcaption>Th Open Bot button is highlighted on the Bot Framework Emulator home screen.</figcaption>
+</figure></li>
+<li><p>In the “Open a bot” dialog, click the <strong>Browse</strong> button to find the generated bot file.</p>
+<figure>
+<img src="media/bot-framework-emulator-open-dialog.png" title="Open a bot" alt="The Browse button is highlighted." /><figcaption>The Browse button is highlighted.</figcaption>
+</figure></li>
+<li><p>Within the Open file browser, navigate to <code>C:\lab-files\ai\1\skills\automotiveskill\automotiveskill</code>, select your generated bot file, then click <strong>Open</strong>.</p>
+<figure>
+<img src="media/bot-framework-emulator-browse.png" title="Browse" alt="The file browser is displayed." /><figcaption>The file browser is displayed.</figcaption>
+</figure></li>
+<li><p>You should see a dialog prompting you for your bot file secret. <strong>Paste</strong> the bot file secret you copied in Step 1 above, then click <strong>Submit</strong>.</p>
+<figure>
+<img src="media/bot-framework-emulator-secret.png" title="Bot file secret" alt="The bot file secret dialog is displayed." /><figcaption>The bot file secret dialog is displayed.</figcaption>
+</figure></li>
+<li><p>Now you should see a Live Chat window with the following features:</p>
+<ol type="1">
+<li><strong>Development endpoint:</strong> Make sure this endpoint is selected under endpoints to the left. You cannot use the production endpoint until you publish your bot.</li>
+<li><strong>Bot service path:</strong> This should display the path to your locally running bot (http://localhost:3980/api/messages). If not, select the <code>development</code> endpoint on the left.</li>
+<li><strong>Welcome message:</strong> The bot is configured to show a welcome message when the user first connects to it. This is controlled by the dialogs within the project that you explored. This area is where your chat history is displayed as well.</li>
+<li><strong>Send message box:</strong> Use this textbox to type in and send all of your messages to the bot.</li>
+</ol>
+<figure>
+<img src="media/bot-framework-emulator-live-chat.png" title="Live Chat" alt="The Live Chat window is displayed with each of the described features highlighted." /><figcaption>The Live Chat window is displayed with each of the described features highlighted.</figcaption>
+</figure></li>
+<li><p>Type <code>help</code> and hit Enter. The bot will respond with a message and a list of suggested actions. Notice that the Log pane to the right lists both user input and bot response activities. You can click on any of the hyperlinks within the Log to view the activity details in the Inspector above. If you click on an item in the chat window, such as the <code>help</code> message you typed, you can inspect the data that was sent to the bot as well as the response. For now, click on the <code>put the air on my feet</code>, or type it in if you don’t see it as a suggested action.</p>
+<figure>
+<img src="media/bot-framework-emulator-help.png" title="Live Chat" alt="The Live Chat window is displayed with various outputs." /><figcaption>The Live Chat window is displayed with various outputs.</figcaption>
+</figure></li>
+<li><p>The bot sent the <code>put the air on my feet</code> text to LUIS so that it could derive your intent and desired action. If you click on the LUIS trace message in the chat window, you should see the following in the Inspector pane:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">  <span class="st">&quot;recognizerResult&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-3" title="3">    <span class="st">&quot;alteredText&quot;</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-4" title="4">    <span class="st">&quot;entities&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-5" title="5">      <span class="st">&quot;$instance&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-6" title="6">        <span class="st">&quot;SETTING&quot;</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb9-7" title="7">          <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-8" title="8">            <span class="st">&quot;endIndex&quot;</span><span class="op">:</span> <span class="dv">11</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-9" title="9">            <span class="st">&quot;score&quot;</span><span class="op">:</span> <span class="fl">0.996788144</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-10" title="10">            <span class="st">&quot;startIndex&quot;</span><span class="op">:</span> <span class="dv">8</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-11" title="11">            <span class="st">&quot;text&quot;</span><span class="op">:</span> <span class="st">&quot;air&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-12" title="12">            <span class="st">&quot;type&quot;</span><span class="op">:</span> <span class="st">&quot;SETTING&quot;</span></a>
+<a class="sourceLine" id="cb9-13" title="13">          <span class="op">}</span></a>
+<a class="sourceLine" id="cb9-14" title="14">        ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb9-15" title="15">        <span class="st">&quot;VALUE&quot;</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb9-16" title="16">          <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-17" title="17">            <span class="st">&quot;endIndex&quot;</span><span class="op">:</span> <span class="dv">22</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-18" title="18">            <span class="st">&quot;score&quot;</span><span class="op">:</span> <span class="fl">0.5489724</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-19" title="19">            <span class="st">&quot;startIndex&quot;</span><span class="op">:</span> <span class="dv">18</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-20" title="20">            <span class="st">&quot;text&quot;</span><span class="op">:</span> <span class="st">&quot;feet&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-21" title="21">            <span class="st">&quot;type&quot;</span><span class="op">:</span> <span class="st">&quot;VALUE&quot;</span></a>
+<a class="sourceLine" id="cb9-22" title="22">          <span class="op">}</span></a>
+<a class="sourceLine" id="cb9-23" title="23">        ]</a>
+<a class="sourceLine" id="cb9-24" title="24">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb9-25" title="25">      <span class="st">&quot;SETTING&quot;</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb9-26" title="26">        <span class="st">&quot;air&quot;</span></a>
+<a class="sourceLine" id="cb9-27" title="27">      ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb9-28" title="28">      <span class="st">&quot;VALUE&quot;</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb9-29" title="29">        <span class="st">&quot;feet&quot;</span></a>
+<a class="sourceLine" id="cb9-30" title="30">      ]</a>
+<a class="sourceLine" id="cb9-31" title="31">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb9-32" title="32">    <span class="st">&quot;intents&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-33" title="33">      <span class="st">&quot;VEHICLE_SETTINGS_CHANGE&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-34" title="34">        <span class="st">&quot;score&quot;</span><span class="op">:</span> <span class="fl">0.9998417</span></a>
+<a class="sourceLine" id="cb9-35" title="35">      <span class="op">}</span></a>
+<a class="sourceLine" id="cb9-36" title="36">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb9-37" title="37">    <span class="st">&quot;text&quot;</span><span class="op">:</span> <span class="st">&quot;put the air on my feet&quot;</span></a>
+<a class="sourceLine" id="cb9-38" title="38">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb9-39" title="39"><span class="op">}</span></a></code></pre></div>
+<p>To explain, the utterance is your text (located on the bottom): <code>put the air on my feet</code>. LUIS detected the intent as <code>VEHICLE_SETTINGS_CHANGE</code> (you should remember that one from earlier) with a score, or “confidence” level of 99%. It detected two entities, a <code>SETTING</code> of “air” with a value of “feet”. The “air” setting also had a high score of 99%, but the setting value of “feet” scored about 55%.</p>
+<p>The result is that the bot must clarify the user’s intent by prompting for more information. To do this, the bot asks which of the two matching settings would you like to select? Since you did not explicitly say to turn the air on in the back of the car or the front of the car, you need to tell it which option you like. The bot displays a <a href="https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-add-rich-card-attachments?view=azure-bot-service-3.0">card</a> for you to choose from. You may either click on one of the options, or type it in.</p>
+<figure>
+<img src="media/bot-framework-emulator-option.png" title="Live Chat" alt="The Live Chat shows the bot’s prompt to choose which air control mode to use." /><figcaption>The Live Chat shows the bot’s prompt to choose which air control mode to use.</figcaption>
+</figure></li>
+<li><p>If you selected or typed in the <code>Front Combined Air Delivery Mode Control</code> option, you should see a response from the bot that says: <code>Setting Front Combined Air Delivery Mode Control to Floor</code>. The amazing thing that happened is that your original somewhat vague request to “put the air on my feet” ultimately resulted in the bot telling the vehicle to turn on the air in the front of the car to the floor setting, knowing that your feet are most likely located on the floor :)</p>
+<figure>
+<img src="media/bot-framework-emulator-air-feet.png" title="Live Chat" alt="The bot’s response to your selected action." /><figcaption>The bot’s response to your selected action.</figcaption>
+</figure></li>
+<li><p>Now type a command that the bot would not understand, such as “make me a coffee”. The bot will respond with, “Sorry, I don’t know what setting you’re talking about.”</p>
+<figure>
+<img src="media/bot-framework-emulator-do-not-know.png" title="Live Chat" alt="The bot responded with it does not know what setting you are talking about." /><figcaption>The bot responded with it does not know what setting you are talking about.</figcaption>
+</figure>
+<p>So how did this happen? Remember, the Dialogs within the bot’s code controls the conversation flow. It first gets help from LUIS to decide what the user is trying to do. In this case the <code>ProcessSetting</code> method within the <code>VehicleSettingsDialog.cs</code> file is called and the LUIS result is evaluated to get the top (highest rated) intent.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode csharp"><code class="sourceCode cs"><a class="sourceLine" id="cb10-1" title="1"><span class="dt">var</span> luisResult = state.<span class="fu">VehicleSettingsLuisResult</span>;</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="dt">var</span> topIntent = luisResult?.<span class="fu">TopIntent</span>().<span class="fu">intent</span>;</a></code></pre></div>
+<p>Next, the <code>topIntent</code>’s value is evaluated in a <code>switch</code> statement to perform actions based on the value. In this case, it is determined that the intent type is <code>VEHICLE_SETTINGS_DECLARATIVE</code>. Next, some post-processing of the entities is performed as well as removing entities that don’t make sense (like “coffee”). After this processing and cleanup is done, there are no matching setting names, so we call <code>SendActivityAsync</code> with the <code>VehicleSettingsResponses.VehicleSettingsMissingSettingName</code> response.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode csharp"><code class="sourceCode cs"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">switch</span> (topIntent.<span class="fu">Value</span>)</a>
+<a class="sourceLine" id="cb11-2" title="2">{</a>
+<a class="sourceLine" id="cb11-3" title="3">    <span class="kw">case</span> Luis.<span class="fu">VehicleSettings</span>.<span class="fu">Intent</span>.<span class="fu">VEHICLE_SETTINGS_CHANGE</span>:</a>
+<a class="sourceLine" id="cb11-4" title="4">    <span class="kw">case</span> Luis.<span class="fu">VehicleSettings</span>.<span class="fu">Intent</span>.<span class="fu">VEHICLE_SETTINGS_DECLARATIVE</span>:</a>
+<a class="sourceLine" id="cb11-5" title="5"></a>
+<a class="sourceLine" id="cb11-6" title="6">        <span class="co">// Perform post-processing on the entities, if it&#39;s declarative we indicate for special processing (opposite of the condition they&#39;ve expressed)</span></a>
+<a class="sourceLine" id="cb11-7" title="7">        settingFilter.<span class="fu">PostProcessSettingName</span>(state, topIntent.<span class="fu">Value</span> == Luis.<span class="fu">VehicleSettings</span>.<span class="fu">Intent</span>.<span class="fu">VEHICLE_SETTINGS_DECLARATIVE</span> ? <span class="kw">true</span> : <span class="kw">false</span>);</a>
+<a class="sourceLine" id="cb11-8" title="8"></a>
+<a class="sourceLine" id="cb11-9" title="9">        <span class="co">// Perform content logic and remove entities that don&#39;t make sense</span></a>
+<a class="sourceLine" id="cb11-10" title="10">        settingFilter.<span class="fu">ApplyContentLogic</span>(state);</a>
+<a class="sourceLine" id="cb11-11" title="11"></a>
+<a class="sourceLine" id="cb11-12" title="12">        <span class="dt">var</span> settingNames = state.<span class="fu">GetUniqueSettingNames</span>();</a>
+<a class="sourceLine" id="cb11-13" title="13">        <span class="kw">if</span> (!settingNames.<span class="fu">Any</span>())</a>
+<a class="sourceLine" id="cb11-14" title="14">        {</a>
+<a class="sourceLine" id="cb11-15" title="15">            <span class="co">// missing setting name</span></a>
+<a class="sourceLine" id="cb11-16" title="16">            await sc.<span class="fu">Context</span>.<span class="fu">SendActivityAsync</span>(ResponseManager.<span class="fu">GetResponse</span>(VehicleSettingsResponses.<span class="fu">VehicleSettingsMissingSettingName</span>));</a>
+<a class="sourceLine" id="cb11-17" title="17">            <span class="kw">return</span> await sc.<span class="fu">EndDialogAsync</span>();</a>
+<a class="sourceLine" id="cb11-18" title="18">        }</a>
+<a class="sourceLine" id="cb11-19" title="19"></a>
+<a class="sourceLine" id="cb11-20" title="20">    <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb11-21" title="21">    <span class="co">// REMOVED FOR BREVITY</span></a>
+<a class="sourceLine" id="cb11-22" title="22">    <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb11-23" title="23">}</a></code></pre></div>
+<p>Remember reading about the Speech &amp; Text response files at the end of the previous Task? That’s what the <code>VehicleSettingsResponses.VehicleSettingsMissingSettingName</code> value was referring to. You can find the <code>VehicleSettingsMissingSettingName</code> response within the <code>VehicleSettingsResponses.json</code> file:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1"><span class="st">&quot;VehicleSettingsMissingSettingName&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb12-2" title="2">  <span class="st">&quot;replies&quot;</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb12-3" title="3">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb12-4" title="4">      <span class="st">&quot;text&quot;</span><span class="op">:</span> <span class="st">&quot;Sorry, I don&#39;t know what setting you&#39;re talking about.&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb12-5" title="5">      <span class="st">&quot;speak&quot;</span><span class="op">:</span> <span class="st">&quot;Sorry, I don&#39;t know what setting you&#39;re talking about.&quot;</span></a>
+<a class="sourceLine" id="cb12-6" title="6">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb12-7" title="7">  ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb12-8" title="8">  <span class="st">&quot;inputHint&quot;</span><span class="op">:</span> <span class="st">&quot;ignoringInput&quot;</span></a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="op">},</span></a></code></pre></div></li>
+<li><p>Now that you are starting to understand what is going on, try out the following commands to see how the bot responds:</p>
+<ul>
+<li>Set temperature to 68 degrees</li>
+<li>It’s feeling cold in the back</li>
+<li>The passenger is freezing</li>
+<li>temperature</li>
+<li>Increase the volume</li>
+<li>adjust the equalizer</li>
+<li>The volume is too low</li>
+</ul></li>
+</ol>
+<h2 id="task-6-open-luis-to-view-the-generated-apps">Task 6: Open LUIS to view the generated apps</h2>
+<p>If you recall, the bot deployment script created Azure services, generated a .bot file, and converted the .lu files to JSON files were uploaded to LUIS. Let’s take this new knowledge about how LUIS works and how the files are used to train it, and browse to the LUIS portal to explore the generated apps.</p>
+<ol type="1">
+<li><p>Navigate to the LUIS portal (<a href="https://www.luis.ai/">www.luis.ai</a>) and sign in if needed. You should see four new apps listed underneath <strong>My Apps</strong>, each of which start with the name of your bot. You can see by the <code>Endpoint hits</code> value which LUIS app gets used the most.</p>
+<figure>
+<img src="media/luis-apps.png" title="My Apps" alt="My Apps is displayed with a list of generated LUIS apps." /><figcaption>My Apps is displayed with a list of generated LUIS apps.</figcaption>
+</figure></li>
+<li><p>Open the app that ends with <strong>General</strong>. Select <strong>Intents</strong> under App Assets on the left-hand menu. Notice that each named intent has a number of labeled utterances. Remember, utterances are used to train LUIS on different ways a user may express their intent. Generally speaking, the more utterances you have, the more variety of ways LUIS can understand how people may type or speak a phrase.</p>
+<figure>
+<img src="media/luis-general-intents.png" title="Intents" alt="The list of General intents." /><figcaption>The list of General intents.</figcaption>
+</figure></li>
+<li><p>Select the <strong>Cancel</strong> intent.</p></li>
+<li><p>You may use the navigation controls on the bottom of the list to look through the utterances for this intent. If you click on a word, you will see an option to assign an entity to that word. We’ll take a look at an utterance with an entity in a bit to see what that looks like.</p>
+<figure>
+<img src="media/luis-cancel-intent.png" title="Cancel intent" alt="Screenshot of the Cancel intent." /><figcaption>Screenshot of the Cancel intent.</figcaption>
+</figure></li>
+<li><p>Select <strong>My apps</strong> in the top menu. Now open the app that ends with **_settings**.</p>
+<figure>
+<img src="media/luis-apps-settings.png" title="My Apps" alt="My Apps is displayed with the settings app highlighted." /><figcaption>My Apps is displayed with the settings app highlighted.</figcaption>
+</figure></li>
+<li><p>As you can see, this app’s intents have a much larger number of labeled utterances. Select <strong>VEHICLE_SETTINGS_DECLARATIVE</strong>.</p>
+<figure>
+<img src="media/luis-settings-intents.png" title="Intents" alt="The settings app’s intents are listed." /><figcaption>The settings app’s intents are listed.</figcaption>
+</figure></li>
+<li><p>As you can see, these utterances are a bit more descriptive and contain one or more <code>SETTING</code> and/or <code>VALUE</code> entities. When you hover over an entity, you can see a sample value. Feel free to explore the other entities.</p>
+<figure>
+<img src="media/luis-declarative-intent.png" title="Declarative intent" alt="The declarative intent is shown." /><figcaption>The declarative intent is shown.</figcaption>
+</figure></li>
+<li><p>Select <strong>Entities</strong> on the left-hand menu. The list of entities shows the number of times each is used within an utterance. If you click on an entity, you can browse through the list of utterances in which it is used.</p>
+<figure>
+<img src="media/luis-entities.png" title="Entities" alt="The list of entities is displayed." /><figcaption>The list of entities is displayed.</figcaption>
+</figure></li>
+<li><p>Select <strong>Dashboard</strong> on the top menu to view statistics about this app. The top of the dashboard displays app state information, like the status and number of labeled utterances.</p>
+<figure>
+<img src="media/luis-dashboard.png" title="Dashboard" alt="The top of the dashboard is displayed and the Dashboard menu item is highlighted." /><figcaption>The top of the dashboard is displayed and the Dashboard menu item is highlighted.</figcaption>
+</figure></li>
+<li><p>When you scroll further down, you will see the <strong>Endpoint State</strong> section, which gives you a sense of how much the endpoint is being used and when.</p>
+<figure>
+<img src="media/luis-endpoint-state.png" title="Dashboard: Endpoint State" alt="The Endpoint State section of the Dashboard is shown." /><figcaption>The Endpoint State section of the Dashboard is shown.</figcaption>
+</figure></li>
+<li><p>The bottom of the dashboard shows detailed model view charts with the intent and entity breakdowns by utterance. This can give you an idea of which intents and entities are used in the most utterances. Hover over any section of the chart to view its label.</p>
+<figure>
+<img src="media/luis-detailed-model-view.png" title="Dashboard: Detailed Model View" alt="The Detailed Model View of the Dashboard id shown." /><figcaption>The Detailed Model View of the Dashboard id shown.</figcaption>
+</figure></li>
+</ol>
+<h2 id="wrap-up">Wrap-up</h2>
+<p>Thank you for participating in the Bot solutions experience! We hope that you are excited about how you can use the Virtual Assistant Solution Accelerator alongside our bot services to create some interesting solutions of your own. Please feel free to refer back to this experience at any time to learn more about the solution accelerator, LUIS, and other Azure services that make these capabilities shine.</p>
+<p>To recap, you experienced:</p>
+<ol type="1">
+<li>How to quickly get started with <a href="https://www.luis.ai/">LUIS</a> to add natural language processing to your solutions.</li>
+<li>Using the deployment scripts that come with the Virtual Assistant Solution Accelerator to create all of the Azure resources for you, as well as to train LUIS with thousands of text entries.</li>
+<li>Exploring the Virtual Assistant starter solution, learning how things are laid out, which skills are included, and where to make modifications to the Automotive Skill if needed.</li>
+<li>Using the Bot Framework Emulator to test your bot locally and examine the data being sent back and forth between your bot and its related services.</li>
+<li>Exploring LUIS to see how intents, entities, and utterances are stored and relate to one another.</li>
+<li>Viewing usage reports in LUIS to see how users are sending commands and how those commands translate to the most-used intents and entities, giving you insight into where to make improvements.</li>
+</ol>
+<h2 id="additional-resources-and-more-information">Additional resources and more information</h2>
+<p>The Virtual Assistant solution accelerator is a great starting point for adding many new skills or updating existing ones to your bot. To address some of Contoso Auto’s requirements, you may consider doing the following:</p>
+<p>Contoso Auto wants to have the bot proactively alert the driver when there is a potential problem with the vehicle, which it detects by monitoring vehicle sensor data. Right now, the Automotive skill bot is exclusively reactive (user-initiated). However, you can proactively send messages that are triggered by external events by using a combination of the Bot Framework’s <code>ContinueConversationAsync</code> function to patch into a previously started conversation, and the <code>ProactiveStateMiddleware</code> to store the previous conversation. Read more about <a href="https://github.com/Microsoft/AI/blob/master/docs/virtual-assistant/proactivemessaging.md">sending proactive messages</a>.</p>
+<p>One of the experiences in this set of labs is to train a machine learning model to detect when a driver might have to change out the vehicle’s battery, based on telemetry captured and stored for a given vehicle. Using <a href="https://docs.microsoft.com/en-us/azure/machine-learning/service/overview-what-is-azure-ml">Azure Machine Learning</a>, you can manage and deploy that trained model either as a service hosted online, or on an edge device, such as <a href="https://docs.microsoft.com/en-us/azure/iot-edge/about-iot-edge">IoT Edge</a>. An edge device would be the onboard computer that hosts the Automotive bot that interfaces with the vehicle’s telematics solution to read sensor data and perform other vehicle functions. Your bot would need to be configured to either work with the machine learning model that’s stored locally, or connect to the hosted machine learning model online. If you are going the online route, you would likely want to have an API layer between the onboard bot and the model. <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview">Azure Functions</a> may be ideal for acting as the API, with <a href="">API Management</a> serving as the API layer, providing a set of endpoints for multiple APIs, authentication services, rate-limiting, etc. Your function would accept the scoring request from the bot to check for any concerns about the vehicle based on telemetry data, and call out to this and other trained machine learning models for a prediction. It would then send a <a href="https://github.com/Microsoft/AI/blob/master/docs/virtual-assistant/proactivemessaging.md">proactive message</a> to the bot. The bot could then alert the user if needed, and ask the user for an action. Such an action would be to find the nearest service center to set up an appointment. At this point, you could use the Points of Interest skill to find the nearest service center and get directions or contact information. The possibilities are nearly limitless on how you can add new capabilities to the bot.</p>
