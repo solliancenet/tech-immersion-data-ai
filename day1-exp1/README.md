@@ -205,7 +205,7 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
 
     ![A preview of the CSV data is displayed.](media/ads-external-table-csv-preview.png 'Preview Data')
 
-19. In the next step, you will be able to Modify the columns of the external table you intend to create. you are able to alter the column name, Change the data type, and allow for Nullable rows. Leave everything as-is and click **Next**.
+19. In the next step, you will be able to modify the columns of the external table you intend to create. You are able to alter the column name, change the data type, and allow for Nullable rows. For now, leave everything as-is and click **Next**.
 
     ![The Modify Columns step is displayed.](media/ads-external-table-csv-modify.png 'Modify Columns')
 
