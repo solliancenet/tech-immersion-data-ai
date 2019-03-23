@@ -49,29 +49,41 @@ In this experience you will learn how Contoso Auto can leverage Deep Learning te
 
 ## Task 1: Train and deploy a deep learning model
 
-In this task, you will train a deep learning model to classify the descriptions of car components provided by technicians as compliant or non-compliant, convert it to ONNX, and deploy it as a web service. To accomplish this, you will use an Azure Databricks notebook to explore the transaction and account data. 
+In this task, you will train a deep learning model to classify the descriptions of car components provided by technicians as compliant or non-compliant, convert it to ONNX, and deploy it as a web service. To accomplish this, you will use an Azure Notebook and Azure Machine Learning. 
 
-1. From the Azure Portal, navigate to your deployed Azure Databricks workspace and select **Launch Workspace**.
+1. To start, open a new web browser window and navigate to <https://notebooks.azure.com>.
 
-    ![Launch Workspace](media/01.png 'Launch Workspace')
+2. Select **Sign In** and then use your Microsoft Account to complete the sign in process.
 
-2. Within the Workspace, using the command bar on the left, select **Workspace**, **Users** and select your username (the entry with house icon).
+    ![The Sign In button](media/01.png 'Sign In')
 
-    ![Selecting Workspace, Users](media/02.png 'Selecting Workspace, Users')
+3. Dismiss the dialog to create the user ID (you will not need this). Within the Microsoft Azure Notebooks portal, select **My Projects** from the menu at the top.
 
-3. In the blade that appears, select the downwards pointing chevron next to your username, and select **Import**.
+    ![The My Projects button](media/02.png 'My Projects')
 
-    ![Select Import](media/03.png 'Select Import')
+4. Then select **New Project**.
 
-4. On the Import Notebooks dialog, select **browse** and then select `Deep_Learning.dbc` from your lab files folder for this experience (C:\lab-files\ai\4) and select **Import**.
+    ![The New Project button](media/03.png 'New Project')
 
-    ![Import the notebook](media/04.png 'Import Notebooks')
+5. On the Create New Project dialog, provide a Project Name (this should be a user friendly description) and Project ID (this will form a part of the URL used to access this project in the browser) and uncheck Public. Select **Create**.
 
-5. The notebook should appear in the list. Double-click this notebook to open it. This is the notebook you will use in completing this lab. Follow the instructions in the notebook, and then return to this guide to complete the experience.
+    ![The Create New Project dialog](media/04.png 'Create New Project')
+
+6. Select the **Upload** menu and then choose **From Computer**.
+
+    ![The Upload menu](media/05.png 'Upload')
+
+7. In the Upload files from Computer dialog, select **Choose Files** and then select the `deep-learning.ipynb` from lab starter files (C:\lab-files\ai\3). Select **Upload** to upload the notebook and then select **Done** to dismiss the dialog.
+
+    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
+
+8. In the listing, select the Notebook you just uploaded (deep-learning.ipynb) to open it.
+
+9. Follow the instructions within the notebook to complete the experience.
 
 ## Wrap-up
 
-Congratulations on completing the deep learning with ONNX experience. In this experience you completed an end-to-end process for training a deep learning model, converting it to ONNX and deploying the model into production, all from within an Azure Databricks notebook.
+Congratulations on completing the deep learning with ONNX experience. In this experience you completed an end-to-end process for training a deep learning model, converting it to ONNX and deploying the model into production, all from within an Azure Notebook.
 
 To recap, you experienced:
 
@@ -83,5 +95,3 @@ To recap, you experienced:
 ## Additional resources and more information
 
 To learn more about the Azure Machine Learning service, visit the [documentation](https://docs.microsoft.com/azure/machine-learning/service)
-
-To learn more about Azure Databricks, visit the [documentation](https://docs.microsoft.com/azure/azure-databricks/)
