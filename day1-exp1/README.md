@@ -58,9 +58,15 @@ Follow the steps below to connect to your SQL Server 2019 cluster with both Azur
 
 ### Connect with Azure Data Studio
 
+A link to Azure Data Studio should already be on the desktop of the VM. If not, follow the instructions in Step 1 below.
+
+![Azure Data Studio is highlighted on the desktop.](media/ads-desktop.png 'Desktop')
+
 1.  On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **Azure Data Studio**, then select the Azure Data Studio desktop app in the search results.
 
     ![The search box has "Azure Data Studio" entered into it and the desktop app is highlighted in the results.](media/launch-azure-data-studio.png 'Launch Azure Data Studio')
+
+    > **Please note:** If Azure Data Studio prompts you to update, please **do not apply** the update at this time. The lab has been tested with the software and library versions loaded in the provided environment.
 
 2.  Within Azure Data Studio, select **Servers** from the top of the left-hand menu, then select **New Connection** from the top toolbar to the right of the menu.
 
@@ -70,6 +76,7 @@ Follow the steps below to connect to your SQL Server 2019 cluster with both Azur
 
     - **Connection type:** Select Microsoft SQL Server.
     - **Server:** Enter the IP address, followed by port number `31433`. For example: `123.123.123.123,31433`.
+    - **Authentication type:** Select SQL Login.
     - **Username:** Enter "sa".
     - **Password:** Enter the password provided to you for this lab.
     - **Remember password:** Checked.
@@ -81,6 +88,8 @@ Follow the steps below to connect to your SQL Server 2019 cluster with both Azur
 
 ### Connect with SQL Server Management Studio
 
+The version of SQL Server Management Studio (SSMS) used in this lab is v17.x. There is a [newer preview version (v18)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017#ssms-180-preview-7) that includes some SQL Server 2019 features, which is not included in the provided environment.
+
 1.  On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **SQL Server Management Studio**, then select the SQL Server Management Studio desktop app in the search results.
 
     ![The search box has "SQL Server Management Studio" entered into it and the desktop app is highlighted in the results.](media/launch-ssms.png 'Launch SQL Server Management Studio')
@@ -88,6 +97,7 @@ Follow the steps below to connect to your SQL Server 2019 cluster with both Azur
 2.  Within the Connection dialog that appears, configure the following:
 
     - **Server name:** Enter the IP address, followed by port number `31433`. For example: `123.123.123.123,31433`.
+    - **Authentication:** Select SQL Server Authentication.
     - **Login:** Enter "sa".
     - **Password:** Enter the password provided to you for this lab.
     - **Remember password:** Checked.
