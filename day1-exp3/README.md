@@ -272,7 +272,7 @@ In this task, you will enable DDM on the `CardNumber` field in the `CreditCard` 
 4. So we can test the mask being applied to the `CardNumber` field, you will first create a user in the database that will be used for testing the masked field. In SSMS, select **New Query** and paste the following SQL script into the new query window, replacing `XXXXX` with your unique ID:
 
    ```sql
-   USE ContosoAutoDb-XXXXX;
+   USE [ContosoAutoDb-XXXXX];
    GO
 
    CREATE USER DDMUser WITHOUT LOGIN;
@@ -288,10 +288,10 @@ In this task, you will enable DDM on the `CardNumber` field in the `CreditCard` 
 6. With the new user created, let's run a quick query to verify the results. Select **New Query** again, and paste the following into the new query window. Replace `XXXXX` in the `USE` statement to include the unique identifier of your database which will be `ContosoAutoDb-XXXXX` (e.g., ContosoAutoDb-01234).
 
    ```sql
-   USE ContosoAutoDb-XXXXX;
+   USE [ContosoAutoDb-XXXXX];
    GO
 
-   EXECUTE AS USER = "DDMUser';
+   EXECUTE AS USER = 'DDMUser';
    SELECT * FROM [Sales].[CreditCard];
    REVERT;
    ```
@@ -305,11 +305,11 @@ In this task, you will enable DDM on the `CardNumber` field in the `CreditCard` 
 8. You will now apply DDM on the `CardNumber` field to prevent it from being viewed in query results. Select **New Query** from the SSMS toolbar and paste the following query into the query window to apply a mask to the `CardNumber` field, replacing `XXXXX` with your unique ID. Select **Execute** to run the query.
 
    ```sql
-   USE ContosoAutoDb-XXXXX;
+   USE [ContosoAutoDb-XXXXX];
    GO
 
    ALTER TABLE [Sales].[CreditCard]
-   ALTER COLUMN [CardNumber] NVARCHAR(25) MASKED WITH (FUNCTION = "partial(0,"xxx-xxx-xxx-",4)")
+   ALTER COLUMN [CardNumber] NVARCHAR(25) MASKED WITH (FUNCTION = 'partial(0,"xxx-xxx-xxx-",4)")
    ```
 
    ![The SQL script above is pasted into the new query window. The Execute button is highlighted and a success message is displayed in the Messages pane.](media/ssms-sql-mi-ddm-add-mask.png "Add DDM Mask")
@@ -317,10 +317,10 @@ In this task, you will enable DDM on the `CardNumber` field in the `CreditCard` 
 9. Run the `SELECT` query you opened in step 7 above again, and observe the results, specifically inspect the output in the `CardNumber` field. For reference the query is below. You replaced `XXXXX` in the `USE` statement to include the unique identifier of your database which will be `ContosoAutoDb-XXXXX` (e.g., ContosoAutoDb-01234).
 
     ```sql
-    USE ContosoAutoDb-XXXXX;
+    USE [ContosoAutoDb-XXXXX];
     GO
 
-    EXECUTE AS USER = "DDMUser';
+    EXECUTE AS USER = 'DDMUser';
     SELECT * FROM [Sales].[CreditCard];
     REVERT;
     ```
@@ -346,7 +346,7 @@ In this task, you will create a new table based on the existing `[Sales].[SalesO
 3. Copy the script below, and paste it into the query window. Replace `XXXXX` in the `USE` statement to include the unique identifier of your database which will be `ContosoAutoDb-XXXXX` (e.g., ContosoAutoDb-01234).
 
    ```sql
-   USE ContosoAutoDb-XXXXX;
+   USE [ContosoAutoDb-XXXXX];
    GO
 
    SELECT *
@@ -362,7 +362,7 @@ In this task, you will create a new table based on the existing `[Sales].[SalesO
 5. Select **New Query** in the toolbar again, and paste the following query into the new query window. The query contains multiple parts; one to get the size of the `ColumnStore_SalesOrderDetail` table, a second to create a clustered ColumnStore index on the `[Sales].[ColumnStore_SalesOrderDetail]` table, and then the size query is repeated to get the size after adding the clustered ColumnStore index. Replace `XXXXX` in the `USE` statement to include the unique identifier of your database which will be `ContosoAutoDb-XXXXX` (e.g., ContosoAutoDb-01234).
 
    ```sql
-   USE ContosoAutoDb-XXXXX;
+   USE [ContosoAutoDb-XXXXX];
    GO
 
    -- Get the Size of the [Sales].[ColumnStore_SalesOrderDetail] table
@@ -374,7 +374,7 @@ In this task, you will create a new table based on the existing `[Sales].[SalesO
    INNER JOIN sys.indexes i ON t.OBJECT_ID = i.object_id
    INNER JOIN sys.partitions p ON i.object_id = p.OBJECT_ID AND i.index_id = p.index_id
    INNER JOIN sys.allocation_units a ON p.partition_id = a.container_id
-   WHERE t.Name = "ColumnStore_SalesOrderDetail'
+   WHERE t.Name = 'ColumnStore_SalesOrderDetail'
    GROUP BY t.Name, p.Rows
    GO
 
@@ -392,7 +392,7 @@ In this task, you will create a new table based on the existing `[Sales].[SalesO
    INNER JOIN sys.indexes i ON t.OBJECT_ID = i.object_id
    INNER JOIN sys.partitions p ON i.object_id = p.OBJECT_ID AND i.index_id = p.index_id
    INNER JOIN sys.allocation_units a ON p.partition_id = a.container_id
-   WHERE t.Name = "ColumnStore_SalesOrderDetail'
+   WHERE t.Name = 'ColumnStore_SalesOrderDetail'
    GROUP BY t.Name, p.Rows
    GO
    ```
@@ -410,7 +410,7 @@ In this task, you will create a new table based on the existing `[Sales].[SalesO
 9. Paste the queries below into the new query window, replace `XXXXX` with your unique ID, and select **Execute** on the toolbar:
 
    ```sql
-   USE ContosoAutoDb-XXXXX;
+   USE [ContosoAutoDb-XXXXX];
    GO
 
    SELECT ProductId, LineTotal
@@ -435,10 +435,10 @@ In this task, you will create a new table based on the existing `[Sales].[SalesO
     GO
     ```
 
-12. Your finaly query should look like, with `XXXXX` replaced with your unique ID:
+12. Your final query should look like, with `XXXXX` replaced with your unique ID:
 
     ```sql
-    USE ContosoAutoDb-XXXXX;
+    USE [ContosoAutoDb-XXXXX];
     GO
 
     SET STATISTICS IO ON
