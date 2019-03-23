@@ -158,7 +158,7 @@ With data now streaming into your Cosmos DB `tweets` collection, you are ready t
 
     ![The Create an indexer tab is displayed, with the settings specified above entered into the form.](media/cosmos-db-add-azure-search-create-indexer.png "Create an indexer")
 
-    > An indexer in Azure Search is a crawler that extracts searchable data and metadata from an external Azure data source and populates an index based on field-to-field mappings between the index and your data source. This approach is sometimes referred to as a "pull model' because the service pulls data in without you having to write any code that adds data to an index.
+    > An indexer in Azure Search is a crawler that extracts searchable data and metadata from an external Azure data source and populates an index based on field-to-field mappings between the index and your data source. This approach is sometimes referred to as a 'pull model' because the service pulls data in without you having to write any code that adds data to an index.
 
 12. Select **Submit**.
 
