@@ -165,7 +165,7 @@ To migrate the `ContosoAutoDb` database from SQL 2008 R2 to SQL MI you will use 
 
 2. Select **Connect**.
 
-3. To start the `RESTORE` process, select **New Query** from the SSMS toolbar. In the new query window, paste the following SQL code.
+3. To preform the `RESTORE` process, credentials for a pre-configured storage account and SAS token have already been added to the Managed Instance using the [create a credential](https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017) method. This process essentially creates a connection from your SQL MI database to the Blob storage account, allowing you to access files stored in the target container, `database-backup`. Because this is a shared SQL MI, only one credential is needed for all attendees. If you are curious, you would create it with a SQL statement similar to the below.
 
    ```sql
    CREATE CREDENTIAL [https://techimmersion.blob.core.windows.net/labfiles/data/3]
@@ -173,13 +173,7 @@ To migrate the `ContosoAutoDb` database from SQL 2008 R2 to SQL MI you will use 
    SECRET = 'sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2099-03-22T05:33:07Z&st=2019-03-21T21:33:07Z&spr=https&sig=xCq7hZfgdtM1UaN9%2FToz04GT5d5RsKaeb1JjWrpuKHE%3D'
    ```
 
-   > The script above uses a pre-configured storage account and SAS token to [create a credential](https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017) in your Managed Instance. This essentially creates a connection from your SQL MI database to the Blob storage account, allowing you to access files stored in the target container, `database-backup`.
-
-4. Select **Execute** on the SSMS toolbar. You will see a message that the command completed successfully in the output window.
-
-   ![Script to create a credential in SSMS.](media/ssms-sql-mi-create-credential.png "SSMS")
-
-5. To verify your credential's access to the Blob storage account, select **New Query** again from the SSMS toolbar, paste the following SQL script to get a backup file list from the storage account into the new query window and select **Execute** from the toolbar.
+4. You can verify the credential's access to the Blob storage account by selecting **New Query** again from the SSMS toolbar. Paste the following SQL script to get a backup file list from the storage account into the new query window and select **Execute** from the toolbar.
 
    ```sql
    RESTORE FILELISTONLY FROM URL = 'https://techimmersion.blob.core.windows.net/labfiles/data/3/ContosoAutoDb.bak'
@@ -187,19 +181,19 @@ To migrate the `ContosoAutoDb` database from SQL 2008 R2 to SQL MI you will use 
 
    ![Script to list files in a backup file in Blob storage.](media/ssms-sql-mi-restore-filelistonly.png "SSMS")
 
-6. You are now ready to restore the `ContosoAutoDb` database in SQL MI. Select **New Query** on the SSMS toolbar again, then paste the following SQL script into the new query window. **Replace the `XXXXX` value** with the unique identifier assigned to your for this workshop.
+5. You are now ready to restore the `ContosoAutoDb` database in SQL MI. In this step, you will be creating a new database on the Managed Instance. Select **New Query** on the SSMS toolbar again, then paste the following SQL script into the new query window. **Replace the `XXXXX` value** with the unique identifier assigned to your for this workshop. The database name in the  query should look something like `ContosoAutoDb-01234`.
 
    ```sql
    RESTORE DATABASE [ContosoAutoDb-XXXXX] FROM URL = 'https://techimmersion.blob.core.windows.net/labfiles/data/3/ContosoAutoDb.bak'
    ```
 
-   > The database name in the above query should look something like `ContosoAutoDb-01234`.
+   > **NOTE**: You may notice multiple databases in on the Managed Instance. This is because the SQL MI is a shared resource for all workshop attendees, so make sure you use your assigned unique ID when restoring and accessing the database.
 
-7. Select **Execute** on the SSMS toolbar.
+6. Select **Execute** on the SSMS toolbar.
 
-8. The restore will take 1 - 2 minutes to complete. You will receive a "Commands completed successfully" message when it is done.
+7. The restore will take 1 - 2 minutes to complete. You will receive a "Commands completed successfully" message when it is done.
 
-9. When the restore completes, expand **Databases** in the Object Explorer, and then expand **ContosoAutoDb-XXXXX** (where XXXXX is the unique identifier assigned to you for this workshop) and **Tables**. You will see that the tables are all listed, and the SQL Server 2008 R2 database has been successfully restored into SQL MI.
+8. When the restore completes, expand **Databases** in the Object Explorer, and then expand **ContosoAutoDb-XXXXX** (where XXXXX is the unique identifier assigned to you for this workshop) and **Tables**. You will see that the tables are all listed, and the SQL Server 2008 R2 database has been successfully restored into SQL MI.
 
     ![The Object Explorer is displayed with Databases, ContosoAutoDb, and Tables expanded.](media/ssms-sql-mi-object-explorer.png "SSMS Object Explorer")
 
