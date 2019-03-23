@@ -222,7 +222,7 @@ In this task, you will make updates to the ContosoAuto operations web applicatio
 4. On the Application settings blade, scroll down and locate the **Connection strings** section. Paste the connection string value below into the value for the `ContosoAutoDbContext` connection string.
 
     ```sql
-    Server=tcp:tech-immersion-sqlmi-shared.521f7783692d.database.windows.net,1433;Persist Security Info=False;User ID=tiuser;Password=Password.1234567890;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+    Server=tcp:tech-immersion-sqlmi-shared.521f7783692d.database.windows.net,1433;Persist Security Info=False;Database=ContosoAutoDb;User ID=tiuser;Password=Password.1234567890;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
     ```
 
    ![The copied SQL MI connection string is pasted into the value for the ContosoAutoDbContext connection string.](media/app-service-app-settings-connection-strings.png "Connection strings")
