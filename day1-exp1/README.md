@@ -275,6 +275,8 @@ In this task, you will use Azure Data Studio to execute a notebook that will ena
 
 5.  Follow the instructions in the notebook and return to the next step after you have completed the notebook.
 
+    > If after loading the notebook, the Spark kernel fails to load, change the kernel to PySpark and back to PySpark3 to get it to work. This is an issue we've seen happen occasionally on the provided VMs.
+
 6.  In Azure Data Studio, under Servers, expand your Big Data Cluster, `Data Services`, `HDFS`, `data`.
 
 7.  Right click the `data` folder and select `Refresh` to see the newly created folder.
