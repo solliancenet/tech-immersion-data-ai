@@ -22,7 +22,7 @@
 
 ### Azure Cosmos DB
 
-Develop high-concurrency, low-latency applications with Azure Cosmos DB, a fully managed database service that supports NoSQL APIs and can scale out [multi-master](https://docs.microsoft.com/en-us/azure/cosmos-db/multi-region-writer) workloads anywhere in the world. Ensure blazing fast performance with [industry-leading service level agreements (SLAs)](https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/v1_2/) for single-digit-millisecond reads and writes, data consistency and throughput, and 99.999% high availability. Transparent [horizontally-partitioning](https://docs.microsoft.com/en-us/azure/cosmos-db/partitioning-overview) provides elastic scaling, matching capacity with demand to controls costs and ensures your applications maintains high performance during peak traffic.
+Develop high-concurrency, low-latency applications with Azure Cosmos DB, a fully managed database service that supports NoSQL APIs and can scale out [multi-master](https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-multi-master) workloads anywhere in the world. Ensure blazing fast performance with [industry-leading service level agreements (SLAs)](https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/v1_2/) for single-digit-millisecond reads and writes, data consistency and throughput, and 99.999% high availability. Transparent [horizontally-partitioning](https://docs.microsoft.com/en-us/azure/cosmos-db/partitioning-overview) provides elastic scaling, matching capacity with demand to controls costs and ensures your applications maintains high performance during peak traffic.
 
 Azure Cosmos DB offers built-in, cloud-native capabilities to simplify app development and boost developer productivity, including five well-defined consistency models, [auto-indexing](https://docs.microsoft.com/en-us/azure/cosmos-db/index-policy), and multiple data models. Easily migrate existing NoSQL data with open-source APIs for [MongoDB](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction), [Cassandra](https://docs.microsoft.com/en-us/azure/cosmos-db/cassandra-introduction), Gremlin (Graph), and others. Developers can work with tools to build microservices and the languages of their choice, while enjoying seamless integration with Azure services for IoT, advanced analytics, AI and machine learning, and business intelligence.
 
@@ -490,13 +490,13 @@ In this task, you will open the lab solution in Visual Studio, publish the Funct
 
 6.  The Function App will start publishing in a moment. You can watch the output window for the publish status. When it is done publishing, you should see a "Publish completed" message on the bottom of the output window.
 
-    ![The Publish Succeeded and Publish Completed messages are highlighted in the output window.](media/vs-publish-output.png 'Publish output') ![](media/vs-publish-output.png)
+    ![The Publish Succeeded and Publish Completed messages are highlighted in the output window.](media/vs-publish-output.png 'Publish output')
 
 7.  Expand the **TransactionGenerator** project within the Solution Explorer, then double-click on **appsettings.json** to open it.
 
     ![The appsettings.json file is highlighted in Solution Explorer.](media/vs-appsettings-link.png 'Solution Explorer')
 
-8.  Paste your Cosmos DB connection string value next to `COSMOS_DB_CONNECTION_STRING`. Make sure you have quotes ("") around the value, as shown.
+8.  Paste your Cosmos DB connection string value next to `COSMOS_DB_CONNECTION_STRING`. Make sure you have quotes ("") around the value, as shown. **Save** the file.
 
     ![The Cosmos DB connection string is highlighted within the appsettings.json file.](media/vs-appsettings.png 'appsettings.json')
 
