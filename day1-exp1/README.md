@@ -303,7 +303,7 @@ In this task, you will use Azure Data Studio to execute a notebook that will ena
 
 13. On Step 5, select `Create Table`. Your predictions are now available for SQL querying in the battery-life-predictions table in the sales database.
 
-14. In Azure Data Studio, Servers, expand your Big Data Cluster, `Databases`, `sales`, right click `Tables` and then select `Refresh`.
+14. In Azure Data Studio, Servers, expand your Big Data Cluster, `Databases`, `sales_YOUR-UNIQUE-IDENTIFIER`, right click `Tables` and then select `Refresh`.
 
     ![Refresh sales](media/task02-refresh-sales.png 'Refresh sales')
 

@@ -73,7 +73,7 @@ In this task, you will train a deep learning model to classify the descriptions 
 
     ![The Upload menu](media/05.png 'Upload')
 
-7. In the Upload files from Computer dialog, select **Choose Files** and then select the `deep-learning.ipynb` from lab starter files (C:\lab-files\ai\3). Select **Upload** to upload the notebook and then select **Done** to dismiss the dialog.
+7. In the Upload files from Computer dialog, select **Choose Files** and then select the `deep-learning.ipynb` from lab starter files (C:\lab-files\ai\4). Select **Upload** to upload the notebook and then select **Done** to dismiss the dialog.
 
     ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
