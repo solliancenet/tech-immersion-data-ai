@@ -205,7 +205,7 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
 
     ![A preview of the CSV data is displayed.](media/ads-external-table-csv-preview.png 'Preview Data')
 
-19. In the next step, you will be able to Modify the columns of the external table you intend to create. you are able to alter the column name, Change the data type, and allow for Nullable rows. Leave everything as-is and click **Next**.
+19. In the next step, you will be able to modify the columns of the external table you intend to create. You are able to alter the column name, change the data type, and allow for Nullable rows. For now, leave everything as-is and click **Next**.
 
     ![The Modify Columns step is displayed.](media/ads-external-table-csv-modify.png 'Modify Columns')
 
@@ -274,6 +274,8 @@ In this task, you will use Azure Data Studio to execute a notebook that will ena
 4.  Browse to **C:\lab-files\data\1**, select **predict-battery-life-with-sqlbdc.ipynb** and select `Open`.
 
 5.  Follow the instructions in the notebook and return to the next step after you have completed the notebook.
+
+    > If after loading the notebook, the Spark kernel fails to load, change the kernel to PySpark and back to PySpark3 to get it to work. This is an issue we've seen happen occasionally on the provided VMs.
 
 6.  In Azure Data Studio, under Servers, expand your Big Data Cluster, `Data Services`, `HDFS`, `data`.
 
