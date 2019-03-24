@@ -23,6 +23,8 @@ The computer or VM on which you run the scripts to deploy the cluster and restor
   az extension add -n botservice
   ```
 
+- Add the following PATH setting to the machine's environment variables: `%USERPROFILE%\AppData\Roaming\npm`. Without it, you will receive an error in the command window during provisioning that `botservice` could not be found.
+
 ### Azure resources
 
 Users will need to be able to sign into [LUIS](https://www.luis.ai/) with their Azure Active Directory account and create a new LUIS app.
