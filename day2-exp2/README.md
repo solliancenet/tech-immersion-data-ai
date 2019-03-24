@@ -128,7 +128,7 @@ With data now streaming into your Cosmos DB `tweets` collection, you are ready t
 
 7. On the **Add cognitive search (Optional)** tab:
 
-   - Expand **Attached Cognitive Services** and select your **tech-immersion-cog-services** instance. This will associate your Cognitive Services account with the Skillset you are creating.
+   - Expand **Attached Cognitive Services** and select your **tech-immersion-cogserv** instance. This will associate your Cognitive Services account with the Skillset you are creating.
    - Expand **Add Enrichments**, enter **tweet-skillset** as the name, and select **text** as the source data field. Check the box next to Cognitive Skills to select all of the options.
 
    ![The Add cognitive search tab is displayed, with the settings specified above entered into the form.](media/cosmos-db-add-azure-search-add-cognitive-search.png "Add cognitive search")
@@ -251,9 +251,11 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
    "AZURE_SEARCH_SERVICE_KEY": "B54E21DC49EB3B5A322190851F22BA8E"
    ```
 
-9. Return to the Azure portal, and select your **Cognitive Services** account from the list of resources under the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
+9. Return to the Azure portal, and select the **Cognitive Services** account named **tech-immersion-cogserv** from the list of resources under the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
 
    ![The Cognitive Services resource is highlighted in the tech-immersion resource group.](media/tech-immersion-resource-group-cog-services.png "Cognitive Services resource")
+
+   > **NOTE**: There are three different Cognitive Services accounts in the resource group. You will want the one named **tech-immersion-cogserv** for this experience.
 
 10. On the Cognitive Services blade, select **Properties** from the left-hand menu, and then copy the value for the **Resource ID** field by selecting the copy button to the right of the field.
 
