@@ -539,6 +539,8 @@ The last bit of interesting code within the generator is where we create the Cos
 
 A few minutes ago, you published your Azure Function App from Visual Studio. This Function App contains a single function, `CarEventProcessor`. We will take a look at the published function in this task.
 
+You will notice that the Function App is now set to read-only. This is because you published a generated function.json file from Visual Studio. Function Apps adds this protection when you publish so you do not accidentally overwrite the function.json file or related files through the UI.
+
 1.  Navigate to the [Azure portal](https://portal.azure.com).
 
 2.  Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion-YOUR_UNIQUE_IDENTIFIER**.
