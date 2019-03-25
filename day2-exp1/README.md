@@ -416,6 +416,8 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
     ![The bot file secret dialog is displayed.](media/bot-framework-emulator-secret.png "Bot file secret")
 
+    > If after loading the bot file you see a blank screen for more than a few seconds, shut down and re-open the Bot Emulator.
+
 12. Now you should see a Live Chat window with the following features:
 
     1. **Development endpoint:** Make sure this endpoint is selected under endpoints to the left. You cannot use the production endpoint until you publish your bot.
