@@ -1,7 +1,5 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-
-
 ## Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
@@ -49,18 +47,16 @@ This experience will highlight the new features of SQL Server 2019 with a focus 
 
 ## Experience requirements
 
-Before you begin this lab, you need to find the following information on the Tech Immersion Mega Data & AI Workshop On Demand Lab environment details page:
+Before you begin this lab, you need to find the following information on the Tech Immersion Mega Data & AI Workshop On Demand Lab environment details page, or the document provided to you for this experience:
 
 - Server IP address and port number: `SQL SERVER_2019_CLUSTER URL`
-- SQL username: `SALES DB USERNAME`
-- SQL password: `SALES DB PASSWORD`
+- SQL username: `SQL 2019 Big Data Cluster username`
+- SQL password: `SQL 2019 Big Data Cluster password`
 - Sales database name (your unique copy): `SALES DB`
 - Azure SQL Database server: `AZURE DATABASE SERVER`
 - Azure SQL Database name: `DATABASE NAME`
 - Azure SQL Database username: `DATABASE USER`
 - Azure SQL Database password: `DATABASE PASSWORD`
-
-![Screenshot of the lab environment details](media/environment-details.png 'Environment Details')
 
 ## Before the lab: Connecting to SQL Server 2019
 
@@ -370,7 +366,7 @@ In this exercise, you will run the SQL Data Discovery & Classification tool agai
 
 ## Task 4: Fix compliance issues with dynamic data masking
 
-Some of the columns identified by the Data Discovery & Classification tool as containing sensitive (PII/GDPR) information include phone numbers, email addresses, billing addresses, and credit card numbers. One way to ensure compliance with various rules and regulations that enforce policies to protect such sensitive data is to prevent those who are not authorized from seeing it. An example would be displaying `XXX-XXX-XX95` instead of `123-555-2695` when outputting a phone number within a SQL query result, report, web page, etc. This is commonly called data masking. Traditionally, modifying systems and applications to implement data masking can be challenging. This is especially true when the masking has to apply all the way down to the data source level. Fortunately, SQL Server and its cloud-related product, Azure SQL Database, provides a feature named [dynamic data masking](https://docs.microsoft.com/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver15) (DDD) to automatically protect this sensitive data from non-privileged users.
+Some of the columns identified by the Data Discovery & Classification tool as containing sensitive (PII/GDPR) information include phone numbers, email addresses, billing addresses, and credit card numbers. One way to ensure compliance with various rules and regulations that enforce policies to protect such sensitive data is to prevent those who are not authorized from seeing it. An example would be displaying `XXX-XXX-XX95` instead of `123-555-2695` when outputting a phone number within a SQL query result, report, web page, etc. This is commonly called data masking. Traditionally, modifying systems and applications to implement data masking can be challenging. This is especially true when the masking has to apply all the way down to the data source level. Fortunately, SQL Server and its cloud-related product, Azure SQL Database, provides a feature named [dynamic data masking](https://docs.microsoft.com/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver15) (DDM) to automatically protect this sensitive data from non-privileged users.
 
 Dynamic data masking helps prevent unauthorized access to sensitive data by enabling customers to designate how much of the sensitive data to reveal with minimal impact on the application layer. DDM can be configured on the database to hide sensitive data in the result sets of queries over designated database fields, while the data in the database is not changed. Dynamic data masking is easy to use with existing applications, since masking rules are applied in the query results. Many applications can mask sensitive data without modifying existing queries.
 
