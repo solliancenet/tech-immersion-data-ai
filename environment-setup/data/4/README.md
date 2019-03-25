@@ -81,8 +81,12 @@ A service principal (SP) should be created in Azure Active Directory for the sub
 
 - Copy Application ID (will be added to Key Vault)
 - Generate password key for the SP (will be added to Key Vault)
-- Add access rights to the ADLS Gen2 account
-- Add Access Control (IAM) role of Storage Blob Data Contributor for ADLS Gen2 account
+- Assign to Storage Blob Data Contributor role in the ADLS Gen2 account
+  - Select Access Control (IAM) on the ADLS Gen2 account blade.
+  - Select Add.
+  - Select the role of Storage Blob Data Contributor.
+  - Select the Service Principal tech-immersion-sp Service Principal used for this workshop.
+  - Save the role assignment.
 
 ## Azure Key Vault configuration
 
@@ -97,13 +101,13 @@ The following secrets must be added to Key Vault:
 
 | Name | Value |
 | ---- | ----- |
-| ADLS-Gen2-Account-Name | The user's ADLS Gen2 account name |
-| Azure-Tenant-ID | The Directory ID for the Azure Active Directory Tenant |
-| ContosoAuto-SP-Client-ID | The Application ID of the shared Service Principal |
-| ContosoAuto-SP-Client-Key | The password for the shared Service Principal |
+| ADLS-Gen2-Account-Name | `adlsstrgXXXXX` |
+| Azure-Tenant-ID | `f94768c8-8714-4abe-8e2d-37a64b18216a` |
+| ContosoAuto-SP-Client-ID | `ea2ca9d8-6691-4e6e-b5ee-2d246fd3f0c7` |
+| ContosoAuto-SP-Client-Key | `eSQ8LALrZqo74YcxXhHPRML2Fz37aHOmxI/Z89TCk+o=` |
 | Cosmos-DB-Key | The Primary Key for the user's Cosmos DB instance |
 | Cosmos-DB-Uri | The URI for the user's Cosmos DB instance |
-| Sql-Dw-Password | The password for the SQL DW. Should be set to `Password.1!!`  |
+| Sql-Dw-Password | `Password.1!!`  |
 | Sql-Dw-Server-Name | The server name of the user's SQL DW |
 | Storage-Account-Key | The primary key for the user's Blob Storage account |
 | Storage-Account-Name | The account name of the user's Blob Storage account |
@@ -119,6 +123,11 @@ For each attendee's Databricks workspace, the following configuration should be 
    - Spark Config
      - Add value: `spark.databricks.delta.preview.enabled true`
 2. Key Vault-backed secrets and scopes should be enabled
-   - Secret scope name: key-vault-secrets
    - Instructions <https://docs.azuredatabricks.net/user-guide/secrets/secret-scopes.html#akv-ss>
+   - Secret scope name: **key-vault-secrets**
+   - Managed Principal: Select **Creator**
+   - DNS Name: This will be the DNS name assigned to each user-specific Azure Key Vault instance.
+     - Can be copied from the Overview blade of the user's Key Vault.
+   - Resource ID: This will be the resource ID assigned to the user-specific Azure Key Vault instances.
+     - Can be copied from the **Properties** blade of the user's Key Vault.
 3. Add the `Tech-Immersion.dbc` notebook (found in lab-files/data/4) to the Shared workspace folder.

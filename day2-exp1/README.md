@@ -30,6 +30,8 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
    ![Select Accept on the Permission requested dialog to continue.](media/luis-permission-requested.png 'Permission requested')
 
+   > If after signing in and accepting requested permissions, you see a loading screen that seems stuck for more than 10 seconds, try refreshing the page.
+
 3. Again, if this is your first time signing in, you will be prompted to select your **Country/Region**. Select the appropriate option from the list, check the service agreement checkbox, then select **Continue**.
 
    ![The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted.](media/luis-accept.png 'Accept Service Agreement')
@@ -69,6 +71,8 @@ The Bot Framework SDK uses what's called an Azure application for authentication
    ![The new password is displayed.](media/app-portal-new-password.png 'New password generated')
 
 6. **Copy and paste** the **Application Id** value to Notepad or a similar text application for later steps.
+
+   ![The Application Id is highlighted.](media/app-portal-app-id.png 'Application Id')
 
 ## Task 3: Deployment
 
@@ -344,7 +348,7 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
 2.  Now we are ready to test the bot. Before testing, you must update the **appsettings.json** file in the **AutomotiveSkills** project. To do this, switch back to the solution in Visual Studio and expand the **AutomotiveSkill** project in the Solution Explorer. **Double-click** on the **appsettings.json** file to open it.
 
-3.  Update your `appsettings.json` file with the newly created .bot file name and .bot file secret. The .bot file is located in the root directory of the **AutomotiveSkill** project.
+3.  Update your `appsettings.json` file with the newly created .bot file name and .bot file secret. The .bot file is located in the root directory of the **AutomotiveSkill** project. Most likely, the script that you ran already added the bot file name for you. Example: `tech-immersion-YOUR_UNIQUE_ID.bot`.
 
     ```
       {
@@ -353,7 +357,7 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
       }
     ```
 
-    - Finally, add the .bot file paths for each of your language configurations (English only at this time). You can find the bot file under the **LocaleConfigurations** folder.
+    - Finally, add the .bot file paths for each of your language configurations (English only at this time). You can find the bot file under the **LocaleConfigurations** folder. Make sure that the bot file name ends with `en.bot`. For instance, `tech-immersion-YOUR_UNIQUE_IDen.bot`.
 
     ```
     "defaultLocale": "en-us",

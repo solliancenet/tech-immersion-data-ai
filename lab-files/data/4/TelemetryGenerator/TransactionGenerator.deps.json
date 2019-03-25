@@ -1,12 +1,12 @@
 {
   "runtimeTarget": {
-    "name": ".NETCoreApp,Version=v2.0/win-x64",
-    "signature": "8dddae7e1bfd98ff3f6dce15abdab1144deade8c"
+    "name": ".NETCoreApp,Version=v2.0/win10-x64",
+    "signature": "acedc70e4dd6ac729a497ec90c2924e58024c83a"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.0": {},
-    ".NETCoreApp,Version=v2.0/win-x64": {
+    ".NETCoreApp,Version=v2.0/win10-x64": {
       "TransactionGenerator/1.0.0": {
         "dependencies": {
           "Microsoft.Azure.DocumentDB.Core": "2.2.1",
@@ -60,6 +60,14 @@
           "lib/netstandard1.6/Microsoft.Azure.DocumentDB.Core.dll": {
             "assemblyVersion": "2.2.1.0",
             "fileVersion": "2.2.1.0"
+          }
+        },
+        "native": {
+          "runtimes/win7-x64/native/DocumentDB.Spatial.Sql.dll": {
+            "fileVersion": "2.2.0.0"
+          },
+          "runtimes/win7-x64/native/Microsoft.Azure.Documents.ServiceInterop.dll": {
+            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -1272,6 +1280,7 @@
           "System.Private.Uri": "4.3.0"
         }
       },
+      "runtime.win7.System.Private.Uri/4.3.0": {},
       "System.Buffers/4.3.0": {
         "dependencies": {
           "System.Diagnostics.Debug": "4.3.0",
@@ -1770,7 +1779,8 @@
       "System.Private.Uri/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.2",
-          "Microsoft.NETCore.Targets": "1.1.0"
+          "Microsoft.NETCore.Targets": "1.1.0",
+          "runtime.win7.System.Private.Uri": "4.3.0"
         }
       },
       "System.Reflection/4.3.0": {
@@ -2728,6 +2738,13 @@
       "sha512": "sha512-+N3OiFVBB5t4rSfB1NU99beMl21jlaUsymd3YG8Lgyfa5sqmF+JpA0+4EAq4lk9gEXcIol3vQZHlxsfBjgQ7JQ==",
       "path": "runtime.win.system.runtime.extensions/4.3.0",
       "hashPath": "runtime.win.system.runtime.extensions.4.3.0.nupkg.sha512"
+    },
+    "runtime.win7.System.Private.Uri/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-T9HAQUHm7k9f4KkG5zYmUa/Vy5lc2fzRBJknpzKwcfgnu5Yt8epPNjDzxOkooMGRH9gsg45lQgjHcd7mOYq7PQ==",
+      "path": "runtime.win7.system.private.uri/4.3.0",
+      "hashPath": "runtime.win7.system.private.uri.4.3.0.nupkg.sha512"
     },
     "System.Buffers/4.3.0": {
       "type": "package",

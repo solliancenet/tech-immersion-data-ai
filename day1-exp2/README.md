@@ -14,7 +14,8 @@
   - [Task 3: Configure Stream Analytics](#task-3-configure-stream-analytics)
   - [Task 4: Configure Azure Function App](#task-4-configure-azure-function-app)
   - [Task 5: Publish Function App and run data generator](#task-5-publish-function-app-and-run-data-generator)
-  - [Task 6: Create Power BI dashboard](#task-6-create-power-bi-dashboard)
+  - [Task 6: View published function](#task-6-view-published-function)
+  - [Task 7: Create Power BI dashboard](#task-7-create-power-bi-dashboard)
   - [Wrap-up](#wrap-up)
   - [Additional resources and more information](#additional-resources-and-more-information)
 
@@ -162,7 +163,7 @@ In this task, you will create a new Cosmos DB database and collection, set the t
 
 8.  Select **OK** on the bottom of the form when you are finished entering the values.
 
-9.  Select **Firewall and virtual networks** from the left-hand menu, then select Allow access from **All networks**. Select **Save**. This will allow the vehicle telemetry generator application to send data to your Cosmos DB collection. Select **Save**.
+9.  Select **Firewall and virtual networks** from the left-hand menu and confirm that Allow access from **All networks** is selected. If it was not previously set to this, select **Save**. This will allow the vehicle telemetry generator application to send data to your Cosmos DB collection.
 
     ![The All networks option is selected within the Firewall and virtual networks blade.](media/cosmos-db-firewall.png 'Firewall and virtual networks')
 
@@ -186,7 +187,7 @@ In this task, you will create and configure a new event hub within the provided 
 
     ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
 
-3.  Select the **Event Hubs Namespace** from the list of resources in your resource group.
+3.  Select the **Event Hubs Namespace** (`tech-immersion-hub-YOUR_UNIQUE_ID`) from the list of resources in your resource group.
 
     ![The Event Hubs Namespace is selected in the resource group.](media/tech-immersion-rg-event-hubs.png 'tech-immersion resource group')
 
@@ -265,7 +266,7 @@ In this task, you will configure Stream Analytics to use the event hub you creat
 
     ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
 
-3.  Select the **Stream Analytics job** from the list of resources in your resource group.
+3.  Select the **Stream Analytics job** (`tech-immersion-analytics-YOUR_UNIQUE_ID`) from the list of resources in your resource group.
 
     ![The Stream Analytics job is selected in the resource group.](media/tech-immersion-rg-stream-analytics.png 'tech-immersion resource group')
 
@@ -299,11 +300,11 @@ In this task, you will configure Stream Analytics to use the event hub you creat
 
     ![The Add button and Power BI menu item are highlighted.](media/stream-analytics-add-output-link.png 'Add output - Power BI')
 
-10. In the **New Output** blade, select the **Authorize** button to authorize a connection from Stream Analytics to your Power BI account. If you do not have a Power BI account, select the **Sign up** link below the button.
+10. In the **New Output** blade, select the **Authorize** button to authorize a connection from Stream Analytics to your Power BI account.
 
     ![The Authorize button is highlighted in the New Output blade.](media/stream-analytics-new-output-authorize.png 'New Output')
 
-11. When prompted, sign in to your Power BI account.
+11. When prompted, sign in to your Power BI account, which is the same username and password you were provided with and used to login to the Azure Portal.
 
     ![The Power BI sign in form is displayed.](media/power-bi-sign-in.png 'Power BI Sign In')
 
@@ -502,7 +503,7 @@ In this task, you will open the lab solution in Visual Studio, publish the Funct
 
     `SECONDS_TO_LEAD` is the amount of time to wait before sending vehicle telemetry data. Default value is `0`.
 
-    `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. The default value is `600`. Data will also stop transmitting when you enter Ctrl+C while the generator is running, or if you close the window.
+    `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. The default value is `1800`. Data will also stop transmitting when you enter Ctrl+C while the generator is running, or if you close the window.
 
 9.  Now you are ready to run the transaction generator. Select the **Debug** menu item, then select **Start Debugging**, or press _F-5_ on your keyboard.
 
@@ -534,7 +535,44 @@ The last bit of interesting code within the generator is where we create the Cos
 
 ![The InitializeCosmosDB method code.](media/telemetry-generator-initialize-cosmos.png 'InitializeCosmosDB method')
 
-## Task 6: Create Power BI dashboard
+## Task 6: View published function
+
+A few minutes ago, you published your Azure Function App from Visual Studio. This Function App contains a single function, `CarEventProcessor`. We will take a look at the published function in this task.
+
+You will notice that the Function App is now set to read-only. This is because you published a generated function.json file from Visual Studio. Function Apps adds this protection when you publish so you do not accidentally overwrite the function.json file or related files through the UI.
+
+1.  Navigate to the [Azure portal](https://portal.azure.com).
+
+2.  Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion-YOUR_UNIQUE_IDENTIFIER**.
+
+    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
+
+3.  Select the **App Service** (Azure Function App) that includes **day1** in its name from the list of resources in your resource group.
+
+    ![The App Service Function App is selected in the resource group.](media/tech-immersion-rg-function-app.png 'tech-immersion resource group')
+
+4.  Expand **Functions (Read Only)** within the navigation tree to the left, then select **CarEventProcessor**.
+
+    ![The Functions node is expanded in the navigation tree, and the CarEventProcessor is selected.](media/function-app-tree.png 'Functions')
+
+5.  Looking at the **function.json** file to the right, notice that it was generated for you when you published from Visual Studio. Also notice how the `bindings` section lines up with the function method in `CarEventProcessorFunctions.cs`:
+
+    ```csharp
+    [FunctionName("CarEventProcessor")]
+    public static async Task CarEventProcessor([CosmosDBTrigger(
+        databaseName: "ContosoAuto",
+        collectionName: "telemetry",
+        ConnectionStringSetting = "CosmosDbConnectionString",
+        LeaseCollectionName = "leases",
+        CreateLeaseCollectionIfNotExists = true)]IReadOnlyList<Document> input,
+        [EventHub("telemetry",
+            Connection="EventHubsConnectionString")]IAsyncCollector<EventData> eventHubOutput,
+        ILogger log)
+    ```
+
+    ![The function.json file is displayed with the bindings highlighted.](media/function-app-functions-json.png 'function.json')
+
+## Task 7: Create Power BI dashboard
 
 In this task, you will use Power BI to create a report showing captured vehicle anomaly data. Then you will pin that report to a live dashboard for near real-time updates.
 
