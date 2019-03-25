@@ -44,18 +44,16 @@ This experience will highlight the new features of SQL Server 2019 with a focus 
 
 ## Experience requirements
 
-Before you begin this lab, you need to find the following information on the Tech Immersion Mega Data & AI Workshop On Demand Lab environment details page:
+Before you begin this lab, you need to find the following information on the Tech Immersion Mega Data & AI Workshop On Demand Lab environment details page, or the document provided to you for this experience:
 
 - Server IP address and port number: `SQL SERVER_2019_CLUSTER URL`
-- SQL username: `SALES DB USERNAME`
-- SQL password: `SALES DB PASSWORD`
+- SQL username: `SQL 2019 Big Data Cluster username`
+- SQL password: `SQL 2019 Big Data Cluster password`
 - Sales database name (your unique copy): `SALES DB`
 - Azure SQL Database server: `AZURE DATABASE SERVER`
 - Azure SQL Database name: `DATABASE NAME`
 - Azure SQL Database username: `DATABASE USER`
 - Azure SQL Database password: `DATABASE PASSWORD`
-
-![Screenshot of the lab environment details](media/environment-details.png 'Environment Details')
 
 ## Before the lab: Connecting to SQL Server 2019
 
