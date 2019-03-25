@@ -64,9 +64,11 @@ In this task, you will configure and run the data generator to save simulated ve
 
     ![The `appsettings.json` file is highlighted in the C:\lab-files\data\4\TelemetryGenerator folder.](media/windows-explorer-appsettings-json.png "Windows explorer")
 
-4. To retrieve your Cosmos DB connection string, open a web browser and navigate to the [Azure portal](https://portal.azure.com). Select **Resource groups** from the left-hand menu, and then select the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
+4. To retrieve your Cosmos DB connection string, open a web browser and navigate to the [Azure portal](https://portal.azure.com). Select **Resource groups** from the left-hand menu, and then select the **tech-immersionXXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
 
    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
+
+   > **IMPORTANT**: There may be two similarly named Cosmos DB instances. For this experience, you want the one in the format **tech-immersionXXXXX** with no hyphen between the word immersion, and your XXXXX unique identifier.
 
 5. Select the **Azure Cosmos DB account** from the list of resources in your resource group.
 
