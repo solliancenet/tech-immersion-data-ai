@@ -348,7 +348,7 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
 2.  Now we are ready to test the bot. Before testing, you must update the **appsettings.json** file in the **AutomotiveSkills** project. To do this, switch back to the solution in Visual Studio and expand the **AutomotiveSkill** project in the Solution Explorer. **Double-click** on the **appsettings.json** file to open it.
 
-3.  Update your `appsettings.json` file with the newly created .bot file name and .bot file secret. The .bot file is located in the root directory of the **AutomotiveSkill** project.
+3.  Update your `appsettings.json` file with the newly created .bot file name and .bot file secret. The .bot file is located in the root directory of the **AutomotiveSkill** project. Most likely, the script that you ran already added the bot file name for you. Example: `tech-immersion-YOUR_UNIQUE_ID.bot`.
 
     ```
       {
@@ -357,7 +357,7 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
       }
     ```
 
-    - Finally, add the .bot file paths for each of your language configurations (English only at this time). You can find the bot file under the **LocaleConfigurations** folder.
+    - Finally, add the .bot file paths for each of your language configurations (English only at this time). You can find the bot file under the **LocaleConfigurations** folder. Make sure that the bot file name ends with `en.bot`. For instance, `tech-immersion-YOUR_UNIQUE_IDen.bot`.
 
     ```
     "defaultLocale": "en-us",
