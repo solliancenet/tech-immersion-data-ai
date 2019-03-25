@@ -30,6 +30,8 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
    ![Select Accept on the Permission requested dialog to continue.](media/luis-permission-requested.png 'Permission requested')
 
+   > If after signing in and accepting requested permissions, you see a loading screen that seems stuck for more than 10 seconds, try refreshing the page.
+
 3. Again, if this is your first time signing in, you will be prompted to select your **Country/Region**. Select the appropriate option from the list, check the service agreement checkbox, then select **Continue**.
 
    ![The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted.](media/luis-accept.png 'Accept Service Agreement')
@@ -69,6 +71,8 @@ The Bot Framework SDK uses what's called an Azure application for authentication
    ![The new password is displayed.](media/app-portal-new-password.png 'New password generated')
 
 6. **Copy and paste** the **Application Id** value to Notepad or a similar text application for later steps.
+
+   ![The Application Id is highlighted.](media/app-portal-app-id.png 'Application Id')
 
 ## Task 3: Deployment
 
