@@ -35,9 +35,9 @@ In this experience, you will learn the mechanics of using Cognitive Search and K
 
 For this experience, you will be using the `tweets` collection in ContosoAuto's Cosmos DB as the data source for your Cognitive Search pipeline. In order to use Cosmos DB as a data source, documents must exist in the target collection prior to creating the Data Source in Azure Search. In this task, you will populate the `tweets` collection in your Cosmos DB `ContosoAuto` database using a tweet generator application running in Visual Studio.
 
-1. Open Windows Explorer and navigate to `C:\lab-files\ai\2`. Double-click on **`CognitiveSearch.sln`** to open the solution in Visual Studio. If you are prompted about how to open the file, choose **Visual Studio 2017**. If you are prompted by Visual Studio to log in, use the Azure credentials you are using for this workshop.
+1. Open File Explorer and navigate to `C:\lab-files\ai\2`. Double-click on **`CognitiveSearch.sln`** to open the solution in Visual Studio. If you are prompted about how to open the file, choose **Visual Studio 2017**. If you are prompted by Visual Studio to log in, use the Azure credentials you are using for this workshop.
 
-   ![Windows Explorer window with `CognitiveSearch.sln` file highlighted.](media/windows-explorer-cognitive-search-sln.png "Windows Explorer")
+   ![File Explorer window with `CognitiveSearch.sln` file highlighted.](media/windows-explorer-cognitive-search-sln.png "File Explorer")
 
    The Visual Studio solution contains the following projects:
 
@@ -164,7 +164,7 @@ With data now streaming into your Cosmos DB `tweets` collection, you are ready t
 
 12. Select **Submit**.
 
-13. Next, navigate to your **Azure Search Service** in the Azure portal by selecting it from the list of resources in the **tech-immersion** resource group.
+13. Next, navigate to the **techimmersionXXXXX** Azure Search Service (where XXXXX is the unique identifier assigned to you for this workshop) in the Azure portal by selecting it from the list of resources in the **tech-immersion** resource group.
 
     ![The tech-immersion Search Service is highlighted in the tech-immersion resource group.](media/tech-immersion-resource-group-search-service.png "Resource group")
 
