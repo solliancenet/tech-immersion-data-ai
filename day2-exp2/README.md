@@ -55,9 +55,11 @@ For this experience, you will be using the `tweets` collection in ContosoAuto's 
 
    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
 
-4. Select your **Azure Cosmos DB account** from the list of resources.
+4. Select the **tech-immersionXXXXX** Azure Cosmos DB account from the list of resources (where XXXXX is the unique identifier assigned to you for this workshop).
 
    ![The Azure Cosmos DB account resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-cosmosdb.png "Tech Immersion resource group")
+
+   > **IMPORTANT**: There may be two Cosmos DB accounts in your resource group. Select the Cosmos DB account named **tech-immersionXXXXX**, with no hyphen between immersion and XXXXX.
 
 5. On your Cosmos DB blade, select **Keys** from the left-hand menu.
 
@@ -481,7 +483,7 @@ In addition to predefined Cognitive skills, you can also integrate custom skills
 
 > While this example uses an Azure Function to host a web API, you can use any approach as long as it meets the [interface requirements for a cognitive skill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-custom-skill-interface). Azure Functions, however, make it very easy to create custom skills.
 
-1. Since you will be using the Translator Text API, you need retrieve your API key from the Azure portal, so it can be used by the Azure Function. As you've done with previous resources, select the **Cognitive Services** resource from the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
+1. Since you will be using the Translator Text API, you need retrieve your API key from the Azure portal, so it can be used by the Azure Function. As you've done with previous resources, select the **tech-immersion-translator** Cognitive Services resource from the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
 
    ![The tech-immersion-translator resource is selected in the tech-immersion resource group.](media/tech-immersion-rg-translator.png "Tech Immersion Resource Group - Translator")
 
