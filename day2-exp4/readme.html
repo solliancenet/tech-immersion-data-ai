@@ -1,7 +1,9 @@
-<h1 id="day-2-experience-4---making-deep-learning-portable-with-onnx">Day 2, Experience 4 - Making deep learning portable with ONNX</h1>
+<h1 id="data-ai-tech-immersion-workshop-product-review-guide-and-lab-instructions">Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions</h1>
+<h2 id="day-2-experience-4---making-deep-learning-portable-with-onnx">Day 2, Experience 4 - Making deep learning portable with ONNX</h2>
 <ul>
-<li><a href="#day-2-experience-4---making-deep-learning-portable-with-onnx">Day 2, Experience 4 - Making deep learning portable with ONNX</a>
+<li><a href="#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions">Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions</a>
 <ul>
+<li><a href="#day-2-experience-4---making-deep-learning-portable-with-onnx">Day 2, Experience 4 - Making deep learning portable with ONNX</a></li>
 <li><a href="#technology-overview">Technology overview</a></li>
 <li><a href="#scenario-overview">Scenario overview</a></li>
 <li><a href="#task-1-train-and-deploy-a-deep-learning-model">Task 1: Train and deploy a deep learning model</a></li>
@@ -38,28 +40,38 @@
 <h2 id="scenario-overview">Scenario overview</h2>
 <p>In this experience you will learn how Contoso Auto can leverage Deep Learning technologies to scan through their vehicle specification documents to find compliance issues with new regulations. Then they will deploy this model, standardizing operationalization with ONNX. You will see how this simplifies inference runtime code, enabling pluggability of different models and targeting a broad range of runtime environments from Linux based web services to Windows/.NET based apps.</p>
 <h2 id="task-1-train-and-deploy-a-deep-learning-model">Task 1: Train and deploy a deep learning model</h2>
-<p>In this task, you will train a deep learning model to classify the descriptions of car components provided by technicians as compliant or non-compliant, convert it to ONNX, and deploy it as a web service. To accomplish this, you will use an Azure Databricks notebook to explore the transaction and account data.</p>
+<p>In this task, you will train a deep learning model to classify the descriptions of car components provided by technicians as compliant or non-compliant, convert it to ONNX, and deploy it as a web service. To accomplish this, you will use an Azure Notebook and Azure Machine Learning.</p>
 <ol type="1">
-<li><p>From the Azure Portal, navigate to your deployed Azure Databricks workspace and select <strong>Launch Workspace</strong>.</p>
+<li><p>To start, open a new web browser window and navigate to <a href="https://notebooks.azure.com" class="uri">https://notebooks.azure.com</a>.</p></li>
+<li><p>Select <strong>Sign In</strong> and then use your Microsoft Account to complete the sign in process.</p>
 <figure>
-<img src="media/01.png" title="Launch Workspace" alt="Launch Workspace" /><figcaption>Launch Workspace</figcaption>
+<img src="media/01.png" title="Sign In" alt="The Sign In button" /><figcaption>The Sign In button</figcaption>
 </figure></li>
-<li><p>Within the Workspace, using the command bar on the left, select <strong>Workspace</strong>, <strong>Users</strong> and select your username (the entry with house icon).</p>
+<li><p>Dismiss the dialog to create the user ID (you will not need this). Within the Microsoft Azure Notebooks portal, select <strong>My Projects</strong> from the menu at the top.</p>
 <figure>
-<img src="media/02.png" title="Selecting Workspace, Users" alt="Selecting Workspace, Users" /><figcaption>Selecting Workspace, Users</figcaption>
+<img src="media/02.png" title="My Projects" alt="The My Projects button" /><figcaption>The My Projects button</figcaption>
 </figure></li>
-<li><p>In the blade that appears, select the downwards pointing chevron next to your username, and select <strong>Import</strong>.</p>
+<li><p>Then select <strong>New Project</strong>.</p>
 <figure>
-<img src="media/03.png" title="Select Import" alt="Select Import" /><figcaption>Select Import</figcaption>
+<img src="media/03.png" title="New Project" alt="The New Project button" /><figcaption>The New Project button</figcaption>
 </figure></li>
-<li><p>On the Import Notebooks dialog, select <strong>browse</strong> and then select <code>Deep_Learning.dbc</code> from your lab files folder for this experience (C:-files\4) and select <strong>Import</strong>.</p>
+<li><p>On the Create New Project dialog, provide a Project Name (this should be a user friendly description) and Project ID (this will form a part of the URL used to access this project in the browser) and uncheck Public. Select <strong>Create</strong>.</p>
 <figure>
-<img src="media/04.png" title="Import Notebooks" alt="Import the notebook" /><figcaption>Import the notebook</figcaption>
+<img src="media/04.png" title="Create New Project" alt="The Create New Project dialog" /><figcaption>The Create New Project dialog</figcaption>
 </figure></li>
-<li><p>The notebook should appear in the list. Double-click this notebook to open it. This is the notebook you will use in completing this lab. Follow the instructions in the notebook, and then return to this guide to complete the experience.</p></li>
+<li><p>Select the <strong>Upload</strong> menu and then choose <strong>From Computer</strong>.</p>
+<figure>
+<img src="media/05.png" title="Upload" alt="The Upload menu" /><figcaption>The Upload menu</figcaption>
+</figure></li>
+<li><p>In the Upload files from Computer dialog, select <strong>Choose Files</strong> and then select the <code>deep-learning.ipynb</code> from lab starter files (C:-files\4). Select <strong>Upload</strong> to upload the notebook and then select <strong>Done</strong> to dismiss the dialog.</p>
+<figure>
+<img src="media/06.png" title="Upload files from Computer" alt="The Upload files from Computer dialog" /><figcaption>The Upload files from Computer dialog</figcaption>
+</figure></li>
+<li><p>In the listing, select the Notebook you just uploaded (deep-learning.ipynb) to open it.</p></li>
+<li><p>Follow the instructions within the notebook to complete the experience.</p></li>
 </ol>
 <h2 id="wrap-up">Wrap-up</h2>
-<p>Congratulations on completing the deep learning with ONNX experience. In this experience you completed an end-to-end process for training a deep learning model, converting it to ONNX and deploying the model into production, all from within an Azure Databricks notebook.</p>
+<p>Congratulations on completing the deep learning with ONNX experience. In this experience you completed an end-to-end process for training a deep learning model, converting it to ONNX and deploying the model into production, all from within an Azure Notebook.</p>
 <p>To recap, you experienced:</p>
 <ol type="1">
 <li>Using <a href="https://keras.io/">Keras</a> to create and train a deep learning model for classifying text data on a GPU enabled cluster provided by Azure Databricks.</li>
@@ -69,4 +81,3 @@
 </ol>
 <h2 id="additional-resources-and-more-information">Additional resources and more information</h2>
 <p>To learn more about the Azure Machine Learning service, visit the <a href="https://docs.microsoft.com/azure/machine-learning/service">documentation</a></p>
-<p>To learn more about Azure Databricks, visit the <a href="https://docs.microsoft.com/azure/azure-databricks/">documentation</a></p>

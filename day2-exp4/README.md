@@ -1,13 +1,18 @@
-# Day 2, Experience 4 - Making deep learning portable with ONNX
+# Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-- [Day 2, Experience 4 - Making deep learning portable with ONNX](#day-2-experience-4---making-deep-learning-portable-with-onnx)
+
+
+## Day 2, Experience 4 - Making deep learning portable with ONNX
+
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
+  - [Day 2, Experience 4 - Making deep learning portable with ONNX](#day-2-experience-4---making-deep-learning-portable-with-onnx)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
   - [Task 1: Train and deploy a deep learning model](#task-1-train-and-deploy-a-deep-learning-model)
   - [Wrap-up](#wrap-up)
   - [Additional resources and more information](#additional-resources-and-more-information)
 
-## Technology overview
+## Technology overview 
 
 Using the [main Python SDK](https://docs.microsoft.com/python/api/overview/azure/ml/intro?view=azure-ml-py) and the [Data Prep SDK](https://docs.microsoft.com/python/api/overview/azure/dataprep/intro?view=azure-dataprep-py) for Azure Machine Learning as well as open-source Python packages, you can build and train highly accurate machine learning and deep-learning models yourself in an Azure Machine Learning service Workspace. You can choose from many machine learning components available in open-source Python packages, such as the following examples:
 

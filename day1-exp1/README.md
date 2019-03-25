@@ -1,6 +1,11 @@
-# Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters
+# Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-- [Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters](#day-1-experience-1---handling-big-data-with-sql-server-2019-big-data-clusters)
+
+
+## Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters
+
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
+  - [Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters](#day-1-experience-1---handling-big-data-with-sql-server-2019-big-data-clusters)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
   - [Experience requirements](#experience-requirements)

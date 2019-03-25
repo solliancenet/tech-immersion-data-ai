@@ -1,6 +1,11 @@
-# Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator
+# Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-- [Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator](#day-2-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator)
+
+
+## Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator
+
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
+  - [Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator](#day-2-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
   - [Task 1: Sign in to LUIS to retrieve the Authoring Key](#task-1-sign-in-to-luis-to-retrieve-the-authoring-key)

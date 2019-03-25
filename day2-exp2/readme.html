@@ -1,7 +1,9 @@
-<h1 id="day-2-experience-2---yield-quick-insights-from-unstructured-data-with-knowledge-mining-and-cognitive-search">Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search</h1>
+<h1 id="data-ai-tech-immersion-workshop-product-review-guide-and-lab-instructions">Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions</h1>
+<h2 id="day-2-experience-2---yield-quick-insights-from-unstructured-data-with-knowledge-mining-and-cognitive-search">Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search</h2>
 <ul>
-<li><a href="#day-2-experience-2---yield-quick-insights-from-unstructured-data-with-knowledge-mining-and-cognitive-search">Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search</a>
+<li><a href="#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions">Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions</a>
 <ul>
+<li><a href="#day-2-experience-2---yield-quick-insights-from-unstructured-data-with-knowledge-mining-and-cognitive-search">Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search</a></li>
 <li><a href="#technology-overview">Technology overview</a></li>
 <li><a href="#scenario-overview">Scenario overview</a></li>
 <li><a href="#task-1-populate-cosmos-db-with-tweets-from-a-generator">Task 1: Populate Cosmos DB with tweets from a generator</a></li>
@@ -31,9 +33,9 @@
 <h2 id="task-1-populate-cosmos-db-with-tweets-from-a-generator">Task 1: Populate Cosmos DB with tweets from a generator</h2>
 <p>For this experience, you will be using the <code>tweets</code> collection in ContosoAuto’s Cosmos DB as the data source for your Cognitive Search pipeline. In order to use Cosmos DB as a data source, documents must exist in the target collection prior to creating the Data Source in Azure Search. In this task, you will populate the <code>tweets</code> collection in your Cosmos DB <code>ContosoAuto</code> database using a tweet generator application running in Visual Studio.</p>
 <ol type="1">
-<li><p>Open Windows Explorer and navigate to <code>C:\lab-files\ai\2</code>. Double-click on <strong><code>CognitiveSearch.sln</code></strong> to open the solution in Visual Studio. If you are prompted about how to open the file, choose <strong>Visual Studio 2017</strong>. If you are prompted by Visual Studio to log in, use the Azure credentials you are using for this workshop.</p>
+<li><p>Open File Explorer and navigate to <code>C:\lab-files\ai\2</code>. Double-click on <strong><code>CognitiveSearch.sln</code></strong> to open the solution in Visual Studio. If you are prompted about how to open the file, choose <strong>Visual Studio 2017</strong>. If you are prompted by Visual Studio to log in, use the Azure credentials you are using for this workshop.</p>
 <figure>
-<img src="media/windows-explorer-cognitive-search-sln.png" title="Windows Explorer" alt="Windows Explorer window with CognitiveSearch.sln file highlighted." /><figcaption>Windows Explorer window with <code>CognitiveSearch.sln</code> file highlighted.</figcaption>
+<img src="media/windows-explorer-cognitive-search-sln.png" title="File Explorer" alt="File Explorer window with CognitiveSearch.sln file highlighted." /><figcaption>File Explorer window with <code>CognitiveSearch.sln</code> file highlighted.</figcaption>
 </figure>
 <p>The Visual Studio solution contains the following projects:</p>
 <ul>
@@ -51,10 +53,13 @@
 <figure>
 <img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
 </figure></li>
-<li><p>Select your <strong>Azure Cosmos DB account</strong> from the list of resources.</p>
+<li><p>Select the <strong>tech-immersionXXXXX</strong> Azure Cosmos DB account from the list of resources (where XXXXX is the unique identifier assigned to you for this workshop).</p>
 <figure>
 <img src="media/tech-immersion-rg-cosmosdb.png" title="Tech Immersion resource group" alt="The Azure Cosmos DB account resource is selected from the list of resources in the tech-immersion resource group." /><figcaption>The Azure Cosmos DB account resource is selected from the list of resources in the tech-immersion resource group.</figcaption>
-</figure></li>
+</figure>
+<blockquote>
+<p><strong>IMPORTANT</strong>: There may be two Cosmos DB accounts in your resource group. Select the Cosmos DB account named <strong>tech-immersionXXXXX</strong>, with no hyphen between immersion and XXXXX.</p>
+</blockquote></li>
 <li><p>On your Cosmos DB blade, select <strong>Keys</strong> from the left-hand menu.</p>
 <figure>
 <img src="media/cosmos-db-keys-link.png" title="Keys link" alt="The Keys link on the left-hand menu is highlighted." /><figcaption>The Keys link on the left-hand menu is highlighted.</figcaption>
@@ -122,7 +127,7 @@
 </blockquote></li>
 <li><p>On the <strong>Add cognitive search (Optional)</strong> tab:</p>
 <ul>
-<li>Expand <strong>Attached Cognitive Services</strong> and select your <strong>tech-immersion-cog-services</strong> instance. This will associate your Cognitive Services account with the Skillset you are creating.</li>
+<li>Expand <strong>Attached Cognitive Services</strong> and select your <strong>tech-immersion-cogserv</strong> instance. This will associate your Cognitive Services account with the Skillset you are creating.</li>
 <li>Expand <strong>Add Enrichments</strong>, enter <strong>tweet-skillset</strong> as the name, and select <strong>text</strong> as the source data field. Check the box next to Cognitive Skills to select all of the options.</li>
 </ul>
 <figure>
@@ -156,10 +161,10 @@
 <img src="media/cosmos-db-add-azure-search-create-indexer.png" title="Create an indexer" alt="The Create an indexer tab is displayed, with the settings specified above entered into the form." /><figcaption>The Create an indexer tab is displayed, with the settings specified above entered into the form.</figcaption>
 </figure>
 <blockquote>
-<p>An indexer in Azure Search is a crawler that extracts searchable data and metadata from an external Azure data source and populates an index based on field-to-field mappings between the index and your data source. This approach is sometimes referred to as a "pull model’ because the service pulls data in without you having to write any code that adds data to an index.</p>
+<p>An indexer in Azure Search is a crawler that extracts searchable data and metadata from an external Azure data source and populates an index based on field-to-field mappings between the index and your data source. This approach is sometimes referred to as a ‘pull model’ because the service pulls data in without you having to write any code that adds data to an index.</p>
 </blockquote></li>
 <li><p>Select <strong>Submit</strong>.</p></li>
-<li><p>Next, navigate to your <strong>Azure Search Service</strong> in the Azure portal by selecting it from the list of resources in the <strong>tech-immersion</strong> resource group.</p>
+<li><p>Next, navigate to the <strong>techimmersionXXXXX</strong> Azure Search Service (where XXXXX is the unique identifier assigned to you for this workshop) in the Azure portal by selecting it from the list of resources in the <strong>tech-immersion</strong> resource group.</p>
 <figure>
 <img src="media/tech-immersion-resource-group-search-service.png" title="Resource group" alt="The tech-immersion Search Service is highlighted in the tech-immersion resource group." /><figcaption>The tech-immersion Search Service is highlighted in the tech-immersion resource group.</figcaption>
 </figure></li>
@@ -232,10 +237,13 @@
 </figure></li>
 <li><p>Return to Visual Studio and the <code>appsettings.json</code> file, and locate the <code>AZURE_SEARCH_SERVICE_KEY</code> setting. Paste the key you copied into the value for this setting. It should look similar to:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb5-1" title="1"><span class="er">&quot;AZURE_SEARCH_SERVICE_KEY&quot;:</span> <span class="er">&quot;B54E21DC49EB3B5A322190851F22BA8E&quot;</span></a></code></pre></div></li>
-<li><p>Return to the Azure portal, and select your <strong>Cognitive Services</strong> account from the list of resources under the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop).</p>
+<li><p>Return to the Azure portal, and select the <strong>Cognitive Services</strong> account named <strong>tech-immersion-cogserv</strong> from the list of resources under the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop).</p>
 <figure>
 <img src="media/tech-immersion-resource-group-cog-services.png" title="Cognitive Services resource" alt="The Cognitive Services resource is highlighted in the tech-immersion resource group." /><figcaption>The Cognitive Services resource is highlighted in the tech-immersion resource group.</figcaption>
-</figure></li>
+</figure>
+<blockquote>
+<p><strong>NOTE</strong>: There are three different Cognitive Services accounts in the resource group. You will want the one named <strong>tech-immersion-cogserv</strong> for this experience.</p>
+</blockquote></li>
 <li><p>On the Cognitive Services blade, select <strong>Properties</strong> from the left-hand menu, and then copy the value for the <strong>Resource ID</strong> field by selecting the copy button to the right of the field.</p>
 <figure>
 <img src="media/cog-services-properties.png" title="Properties" alt="Cognitive Services properties blade." /><figcaption>Cognitive Services properties blade.</figcaption>
@@ -248,7 +256,7 @@
 </figure></li>
 <li><p>Return to Visual Studio and in the <code>appsettings.json</code> file, paste the Cognitive Services Key 1 value into the value for the <code>COGNITIVE_SERVICES_KEY</code> field. It will looks similar to the following.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb7-1" title="1"><span class="er">&quot;COGNITIVE_SERVICES_KEY&quot;:</span> <span class="er">&quot;872353ecac8d43a7bf5a60c3ece9ff4a&quot;</span></a></code></pre></div></li>
-<li><p>The final settings you need to retrieve are those for your Azure Function App. In the Azure portal, navigate to your <strong>tech-immersion-functions-XXXXX</strong> Function App (where XXXXX is the unique identifier assigned to you for this workshop), and copy the <strong>URL</strong> on the Overview blade.</p>
+<li><p>The final settings you need to retrieve are those for your Azure Function App. In the Azure portal, navigate to your <strong>ti-function-day2-XXXXX</strong> Function App (where XXXXX is the unique identifier assigned to you for this workshop), and copy the <strong>URL</strong> on the Overview blade.</p>
 <figure>
 <img src="media/function-app-url.png" title="Function App" alt="The URL field is highlighted on the overview blade of the Function App." /><figcaption>The URL field is highlighted on the overview blade of the Function App.</figcaption>
 </figure></li>
@@ -310,7 +318,10 @@ Content-Type: application/json</code></pre></li>
 <blockquote>
 <p>In addition to updating the Skillset JSON, the Indexer and Index were also be updated to include a new field named <code>sentiment</code>.</p>
 </blockquote></li>
-<li><p>The process above deleted and recreated your Index, Indexer and Skillset, so you may need to select <strong>Indexers</strong> and the <strong>tweet-indexer</strong> on your Azure Search Service blade, and then select <strong>Run</strong> to force the Indexer to run against your tweet data again before attempting to run a search against the index in the next step.</p></li>
+<li><p>The process above deleted and recreated your Index, Indexer and Skillset, so you may need to select <strong>Indexers</strong> and the <strong>tweet-indexer</strong> on your Azure Search Service blade, and then select <strong>Run</strong> to force the Indexer to run against your tweet data again before attempting to run a search against the index in the next step.</p>
+<blockquote>
+<p>The Indexer <strong>Run</strong> screen does not refresh when the indexer has finished, so you can return to the overview blade of the Search service, and then select <strong>Indexers</strong>. Then, you can use the <strong>Refresh</strong> button on the Search service tool bar, next to Search explorer, to refresh the status. The <strong>tweet-indexer</strong> will display a status of <strong>Success</strong> when it finishes.</p>
+</blockquote></li>
 <li><p>Return to your Azure Search service in the Azure portal and select <strong>Search explorer</strong> on the Search Service toolbar.</p>
 <figure>
 <img src="media/azure-search-service-toolbar-search-explorer.png" title="Search Service toolbar" alt="The Search explorer button on the Search Service toolbar is highlighted." /><figcaption>The Search explorer button on the Search Service toolbar is highlighted.</figcaption>
@@ -423,7 +434,7 @@ Content-Type: application/json</code></pre></li>
 <p>While this example uses an Azure Function to host a web API, you can use any approach as long as it meets the <a href="https://docs.microsoft.com/en-us/azure/search/cognitive-search-custom-skill-interface">interface requirements for a cognitive skill</a>. Azure Functions, however, make it very easy to create custom skills.</p>
 </blockquote>
 <ol type="1">
-<li><p>Since you will be using the Translator Text API, you need retrieve your API key from the Azure portal, so it can be used by the Azure Function. As you’ve done with previous resources, select the <strong>Cognitive Services</strong> resource from the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop).</p>
+<li><p>Since you will be using the Translator Text API, you need retrieve your API key from the Azure portal, so it can be used by the Azure Function. As you’ve done with previous resources, select the <strong>tech-immersion-translator</strong> Cognitive Services resource from the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop).</p>
 <figure>
 <img src="media/tech-immersion-rg-translator.png" title="Tech Immersion Resource Group - Translator" alt="The tech-immersion-translator resource is selected in the tech-immersion resource group." /><figcaption>The tech-immersion-translator resource is selected in the tech-immersion resource group.</figcaption>
 </figure></li>
@@ -452,7 +463,7 @@ Content-Type: application/json</code></pre></li>
 <figure>
 <img src="media/visual-studio-function-publish-target.png" title="Pick a publish target" alt="Select Existing is highlighted and selected on the Pick a publish target dialog. The publish button is highlighted." /><figcaption>Select Existing is highlighted and selected on the Pick a publish target dialog. The publish button is highlighted.</figcaption>
 </figure></li>
-<li><p>On the <strong>App service</strong> dialog, select your Subscription and locate the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop) in the list. Select your <strong>tech-immersion-functions</strong> Function App from this list of resources.</p>
+<li><p>On the <strong>App service</strong> dialog, select your Subscription and locate the <strong>tech-immersion-XXXXX</strong> resource group (where XXXXX is the unique identifier assigned to you for this workshop) in the list. Select the Function App named <strong>ti-function-day2-XXXXX</strong> from the list of resources (where XXXXX is the unique identifier assigned to you for this workshop).</p>
 <figure>
 <img src="media/visual-studio-function-publish-app-service.png" title="App service" alt="The tech-immersion-functions Function App is highlighted in the search results." /><figcaption>The tech-immersion-functions Function App is highlighted in the search results.</figcaption>
 </figure>

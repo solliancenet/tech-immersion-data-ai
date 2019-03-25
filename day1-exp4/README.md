@@ -1,6 +1,11 @@
-# Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI
+# Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-- [Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI](#day-1-experience-4---delivering-the-modern-data-warehouse-with-azure-sql-data-warehouse-azure-databricks-azure-data-factory-and-power-bi)
+
+
+## Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI
+
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
+  - [Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI](#day-1-experience-4---delivering-the-modern-data-warehouse-with-azure-sql-data-warehouse-azure-databricks-azure-data-factory-and-power-bi)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
   - [Task 1: Start the vehicle telemetry generator](#task-1-start-the-vehicle-telemetry-generator)
