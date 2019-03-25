@@ -74,8 +74,8 @@ In this task, you will use the Microsoft [Data Migration Assistant](https://docs
 
    - **Server name**: Enter the DNS name of the shared sqlServer2008R2 VM, **`sqlserver2008r2.westus.cloudapp.azure.com`**.
    - **Authentication type**: Select **SQL Server Authentication**.
-   - **Username**: Enter **WorkshopUser**.
-   - **Password**: Enter **Password.1!!**.
+   - **Username**: Enter **WorkshopUser**
+   - **Password**: Enter **Password.1!!**
    - **Encrypt connection**: Check this box.
    - **Trust server certificate**: Check this box.
 
@@ -120,8 +120,8 @@ In this task, you will use the Microsoft [Data Migration Assistant](https://docs
 
     - **Server name**: Enter the DNS name of the shared sqlServer2008R2 VM, **`sqlserver2008r2.westus.cloudapp.azure.com`**.
     - **Authentication type**: Select **SQL Server Authentication**.
-    - **Username**: Enter **WorkshopUser**.
-    - **Password**: Enter **Password.1!!**.
+    - **Username**: Enter **WorkshopUser**
+    - **Password**: Enter **Password.1!!**
     - **Encrypt connection**: Check this box.
     - **Trust server certificate**: Check this box.
 
@@ -157,15 +157,15 @@ To migrate the `ContosoAutoDb` database from SQL 2008 R2 to SQL MI you will use 
 
    - **Server name**: Enter the name of the shared SQL MI server, **`tech-immersion-sqlmi-shared.521f7783692d.database.windows.net`**.
    - **Authentication**: Select **SQL Server Authentication**.
-   - **Login**: Enter **tiuser**.
-   - **Password**: Enter **Password.1234567890**.
+   - **Login**: Enter **tiuser**
+   - **Password**: Enter **Password.1234567890**
    - Check the **Remember password** box.
 
    ![Connection dialog for SSMS.](media/ssms-connect-sql-mi.png "SSMS")
 
 2. Select **Connect**.
 
-3. To preform the `RESTORE` process, credentials for a pre-configured storage account and SAS token have already been added to the Managed Instance using the [create a credential](https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017) method. This process essentially creates a connection from your SQL MI database to the Blob storage account, allowing you to access files stored in the target container, `database-backup`. Because this is a shared SQL MI, only one credential is needed for all attendees. If you are curious, you would create it with a SQL statement similar to the below.
+3. To perform the `RESTORE` process, credentials for a pre-configured storage account and SAS token have already been added to the Managed Instance using the [create a credential](https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017) method. This process essentially creates a connection from your SQL MI database to the Blob storage account, allowing you to access files stored in the target container, `database-backup`. Because this is a shared SQL MI, only one credential is needed for all attendees. If you are curious, you would create it with a SQL statement similar to the below.
 
    ```sql
    CREATE CREDENTIAL [https://techimmersion.blob.core.windows.net/labfiles/data/3]
@@ -173,7 +173,7 @@ To migrate the `ContosoAutoDb` database from SQL 2008 R2 to SQL MI you will use 
    SECRET = 'sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2099-03-22T05:33:07Z&st=2019-03-21T21:33:07Z&spr=https&sig=xCq7hZfgdtM1UaN9%2FToz04GT5d5RsKaeb1JjWrpuKHE%3D'
    ```
 
-4. You can verify the credential's access to the Blob storage account by selecting **New Query** again from the SSMS toolbar. Paste the following SQL script to get a backup file list from the storage account into the new query window and select **Execute** from the toolbar.
+4. You can verify the credential's access to the Blob storage account by selecting **New Query** from the SSMS toolbar. Paste the following SQL script to get a backup file list from the storage account into the new query window and select **Execute** from the toolbar.
 
    ```sql
    RESTORE FILELISTONLY FROM URL = 'https://techimmersion.blob.core.windows.net/labfiles/data/3/ContosoAutoDb.bak'
@@ -309,7 +309,7 @@ In this task, you will enable DDM on the `CardNumber` field in the `CreditCard` 
    GO
 
    ALTER TABLE [Sales].[CreditCard]
-   ALTER COLUMN [CardNumber] NVARCHAR(25) MASKED WITH (FUNCTION = 'partial(0,"xxx-xxx-xxx-",4)")
+   ALTER COLUMN [CardNumber] NVARCHAR(25) MASKED WITH (FUNCTION = 'partial(0,"xxx-xxx-xxx-",4)')
    ```
 
    ![The SQL script above is pasted into the new query window. The Execute button is highlighted and a success message is displayed in the Messages pane.](media/ssms-sql-mi-ddm-add-mask.png "Add DDM Mask")
@@ -481,11 +481,11 @@ Server=tcp:tech-immersion-sql-mi.3e134c88d9f6.database.windows.net;Database=Cont
 
 > Note the addition of `ApplicationIntent=ReadOnly;` to the end of the connection string.
 
-1. Using a web browser, navigate to the [Azure portal](https://portal.azure.com), select **Resource groups** from the left-hand menu, and then select the resource group named **tech-immersion**.
+1. Using a web browser, navigate to the [Azure portal](https://portal.azure.com), select **Resource groups** from the left-hand menu, and then select the resource group named **tech-immersion-XXXXX** (where XXXXX is the unique ID assigned to you for this workshop).
 
    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
 
-2. In the tech-immersion resource group, select the **tech-immersion-web App Service** from the list of resources.
+2. In the tech-immersion resource group, select the **techimmersionwebappXXXXX** App Service from the list of resources (where XXXXX is the unique ID assigned to you for this workshop).
 
    ![The App Service resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-appservice.png "Tech Immersion resource group")
 
@@ -561,41 +561,45 @@ In this task, you will review an assessment report generated by [Advance Data Se
 
    > The [SQL Vulnerability Assessment service](https://docs.microsoft.com/azure/sql-database/sql-vulnerability-assessment) is a service that provides visibility into your security state, and includes actionable steps to resolve security issues, and enhance your database security.
 
-6. On the Vulnerability Assessment blade, you will see a dashboard, displaying the number of failing checks, passing checks, and a breakdown of the risk summary by severity level.
+6. On the Vulnerability Assessment blade, select **Scan** on the toolbar.
+
+    ![Vulnerability assessment scan button.](media/vulnerability-assessment-scan.png "Scan")
+
+7. When the scan completes, you will see a dashboard, displaying the number of failing checks, passing checks, and a breakdown of the risk summary by severity level.
 
     ![The Vulnerability Assessment dashboard is displayed.](media/sql-mi-vulnerability-assessment-dashboard.png "Vulnerability Assessment dashboard")
 
     > Scans are run on a schedule, so if you see a message that no vulnerabilities are found your database may not have been scanned yet. You will need to run a scan manually. To do this, select the **Scan** button on the toolbar, and follow any prompts to start a scan. This will take a minute or so to complete.
 
-7. In the scan results, take a few minutes to browse both the Failed and Passed checks, and review the types of checks that are performed. In the **Failed** the list, locate the security check for **Transparent data encryption**. This check has an ID of **VA1219**.
+8. In the scan results, take a few minutes to browse both the Failed and Passed checks, and review the types of checks that are performed. In the **Failed** the list, locate the security check for **Transparent data encryption**. This check has an ID of **VA1219**.
 
     ![The VA1219 finding for Transparent data encryption is highlighted.](media/sql-mi-vulnerability-assessment-failed-va1219.png "Vulnerability assessment")
 
-8. Select the **VA1219** finding to view the detailed description.
+9. Select the **VA1219** finding to view the detailed description.
 
     ![The details of the VA1219 - Transparent data encryption should be enabled finding are displayed with the description, impact, and remediation fields highlighted.](media/sql-mi-vulnerability-assessment-failed-va1219-details.png "Vulnerability Assessment")
 
     > The details for each finding provide more insight into the reason for the finding. Of note are the fields describing the finding, the impact of the recommeneded settings, and details on remediation for the finding.
 
-9. Let's now act on the recommendation remediation steps for the finding, and enable [Transparent Data Encryption](https://docs.microsoft.com/azure/sql-database/transparent-data-encryption-azure-sql) for the `ContosoAutoDb` database. To accomplish this, you will switch back to using SSMS for the next few steps.
+10. Let's now act on the recommendation remediation steps for the finding, and enable [Transparent Data Encryption](https://docs.microsoft.com/azure/sql-database/transparent-data-encryption-azure-sql) for the `ContosoAutoDb` database. To accomplish this, you will switch back to using SSMS for the next few steps.
 
     > Transparent data encryption (TDE) needs to be manually enabled for Azure SQL Managed Instance. TDE helps protect Azure SQL Database, Azure SQL Managed Instance, and Azure Data Warehouse against the threat of malicious activity. It performs real-time encryption and decryption of the database, associated backups, and transaction log files at rest without requiring changes to the application.
 
-10. In SSMS, select **New Query** from the toolbar, paste the following SQL script into the new query window. Replace `<XXXXX>` in the `ALTER DATABASE` statement to include the unique identifier of your database which will be `ContosoAutoDb-XXXXX` (e.g., ContosoAutoDb-0123).
+11. In SSMS, select **New Query** from the toolbar, paste the following SQL script into the new query window. Replace `<XXXXX>` in the `ALTER DATABASE` statement to include the unique identifier of your database which will be `ContosoAutoDb-XXXXX` (e.g., ContosoAutoDb-0123).
 
     ```sql
-    ALTER DATABASE ContosoAutoDb-XXXXX SET ENCRYPTION ON
+    ALTER DATABASE [ContosoAutoDb-XXXXX] SET ENCRYPTION ON
     ```
 
     ![A new query window is displayed, with the script above pasted into it.](media/ssms-sql-mi-enable-tde.png "New query")
 
     > You turn transparent data encryption on and off on the database level. To enable transparent data encryption on a database in Azure SQL Managed Instance use must use T-SQL.
 
-11. Select **Execute** from the SSMS toolbar. After a few seconds, you will see a message that the "Commands completed successfully."
+12. Select **Execute** from the SSMS toolbar. After a few seconds, you will see a message that the "Commands completed successfully."
 
     ![The Excute button is highlighted on the SSMS toolbar, and the Commands completed successfully message is highlighted in the output window.](media/ssms-sql-mi-enable-tde-success.png "Execute")
 
-12. You can verify the encryption state and view information the associated encryption keys by using the [sys.dm_database_encryption_keys view](https://docs.microsoft.com/sql/relational-databases/system-dynamic-management-views/sys-dm-database-encryption-keys-transact-sql). Select **New Query** on the SSMS toolbar again, and paste the following query into the new query window:
+13. You can verify the encryption state and view information the associated encryption keys by using the [sys.dm_database_encryption_keys view](https://docs.microsoft.com/sql/relational-databases/system-dynamic-management-views/sys-dm-database-encryption-keys-transact-sql). Select **New Query** on the SSMS toolbar again, and paste the following query into the new query window:
 
     ```sql
     SELECT * FROM sys.dm_database_encryption_keys
@@ -603,25 +607,25 @@ In this task, you will review an assessment report generated by [Advance Data Se
 
     ![The query above is pasted into a new query window in SSMS.](media/ssms-sql-mi-database-encryption-keys.png "New query")
 
-13. Select **Execute** from the SSMS toolbar. You will see two records in the Results window, which provide information about the encryption state and keys used for encryption.
+14. Select **Execute** from the SSMS toolbar. You will see two records in the Results window, which provide information about the encryption state and keys used for encryption.
 
     ![The Execute button on the SSMS toolbar is highlighted, and in the Results pane the two records about the encryption state and keys for the ContosoAutoDb database are highlighted.](media/ssms-sql-mi-database-encryption-keys-results.png "Results")
 
     > By default, service-managed transparent data encryption is used. A transparent data encryption certificate is automatically generated for the server that contains the database.
 
-14. Return to the Azure portal and the Vulnerability Assessment blade for your copy of the `ContosoAutoDb` managed database (e.g, ContosoAutoDb-0123). On the toolbar, select **Scan** to start a new assessment of the database.
+15. Return to the Azure portal and the Vulnerability Assessment blade for your copy of the `ContosoAutoDb` managed database (e.g, ContosoAutoDb-0123). On the toolbar, select **Scan** to start a new assessment of the database.
 
     ![The Scan button on the SQL MI Vulnerability Assessment dialog is highlighted.](media/sml-mi-vulnerability-assessment-scan.png "Scan")
 
-15. When the scan completes, notice that the numbers for failing and passing checks has changed. The number of failing checks has been reduced by 1 and the number of passing checks has increased by 1.
+16. When the scan completes, notice that the numbers for failing and passing checks has changed. The number of failing checks has been reduced by 1 and the number of passing checks has increased by 1.
 
     ![The total number of failing and passing checks is highlighted.](media/sql-mi-vulnerability-assessment-checks-totals.png "Vulnerability Assessment")
 
-16. On the **Failed** tab, enter **VA1219** into the search filter box, and observe that the previous failure is no longer in the Failed list.
+17. On the **Failed** tab, enter **VA1219** into the search filter box, and observe that the previous failure is no longer in the Failed list.
 
     ![The Failed tab is highlighted and VA1219 is entered into the search filter. The list displays no results.](media/sql-mi-vulnerability-assessment-failed-filter-va1219.png "Failed")
 
-17. Now, select the **Passed** tab, and observe the **VA1219** check is listed with a status of PASS.
+18. Now, select the **Passed** tab, and observe the **VA1219** check is listed with a status of PASS.
 
     ![The Passed tab is highlighted and VA1219 is entered into the search filter. VA1219 with a status of PASS is highlighted in the results.](media/sql-mi-vulnerability-assessment-passed-va1219.png "Passed")
 
