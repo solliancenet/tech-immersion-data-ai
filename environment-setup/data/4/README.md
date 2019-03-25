@@ -97,13 +97,13 @@ The following secrets must be added to Key Vault:
 
 | Name | Value |
 | ---- | ----- |
-| ADLS-Gen2-Account-Name | The user's ADLS Gen2 account name |
-| Azure-Tenant-ID | The Directory ID for the Azure Active Directory Tenant |
-| ContosoAuto-SP-Client-ID | The Application ID of the shared Service Principal |
-| ContosoAuto-SP-Client-Key | The password for the shared Service Principal |
+| ADLS-Gen2-Account-Name | `adlsstrgXXXXX` |
+| Azure-Tenant-ID | `f94768c8-8714-4abe-8e2d-37a64b18216a` |
+| ContosoAuto-SP-Client-ID | `ea2ca9d8-6691-4e6e-b5ee-2d246fd3f0c7` |
+| ContosoAuto-SP-Client-Key | `eSQ8LALrZqo74YcxXhHPRML2Fz37aHOmxI/Z89TCk+o=` |
 | Cosmos-DB-Key | The Primary Key for the user's Cosmos DB instance |
 | Cosmos-DB-Uri | The URI for the user's Cosmos DB instance |
-| Sql-Dw-Password | The password for the SQL DW. Should be set to `Password.1!!`  |
+| Sql-Dw-Password | `Password.1!!`  |
 | Sql-Dw-Server-Name | The server name of the user's SQL DW |
 | Storage-Account-Key | The primary key for the user's Blob Storage account |
 | Storage-Account-Name | The account name of the user's Blob Storage account |

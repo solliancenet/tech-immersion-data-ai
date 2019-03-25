@@ -137,7 +137,7 @@ namespace TransactionGenerator
                 );
                 #endregion Write to Cosmos DB
 
-                if (_totalMessages % 500 == 0)
+                if (_totalMessages % 250 == 0)
                 {
                     eventHubsTimer.Stop();
                     cosmosTimer.Stop();
@@ -159,7 +159,7 @@ namespace TransactionGenerator
 
                     // Output statistics. Be on the lookout for the following:
                     //  - Inserted line shows successful inserts in this batch and throughput for writes/second with RU/s usage and estimated monthly ingestion rate added to Cosmos DB statistics.
-                    //  - Processing time: Processing time for the past 1,000 requested inserts.
+                    //  - Processing time: Processing time for the past 250 requested inserts.
                     //  - Total elapsed time: Running total of time taken to process all documents.
                     //  - Succeeded shows number of accumulative successful inserts to the service.
                     //  - Pending are items in the bulkhead queue. This amount will continue to grow if the service is unable to keep up with demand.
@@ -183,6 +183,8 @@ namespace TransactionGenerator
                     // Output all messages available right now, in one go.
                     progress.Report(ProgressWithMessages(ConsumeAsEnumerable(messages)));
                 }
+
+                await Task.Delay(random.Next(200, 500), externalCancellationToken).ConfigureAwait(false);
             }
 
             messages.Enqueue(new ColoredMessage("Data generation complete", Color.Magenta));

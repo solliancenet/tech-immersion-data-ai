@@ -64,19 +64,15 @@ In this task, you will configure and run the data generator to save simulated ve
 
    ![The Azure Cosmos DB account is selected in the resource group.](media/tech-immersion-rg-cosmos-db.png "Tech Immersion resource group")
 
-4. Select **Firewall and virtual networks** from the left-hand menu on your Cosmos DB blade, then select Allow access from **All networks**. Select **Save**. This will allow the vehicle telemetry generator application to send data to your Cosmos DB collection. Select **Save**.
-
-    ![The All networks option is selected within the Firewall and virtual networks blade.](media/cosmos-db-firewall.png "Firewall and virtual networks")
-
-5. Next, select **Keys** from the left-hand menu.
+4. Select **Keys** from the left-hand menu.
 
     ![The Keys link on the left-hand menu is highlighted.](media/cosmos-db-keys-link.png "Keys link")
 
-6. Copy the **Primary Connection String** value by selecting the copy button to the right of the field.
+5. Copy the **Primary Connection String** value by selecting the copy button to the right of the field.
 
     ![The Primary Connection String key is copied.](media/cosmos-db-keys.png "Keys")
 
-7. Return to the `appsettings.json` file in your text editor, and paste your Cosmos DB connection string value next to `COSMOS_DB_CONNECTION_STRING`. Make sure you have quotes ("") around the value, as shown in the example below:
+6. Return to the `appsettings.json` file in your text editor, and paste your Cosmos DB connection string value next to `COSMOS_DB_CONNECTION_STRING`. Make sure you have quotes ("") around the value, as shown in the example below:
 
     ```json
     {
@@ -91,13 +87,13 @@ In this task, you will configure and run the data generator to save simulated ve
 
     `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. The default value is `2400`. Data will also stop transmitting when you enter <Ctrl+C> while the generator is running, or if you close the window.
 
-8. Save the `appsettings.json` file.
+7. Save the `appsettings.json` file.
 
-9. In your open Windows Explorer window, locate and double-click the `TransactionGenerator.exe` file (located in the same `C:\lab-files\data\4\TelemetryGenerator` folder as `appsettings.json`) to launch the console application.
+8. In your open Windows Explorer window, locate and double-click the `TransactionGenerator.exe` file (located in the same `C:\lab-files\data\4\TelemetryGenerator` folder as `appsettings.json`) to launch the console application.
 
     ![Screenshot of the console window.](media/telemetry-generator-console.png "Console window")
 
-10. A console window will open and you should see it start to send data after a few seconds. Once you see that it is sending data to Cosmos DB, _minimize_ the window and allow it to run in the background throughout this experience.
+9.  A console window will open and you should see it start to send data after a few seconds. Once you see that it is sending data to Cosmos DB, _minimize_ the window and allow it to run in the background throughout this experience.
 
     ![Screenshot of the console window.](media/vs-console.png "Console window")
 
@@ -119,7 +115,7 @@ In this task, you will quickly set up your ADLS Gen2 filesystem using a Databric
 
    ![Databricks Launch Workspace](media/tech-immersion-databricks-launch-workspace.png "Launch Workspace")
 
-4. In your Databricks workspace, select **Clusters** from the left-hand menu, and then select the **Start** button for the cluster. Select **Confirm** in the dialog to start the cluster.
+4. In your Databricks workspace, confirm your Databricks cluster is running by selecting **Clusters** from the left-hand menu, and ensure the Status is **Running**. If it is **Terminated**, select the **Start** button for the cluster. Select **Confirm** in the dialog to start the cluster.
 
     ![The start button for the cluster is highlighted on the Clusters page in Databricks.](media/databricks-cluster-start.png "Clusters")
 
