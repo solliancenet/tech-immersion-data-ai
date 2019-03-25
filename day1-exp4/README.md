@@ -52,27 +52,35 @@ The data generator console application creates and sends simulated vehicle senso
 
 In this task, you will configure and run the data generator to save simulated vehicle telemetry data to a `telemetry` collection in Cosmos DB.
 
-1. Open Windows Explorer and navigate to `C:\lab-files\data\4\TelemetryGenerator`. Open `appsettings.json` with a text editor, such as Notepad.exe.
+1. Before running the data generator, you need to edit the configuration file for the application. Open **Visual Studio Code** from the Window Start menu.
+
+    ![Visual Studio Code is highlighted in the Start menu.](media/vscode-start-menu.png "Start menu")
+
+2. In Visual Studio Code, select **Open File...** from the **File** menu.
+
+    ![Open File is highlighted in the File menu.](media/file-menu.png "File menu")
+
+3. In the Open File window, navigate to `C:\lab-files\data\4\TelemetryGenerator`. Select `appsettings.json` to and then select **Open**.
 
     ![The `appsettings.json` file is highlighted in the C:\lab-files\data\4\TelemetryGenerator folder.](media/windows-explorer-appsettings-json.png "Windows explorer")
 
-2. To retrieve your Cosmos DB connection string, open a web browser and navigate to the [Azure portal](https://portal.azure.com). Select **Resource groups** from the left-hand menu, and then select the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
+4. To retrieve your Cosmos DB connection string, open a web browser and navigate to the [Azure portal](https://portal.azure.com). Select **Resource groups** from the left-hand menu, and then select the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
 
    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
 
-3. Select the **Azure Cosmos DB account** from the list of resources in your resource group.
+5. Select the **Azure Cosmos DB account** from the list of resources in your resource group.
 
    ![The Azure Cosmos DB account is selected in the resource group.](media/tech-immersion-rg-cosmos-db.png "Tech Immersion resource group")
 
-4. Select **Keys** from the left-hand menu.
+6. Select **Keys** from the left-hand menu.
 
     ![The Keys link on the left-hand menu is highlighted.](media/cosmos-db-keys-link.png "Keys link")
 
-5. Copy the **Primary Connection String** value by selecting the copy button to the right of the field.
+7. Copy the **Primary Connection String** value by selecting the copy button to the right of the field.
 
     ![The Primary Connection String key is copied.](media/cosmos-db-keys.png "Keys")
 
-6. Return to the `appsettings.json` file in your text editor, and paste your Cosmos DB connection string value next to `COSMOS_DB_CONNECTION_STRING`. Make sure you have quotes ("") around the value, as shown in the example below:
+8. Return to the `appsettings.json` file in your text editor, and paste your Cosmos DB connection string value next to `COSMOS_DB_CONNECTION_STRING`. Make sure you have quotes ("") around the value, as shown in the example below:
 
     ```json
     {
@@ -87,13 +95,13 @@ In this task, you will configure and run the data generator to save simulated ve
 
     `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. The default value is `2400`. Data will also stop transmitting when you enter <Ctrl+C> while the generator is running, or if you close the window.
 
-7. Save the `appsettings.json` file.
+9. Save the `appsettings.json` file.
 
-8. In your open Windows Explorer window, locate and double-click the `TransactionGenerator.exe` file (located in the same `C:\lab-files\data\4\TelemetryGenerator` folder as `appsettings.json`) to launch the console application.
+10. In your open Windows Explorer window, locate and double-click the `TransactionGenerator.exe` file (located in the same `C:\lab-files\data\4\TelemetryGenerator` folder as `appsettings.json`) to launch the console application.
 
     ![Screenshot of the console window.](media/telemetry-generator-console.png "Console window")
 
-9.  A console window will open and you should see it start to send data after a few seconds. Once you see that it is sending data to Cosmos DB, _minimize_ the window and allow it to run in the background throughout this experience.
+11. A console window will open and you should see it start to send data after a few seconds. Once you see that it is sending data to Cosmos DB, _minimize_ the window and allow it to run in the background throughout this experience.
 
     ![Screenshot of the console window.](media/vs-console.png "Console window")
 
