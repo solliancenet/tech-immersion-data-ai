@@ -1,6 +1,11 @@
-# Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance
+# Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-- [Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance](#day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-database-managed-instance)
+
+
+## Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance
+
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
+  - [Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance](#day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-database-managed-instance)
   - [Technology overview](#technology-overview)
     - [Migrate your SQL Server databases without changing your apps](#migrate-your-sql-server-databases-without-changing-your-apps)
     - [Accelerate your database migration](#accelerate-your-database-migration)

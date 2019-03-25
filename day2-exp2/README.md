@@ -1,6 +1,11 @@
-# Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search
+# Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-- [Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search](#day-2-experience-2---yield-quick-insights-from-unstructured-data-with-knowledge-mining-and-cognitive-search)
+
+
+## Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search
+
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
+  - [Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search](#day-2-experience-2---yield-quick-insights-from-unstructured-data-with-knowledge-mining-and-cognitive-search)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
   - [Task 1: Populate Cosmos DB with tweets from a generator](#task-1-populate-cosmos-db-with-tweets-from-a-generator)
