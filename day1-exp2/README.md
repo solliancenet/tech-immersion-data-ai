@@ -14,7 +14,8 @@
   - [Task 3: Configure Stream Analytics](#task-3-configure-stream-analytics)
   - [Task 4: Configure Azure Function App](#task-4-configure-azure-function-app)
   - [Task 5: Publish Function App and run data generator](#task-5-publish-function-app-and-run-data-generator)
-  - [Task 6: Create Power BI dashboard](#task-6-create-power-bi-dashboard)
+  - [Task 6: View published function](#task-6-view-published-function)
+  - [Task 7: Create Power BI dashboard](#task-7-create-power-bi-dashboard)
   - [Wrap-up](#wrap-up)
   - [Additional resources and more information](#additional-resources-and-more-information)
 
@@ -534,7 +535,42 @@ The last bit of interesting code within the generator is where we create the Cos
 
 ![The InitializeCosmosDB method code.](media/telemetry-generator-initialize-cosmos.png 'InitializeCosmosDB method')
 
-## Task 6: Create Power BI dashboard
+## Task 6: View published function
+
+A few minutes ago, you published your Azure Function App from Visual Studio. This Function App contains a single function, `CarEventProcessor`. We will take a look at the published function in this task.
+
+1.  Navigate to the [Azure portal](https://portal.azure.com).
+
+2.  Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion-YOUR_UNIQUE_IDENTIFIER**.
+
+    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
+
+3.  Select the **App Service** (Azure Function App) that includes **day1** in its name from the list of resources in your resource group.
+
+    ![The App Service Function App is selected in the resource group.](media/tech-immersion-rg-function-app.png 'tech-immersion resource group')
+
+4.  Expand **Functions (Read Only)** within the navigation tree to the left, then select **CarEventProcessor**.
+
+    ![The Functions node is expanded in the navigation tree, and the CarEventProcessor is selected.](media/function-app-tree.png 'Functions')
+
+5.  Looking at the **function.json** file to the right, notice that it was generated for you when you published from Visual Studio. Also notice how the `bindings` section lines up with the function method in `CarEventProcessorFunctions.cs`:
+
+    ```csharp
+    [FunctionName("CarEventProcessor")]
+    public static async Task CarEventProcessor([CosmosDBTrigger(
+        databaseName: "ContosoAuto",
+        collectionName: "telemetry",
+        ConnectionStringSetting = "CosmosDbConnectionString",
+        LeaseCollectionName = "leases",
+        CreateLeaseCollectionIfNotExists = true)]IReadOnlyList<Document> input,
+        [EventHub("telemetry",
+            Connection="EventHubsConnectionString")]IAsyncCollector<EventData> eventHubOutput,
+        ILogger log)
+    ```
+
+    ![The function.json file is displayed with the bindings highlighted.](media/function-app-functions-json.png 'function.json')
+
+## Task 7: Create Power BI dashboard
 
 In this task, you will use Power BI to create a report showing captured vehicle anomaly data. Then you will pin that report to a live dashboard for near real-time updates.
 
