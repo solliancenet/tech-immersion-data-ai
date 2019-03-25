@@ -1,7 +1,9 @@
-<h1 id="day-2-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator">Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator</h1>
+<h1 id="data-ai-tech-immersion-workshop-product-review-guide-and-lab-instructions">Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions</h1>
+<h2 id="day-2-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator">Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator</h2>
 <ul>
-<li><a href="#day-2-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator">Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator</a>
+<li><a href="#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions">Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions</a>
 <ul>
+<li><a href="#day-2-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator">Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator</a></li>
 <li><a href="#technology-overview">Technology overview</a></li>
 <li><a href="#scenario-overview">Scenario overview</a></li>
 <li><a href="#task-1-sign-in-to-luis-to-retrieve-the-authoring-key">Task 1: Sign in to LUIS to retrieve the Authoring Key</a></li>
@@ -25,7 +27,10 @@
 <li><p>If it is your first time signing in, you may see a “Permission requested” dialog. If so, select <strong>Accept</strong>.</p>
 <figure>
 <img src="media/luis-permission-requested.png" title="Permission requested" alt="Select Accept on the Permission requested dialog to continue." /><figcaption>Select Accept on the Permission requested dialog to continue.</figcaption>
-</figure></li>
+</figure>
+<blockquote>
+<p>If after signing in and accepting requested permissions, you see a loading screen that seems stuck for more than 10 seconds, try refreshing the page.</p>
+</blockquote></li>
 <li><p>Again, if this is your first time signing in, you will be prompted to select your <strong>Country/Region</strong>. Select the appropriate option from the list, check the service agreement checkbox, then select <strong>Continue</strong>.</p>
 <figure>
 <img src="media/luis-accept.png" title="Accept Service Agreement" alt="The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted." /><figcaption>The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted.</figcaption>
@@ -63,7 +68,10 @@
 <figure>
 <img src="media/app-portal-new-password.png" title="New password generated" alt="The new password is displayed." /><figcaption>The new password is displayed.</figcaption>
 </figure></li>
-<li><p><strong>Copy and paste</strong> the <strong>Application Id</strong> value to Notepad or a similar text application for later steps.</p></li>
+<li><p><strong>Copy and paste</strong> the <strong>Application Id</strong> value to Notepad or a similar text application for later steps.</p>
+<figure>
+<img src="media/app-portal-app-id.png" title="Application Id" alt="The Application Id is highlighted." /><figcaption>The Application Id is highlighted.</figcaption>
+</figure></li>
 </ol>
 <h2 id="task-3-deployment">Task 3: Deployment</h2>
 <p>The Virtual Assistant automotive bot requires the following Azure dependencies for end to end operation:</p>
@@ -322,13 +330,13 @@
 <img src="media/cmd-script-finished.png" title="Command Prompt" alt="The bot file secret is highlighted." /><figcaption>The bot file secret is highlighted.</figcaption>
 </figure></li>
 <li><p>Now we are ready to test the bot. Before testing, you must update the <strong>appsettings.json</strong> file in the <strong>AutomotiveSkills</strong> project. To do this, switch back to the solution in Visual Studio and expand the <strong>AutomotiveSkill</strong> project in the Solution Explorer. <strong>Double-click</strong> on the <strong>appsettings.json</strong> file to open it.</p></li>
-<li><p>Update your <code>appsettings.json</code> file with the newly created .bot file name and .bot file secret. The .bot file is located in the root directory of the <strong>AutomotiveSkill</strong> project.</p>
+<li><p>Update your <code>appsettings.json</code> file with the newly created .bot file name and .bot file secret. The .bot file is located in the root directory of the <strong>AutomotiveSkill</strong> project. Most likely, the script that you ran already added the bot file name for you. Example: <code>tech-immersion-YOUR_UNIQUE_ID.bot</code>.</p>
 <pre><code>  {
     &quot;botFilePath&quot;: &quot;./YOURBOTFILE.bot&quot;,
     &quot;botFileSecret&quot;: &quot;YOUR_BOT_SECRET&quot;,
   }</code></pre>
 <ul>
-<li>Finally, add the .bot file paths for each of your language configurations (English only at this time). You can find the bot file under the <strong>LocaleConfigurations</strong> folder.</li>
+<li>Finally, add the .bot file paths for each of your language configurations (English only at this time). You can find the bot file under the <strong>LocaleConfigurations</strong> folder. Make sure that the bot file name ends with <code>en.bot</code>. For instance, <code>tech-immersion-YOUR_UNIQUE_IDen.bot</code>.</li>
 </ul>
 <pre><code>&quot;defaultLocale&quot;: &quot;en-us&quot;,
 &quot;languageModels&quot;: {
@@ -380,7 +388,10 @@
 <li><p>You should see a dialog prompting you for your bot file secret. <strong>Paste</strong> the bot file secret you copied in Step 1 above, then click <strong>Submit</strong>.</p>
 <figure>
 <img src="media/bot-framework-emulator-secret.png" title="Bot file secret" alt="The bot file secret dialog is displayed." /><figcaption>The bot file secret dialog is displayed.</figcaption>
-</figure></li>
+</figure>
+<blockquote>
+<p>If after loading the bot file you see a blank screen for more than a few seconds, shut down and re-open the Bot Emulator.</p>
+</blockquote></li>
 <li><p>Now you should see a Live Chat window with the following features:</p>
 <ol type="1">
 <li><strong>Development endpoint:</strong> Make sure this endpoint is selected under endpoints to the left. You cannot use the production endpoint until you publish your bot.</li>
