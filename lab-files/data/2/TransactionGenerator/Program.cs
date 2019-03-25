@@ -137,7 +137,7 @@ namespace TransactionGenerator
                 );
                 #endregion Write to Cosmos DB
 
-                if (_totalMessages % 250 == 0)
+                if (_totalMessages % 500 == 0)
                 {
                     eventHubsTimer.Stop();
                     cosmosTimer.Stop();
@@ -184,7 +184,7 @@ namespace TransactionGenerator
                     progress.Report(ProgressWithMessages(ConsumeAsEnumerable(messages)));
                 }
 
-                await Task.Delay(random.Next(200, 500), externalCancellationToken).ConfigureAwait(false);
+                //await Task.Delay(random.Next(200, 500), externalCancellationToken).ConfigureAwait(false);
             }
 
             messages.Enqueue(new ColoredMessage("Data generation complete", Color.Magenta));
