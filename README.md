@@ -46,4 +46,4 @@ In the user name box, enter your VM Admin User Name.  Enter your VM Admin Passwo
 
 - **Day 2, Experience 4** - [Making deep learning portable with ONNX](./day2-exp4/README.md)
 
-  Attendees will experience how Contoso Auto can leverage Deep Learning technologies to scan through their vehicle specification documents to find compliance issues with new regulations. Then they will deploy this model, standardizing operationalization with ONNX. The will see how this simplifies inference runtime code, enabling pluggability of different models and targeting a broad range of runtime environments from Linux based web services to Windows/.NET based apps.
+  Attendees will experience how Contoso Auto can leverage Deep Learning technologies to scan through their vehicle specification documents to find compliance issues with new regulations. Then they will deploy this model, standardizing operationalization with ONNX. They will see how this simplifies inference runtime code, enabling pluggability of different models and targeting a broad range of runtime environments from Linux based web services to Windows/.NET based apps.
