@@ -95,7 +95,7 @@ In this task, you will configure and run the data generator to save simulated ve
 
     `SECONDS_TO_LEAD` is the amount of time to wait before sending vehicle telemetry data. Default value is `0`.
 
-    `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. The default value is `2400`. Data will also stop transmitting when you enter <Ctrl+C> while the generator is running, or if you close the window.
+    `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. Set the value to `2400`. Data will also stop transmitting when you enter <Ctrl+C> while the generator is running, or if you close the window.
 
 9. Save the `appsettings.json` file.
 
