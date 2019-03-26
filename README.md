@@ -1,16 +1,16 @@
 # Tech Immersion Mega Data & AI Workshop
 
 ## Setup: Connecting to your VM with Remote Desktop
-	When setting up a cloud infrastructure, it's a good idea to create a VM where you can install all of the tools and applications you need to manage your environment and products.  This is called a jumpbox.  In order to use your jumpbox, you need to open Remote Desktop Connection.
+When setting up a cloud infrastructure, it's a good idea to create a VM where you can install all of the tools and applications you need to manage your environment and products.  This is called a jumpbox.  In order to use your jumpbox, you need to open Remote Desktop Connection.
 	
-	You will need three pieces of information:
-	- Jump VM DNS Name
-	- VM Admin User Name
-	- VM Admin Password 
+You will need three pieces of information:
+- Jump VM DNS Name
+- VM Admin User Name
+- VM Admin Password 
 	
-	Start Remote Desktop and enter the Jump DNS Name as the computer name.  When you are asked to enter your credentials, click "More Choices".  Click "Use a different account".
+Start Remote Desktop and enter the Jump DNS Name as the computer name.  When you are asked to enter your credentials, click "More Choices".  Click "Use a different account".
 
-	In the user name box, enter your VM Admin User Name.  Enter your VM Admin Password as the password.  Click Connect.  When the warning comes up, click "Yes."  You are now connected to your jumpbox and can continue with each individual Experience.
+In the user name box, enter your VM Admin User Name.  Enter your VM Admin Password as the password.  Click Connect.  When the warning comes up, click "Yes."  You are now connected to your jumpbox and can continue with each individual Experience.
 
 ## Day 1: Data-focused
 
