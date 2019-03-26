@@ -35,20 +35,17 @@
 <p>Contoso Auto stores data in several data stores, including relational databases, NoSQL databases, data warehouses, and unstructured data stored in a data lake. They have heard of data virtualization in SQL Server 2019, and are interested to see whether this feature will allow them to more easily access their data stored in these disparate locations. They have heard of the new Big Data Clusters that can be scaled out to handle their Big Data workloads, including machine learning tasks and advanced analytics. They are also interested in any performance improvements against their internal SQL tables by moving to 2019, since the overall amount of data is growing at a rapid pace.</p>
 <p>This experience will highlight the new features of SQL Server 2019 with a focus on Big Data Clusters and data virtualization. You will gain hands-on experience with querying both structured and unstructured data in a unified way using T-SQL. This capability will be illustrated by joining different data sets, such as product stock data in flat CSV files in Azure Storage, product reviews stored in Azure SQL Database, and transactional data in SQL Server 2019 for exploratory data analysis within Azure Data Studio. This joined data will be prepared into a table used for reporting, highlighting query performance against this table due to intelligent query processing. With the inclusion of Apache Spark packaged with Big Data Clusters, it is now possible to use Spark to train machine learning models over data lakes and use those models in SQL Server in one system. You will learn how to use Azure Data Studio to work with Jupyter notebooks to train a simple model that can predict vehicle battery lifetime, score new data and save the result as an external table. Finally, you will experience the data security and compliance features provided by SQL Server 2019 by using the Data Discovery &amp; Classification tool in SSMS to identify tables and columns with PII and GDPR-related compliance issues, then address the issues by layering on dynamic data masking to identified columns.</p>
 <h2 id="experience-requirements">Experience requirements</h2>
-<p>Before you begin this lab, you need to find the following information on the Tech Immersion Mega Data &amp; AI Workshop On Demand Lab environment details page:</p>
+<p>Before you begin this lab, you need to find the following information on the Tech Immersion Mega Data &amp; AI Workshop On Demand Lab environment details page, or the document provided to you for this experience:</p>
 <ul>
-<li>Server IP address and port number: <code>SQL SERVER_2019_CLUSTER URL</code></li>
-<li>SQL username: <code>SALES DB USERNAME</code></li>
-<li>SQL password: <code>SALES DB PASSWORD</code></li>
+<li>SQL Server 2019 Big Data Cluster IP address and port number: <code>SQL SERVER_2019_CLUSTER URL</code></li>
+<li>SQL username: <code>SQL 2019 Big Data Cluster username</code></li>
+<li>SQL password: <code>SQL 2019 Big Data Cluster password</code></li>
 <li>Sales database name (your unique copy): <code>SALES DB</code></li>
 <li>Azure SQL Database server: <code>AZURE DATABASE SERVER</code></li>
 <li>Azure SQL Database name: <code>DATABASE NAME</code></li>
 <li>Azure SQL Database username: <code>DATABASE USER</code></li>
 <li>Azure SQL Database password: <code>DATABASE PASSWORD</code></li>
 </ul>
-<figure>
-<img src="media/environment-details.png" title="Environment Details" alt="Screenshot of the lab environment details" /><figcaption>Screenshot of the lab environment details</figcaption>
-</figure>
 <h2 id="before-the-lab-connecting-to-sql-server-2019">Before the lab: Connecting to SQL Server 2019</h2>
 <p>Follow the steps below to connect to your SQL Server 2019 cluster with both Azure Data Studio and SQL Server Management Studio (SSMS).</p>
 <h3 id="connect-with-azure-data-studio">Connect with Azure Data Studio</h3>
@@ -71,10 +68,10 @@
 <li><p>Within the Connection dialog, configure the following:</p>
 <ul>
 <li><strong>Connection type:</strong> Select Microsoft SQL Server.</li>
-<li><strong>Server:</strong> Enter the IP address, followed by port number <code>31433</code>. For example: <code>123.123.123.123,31433</code>.</li>
+<li><strong>Server:</strong> Enter the IP address, followed by port number <code>31433</code> to the SQL Server 2019 Big Data cluster. Use the value from the <code>SQL SERVER_2019_CLUSTER URL</code> for this from the environment documentation. It should have a format of IP separated by a comma from the port, such as: <code>11.122.133.144,31433</code>.</li>
 <li><strong>Authentication type:</strong> Select SQL Login.</li>
-<li><strong>Username:</strong> Enter “sa”.</li>
-<li><strong>Password:</strong> Enter the password provided to you for this lab.</li>
+<li><strong>Username:</strong> Enter <code>sa</code>.</li>
+<li><strong>Password:</strong> Enter the password provided to you for this lab, you can find this value documented as <code>SQL 2019 Big Data Cluster password</code>.</li>
 <li><strong>Remember password:</strong> Checked.</li>
 <li>Leave all other options at their default values.</li>
 </ul>
@@ -92,10 +89,10 @@
 </figure></li>
 <li><p>Within the Connection dialog that appears, configure the following:</p>
 <ul>
-<li><strong>Server name:</strong> Enter the IP address, followed by port number <code>31433</code>. For example: <code>123.123.123.123,31433</code>.</li>
+<li><strong>Server name:</strong> Enter the IP address, followed by port number <code>31433</code> to the SQL Server 2019 Big Data cluster. Use the value from the <code>SQL SERVER_2019_CLUSTER URL</code> for this from the environment documentation. It should have a format of IP separated by a comma from the port, such as: <code>11.122.133.144,31433</code>.</li>
 <li><strong>Authentication:</strong> Select SQL Server Authentication.</li>
-<li><strong>Login:</strong> Enter “sa”.</li>
-<li><strong>Password:</strong> Enter the password provided to you for this lab.</li>
+<li><strong>Login:</strong> Enter <code>sa</code>.</li>
+<li><strong>Password:</strong> Enter the password provided to you for this lab, you can find this value documented as <code>SQL 2019 Big Data Cluster password</code>.</li>
 <li><strong>Remember password:</strong> Checked.</li>
 </ul>
 <figure>
@@ -133,13 +130,13 @@
 </figure></li>
 <li><p>Now, enter the credentials provided to you for the <strong>CA_Commerce</strong> Azure SQL Database within the following fields:</p>
 <ul>
-<li><strong>External Data Source Name:</strong> Enter “SQLReviews”.</li>
-<li><strong>Server Name:</strong> Enter the value provided to you for the Azure SQL Server name. The name should end with <code>.database.windows.net</code> (lab environment details page: <code>AZURE DATABASE SERVER</code>).</li>
+<li><strong>External Data Source Name:</strong> Enter the string “SQLReviews”.</li>
+<li><strong>Server Name:</strong> Enter the value provided to you for the Azure SQL Server name. The name should end with <code>.database.windows.net</code> (you can find this value in the lab environment details page, with the label <code>AZURE DATABASE SERVER</code>).</li>
 <li><strong>Database Name:</strong> Enter “CA_Commerce”.</li>
 <li><strong>Choose Credential:</strong> Select “– Create New Credential –”.</li>
 <li><strong>New Credential Name:</strong> Enter “SQLCred”.</li>
-<li><strong>Username:</strong> Enter the Azure SQL Server username provided to you for this lab (lab environment details page: <code>DATABASE USER</code>).</li>
-<li><strong>Password:</strong> Enter the Azure SQL Server password provided to you for this lab (lab environment details page: <code>DATABASE PASSWORD</code>).</li>
+<li><strong>Username:</strong> Enter the Azure SQL Server username provided to you for this lab (look to the lab environment details for the label <code>DATABASE USER</code>).</li>
+<li><strong>Password:</strong> Enter the Azure SQL Server password provided to you for this lab (look to the lab environment details for the label <code>DATABASE PASSWORD</code>).</li>
 </ul>
 <figure>
 <img src="media/ads-external-table-wizard-data-source.png" title="Create a connection to your Data Source" alt="The external data source connection form is filled out with the previously mentioned settings entered into the appropriate fields." /><figcaption>The external data source connection form is filled out with the previously mentioned settings entered into the appropriate fields.</figcaption>
@@ -332,7 +329,7 @@
 </figure></li>
 </ol>
 <h2 id="task-4-fix-compliance-issues-with-dynamic-data-masking">Task 4: Fix compliance issues with dynamic data masking</h2>
-<p>Some of the columns identified by the Data Discovery &amp; Classification tool as containing sensitive (PII/GDPR) information include phone numbers, email addresses, billing addresses, and credit card numbers. One way to ensure compliance with various rules and regulations that enforce policies to protect such sensitive data is to prevent those who are not authorized from seeing it. An example would be displaying <code>XXX-XXX-XX95</code> instead of <code>123-555-2695</code> when outputting a phone number within a SQL query result, report, web page, etc. This is commonly called data masking. Traditionally, modifying systems and applications to implement data masking can be challenging. This is especially true when the masking has to apply all the way down to the data source level. Fortunately, SQL Server and its cloud-related product, Azure SQL Database, provides a feature named <a href="https://docs.microsoft.com/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver15">dynamic data masking</a> (DDD) to automatically protect this sensitive data from non-privileged users.</p>
+<p>Some of the columns identified by the Data Discovery &amp; Classification tool as containing sensitive (PII/GDPR) information include phone numbers, email addresses, billing addresses, and credit card numbers. One way to ensure compliance with various rules and regulations that enforce policies to protect such sensitive data is to prevent those who are not authorized from seeing it. An example would be displaying <code>XXX-XXX-XX95</code> instead of <code>123-555-2695</code> when outputting a phone number within a SQL query result, report, web page, etc. This is commonly called data masking. Traditionally, modifying systems and applications to implement data masking can be challenging. This is especially true when the masking has to apply all the way down to the data source level. Fortunately, SQL Server and its cloud-related product, Azure SQL Database, provides a feature named <a href="https://docs.microsoft.com/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver15">dynamic data masking</a> (DDM) to automatically protect this sensitive data from non-privileged users.</p>
 <p>Dynamic data masking helps prevent unauthorized access to sensitive data by enabling customers to designate how much of the sensitive data to reveal with minimal impact on the application layer. DDM can be configured on the database to hide sensitive data in the result sets of queries over designated database fields, while the data in the database is not changed. Dynamic data masking is easy to use with existing applications, since masking rules are applied in the query results. Many applications can mask sensitive data without modifying existing queries.</p>
 <p>In this task, you will apply dynamic data masking to one of the database fields so you can see how to address the reported compliance issues. To test the data mask, you will create a test user and query the field as that user.</p>
 <ol type="1">
