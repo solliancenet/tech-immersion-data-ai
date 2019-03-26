@@ -49,7 +49,7 @@ This experience will highlight the new features of SQL Server 2019 with a focus 
 
 Before you begin this lab, you need to find the following information on the Tech Immersion Mega Data & AI Workshop On Demand Lab environment details page, or the document provided to you for this experience:
 
-- Server IP address and port number: `SQL SERVER_2019_CLUSTER URL`
+- SQL Server 2019 Big Data Cluster IP address and port number: `SQL SERVER_2019_CLUSTER URL`
 - SQL username: `SQL 2019 Big Data Cluster username`
 - SQL password: `SQL 2019 Big Data Cluster password`
 - Sales database name (your unique copy): `SALES DB`
@@ -81,10 +81,10 @@ A link to Azure Data Studio should already be on the desktop of the VM. If not, 
 3.  Within the Connection dialog, configure the following:
 
     - **Connection type:** Select Microsoft SQL Server.
-    - **Server:** Enter the IP address, followed by port number `31433`. For example: `123.123.123.123,31433`.
+    - **Server:** Enter the IP address, followed by port number `31433`  to the SQL Server 2019 Big Data cluster. Use the value from the `SQL SERVER_2019_CLUSTER URL` for this from the environment documentation. It should have a format of IP separated by a comma from the port, such as: `11.122.133.144,31433`.
     - **Authentication type:** Select SQL Login.
-    - **Username:** Enter "sa".
-    - **Password:** Enter the password provided to you for this lab.
+    - **Username:** Enter `sa`.
+    - **Password:** Enter the password provided to you for this lab, you can find this value documented as `SQL 2019 Big Data Cluster password`.
     - **Remember password:** Checked.
     - Leave all other options at their default values.
 
@@ -102,10 +102,10 @@ The version of SQL Server Management Studio (SSMS) used in this lab is v17.x. Th
 
 2.  Within the Connection dialog that appears, configure the following:
 
-    - **Server name:** Enter the IP address, followed by port number `31433`. For example: `123.123.123.123,31433`.
+    - **Server name:** Enter the IP address, followed by port number `31433` to the SQL Server 2019 Big Data cluster. Use the value from the `SQL SERVER_2019_CLUSTER URL` for this from the environment documentation. It should have a format of IP separated by a comma from the port, such as: `11.122.133.144,31433`.
     - **Authentication:** Select SQL Server Authentication.
-    - **Login:** Enter "sa".
-    - **Password:** Enter the password provided to you for this lab.
+    - **Login:** Enter `sa`.
+    - **Password:** Enter the password provided to you for this lab, you can find this value documented as `SQL 2019 Big Data Cluster password`.
     - **Remember password:** Checked.
 
     ![The Connect form is filled out with the previously mentioned settings entered into the appropriate fields.](media/ssms-connection.png 'SQL Server Management Studio - Connect')
@@ -148,13 +148,13 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
 
 5.  Now, enter the credentials provided to you for the **CA_Commerce** Azure SQL Database within the following fields:
 
-    - **External Data Source Name:** Enter "SQLReviews".
-    - **Server Name:** Enter the value provided to you for the Azure SQL Server name. The name should end with `.database.windows.net` (lab environment details page: `AZURE DATABASE SERVER`).
+    - **External Data Source Name:** Enter the string "SQLReviews".
+    - **Server Name:** Enter the value provided to you for the Azure SQL Server name. The name should end with `.database.windows.net` (you can find this value in the lab environment details page, with the label `AZURE DATABASE SERVER`).
     - **Database Name:** Enter "CA_Commerce".
     - **Choose Credential:** Select "-- Create New Credential --".
     - **New Credential Name:** Enter "SQLCred".
-    - **Username:** Enter the Azure SQL Server username provided to you for this lab (lab environment details page: `DATABASE USER`).
-    - **Password:** Enter the Azure SQL Server password provided to you for this lab (lab environment details page: `DATABASE PASSWORD`).
+    - **Username:** Enter the Azure SQL Server username provided to you for this lab (look to the lab environment details for the label `DATABASE USER`).
+    - **Password:** Enter the Azure SQL Server password provided to you for this lab (look to the lab environment details for the label `DATABASE PASSWORD`).
 
     ![The external data source connection form is filled out with the previously mentioned settings entered into the appropriate fields.](media/ads-external-table-wizard-data-source.png 'Create a connection to your Data Source')
 
