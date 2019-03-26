@@ -10,7 +10,7 @@ You will need three pieces of information:
 	
 Start Remote Desktop and enter the Jump DNS Name as the computer name.  When you are asked to enter your credentials, click "More Choices".  Click "Use a different account".
 
-In the user name box, enter your VM Admin User Name.  Enter your VM Admin Password as the password.  Click "Connect".  When the warning comes up, click "Yes."  You are now connected to your jumpbox and can continue with each individual Experience.
+In the user name box, enter your VM Admin User Name.  Enter your VM Admin Password as the password.  Click "Connect".  When the warning comes up, click "Yes."  You are now connected to your jumpbox and can continue with each individual experience.
 
 ## Day 1: Data-focused
 
