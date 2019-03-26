@@ -1,6 +1,11 @@
-# Day 2, Experience 3 - Better models made easy with Automated Machine Learning
+# Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-- [Day 2, Experience 3 - Better models made easy with Automated Machine Learning](#day-2-experience-3---better-models-made-easy-with-automated-machine-learning)
+
+
+## Day 2, Experience 3 - Better models made easy with Automated Machine Learning
+
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
+  - [Day 2, Experience 3 - Better models made easy with Automated Machine Learning](#day-2-experience-3---better-models-made-easy-with-automated-machine-learning)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
   - [Task 1: Train and evaluate a model using Azure Machine Learning](#task-1-train-and-evaluate-a-model-using-azure-machine-learning)

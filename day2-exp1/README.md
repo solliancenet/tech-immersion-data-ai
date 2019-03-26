@@ -1,6 +1,11 @@
-# Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator
+# Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-- [Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator](#day-2-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator)
+
+
+## Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator
+
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
+  - [Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator](#day-2-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
   - [Task 1: Sign in to LUIS to retrieve the Authoring Key](#task-1-sign-in-to-luis-to-retrieve-the-authoring-key)
@@ -415,6 +420,8 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 11. You should see a dialog prompting you for your bot file secret. **Paste** the bot file secret you copied in Step 1 above, then click **Submit**.
 
     ![The bot file secret dialog is displayed.](media/bot-framework-emulator-secret.png "Bot file secret")
+
+    > If after loading the bot file you see a blank screen for more than a few seconds, shut down and re-open the Bot Emulator.
 
 12. Now you should see a Live Chat window with the following features:
 

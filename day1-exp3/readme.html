@@ -1,7 +1,9 @@
-<h1 id="day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-database-managed-instance">Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance</h1>
+<h1 id="data-ai-tech-immersion-workshop-product-review-guide-and-lab-instructions">Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions</h1>
+<h2 id="day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-database-managed-instance">Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance</h2>
 <ul>
-<li><a href="#day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-database-managed-instance">Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance</a>
+<li><a href="#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions">Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions</a>
 <ul>
+<li><a href="#day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-database-managed-instance">Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance</a></li>
 <li><a href="#technology-overview">Technology overview</a>
 <ul>
 <li><a href="#migrate-your-sql-server-databases-without-changing-your-apps">Migrate your SQL Server databases without changing your apps</a></li>
@@ -68,8 +70,8 @@
 <ul>
 <li><strong>Server name</strong>: Enter the DNS name of the shared sqlServer2008R2 VM, <strong><code>sqlserver2008r2.westus.cloudapp.azure.com</code></strong>.</li>
 <li><strong>Authentication type</strong>: Select <strong>SQL Server Authentication</strong>.</li>
-<li><strong>Username</strong>: Enter <strong>WorkshopUser</strong>.</li>
-<li><strong>Password</strong>: Enter <strong>Password.1!!</strong>.</li>
+<li><strong>Username</strong>: Enter <strong>WorkshopUser</strong></li>
+<li><strong>Password</strong>: Enter <strong>Password.1!!</strong></li>
 <li><strong>Encrypt connection</strong>: Check this box.</li>
 <li><strong>Trust server certificate</strong>: Check this box.</li>
 </ul>
@@ -115,8 +117,8 @@
 <ul>
 <li><strong>Server name</strong>: Enter the DNS name of the shared sqlServer2008R2 VM, <strong><code>sqlserver2008r2.westus.cloudapp.azure.com</code></strong>.</li>
 <li><strong>Authentication type</strong>: Select <strong>SQL Server Authentication</strong>.</li>
-<li><strong>Username</strong>: Enter <strong>WorkshopUser</strong>.</li>
-<li><strong>Password</strong>: Enter <strong>Password.1!!</strong>.</li>
+<li><strong>Username</strong>: Enter <strong>WorkshopUser</strong></li>
+<li><strong>Password</strong>: Enter <strong>Password.1!!</strong></li>
 <li><strong>Encrypt connection</strong>: Check this box.</li>
 <li><strong>Trust server certificate</strong>: Check this box.</li>
 </ul>
@@ -154,34 +156,27 @@
 <ul>
 <li><strong>Server name</strong>: Enter the name of the shared SQL MI server, <strong><code>tech-immersion-sqlmi-shared.521f7783692d.database.windows.net</code></strong>.</li>
 <li><strong>Authentication</strong>: Select <strong>SQL Server Authentication</strong>.</li>
-<li><strong>Login</strong>: Enter <strong>tiuser</strong>.</li>
-<li><strong>Password</strong>: Enter <strong>Password.1234567890</strong>.</li>
+<li><strong>Login</strong>: Enter <strong>tiuser</strong></li>
+<li><strong>Password</strong>: Enter <strong>Password.1234567890</strong></li>
 <li>Check the <strong>Remember password</strong> box.</li>
 </ul>
 <figure>
 <img src="media/ssms-connect-sql-mi.png" title="SSMS" alt="Connection dialog for SSMS." /><figcaption>Connection dialog for SSMS.</figcaption>
 </figure></li>
 <li><p>Select <strong>Connect</strong>.</p></li>
-<li><p>To start the <code>RESTORE</code> process, select <strong>New Query</strong> from the SSMS toolbar. In the new query window, paste the following SQL code.</p>
+<li><p>To perform the <code>RESTORE</code> process, credentials for a pre-configured storage account and SAS token have already been added to the Managed Instance using the <a href="https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017">create a credential</a> method. This process essentially creates a connection from your SQL MI database to the Blob storage account, allowing you to access files stored in the target container, <code>database-backup</code>. Because this is a shared SQL MI, only one credential is needed for all attendees. If you are curious, you would create it with a SQL statement similar to the below. <strong>NOTE: You should NOT run the following SQL, it is just for illustration.</strong></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">CREATE</span> CREDENTIAL [https:<span class="op">//</span>techimmersion.<span class="dt">blob</span>.core.windows.net<span class="op">/</span>labfiles<span class="op">/</span><span class="kw">data</span><span class="op">/</span><span class="dv">3</span>]</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw">WITH</span> IDENTITY <span class="op">=</span> <span class="st">&#39;SHARED ACCESS SIGNATURE&#39;</span>,</a>
-<a class="sourceLine" id="cb1-3" title="3">SECRET <span class="op">=</span> <span class="st">&#39;sv=2018-03-28</span><span class="ch">&amp;ss</span><span class="st">=bfqt</span><span class="ch">&amp;srt</span><span class="st">=sco</span><span class="ch">&amp;sp</span><span class="st">=rwdlacup</span><span class="ch">&amp;se</span><span class="st">=2099-03-22T05:33:07Z</span><span class="ch">&amp;st</span><span class="st">=2019-03-21T21:33:07Z</span><span class="ch">&amp;spr</span><span class="st">=https</span><span class="ch">&amp;sig</span><span class="st">=xCq7hZfgdtM1UaN9%2FToz04GT5d5RsKaeb1JjWrpuKHE%3D&#39;</span></a></code></pre></div>
-<blockquote>
-<p>The script above uses a pre-configured storage account and SAS token to <a href="https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017">create a credential</a> in your Managed Instance. This essentially creates a connection from your SQL MI database to the Blob storage account, allowing you to access files stored in the target container, <code>database-backup</code>.</p>
-</blockquote></li>
-<li><p>Select <strong>Execute</strong> on the SSMS toolbar. You will see a message that the command completed successfully in the output window.</p>
-<figure>
-<img src="media/ssms-sql-mi-create-credential.png" title="SSMS" alt="Script to create a credential in SSMS." /><figcaption>Script to create a credential in SSMS.</figcaption>
-</figure></li>
-<li><p>To verify your credential’s access to the Blob storage account, select <strong>New Query</strong> again from the SSMS toolbar, paste the following SQL script to get a backup file list from the storage account into the new query window and select <strong>Execute</strong> from the toolbar.</p>
+<a class="sourceLine" id="cb1-3" title="3">SECRET <span class="op">=</span> <span class="st">&#39;sv=2018-03-28</span><span class="ch">&amp;ss</span><span class="st">=bfqt</span><span class="ch">&amp;srt</span><span class="st">=sco</span><span class="ch">&amp;sp</span><span class="st">=rwdlacup</span><span class="ch">&amp;se</span><span class="st">=2099-03-22T05:33:07Z</span><span class="ch">&amp;st</span><span class="st">=2019-03-21T21:33:07Z</span><span class="ch">&amp;spr</span><span class="st">=https</span><span class="ch">&amp;sig</span><span class="st">=xCq7hZfgdtM1UaN9%2FToz04GT5d5RsKaeb1JjWrpuKHE%3D&#39;</span></a></code></pre></div></li>
+<li><p>You can verify the credential’s access to the Blob storage account by selecting <strong>New Query</strong> from the SSMS toolbar. Paste the following SQL script to get a backup file list from the storage account into the new query window and select <strong>Execute</strong> from the toolbar.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb2-1" title="1">RESTORE FILELISTONLY <span class="kw">FROM</span> URL <span class="op">=</span> <span class="st">&#39;https://techimmersion.blob.core.windows.net/labfiles/data/3/ContosoAutoDb.bak&#39;</span></a></code></pre></div>
 <figure>
 <img src="media/ssms-sql-mi-restore-filelistonly.png" title="SSMS" alt="Script to list files in a backup file in Blob storage." /><figcaption>Script to list files in a backup file in Blob storage.</figcaption>
 </figure></li>
-<li><p>You are now ready to restore the <code>ContosoAutoDb</code> database in SQL MI. Select <strong>New Query</strong> on the SSMS toolbar again, then paste the following SQL script into the new query window. <strong>Replace the <code>XXXXX</code> value</strong> with the unique identifier assigned to your for this workshop.</p>
+<li><p>You are now ready to restore the <code>ContosoAutoDb</code> database in SQL MI. In this step, you will be creating a new database on the Managed Instance. Select <strong>New Query</strong> on the SSMS toolbar again, then paste the following SQL script into the new query window. <strong>Replace the <code>XXXXX</code> value</strong> with the unique identifier assigned to your for this workshop. The database name in the query should look something like <code>ContosoAutoDb-01234</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb3-1" title="1">RESTORE <span class="kw">DATABASE</span> [ContosoAutoDb<span class="op">-</span>XXXXX] <span class="kw">FROM</span> URL <span class="op">=</span> <span class="st">&#39;https://techimmersion.blob.core.windows.net/labfiles/data/3/ContosoAutoDb.bak&#39;</span></a></code></pre></div>
 <blockquote>
-<p>The database name in the above query should look something like <code>ContosoAutoDb-01234</code>.</p>
+<p><strong>NOTE</strong>: You may notice multiple databases in on the Managed Instance. This is because the SQL MI is a shared resource for all workshop attendees, so make sure you use your assigned unique ID when restoring and accessing the database.</p>
 </blockquote></li>
 <li><p>Select <strong>Execute</strong> on the SSMS toolbar.</p></li>
 <li><p>The restore will take 1 - 2 minutes to complete. You will receive a “Commands completed successfully” message when it is done.</p></li>
@@ -212,8 +207,8 @@
 <figure>
 <img src="media/tech-immersion-app-service-app-settings.png" title="Application settings" alt="The Application settings item is selected under Settings." /><figcaption>The Application settings item is selected under Settings.</figcaption>
 </figure></li>
-<li><p>On the Application settings blade, scroll down and locate the <strong>Connection strings</strong> section. Paste the connection string value below into the value for the <code>ContosoAutoDbContext</code> connection string.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb4-1" title="1">Server<span class="op">=</span>tcp<span class="ch">:tech</span><span class="op">-</span>immersion<span class="op">-</span>sqlmi<span class="op">-</span><span class="kw">shared</span><span class="fl">.521</span>f7783692d.<span class="kw">database</span>.windows.net,<span class="dv">1433</span>;Persist Security Info<span class="op">=</span><span class="kw">False</span>;<span class="fu">User</span> <span class="kw">ID</span><span class="op">=</span>tiuser;<span class="kw">Password</span><span class="op">=</span><span class="kw">Password</span><span class="fl">.1234567890</span>;MultipleActiveResultSets<span class="op">=</span><span class="kw">False</span>;Encrypt<span class="op">=</span><span class="kw">True</span>;TrustServerCertificate<span class="op">=</span><span class="kw">False</span>;Connection <span class="kw">Timeout</span><span class="op">=</span><span class="dv">30</span>;</a></code></pre></div>
+<li><p>On the Application settings blade, scroll down and locate the <strong>Connection strings</strong> section. Paste the connection string value below into the value for the <code>ContosoAutoDbContext</code> connection string. Also be sure to set the <code>Type</code> drop-down to <code>SQLServer</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb4-1" title="1">Server<span class="op">=</span>tcp<span class="ch">:tech</span><span class="op">-</span>immersion<span class="op">-</span>sqlmi<span class="op">-</span><span class="kw">shared</span><span class="fl">.521</span>f7783692d.<span class="kw">database</span>.windows.net,<span class="dv">1433</span>;Persist Security Info<span class="op">=</span><span class="kw">False</span>;<span class="kw">Database</span><span class="op">=</span>ContosoAutoDb;<span class="fu">User</span> <span class="kw">ID</span><span class="op">=</span>tiuser;<span class="kw">Password</span><span class="op">=</span><span class="kw">Password</span><span class="fl">.1234567890</span>;MultipleActiveResultSets<span class="op">=</span><span class="kw">False</span>;Encrypt<span class="op">=</span><span class="kw">True</span>;TrustServerCertificate<span class="op">=</span><span class="kw">False</span>;Connection <span class="kw">Timeout</span><span class="op">=</span><span class="dv">30</span>;</a></code></pre></div>
 <figure>
 <img src="media/app-service-app-settings-connection-strings.png" title="Connection strings" alt="The copied SQL MI connection string is pasted into the value for the ContosoAutoDbContext connection string." /><figcaption>The copied SQL MI connection string is pasted into the value for the ContosoAutoDbContext connection string.</figcaption>
 </figure></li>
@@ -260,8 +255,8 @@
 <figure>
 <img src="media/ssms-sql-mi-credit-card-table-select-results.png" title="Results" alt="Plain text credit card numbers are highlighted in the query results." /><figcaption>Plain text credit card numbers are highlighted in the query results.</figcaption>
 </figure></li>
-<li><p>So we can test the mask being applied to the <code>CardNumber</code> field, you will first create a user in the database that will be used for testing the masked field. In SSMS, select <strong>New Query</strong> and paste the following SQL script into the new query window, replacing <code>XXXXX</code> with your unique ID:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<li><p>So we can test the mask being applied to the <code>CardNumber</code> field, you will first create a user in the database that will be used for testing the masked field. In SSMS, select <strong>New Query</strong> and paste the following SQL script into the new query window, replacing <code>XXXXX</code> with your unique ID (if the DDMUser already exists in your environment, the following script will show an error, but you are free to proceed to the next step):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
 <a class="sourceLine" id="cb5-2" title="2">GO</a>
 <a class="sourceLine" id="cb5-3" title="3"></a>
 <a class="sourceLine" id="cb5-4" title="4"><span class="kw">CREATE</span> <span class="fu">USER</span> DDMUser <span class="kw">WITHOUT</span> LOGIN;</a>
@@ -273,11 +268,11 @@
 <p>The SQL script above create a new user in the database named <code>DDMUser</code>, and grants that user <code>SELECT</code> rights on the <code>Sales.CreditCard</code> table.</p>
 </blockquote></li>
 <li><p>Select <strong>Execute</strong> from the SSMS toolbar to run the query. You will get a message that the commands completed successfully in the Messages pane.</p></li>
-<li><p>With the new user created, let’s run a quick query to verify the results. Select <strong>New Query</strong> again, and paste the following into the new query window. Replace <code>XXXXX</code> in the <code>USE</code> statement to include the proper name of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<li><p>With the new user created, let’s run a quick query to verify the results. Select <strong>New Query</strong> again, and paste the following into the new query window. Replace <code>XXXXX</code> in the <code>USE</code> statement to include the unique identifier of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
 <a class="sourceLine" id="cb6-2" title="2">GO</a>
 <a class="sourceLine" id="cb6-3" title="3"></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="kw">EXECUTE</span> <span class="kw">AS</span> <span class="fu">USER</span> <span class="op">=</span> <span class="ot">&quot;DDMUser&#39;;</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw">EXECUTE</span> <span class="kw">AS</span> <span class="fu">USER</span> <span class="op">=</span> <span class="st">&#39;DDMUser&#39;</span>;</a>
 <a class="sourceLine" id="cb6-5" title="5"><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> [Sales].[CreditCard];</a>
 <a class="sourceLine" id="cb6-6" title="6">REVERT;</a></code></pre></div>
 <figure>
@@ -288,19 +283,19 @@
 <img src="media/ssms-sql-mi-ddm-results-unmasked.png" title="Query results" alt="The credit card number is unmasked in the query results." /><figcaption>The credit card number is unmasked in the query results.</figcaption>
 </figure></li>
 <li><p>You will now apply DDM on the <code>CardNumber</code> field to prevent it from being viewed in query results. Select <strong>New Query</strong> from the SSMS toolbar and paste the following query into the query window to apply a mask to the <code>CardNumber</code> field, replacing <code>XXXXX</code> with your unique ID. Select <strong>Execute</strong> to run the query.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
 <a class="sourceLine" id="cb7-2" title="2">GO</a>
 <a class="sourceLine" id="cb7-3" title="3"></a>
 <a class="sourceLine" id="cb7-4" title="4"><span class="kw">ALTER</span> <span class="kw">TABLE</span> [Sales].[CreditCard]</a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="kw">ALTER</span> <span class="kw">COLUMN</span> [CardNumber] <span class="dt">NVARCHAR</span>(<span class="dv">25</span>) MASKED <span class="kw">WITH</span> (<span class="kw">FUNCTION</span> <span class="op">=</span> <span class="ot">&quot;partial(0,&quot;</span>xxx<span class="op">-</span>xxx<span class="op">-</span>xxx<span class="op">-</span><span class="ot">&quot;,4)&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb7-5" title="5"><span class="kw">ALTER</span> <span class="kw">COLUMN</span> [CardNumber] <span class="dt">NVARCHAR</span>(<span class="dv">25</span>) MASKED <span class="kw">WITH</span> (<span class="kw">FUNCTION</span> <span class="op">=</span> <span class="st">&#39;partial(0,&quot;xxx-xxx-xxx-&quot;,4)&#39;</span>)</a></code></pre></div>
 <figure>
 <img src="media/ssms-sql-mi-ddm-add-mask.png" title="Add DDM Mask" alt="The SQL script above is pasted into the new query window. The Execute button is highlighted and a success message is displayed in the Messages pane." /><figcaption>The SQL script above is pasted into the new query window. The Execute button is highlighted and a success message is displayed in the Messages pane.</figcaption>
 </figure></li>
-<li><p>Run the <code>SELECT</code> query you opened in step 7 above again, and observe the results, specifically inspect the output in the <code>CardNumber</code> field. For reference the query is below. You replaced <code>XXXXX</code> in the <code>USE</code> statement to include the proper name of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<li><p>Run the <code>SELECT</code> query you opened in step 7 above again, and observe the results, specifically inspect the output in the <code>CardNumber</code> field. For reference the query is below. You replaced <code>XXXXX</code> in the <code>USE</code> statement to include the unique identifier of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
 <a class="sourceLine" id="cb8-2" title="2">GO</a>
 <a class="sourceLine" id="cb8-3" title="3"></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="kw">EXECUTE</span> <span class="kw">AS</span> <span class="fu">USER</span> <span class="op">=</span> <span class="ot">&quot;DDMUser&#39;;</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="kw">EXECUTE</span> <span class="kw">AS</span> <span class="fu">USER</span> <span class="op">=</span> <span class="st">&#39;DDMUser&#39;</span>;</a>
 <a class="sourceLine" id="cb8-5" title="5"><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> [Sales].[CreditCard];</a>
 <a class="sourceLine" id="cb8-6" title="6">REVERT;</a></code></pre></div>
 <figure>
@@ -322,8 +317,8 @@
 <figure>
 <img src="./media/ssms-toolbar-new-query.png" title="SSMS New Query" alt="The New Query icon is highlighted on the SSMS toolbar." /><figcaption>The New Query icon is highlighted on the SSMS toolbar.</figcaption>
 </figure></li>
-<li><p>Copy the script below, and paste it into the query window. Replace <code>XXXXX</code> in the <code>USE</code> statement to include the proper name of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<li><p>Copy the script below, and paste it into the query window. Replace <code>XXXXX</code> in the <code>USE</code> statement to include the unique identifier of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
 <a class="sourceLine" id="cb9-2" title="2">GO</a>
 <a class="sourceLine" id="cb9-3" title="3"></a>
 <a class="sourceLine" id="cb9-4" title="4"><span class="kw">SELECT</span> <span class="op">*</span></a>
@@ -334,8 +329,8 @@
 <figure>
 <img src="./media/ssms-toolbar-execute-query.png" title="Select Execute" alt="The Execute icon is highlighted on the SSMS toolbar." /><figcaption>The Execute icon is highlighted on the SSMS toolbar.</figcaption>
 </figure></li>
-<li><p>Select <strong>New Query</strong> in the toolbar again, and paste the following query into the new query window. The query contains multiple parts; one to get the size of the <code>ColumnStore_SalesOrderDetail</code> table, a second to create a clustered ColumnStore index on the <code>[Sales].[ColumnStore_SalesOrderDetail]</code> table, and then the size query is repeated to get the size after adding the clustered ColumnStore index. Replace <code>XXXXX</code> in the <code>USE</code> statement to include the proper name of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<li><p>Select <strong>New Query</strong> in the toolbar again, and paste the following query into the new query window. The query contains multiple parts; one to get the size of the <code>ColumnStore_SalesOrderDetail</code> table, a second to create a clustered ColumnStore index on the <code>[Sales].[ColumnStore_SalesOrderDetail]</code> table, and then the size query is repeated to get the size after adding the clustered ColumnStore index. Replace <code>XXXXX</code> in the <code>USE</code> statement to include the unique identifier of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
 <a class="sourceLine" id="cb10-2" title="2">GO</a>
 <a class="sourceLine" id="cb10-3" title="3"></a>
 <a class="sourceLine" id="cb10-4" title="4"><span class="co">-- Get the Size of the [Sales].[ColumnStore_SalesOrderDetail] table</span></a>
@@ -347,7 +342,7 @@
 <a class="sourceLine" id="cb10-10" title="10"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.<span class="kw">indexes</span> i <span class="kw">ON</span> t.OBJECT_ID <span class="op">=</span> i.object_id</a>
 <a class="sourceLine" id="cb10-11" title="11"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.<span class="kw">partitions</span> p <span class="kw">ON</span> i.object_id <span class="op">=</span> p.OBJECT_ID <span class="kw">AND</span> i.index_id <span class="op">=</span> p.index_id</a>
 <a class="sourceLine" id="cb10-12" title="12"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.allocation_units a <span class="kw">ON</span> p.partition_id <span class="op">=</span> a.container_id</a>
-<a class="sourceLine" id="cb10-13" title="13"><span class="kw">WHERE</span> t.Name <span class="op">=</span> <span class="ot">&quot;ColumnStore_SalesOrderDetail&#39;</span></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="kw">WHERE</span> t.Name <span class="op">=</span> <span class="st">&#39;ColumnStore_SalesOrderDetail&#39;</span></a>
 <a class="sourceLine" id="cb10-14" title="14"><span class="kw">GROUP</span> <span class="kw">BY</span> t.Name, p.<span class="kw">Rows</span></a>
 <a class="sourceLine" id="cb10-15" title="15">GO</a>
 <a class="sourceLine" id="cb10-16" title="16"></a>
@@ -365,7 +360,7 @@
 <a class="sourceLine" id="cb10-28" title="28"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.<span class="kw">indexes</span> i <span class="kw">ON</span> t.OBJECT_ID <span class="op">=</span> i.object_id</a>
 <a class="sourceLine" id="cb10-29" title="29"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.<span class="kw">partitions</span> p <span class="kw">ON</span> i.object_id <span class="op">=</span> p.OBJECT_ID <span class="kw">AND</span> i.index_id <span class="op">=</span> p.index_id</a>
 <a class="sourceLine" id="cb10-30" title="30"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.allocation_units a <span class="kw">ON</span> p.partition_id <span class="op">=</span> a.container_id</a>
-<a class="sourceLine" id="cb10-31" title="31"><span class="kw">WHERE</span> t.Name <span class="op">=</span> <span class="ot">&quot;ColumnStore_SalesOrderDetail&#39;</span></a>
+<a class="sourceLine" id="cb10-31" title="31"><span class="kw">WHERE</span> t.Name <span class="op">=</span> <span class="st">&#39;ColumnStore_SalesOrderDetail&#39;</span></a>
 <a class="sourceLine" id="cb10-32" title="32"><span class="kw">GROUP</span> <span class="kw">BY</span> t.Name, p.<span class="kw">Rows</span></a>
 <a class="sourceLine" id="cb10-33" title="33">GO</a></code></pre></div></li>
 <li><p>Select <strong>Execute</strong> on the toolbar to run the query.</p></li>
@@ -378,7 +373,7 @@
 <img src="./media/ssms-toolbar-include-actual-execution-plan.png" title="Select the Include Actual Execution Plan" alt="The Include Actual Execution Plan icon is highlighted on the New Query the toolbar." /><figcaption>The Include Actual Execution Plan icon is highlighted on the New Query the toolbar.</figcaption>
 </figure></li>
 <li><p>Paste the queries below into the new query window, replace <code>XXXXX</code> with your unique ID, and select <strong>Execute</strong> on the toolbar:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
 <a class="sourceLine" id="cb11-2" title="2">GO</a>
 <a class="sourceLine" id="cb11-3" title="3"></a>
 <a class="sourceLine" id="cb11-4" title="4"><span class="kw">SELECT</span> ProductId, LineTotal</a>
@@ -399,8 +394,8 @@
 <li><p>Run the same queries again, but this time set statistics IO on in the query by adding the following to the top of the query window:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">SET</span> <span class="kw">STATISTICS</span> IO <span class="kw">ON</span></a>
 <a class="sourceLine" id="cb12-2" title="2">GO</a></code></pre></div></li>
-<li><p>Your finaly query should look like, with <code>XXXXX</code> replaced with your unique ID:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">USE</span> ContosoAutoDb<span class="op">-</span>XXXXX;</a>
+<li><p>Your final query should look like, with <code>XXXXX</code> replaced with your unique ID:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
 <a class="sourceLine" id="cb13-2" title="2">GO</a>
 <a class="sourceLine" id="cb13-3" title="3"></a>
 <a class="sourceLine" id="cb13-4" title="4"><span class="kw">SET</span> <span class="kw">STATISTICS</span> IO <span class="kw">ON</span></a>
@@ -439,11 +434,11 @@
 <p>Note the addition of <code>ApplicationIntent=ReadOnly;</code> to the end of the connection string.</p>
 </blockquote>
 <ol type="1">
-<li><p>Using a web browser, navigate to the <a href="https://portal.azure.com">Azure portal</a>, select <strong>Resource groups</strong> from the left-hand menu, and then select the resource group named <strong>tech-immersion</strong>.</p>
+<li><p>Using a web browser, navigate to the <a href="https://portal.azure.com">Azure portal</a>, select <strong>Resource groups</strong> from the left-hand menu, and then select the resource group named <strong>tech-immersion-XXXXX</strong> (where XXXXX is the unique ID assigned to you for this workshop).</p>
 <figure>
 <img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
 </figure></li>
-<li><p>In the tech-immersion resource group, select the <strong>tech-immersion-web App Service</strong> from the list of resources.</p>
+<li><p>In the tech-immersion resource group, select the <strong>techimmersionwebappXXXXX</strong> App Service from the list of resources (where XXXXX is the unique ID assigned to you for this workshop).</p>
 <figure>
 <img src="media/tech-immersion-rg-appservice.png" title="Tech Immersion resource group" alt="The App Service resource is selected from the list of resources in the tech-immersion resource group." /><figcaption>The App Service resource is selected from the list of resources in the tech-immersion resource group.</figcaption>
 </figure></li>
@@ -485,27 +480,48 @@
 <h2 id="task-7-review-advanced-data-security-vulnerability-assessment">Task 7: Review Advanced Data Security Vulnerability Assessment</h2>
 <p><a href="https://docs.microsoft.com/azure/sql-database/sql-database-advanced-data-security">SQL Database Advance Data Security</a> (ADS) provides advanced SQL security capabilities, including functionality for discovering and classifying sensitive data, surfacing and mitigating potential database vulnerabilities, and detecting anomalous activities that could indicate a threat to your database. ADS is enabled at the managed instance level by selecting <strong>ON</strong> on the <strong>Advanced Data Security</strong> blade for your managed instance. This turns ADS on for all databases on the managed instance. ADS uses an Azure Blob Storage account to save the associated outputs (e.g., assessment and vulnerability reports). In the interest of time for this workshop, the steps to enable ADS have already been performed on the shared SQL MI.</p>
 <p>In this task, you will review an assessment report generated by <a href="https://docs.microsoft.com/azure/sql-database/sql-database-advanced-data-security">Advance Data Security</a> for the <code>ContosoAutoDb</code> database and take action to remediate one of the findings in your copy of the <code>ContosoAutoDb</code> database.</p>
+<blockquote>
+<p>Advanced Data Security is enabled at the server level, and for this workshop it has already been enabled on the SQL MI, so you will focus on just your user-specific database.</p>
+</blockquote>
 <ol type="1">
-<li><p>To review the Advanced Data Security assessment for the <code>ContosoAutoDb</code> database. Select <strong>Overview</strong> from the left-hand menu.</p>
+<li><p>To review the Advanced Data Security assessment for your <code>ContosoAutoDb-XXXXX</code> database, navigate to the <strong>tech-immersion-shared-rg</strong> resource group.</p>
+<figure>
+<img src="media/shared-rg.png" title="Resource Groups" alt="The tech-immersion-shared-rs is highlighted under Resource groups." /><figcaption>The tech-immersion-shared-rs is highlighted under Resource groups.</figcaption>
+</figure></li>
+<li><p>In the shared resource group, select the <strong>SQL Managed Instance</strong> resource from the list.</p>
+<figure>
+<img src="media/shared-rg-sql-mi.png" title="SQL Managed Instance resource" alt="The SQL MI resource is highlighted in the list of resources in the shared resource group." /><figcaption>The SQL MI resource is highlighted in the list of resources in the shared resource group.</figcaption>
+</figure></li>
+<li><p>On the SQL MI blade, select <strong>Overview</strong> from the left-hand menu.</p>
 <figure>
 <img src="media/sql-mi-overview-menu.png" title="Overview" alt="The Overview menu item is highlighted." /><figcaption>The Overview menu item is highlighted.</figcaption>
 </figure></li>
-<li><p>On the SQL MI Overview blade, scroll down and locate the list of databases on the Managed Instance, and then select your copy of the <strong>ContosoAutoDb</strong> database, which will be named <code>ContosoAutoDb-your-unique-identifier</code> (e.g., ContosoAutoDb-0123).</p>
+<li><p>On the SQL MI Overview blade, scroll down and locate the list of databases on the Managed Instance, and then select your copy of the <strong>ContosoAutoDb</strong> database, which will be named <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-0123), where XXXXX is the unique identifier assigned to you for this workshop.</p>
 <figure>
 <img src="media/sql-mi-database-list.png" title="Manged Instance databases" alt="ContosoAutoDb is highlighted in the list of databases on the SQL MI." /><figcaption>ContosoAutoDb is highlighted in the list of databases on the SQL MI.</figcaption>
-</figure></li>
-<li><p>On the <strong>ContosoAutoDb-your-unique-identifier</strong> Managed database blade, select <strong>Advanced Data Security</strong> under Security in the left-hand menu and then select the <strong>Vulnerability Assessment</strong> tile.</p>
+</figure>
+<blockquote>
+<p>You will see a list of all the databases on the SQL MI. Make sure you select the one which includes your assigned unique identifier from the list.</p>
+</blockquote></li>
+<li><p>On the <strong>ContosoAutoDb-XXXXX</strong> Managed database blade, select <strong>Advanced Data Security</strong> under Security in the left-hand menu and then select the <strong>Vulnerability Assessment</strong> tile.</p>
 <figure>
 <img src="media/sql-mi-contosoautodb-ads.png" title="Advanced Data Security" alt="Advanced Data Security is selected in the left-hand menu, and the Vulnerability tile is highlighted." /><figcaption>Advanced Data Security is selected in the left-hand menu, and the Vulnerability tile is highlighted.</figcaption>
 </figure>
 <blockquote>
 <p>The <a href="https://docs.microsoft.com/azure/sql-database/sql-vulnerability-assessment">SQL Vulnerability Assessment service</a> is a service that provides visibility into your security state, and includes actionable steps to resolve security issues, and enhance your database security.</p>
 </blockquote></li>
-<li><p>On the Vulnerability Assessment blade, you will see a dashboard, displaying the number of failing checks, passing checks, and a breakdown of the risk summary by severity level.</p>
+<li><p>On the Vulnerability Assessment blade, select <strong>Scan</strong> on the toolbar.</p>
+<figure>
+<img src="media/vulnerability-assessment-scan.png" title="Scan" alt="Vulnerability assessment scan button." /><figcaption>Vulnerability assessment scan button.</figcaption>
+</figure></li>
+<li><p>When the scan completes, you will see a dashboard, displaying the number of failing checks, passing checks, and a breakdown of the risk summary by severity level.</p>
 <figure>
 <img src="media/sql-mi-vulnerability-assessment-dashboard.png" title="Vulnerability Assessment dashboard" alt="The Vulnerability Assessment dashboard is displayed." /><figcaption>The Vulnerability Assessment dashboard is displayed.</figcaption>
-</figure></li>
-<li><p>Take a few minutes to browse both the Failed and Passed checks, and review the types of checks that are performed. In the <strong>Failed</strong> the list, locate the security check for <strong>Transparent data encryption</strong>. This check has an ID of <strong>VA1219</strong>.</p>
+</figure>
+<blockquote>
+<p>Scans are run on a schedule, so if you see a message that no vulnerabilities are found your database may not have been scanned yet. You will need to run a scan manually. To do this, select the <strong>Scan</strong> button on the toolbar, and follow any prompts to start a scan. This will take a minute or so to complete.</p>
+</blockquote></li>
+<li><p>In the scan results, take a few minutes to browse both the Failed and Passed checks, and review the types of checks that are performed. In the <strong>Failed</strong> the list, locate the security check for <strong>Transparent data encryption</strong>. This check has an ID of <strong>VA1219</strong>.</p>
 <figure>
 <img src="media/sql-mi-vulnerability-assessment-failed-va1219.png" title="Vulnerability assessment" alt="The VA1219 finding for Transparent data encryption is highlighted." /><figcaption>The VA1219 finding for Transparent data encryption is highlighted.</figcaption>
 </figure></li>
@@ -520,8 +536,8 @@
 <blockquote>
 <p>Transparent data encryption (TDE) needs to be manually enabled for Azure SQL Managed Instance. TDE helps protect Azure SQL Database, Azure SQL Managed Instance, and Azure Data Warehouse against the threat of malicious activity. It performs real-time encryption and decryption of the database, associated backups, and transaction log files at rest without requiring changes to the application.</p>
 </blockquote></li>
-<li><p>In SSMS, select <strong>New Query</strong> from the toolbar, paste the following SQL script into the new query window. Replace <code>&lt;your-unique-identifier&gt;</code> in the <code>ALTER DATABASE</code> statement to include the proper name of your database which will be <code>ContosoAutoDb-your-unique-identifier</code> (e.g., ContosoAutoDb-0123).</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">ALTER</span> <span class="kw">DATABASE</span> ContosoAutoDb<span class="op">-&lt;</span>your<span class="op">-</span><span class="kw">unique</span><span class="op">-</span><span class="kw">identifier</span><span class="op">&gt;</span> <span class="kw">SET</span> ENCRYPTION <span class="kw">ON</span></a></code></pre></div>
+<li><p>In SSMS, select <strong>New Query</strong> from the toolbar, paste the following SQL script into the new query window. Replace <code>&lt;XXXXX&gt;</code> in the <code>ALTER DATABASE</code> statement to include the unique identifier of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-0123).</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">ALTER</span> <span class="kw">DATABASE</span> [ContosoAutoDb<span class="op">-</span>XXXXX] <span class="kw">SET</span> ENCRYPTION <span class="kw">ON</span></a></code></pre></div>
 <figure>
 <img src="media/ssms-sql-mi-enable-tde.png" title="New query" alt="A new query window is displayed, with the script above pasted into it." /><figcaption>A new query window is displayed, with the script above pasted into it.</figcaption>
 </figure>
@@ -568,7 +584,7 @@
 <p>In this task, you will look at another <strong>Advanced Data Security</strong> feature available within the SQL MI database, <a href="https://docs.microsoft.com/sql/relational-databases/security/sql-data-discovery-and-classification?view=sql-server-2017">SQL Data Discovery and Classification</a>. Data Discovery &amp; Classification introduces a new tool built into SQL Server Management Studio (SSMS) for discovering, classifying, labeling &amp; reporting the sensitive data in your databases. It introduces a set of advanced services, forming a new SQL Information Protection paradigm aimed at protecting the data in your database, not just the database. Discovering and classifying your most sensitive data (business, financial, healthcare, etc.) can play a pivotal role in your organizational information protection stature.</p>
 <pre><code>&gt; This functionality is not currently available for SQL MI through the Azure portal, so you return to SSMS to use this capability.</code></pre>
 <ol type="1">
-<li><p>In SSMS, right-click the <code>ContosoAutoDb-&lt;your-unique-identifier&gt;</code> database (e.g., ContosoAutoDb-0123) in the Object Explorer, and then select <strong>Tasks</strong> and <strong>Classify Data</strong> in the context menus.</p>
+<li><p>In SSMS, right-click the <code>ContosoAutoDb-XXXXX</code> database (e.g., ContosoAutoDb-0123) in the Object Explorer (where XXXXX is the unique identifier assigned to you for this workshop), and then select <strong>Tasks</strong> and <strong>Classify Data</strong> in the context menus.</p>
 <figure>
 <img src="media/ssms-sql-mi-classify-data-menu.png" title="Classify Data" alt="The Tasks &gt; Classify Data context menu items are highlighted for the ContosoAutoDb database in SSMS." /><figcaption>The Tasks &gt; Classify Data context menu items are highlighted for the ContosoAutoDb database in SSMS.</figcaption>
 </figure></li>

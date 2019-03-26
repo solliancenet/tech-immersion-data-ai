@@ -1,7 +1,9 @@
-<h1 id="day-1-experience-2---leveraging-cosmos-db-for-near-real-time-analytics">Day 1, Experience 2 - Leveraging Cosmos DB for near real-time analytics</h1>
+<h1 id="data-ai-tech-immersion-workshop-product-review-guide-and-lab-instructions">Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions</h1>
+<h2 id="day-1-experience-2---leveraging-cosmos-db-for-near-real-time-analytics">Day 1, Experience 2 - Leveraging Cosmos DB for near real-time analytics</h2>
 <ul>
-<li><a href="#day-1-experience-2---leveraging-cosmos-db-for-near-real-time-analytics">Day 1, Experience 2 - Leveraging Cosmos DB for near real-time analytics</a>
+<li><a href="#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions">Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions</a>
 <ul>
+<li><a href="#day-1-experience-2---leveraging-cosmos-db-for-near-real-time-analytics">Day 1, Experience 2 - Leveraging Cosmos DB for near real-time analytics</a></li>
 <li><a href="#technology-overview">Technology overview</a>
 <ul>
 <li><a href="#azure-cosmos-db">Azure Cosmos DB</a></li>
@@ -17,14 +19,15 @@
 <li><a href="#task-3-configure-stream-analytics">Task 3: Configure Stream Analytics</a></li>
 <li><a href="#task-4-configure-azure-function-app">Task 4: Configure Azure Function App</a></li>
 <li><a href="#task-5-publish-function-app-and-run-data-generator">Task 5: Publish Function App and run data generator</a></li>
-<li><a href="#task-6-create-power-bi-dashboard">Task 6: Create Power BI dashboard</a></li>
+<li><a href="#task-6-view-published-function">Task 6: View published function</a></li>
+<li><a href="#task-7-create-power-bi-dashboard">Task 7: Create Power BI dashboard</a></li>
 <li><a href="#wrap-up">Wrap-up</a></li>
 <li><a href="#additional-resources-and-more-information">Additional resources and more information</a></li>
 </ul></li>
 </ul>
 <h2 id="technology-overview">Technology overview</h2>
 <h3 id="azure-cosmos-db">Azure Cosmos DB</h3>
-<p>Develop high-concurrency, low-latency applications with Azure Cosmos DB, a fully managed database service that supports NoSQL APIs and can scale out <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/multi-region-writer">multi-master</a> workloads anywhere in the world. Ensure blazing fast performance with <a href="https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/v1_2/">industry-leading service level agreements (SLAs)</a> for single-digit-millisecond reads and writes, data consistency and throughput, and 99.999% high availability. Transparent <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/partitioning-overview">horizontally-partitioning</a> provides elastic scaling, matching capacity with demand to controls costs and ensures your applications maintains high performance during peak traffic.</p>
+<p>Develop high-concurrency, low-latency applications with Azure Cosmos DB, a fully managed database service that supports NoSQL APIs and can scale out <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-multi-master">multi-master</a> workloads anywhere in the world. Ensure blazing fast performance with <a href="https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/v1_2/">industry-leading service level agreements (SLAs)</a> for single-digit-millisecond reads and writes, data consistency and throughput, and 99.999% high availability. Transparent <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/partitioning-overview">horizontally-partitioning</a> provides elastic scaling, matching capacity with demand to controls costs and ensures your applications maintains high performance during peak traffic.</p>
 <p>Azure Cosmos DB offers built-in, cloud-native capabilities to simplify app development and boost developer productivity, including five well-defined consistency models, <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/index-policy">auto-indexing</a>, and multiple data models. Easily migrate existing NoSQL data with open-source APIs for <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction">MongoDB</a>, <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/cassandra-introduction">Cassandra</a>, Gremlin (Graph), and others. Developers can work with tools to build microservices and the languages of their choice, while enjoying seamless integration with Azure services for IoT, advanced analytics, AI and machine learning, and business intelligence.</p>
 <p>Azure Cosmos DB enables you to innovate with IoT data to build enhanced user experiences and turn insights into action:</p>
 <ul>
@@ -106,6 +109,10 @@
 <figure>
 <img src="media/cosmos-db-data-explorer-link.png" title="Data Explorer link" alt="The Data Explorer link located in the left-hand menu is highlighted." /><figcaption>The Data Explorer link located in the left-hand menu is highlighted.</figcaption>
 </figure></li>
+<li><p>If the ContosoAuto database and telemetry collection already exist, <strong>skip ahead</strong> to step 9.</p>
+<figure>
+<img src="media/cosmos-db-database-exists.png" title="Data Explorer" alt="Screenshot shows the database and collection already exists." /><figcaption>Screenshot shows the database and collection already exists.</figcaption>
+</figure></li>
 <li><p>Select <strong>New Collection</strong> in the top toolbar.</p>
 <figure>
 <img src="media/cosmos-db-new-collection-link.png" title="New Collection link" alt="The New Collection link in the top toolbar is highlighted." /><figcaption>The New Collection link in the top toolbar is highlighted.</figcaption>
@@ -126,7 +133,7 @@
 </figure>
 <p>On the subject of partitions, choosing an appropriate partition key for Cosmos DB is a critical step for ensuring balanced reads and writes, scaling, and, in this case, in-order change feed processing per partition. While there are no limits, per se, on the number of logical partitions, a single logical partition is allowed an upper limit of 10 GB of storage. Logical partitions cannot be split across physical partitions. For the same reason, if the partition key chosen is of bad cardinality, you could potentially have skewed storage distribution. For instance, if one logical partition becomes larger faster than the others and hits the maximum limit of 10 GB, while the others are nearly empty, the physical partition housing the maxed out logical partition cannot split and could cause an application downtime. This is why we specified <code>vin</code> as the partition key. It has good cardinality for this data set.</p></li>
 <li><p>Select <strong>OK</strong> on the bottom of the form when you are finished entering the values.</p></li>
-<li><p>Select <strong>Firewall and virtual networks</strong> from the left-hand menu, then select Allow access from <strong>All networks</strong>. Select <strong>Save</strong>. This will allow the vehicle telemetry generator application to send data to your Cosmos DB collection. Select <strong>Save</strong>.</p>
+<li><p>Select <strong>Firewall and virtual networks</strong> from the left-hand menu and confirm that Allow access from <strong>All networks</strong> is selected. If it was not previously set to this, select <strong>Save</strong>. This will allow the vehicle telemetry generator application to send data to your Cosmos DB collection.</p>
 <figure>
 <img src="media/cosmos-db-firewall.png" title="Firewall and virtual networks" alt="The All networks option is selected within the Firewall and virtual networks blade." /><figcaption>The All networks option is selected within the Firewall and virtual networks blade.</figcaption>
 </figure></li>
@@ -148,7 +155,7 @@
 <figure>
 <img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
 </figure></li>
-<li><p>Select the <strong>Event Hubs Namespace</strong> from the list of resources in your resource group.</p>
+<li><p>Select the <strong>Event Hubs Namespace</strong> (<code>tech-immersion-hub-YOUR_UNIQUE_ID</code>) from the list of resources in your resource group.</p>
 <figure>
 <img src="media/tech-immersion-rg-event-hubs.png" title="tech-immersion resource group" alt="The Event Hubs Namespace is selected in the resource group." /><figcaption>The Event Hubs Namespace is selected in the resource group.</figcaption>
 </figure></li>
@@ -212,11 +219,7 @@
 <img src="media/event-hubs-add-sas-policy-write.png" title="Add SAS Policy" alt="The Add SAS Policy form is filled out with the previously mentioned settings entered into the appropriate fields." /><figcaption>The Add SAS Policy form is filled out with the previously mentioned settings entered into the appropriate fields.</figcaption>
 </figure></li>
 <li><p>Select <strong>Create</strong> on the bottom of the form when you are finished entering the values.</p></li>
-<li><p>Select your <strong>Read</strong> policy from the list. Copy the <strong>Connection string - primary key</strong> value by selecting the Copy button to the right of the field. <strong>SAVE THIS VALUE</strong> in Notepad or similar text editor for later.</p>
-<figure>
-<img src="media/event-hubs-read-policy-key.png" title="SAS Policy: Read" alt="The Read policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted." /><figcaption>The Read policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted.</figcaption>
-</figure></li>
-<li><p>Now select your <strong>Write</strong> policy from the list. Copy the <strong>Connection string - primary key</strong> value by selecting the Copy button to the right of the field. <strong>SAVE THIS VALUE</strong> in Notepad or similar text editor for later.</p>
+<li><p>Select your <strong>Write</strong> policy from the list. Copy the <strong>Connection string - primary key</strong> value by selecting the Copy button to the right of the field. <strong>SAVE THIS VALUE</strong> in Notepad or similar text editor for later.</p>
 <figure>
 <img src="media/event-hubs-write-policy-key.png" title="SAS Policy: Write" alt="The Write policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted." /><figcaption>The Write policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted.</figcaption>
 </figure></li>
@@ -230,7 +233,7 @@
 <figure>
 <img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
 </figure></li>
-<li><p>Select the <strong>Stream Analytics job</strong> from the list of resources in your resource group.</p>
+<li><p>Select the <strong>Stream Analytics job</strong> (<code>tech-immersion-analytics-YOUR_UNIQUE_ID</code>) from the list of resources in your resource group.</p>
 <figure>
 <img src="media/tech-immersion-rg-stream-analytics.png" title="tech-immersion resource group" alt="The Stream Analytics job is selected in the resource group." /><figcaption>The Stream Analytics job is selected in the resource group.</figcaption>
 </figure></li>
@@ -264,11 +267,11 @@
 <figure>
 <img src="media/stream-analytics-add-output-link.png" title="Add output - Power BI" alt="The Add button and Power BI menu item are highlighted." /><figcaption>The Add button and Power BI menu item are highlighted.</figcaption>
 </figure></li>
-<li><p>In the <strong>New Output</strong> blade, select the <strong>Authorize</strong> button to authorize a connection from Stream Analytics to your Power BI account. If you do not have a Power BI account, select the <strong>Sign up</strong> link below the button.</p>
+<li><p>In the <strong>New Output</strong> blade, select the <strong>Authorize</strong> button to authorize a connection from Stream Analytics to your Power BI account.</p>
 <figure>
 <img src="media/stream-analytics-new-output-authorize.png" title="New Output" alt="The Authorize button is highlighted in the New Output blade." /><figcaption>The Authorize button is highlighted in the New Output blade.</figcaption>
 </figure></li>
-<li><p>When prompted, sign in to your Power BI account.</p>
+<li><p>When prompted, sign in to your Power BI account, which is the same username and password you were provided with and used to login to the Azure Portal.</p>
 <figure>
 <img src="media/power-bi-sign-in.png" title="Power BI Sign In" alt="The Power BI sign in form is displayed." /><figcaption>The Power BI sign in form is displayed.</figcaption>
 </figure></li>
@@ -385,7 +388,7 @@
 <figure>
 <img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
 </figure></li>
-<li><p>Select the <strong>App Service</strong> (Azure Function App) from the list of resources in your resource group.</p>
+<li><p>Select the <strong>App Service</strong> (Azure Function App) that includes <strong>day1</strong> in its name from the list of resources in your resource group.</p>
 <figure>
 <img src="media/tech-immersion-rg-function-app.png" title="tech-immersion resource group" alt="The App Service Function App is selected in the resource group." /><figcaption>The App Service Function App is selected in the resource group.</figcaption>
 </figure></li>
@@ -397,12 +400,12 @@
 <figure>
 <img src="media/function-app-app-settings-new-link.png" title="Application settings" alt="The Add new setting link is highlighted on the bottom of the Application settings section." /><figcaption>The Add new setting link is highlighted on the bottom of the Application settings section.</figcaption>
 </figure></li>
-<li><p>Enter <strong>CosmosDbConnectionString</strong> into the <strong>Name</strong> field, then paste your Cosmos DB connection string into the <strong>Value</strong> field. If you cannot locate your connection string, refer to Task 1, step 10.</p>
+<li><p>Enter <code>CosmosDbConnectionString</code> into the <strong>Name</strong> field, then paste your Cosmos DB connection string into the <strong>Value</strong> field. If you cannot locate your connection string, refer to Task 1, step 10.</p>
 <figure>
 <img src="media/function-app-app-settings-cosmos-db.png" title="Application settings" alt="The CosmosDbConnectionString name and value pair has been added and is highlighted." /><figcaption>The CosmosDbConnectionString name and value pair has been added and is highlighted.</figcaption>
 </figure></li>
 <li><p>Select <strong>Add new setting</strong> underneath the new application setting you just added to add a new one.</p></li>
-<li><p>Enter <strong>EventHubsConnectionString</strong> into the <strong>Name</strong> field, then paste your Event Hubs connection string into the <strong>Value</strong> field. This is the connection string for the <strong>Write</strong> shared access policy you created. If you cannot locate your connection string, refer to Task 2, step 17.</p>
+<li><p>Enter <code>EventHubsConnectionString</code> into the <strong>Name</strong> field, then paste your Event Hubs connection string into the <strong>Value</strong> field. This is the connection string for the <strong>Write</strong> shared access policy you created. If you cannot locate your connection string, refer to Task 2, step 17.</p>
 <figure>
 <img src="media/function-app-app-settings-event-hubs.png" title="Application settings" alt="The EventHubsConnectionString name and value pair has been added and is highlighted." /><figcaption>The EventHubsConnectionString name and value pair has been added and is highlighted.</figcaption>
 </figure></li>
@@ -415,7 +418,7 @@
 <p>The data generator console application creates and sends simulated vehicle sensor telemetry for an array of vehicles (denoted by VIN (vehicle identification number)) directly to Cosmos DB. For this to happen, you first need to configure it with the Cosmos DB connection string.</p>
 <p>In this task, you will open the lab solution in Visual Studio, publish the Function App, and configure and run the data generator. The data generator saves simulated vehicle telemetry data to Cosmos DB, which triggers the Azure function to run and process the data, sending it to Event Hubs, prompting your Stream Analytics job to aggregate and analyze the enriched data and send it to Power BI. The final step will be to create the Power BI report in the task that follows.</p>
 <ol type="1">
-<li><p>Open Windows Explorer and navigate to <code>C:\lab-files\data\2</code>. Double-click on <strong>TechImmersion.sln</strong> to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab.</p>
+<li><p>Open File Explorer and navigate to <code>C:\lab-files\data\2</code>. Double-click on <strong>TechImmersion.sln</strong> to open the solution in Visual Studio. <strong>NOTE:</strong> If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab (they are called <code>Username</code> and <code>Password</code> under the heading Azure Credentials in the documentation).</p>
 <figure>
 <img src="media/vs-solution.png" title="Windows explorer" alt="The TechImmersion.sln file is highlighted in the C:-immersion folder." /><figcaption>The TechImmersion.sln file is highlighted in the C:-immersion folder.</figcaption>
 </figure>
@@ -437,7 +440,7 @@
 <figure>
 <img src="media/vs-publish-target.png" title="Pick a publish target" alt="The Select Existing radio button and Publish button are highlighted." /><figcaption>The Select Existing radio button and Publish button are highlighted.</figcaption>
 </figure></li>
-<li><p>In the App Service dialog that follows, make sure your Azure <strong>Subscription</strong> for this lab is selected, then find and expand the <strong>tech-immersion-YOUR_UNIQUE_IDENTIFIER</strong> resource group. Select your Function App, then click <strong>OK</strong> on the bottom of the dialog window</p>
+<li><p>In the App Service dialog that follows, make sure your Azure <strong>Subscription</strong> for this lab is selected, then find and expand the <strong>tech-immersion-YOUR_UNIQUE_IDENTIFIER</strong> resource group. Select your Function App that includes <strong>day1</strong> in its name, then click <strong>OK</strong> on the bottom of the dialog window</p>
 <figure>
 <img src="media/vs-publish-app-service.png" title="App Service" alt="The Function App and OK button are highlighted." /><figcaption>The Function App and OK button are highlighted.</figcaption>
 </figure></li>
@@ -449,12 +452,12 @@
 <figure>
 <img src="media/vs-appsettings-link.png" title="Solution Explorer" alt="The appsettings.json file is highlighted in Solution Explorer." /><figcaption>The appsettings.json file is highlighted in Solution Explorer.</figcaption>
 </figure></li>
-<li><p>Paste your Cosmos DB connection string value next to <code>COSMOS_DB_CONNECTION_STRING</code>. Make sure you have quotes ("") around the value, as shown.</p>
+<li><p>Paste your Cosmos DB connection string value next to <code>COSMOS_DB_CONNECTION_STRING</code>. Make sure you have quotes ("") around the value, as shown. <strong>Save</strong> the file.</p>
 <figure>
 <img src="media/vs-appsettings.png" title="appsettings.json" alt="The Cosmos DB connection string is highlighted within the appsettings.json file." /><figcaption>The Cosmos DB connection string is highlighted within the appsettings.json file.</figcaption>
 </figure>
 <p><code>SECONDS_TO_LEAD</code> is the amount of time to wait before sending vehicle telemetry data. Default value is <code>0</code>.</p>
-<p><code>SECONDS_TO_RUN</code> is the maximum amount of time to allow the generator to run before stopping transmission of data. The default value is <code>600</code>. Data will also stop transmitting when you enter Ctrl+C while the generator is running, or if you close the window.</p></li>
+<p><code>SECONDS_TO_RUN</code> is the maximum amount of time to allow the generator to run before stopping transmission of data. The default value is <code>1800</code>. Data will also stop transmitting when you enter Ctrl+C while the generator is running, or if you close the window.</p></li>
 <li><p>Now you are ready to run the transaction generator. Select the <strong>Debug</strong> menu item, then select <strong>Start Debugging</strong>, or press <em>F-5</em> on your keyboard.</p>
 <figure>
 <img src="media/vs-debug.png" title="Debug" alt="The Debug menu item and Start Debugging sub-menu item are selected" /><figcaption>The Debug menu item and Start Debugging sub-menu item are selected</figcaption>
@@ -463,7 +466,7 @@
 <figure>
 <img src="media/vs-console.png" title="Console window" alt="Screenshot of the console window." /><figcaption>Screenshot of the console window.</figcaption>
 </figure>
-<p>The top of the output displays information about the Cosmos DB collection you created (telemetry), the requested RU/s as well as estimated hourly and monthly cost. After every 1,000 records are requested to be sent, you will see output statistics.</p></li>
+<p>The top of the output displays information about the Cosmos DB collection you created (telemetry), the requested RU/s as well as estimated hourly and monthly cost. After every 500 records are requested to be sent, you will see output statistics.</p></li>
 </ol>
 <hr />
 <p>Some key areas to point out about the data generator code are as follows:</p>
@@ -479,7 +482,39 @@
 <figure>
 <img src="media/telemetry-generator-initialize-cosmos.png" title="InitializeCosmosDB method" alt="The InitializeCosmosDB method code." /><figcaption>The InitializeCosmosDB method code.</figcaption>
 </figure>
-<h2 id="task-6-create-power-bi-dashboard">Task 6: Create Power BI dashboard</h2>
+<h2 id="task-6-view-published-function">Task 6: View published function</h2>
+<p>A few minutes ago, you published your Azure Function App from Visual Studio. This Function App contains a single function, <code>CarEventProcessor</code>. We will take a look at the published function in this task.</p>
+<p>You will notice that the Function App is now set to read-only. This is because you published a generated function.json file from Visual Studio. Function Apps adds this protection when you publish so you do not accidentally overwrite the function.json file or related files through the UI.</p>
+<ol type="1">
+<li><p>Navigate to the <a href="https://portal.azure.com">Azure portal</a>.</p></li>
+<li><p>Select <strong>Resource groups</strong> from the left-hand menu. Then select the resource group named <strong>tech-immersion-YOUR_UNIQUE_IDENTIFIER</strong>.</p>
+<figure>
+<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
+</figure></li>
+<li><p>Select the <strong>App Service</strong> (Azure Function App) that includes <strong>day1</strong> in its name from the list of resources in your resource group.</p>
+<figure>
+<img src="media/tech-immersion-rg-function-app.png" title="tech-immersion resource group" alt="The App Service Function App is selected in the resource group." /><figcaption>The App Service Function App is selected in the resource group.</figcaption>
+</figure></li>
+<li><p>Expand <strong>Functions (Read Only)</strong> within the navigation tree to the left, then select <strong>CarEventProcessor</strong>.</p>
+<figure>
+<img src="media/function-app-tree.png" title="Functions" alt="The Functions node is expanded in the navigation tree, and the CarEventProcessor is selected." /><figcaption>The Functions node is expanded in the navigation tree, and the CarEventProcessor is selected.</figcaption>
+</figure></li>
+<li><p>Looking at the <strong>function.json</strong> file to the right, notice that it was generated for you when you published from Visual Studio. Also notice how the <code>bindings</code> section lines up with the function method in <code>CarEventProcessorFunctions.cs</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode csharp"><code class="sourceCode cs"><a class="sourceLine" id="cb3-1" title="1">[<span class="fu">FunctionName</span>(<span class="st">&quot;CarEventProcessor&quot;</span>)]</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">public</span> <span class="kw">static</span> async Task <span class="fu">CarEventProcessor</span>([<span class="fu">CosmosDBTrigger</span>(</a>
+<a class="sourceLine" id="cb3-3" title="3">    databaseName: <span class="st">&quot;ContosoAuto&quot;</span>,</a>
+<a class="sourceLine" id="cb3-4" title="4">    collectionName: <span class="st">&quot;telemetry&quot;</span>,</a>
+<a class="sourceLine" id="cb3-5" title="5">    ConnectionStringSetting = <span class="st">&quot;CosmosDbConnectionString&quot;</span>,</a>
+<a class="sourceLine" id="cb3-6" title="6">    LeaseCollectionName = <span class="st">&quot;leases&quot;</span>,</a>
+<a class="sourceLine" id="cb3-7" title="7">    CreateLeaseCollectionIfNotExists = <span class="kw">true</span>)]IReadOnlyList&lt;Document&gt; input,</a>
+<a class="sourceLine" id="cb3-8" title="8">    [<span class="fu">EventHub</span>(<span class="st">&quot;telemetry&quot;</span>,</a>
+<a class="sourceLine" id="cb3-9" title="9">        Connection=<span class="st">&quot;EventHubsConnectionString&quot;</span>)]IAsyncCollector&lt;EventData&gt; eventHubOutput,</a>
+<a class="sourceLine" id="cb3-10" title="10">    ILogger log)</a></code></pre></div>
+<figure>
+<img src="media/function-app-functions-json.png" title="function.json" alt="The function.json file is displayed with the bindings highlighted." /><figcaption>The function.json file is displayed with the bindings highlighted.</figcaption>
+</figure></li>
+</ol>
+<h2 id="task-7-create-power-bi-dashboard">Task 7: Create Power BI dashboard</h2>
 <p>In this task, you will use Power BI to create a report showing captured vehicle anomaly data. Then you will pin that report to a live dashboard for near real-time updates.</p>
 <ol type="1">
 <li><p>Open your web browser and navigate to <a href="https://powerbi.microsoft.com/" class="uri">https://powerbi.microsoft.com/</a>. Select <strong>Sign in</strong> on the upper-right.</p>
