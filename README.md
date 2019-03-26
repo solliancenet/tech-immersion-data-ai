@@ -1,7 +1,7 @@
 # Tech Immersion Mega Data & AI Workshop
 
 ## Setup: Connecting to your VM with Remote Desktop
-When setting up a cloud infrastructure, it's a good idea to create a VM where you can install all of the tools and applications you need to manage your environment and products.  This is called a jumpbox.  In order to use your jumpbox, you need to open Remote Desktop Connection.
+When setting up a cloud infrastructure, it's a good idea to create a VM where you can install all of the tools and applications you need to manage your environment.  This is called a jumpbox.  A jumpbox has been created for you.  In order to use it, you need to open Remote Desktop Connection.
 	
 You will need three pieces of information:
 - Jump VM DNS Name
