@@ -74,11 +74,15 @@ In this task, you will train a deep learning model to classify the descriptions 
 
     ![The Create New Project dialog](media/04.png 'Create New Project')
 
-6. Select the **Upload** menu and then choose **From Computer**.
+6. Select the **Upload** menu and then choose **From URL**.
 
     ![The Upload menu](media/05.png 'Upload')
 
-7. In the Upload files from Computer dialog, select **Choose Files** and then select the `deep-learning.ipynb` from lab starter files (C:\lab-files\ai\4). Select **Upload** to upload the notebook and then select **Done** to dismiss the dialog.
+7. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
+
+    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4/deep-learning.ipynb
+   
+    Then select **Done** to upload and dismiss the dialog.
 
     ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 

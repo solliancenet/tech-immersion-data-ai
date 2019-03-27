@@ -52,19 +52,23 @@ In this exercise, you will use compute resources provided by Azure Machine Learn
 
     ![The Create New Project dialog](media/04.png 'Create New Project')
 
-6. Select the **Upload** menu and then choose **From Computer**.
+6. Select the **Upload** menu and then choose **From URL**.
 
     ![The Upload menu](media/05.png 'Upload')
 
-7. In the Upload files from Computer dialog, select **Choose Files** and then select the `predict-battery-life-with-AML.ipynb` from lab starter files (C:\lab-files\ai\3). Select **Upload** to upload the notebook and then select **Done** to dismiss the dialog.
+7. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
+
+    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/3/predict-battery-life-with-AML.ipynb
+   
+    Then select **Done** to upload and dismiss the dialog.
 
     ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
-8. In the listing, select the Notebook you just uploaded (predict-battery-life-with-AML.ipynb) to open it.
+8.  In the listing, select the Notebook you just uploaded (predict-battery-life-with-AML.ipynb) to open it.
 
     ![Select the notebook](media/07.png 'Select the notebook')
 
-9. Follow the instructions within the notebook to complete the experience.
+9.  Follow the instructions within the notebook to complete the experience.
 
 ## Wrap-up
 
