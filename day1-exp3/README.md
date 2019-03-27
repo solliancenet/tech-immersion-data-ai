@@ -170,7 +170,8 @@ To migrate the `ContosoAutoDb` database from SQL 2008 R2 to SQL MI you will use 
 
 2. Select **Connect**.
 
-3. To perform the `RESTORE` process, credentials for a pre-configured storage account and SAS token have already been added to the Managed Instance using the [create a credential](https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017) method. This process essentially creates a connection from your SQL MI database to the Blob storage account, allowing you to access files stored in the target container, `database-backup`. Because this is a shared SQL MI, only one credential is needed for all attendees. If you are curious, you would create it with a SQL statement similar to the below.
+3. To perform the `RESTORE` process, credentials for a pre-configured storage account and SAS token have already been added to the Managed Instance using the [create a credential](https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017) method. This process essentially creates a connection from your SQL MI database to the Blob storage account, allowing you to access files stored in the target container, `database-backup`. Because this is a shared SQL MI, only one credential is needed for all attendees. If you are curious, you would create it with a SQL statement similar to the below. 
+**NOTE: You should NOT run the following SQL, it is just for illustration.**
 
    ```sql
    CREATE CREDENTIAL [https://techimmersion.blob.core.windows.net/labfiles/data/3]
@@ -224,7 +225,7 @@ In this task, you will make updates to the ContosoAuto operations web applicatio
 
    ![The Application settings item is selected under Settings.](media/tech-immersion-app-service-app-settings.png "Application settings")
 
-4. On the Application settings blade, scroll down and locate the **Connection strings** section. Paste the connection string value below into the value for the `ContosoAutoDbContext` connection string.
+4. On the Application settings blade, scroll down and locate the **Connection strings** section. Paste the connection string value below into the value for the `ContosoAutoDbContext` connection string. Also be sure to set the `Type` drop-down to `SQLServer`.
 
     ```sql
     Server=tcp:tech-immersion-sqlmi-shared.521f7783692d.database.windows.net,1433;Persist Security Info=False;Database=ContosoAutoDb;User ID=tiuser;Password=Password.1234567890;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
@@ -274,7 +275,7 @@ In this task, you will enable DDM on the `CardNumber` field in the `CreditCard` 
 
    ![Plain text credit card numbers are highlighted in the query results.](media/ssms-sql-mi-credit-card-table-select-results.png "Results")
 
-4. So we can test the mask being applied to the `CardNumber` field, you will first create a user in the database that will be used for testing the masked field. In SSMS, select **New Query** and paste the following SQL script into the new query window, replacing `XXXXX` with your unique ID:
+4. So we can test the mask being applied to the `CardNumber` field, you will first create a user in the database that will be used for testing the masked field. In SSMS, select **New Query** and paste the following SQL script into the new query window, replacing `XXXXX` with your unique ID (if the DDMUser already exists in your environment, the following script will show an error, but you are free to proceed to the next step):
 
    ```sql
    USE [ContosoAutoDb-XXXXX];

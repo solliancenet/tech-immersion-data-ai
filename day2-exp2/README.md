@@ -169,7 +169,7 @@ With data now streaming into your Cosmos DB `tweets` collection, you are ready t
 
 12. Select **Submit**.
 
-13. Next, navigate to the **techimmersionXXXXX** Azure Search Service (where XXXXX is the unique identifier assigned to you for this workshop) in the Azure portal by selecting it from the list of resources in the **tech-immersion** resource group.
+13. Next, navigate to the **techimmersionXXXXX** Azure Search Service (where XXXXX is the unique identifier assigned to you for this workshop) in the Azure portal by selecting it from the list of resources in the **tech-immersion-XXXXX** resource group.
 
     ![The tech-immersion Search Service is highlighted in the tech-immersion resource group.](media/tech-immersion-resource-group-search-service.png "Resource group")
 

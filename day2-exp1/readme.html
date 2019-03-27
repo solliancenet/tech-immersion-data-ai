@@ -330,13 +330,13 @@
 <img src="media/cmd-script-finished.png" title="Command Prompt" alt="The bot file secret is highlighted." /><figcaption>The bot file secret is highlighted.</figcaption>
 </figure></li>
 <li><p>Now we are ready to test the bot. Before testing, you must update the <strong>appsettings.json</strong> file in the <strong>AutomotiveSkills</strong> project. To do this, switch back to the solution in Visual Studio and expand the <strong>AutomotiveSkill</strong> project in the Solution Explorer. <strong>Double-click</strong> on the <strong>appsettings.json</strong> file to open it.</p></li>
-<li><p>Update your <code>appsettings.json</code> file with the newly created .bot file name and .bot file secret. The .bot file is located in the root directory of the <strong>AutomotiveSkill</strong> project. Most likely, the script that you ran already added the bot file name for you. Example: <code>tech-immersion-YOUR_UNIQUE_ID.bot</code>.</p>
+<li><p>Confirm that your bot creation script has finished executing before proceeding. Update your <code>appsettings.json</code> file with the newly created .bot file name and .bot file secret. The .bot file is located in the root directory of the <strong>AutomotiveSkill</strong> project. Most likely, the script that you ran already added the bot file name for you. Example: <code>tech-immersion-YOUR_UNIQUE_ID.bot</code>.</p>
 <pre><code>  {
     &quot;botFilePath&quot;: &quot;./YOURBOTFILE.bot&quot;,
     &quot;botFileSecret&quot;: &quot;YOUR_BOT_SECRET&quot;,
   }</code></pre>
 <ul>
-<li>Finally, add the .bot file paths for each of your language configurations (English only at this time). You can find the bot file under the <strong>LocaleConfigurations</strong> folder. Make sure that the bot file name ends with <code>en.bot</code>. For instance, <code>tech-immersion-YOUR_UNIQUE_IDen.bot</code>.</li>
+<li>Finally, add the .bot file paths for each of your language configurations (English only at this time). You can find the bot file under the <strong>LocaleConfigurations</strong> folder. Make sure that the bot file name ends with <code>en.bot</code>. For instance, <code>tech-immersion-YOUR_UNIQUE_IDen.bot</code>. ALso, make sure both <code>botFilePath</code> settings start with <code>./</code>.</li>
 </ul>
 <pre><code>&quot;defaultLocale&quot;: &quot;en-us&quot;,
 &quot;languageModels&quot;: {

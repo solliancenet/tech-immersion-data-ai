@@ -74,11 +74,15 @@ In this task, you will train a deep learning model to classify the descriptions 
 
     ![The Create New Project dialog](media/04.png 'Create New Project')
 
-6. Select the **Upload** menu and then choose **From Computer**.
+6. Select the **Upload** menu and then choose **From URL**.
 
     ![The Upload menu](media/05.png 'Upload')
 
-7. In the Upload files from Computer dialog, select **Choose Files** and then select the `deep-learning.ipynb` from lab starter files (C:\lab-files\ai\4). Select **Upload** to upload the notebook and then select **Done** to dismiss the dialog.
+7. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
+
+    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4/deep-learning.ipynb
+   
+    Then select **Done** to upload and dismiss the dialog.
 
     ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
@@ -92,7 +96,7 @@ Congratulations on completing the deep learning with ONNX experience. In this ex
 
 To recap, you experienced:
 
-1. Using [Keras](https://keras.io/) to create and train a deep learning model for classifying text data on a GPU enabled cluster provided by Azure Databricks.
+1. Using [Keras](https://keras.io/) to create and train a deep learning model for classifying text data on a GPU enabled cluster provided by Azure Machine Learning.
 2. Converting the Keras model to an ONNX model.
 3. Using the ONNX model to classify text data.
 4. Creating and deploying a web service to [Azure Container Instances](https://docs.microsoft.com/azure/container-instances/) that uses the ONNX model for classification.
