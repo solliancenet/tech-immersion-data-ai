@@ -119,7 +119,7 @@ In this task, you will deploy all of these Azure dependencies as well as configu
 
 7.  Copy and paste your _edited_ command into the command prompt, then hit `Enter`. Supply the following values when prompted:
 
-    - **name:** Enter your unique Resource Group name provided to you for this lab. Example: `tech-immersion-YOUR_UNIQUE_IDENTIFIER`. It should exactly match your Resource Group name, be all lower case, contain no spaces and no special characters except for dashes (-) and underscores (\_).
+    - **name:** Enter your unique **Azure Resource Group name** provided to you for this lab. Example: `tech-immersion-YOUR_UNIQUE_IDENTIFIER`. It should exactly match your Azure Resource Group name, be all lower case, contain no spaces and no special characters except for dashes (-) and underscores (\_).
     - **location:** Enter `westus`.
     - **luisAuthoringKey:** Paste the LUIS Authoring Key you copied at the end of Task 1 above.
 
