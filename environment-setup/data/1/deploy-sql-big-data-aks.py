@@ -45,6 +45,7 @@ CONTROLLER_USERNAME=input("Provide username to be used for Controller user - Pre
 DOCKER_REGISTRY="private-repo.microsoft.com"
 DOCKER_REPOSITORY="mssql-private-preview"
 DOCKER_IMAGE_TAG="ctp3.0"
+STORAGE_SIZE="60Gi"
 
 print ('Setting environment variables')
 os.environ['MSSQL_SA_PASSWORD'] = PASSWORD
@@ -55,7 +56,7 @@ os.environ['DOCKER_USERNAME']=DOCKER_USERNAME
 os.environ['DOCKER_PASSWORD']=DOCKER_PASSWORD
 os.environ['DOCKER_IMAGE_POLICY']="IfNotPresent"
 os.environ['ACCEPT_EULA']="Yes"
-os.environ['STORAGE_SIZE']="60Gi"
+os.environ['STORAGE_SIZE']=STORAGE_SIZE
 
 print ("Set azure context to subcription: "+SUBSCRIPTION_ID)
 command = "az account set -s "+ SUBSCRIPTION_ID
@@ -85,7 +86,7 @@ command="mssqlctl cluster config section set -c custom.json -j ""$.spec.controlP
 executeCmd (command)
 command="mssqlctl cluster config section set -c custom.json -j ""$.spec.controlPlane.spec.docker.imageTag=" + DOCKER_IMAGE_TAG + ""
 executeCmd (command)
-command="mssqlctl cluster config section set -c custom.json -j ""$.spec.controlPlane.spec.storage.data.size=60Gi""
+command="mssqlctl cluster config section set -c custom.json -j ""$.spec.controlPlane.spec.storage.data.size=" + STORAGE_SIZE + ""
 executeCmd (command)
 
 command="mssqlctl cluster create -c custom.json --accept-eula yes"
