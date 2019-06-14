@@ -1,7 +1,5 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-
-
 ## Day 1, Experience 2 - Leveraging Cosmos DB for near real-time analytics
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
@@ -19,8 +17,10 @@
   - [Task 3: Configure Stream Analytics](#task-3-configure-stream-analytics)
   - [Task 4: Configure Azure Function App](#task-4-configure-azure-function-app)
   - [Task 5: Publish Function App and run data generator](#task-5-publish-function-app-and-run-data-generator)
-  - [Task 6: View published function](#task-6-view-published-function)
-  - [Task 7: Create Power BI dashboard](#task-7-create-power-bi-dashboard)
+  - [Task 6: View published functions](#task-6-view-published-functions)
+  - [Task 7: View output from functions in App Insights](#task-7-view-output-from-functions-in-app-insights)
+  - [Task 8: Create Power BI dashboard](#task-8-create-power-bi-dashboard)
+  - [Task 9: View anomaly data in Cosmos DB](#task-9-view-anomaly-data-in-cosmos-db)
   - [Wrap-up](#wrap-up)
   - [Additional resources and more information](#additional-resources-and-more-information)
 
@@ -146,19 +146,19 @@ In this task, you will create a new Cosmos DB database and collection, set the t
 
     ![The Data Explorer link located in the left-hand menu is highlighted.](media/cosmos-db-data-explorer-link.png 'Data Explorer link')
 
-5.  If the ContosoAuto database and telemetry collection already exist, **skip ahead** to step 9.
+5.  If the ContosoAuto database and **telemetry** container already exist, **skip ahead** to step 9.
 
     ![Screenshot shows the database and collection already exists.](media/cosmos-db-database-exists.png 'Data Explorer')
 
-6.  Select **New Collection** in the top toolbar.
+6.  Select **New Container** in the top toolbar.
 
     ![The New Collection link in the top toolbar is highlighted.](media/cosmos-db-new-collection-link.png 'New Collection link')
 
 7.  In the **Add Collection** blade, configure the following:
 
-    - **Database id:** Select **Create new**, then enter "ContosoAuto" for the id.
+    - **Database id:** Select **Create new**, then enter "ContosoAuto" for the id. If ContosoAuto already exists, choose **Use existing** and select the database.
     - **Provision database throughput:** Unchecked.
-    - **Collection id:** Enter "telemetry".
+    - **Container id:** Enter "telemetry".
     - **Partition key:** Enter "/vin".
     - **Throughput:** Enter 15000.
 
@@ -330,61 +330,88 @@ In this task, you will configure Stream Analytics to use the event hub you creat
 
 14. Select **Save** on the bottom of the form when you are finished entering the values.
 
-15. Within the Stream Analytics job blade, select **Query** within the left-hand menu.
+15. Select **+ Add** in the top toolbar, then select **Cosmos DB** to create a new Cosmos DB output.
+
+    ![The Add button and Cosmos DB menu item are highlighted.](media/stream-analytics-add-output-cosmos-link.png 'Add output - Cosmos DB')
+
+16. In the **New Output** blade, configure the following:
+
+    - **Output alias:** Enter "cosmosDB".
+    - **Select Cosmos DB from your subscriptions:** Selected.
+    - **Subscription:** Select the subscription you are using for this lab.
+    - **Account id:** Select your Cosmos DB account.
+    - **Database:** Select **Use existing** and select **ContosoAuto**.
+    - **Container name pattern:** Enter "telemetry".
+
+    ![The New Output form is filled out with the previously mentioned settings entered into the appropriate fields.](media/cosmos-db-new-output.png 'New Output')
+
+17. Select **Save** on the bottom of the form when you are finished entering the values.
+
+18. Within the Stream Analytics job blade, select **Query** within the left-hand menu.
 
     ![The Query link is selected in the left-hand menu.](media/query-link.png 'Query link')
 
-16. Clear the edit **Query** window and paste the following in its place:
+19. Clear the edit **Query** window and paste the following in its place:
 
     ```sql
     WITH
-    Averages AS (
-    select
-        AVG(engineTemperature) averageEngineTemperature,
-        AVG(speed) averageSpeed
-    FROM
-        eventhub TIMESTAMP BY [timestamp]
-    GROUP BY
-        TumblingWindow(Duration(second, 2))
+        Averages AS (
+        select
+            AVG(engineTemperature) averageEngineTemperature,
+            AVG(speed) averageSpeed
+        FROM
+            eventhub TIMESTAMP BY [timestamp]
+        GROUP BY
+            TumblingWindow(Duration(second, 2))
     ),
     Anomalies AS (
-    select
-        t.vin,
-        t.[timestamp],
-        t.city,
-        t.region,
-        t.outsideTemperature,
-        t.engineTemperature,
-        a.averageEngineTemperature,
-        t.speed,
-        a.averageSpeed,
-        t.fuel,
-        t.engineoil,
-        t.tirepressure,
-        t.odometer,
-        t.accelerator_pedal_position,
-        t.parking_brake_status,
-        t.headlamp_status,
-        t.brake_pedal_status,
-        t.transmission_gear_position,
-        t.ignition_status,
-        t.windshield_wiper_status,
-        t.abs,
-        (case when a.averageEngineTemperature >= 405 OR a.averageEngineTemperature <= 15 then 1 else 0 end) as enginetempanomaly,
-        (case when t.engineoil <= 1 then 1 else 0 end) as oilanomaly,
-        (case when (t.transmission_gear_position = 'first' OR
-            t.transmission_gear_position = 'second' OR
-            t.transmission_gear_position = 'third') AND
-            t.brake_pedal_status = 1 AND
-            t.accelerator_pedal_position >= 90 AND
-            a.averageSpeed >= 55 then 1 else 0 end) as aggressivedriving
-    from eventhub t TIMESTAMP BY [timestamp]
-    INNER JOIN Averages a ON DATEDIFF(second, t, a) BETWEEN 0 And 2
+        select
+            t.vin,
+            t.[timestamp],
+            t.city,
+            t.region,
+            t.outsideTemperature,
+            t.engineTemperature,
+            a.averageEngineTemperature,
+            t.speed,
+            a.averageSpeed,
+            t.fuel,
+            t.engineoil,
+            t.tirepressure,
+            t.odometer,
+            t.accelerator_pedal_position,
+            t.parking_brake_status,
+            t.headlamp_status,
+            t.brake_pedal_status,
+            t.transmission_gear_position,
+            t.ignition_status,
+            t.windshield_wiper_status,
+            t.abs,
+            (case when a.averageEngineTemperature >= 405 OR a.averageEngineTemperature <= 15 then 1 else 0 end) as enginetempanomaly,
+            (case when t.engineoil <= 1 then 1 else 0 end) as oilanomaly,
+            (case when (t.transmission_gear_position = 'first' OR
+                t.transmission_gear_position = 'second' OR
+                t.transmission_gear_position = 'third') AND
+                t.brake_pedal_status = 1 AND
+                t.accelerator_pedal_position >= 90 AND
+                a.averageSpeed >= 55 then 1 else 0 end) as aggressivedriving
+        from eventhub t TIMESTAMP BY [timestamp]
+        INNER JOIN Averages a ON DATEDIFF(second, t, a) BETWEEN 0 And 2
     )
+    -- INSERT INTO POWER BI
     SELECT
         *
     INTO
         powerBIAlerts
+    FROM
+        Anomalies
+    where aggressivedriving = 1 OR enginetempanomaly = 1 OR oilanomaly = 1
+    -- INSERT INTO COSMOS DB
+    SELECT
+        *,
+        collectionType = 'Anomaly'
+    INTO
+        cosmosDB
     FROM
         Anomalies
     where aggressivedriving = 1 OR enginetempanomaly = 1 OR oilanomaly = 1
@@ -400,15 +427,15 @@ In this task, you will configure Stream Analytics to use the event hub you creat
 
     c. **aggressivedriving**: When the transmission gear position is in first, second, or third, and the brake pedal status is 1, the accelerator pedal position \>= 90, and the average speed is \>= 55.
 
-    Finally, the query outputs all fields from the anomalies step into the `powerBIAlerts` output where aggressivedriving = 1 or enginetempanomaly = 1 or oilanomaly = 1.
+    Finally, the query outputs all fields from the anomalies step into the `powerBIAlerts` output where aggressivedriving = 1 or enginetempanomaly = 1 or oilanomaly = 1. The query also outputs these fields to the `cosmosDB` output, setting the `collectionType` value to "Anomaly". We set the `collectionType` value because the Cosmos DB container does not enforce a schema and can store any type of entity. Setting a field such as `collectionType` makes it easier for us to filter results by the type of entity we want to return.
 
-17. Select **Save** in the top toolbar when you are finished updating the query.
+20. Select **Save** in the top toolbar when you are finished updating the query.
 
-18. Within the Stream Analytics job blade, select **Overview** within the left-hand menu. On top of the Overview blade, select **Start**.
+21. Within the Stream Analytics job blade, select **Overview** within the left-hand menu. On top of the Overview blade, select **Start**.
 
     ![The Start button is highlighted on top of the Overview blade.](media/stream-analytics-overview-start-button.png 'Overview')
 
-19. In the Start job blade that appears, select **Now** for the job output start time, then select **Start**. This will start the Stream Analytics job so it will be ready to start processing and sending your events to Power BI later on.
+22. In the Start job blade that appears, select **Now** for the job output start time, then select **Start**. This will start the Stream Analytics job so it will be ready to start processing and sending your events to Power BI later on.
 
     ![The Now and Start buttons are highlighted within the Start job blade.](media/stream-analytics-start-job.png 'Start job')
 
@@ -419,6 +446,8 @@ Azure Functions is a solution for easily running small pieces of code, or "funct
 When you use the Azure Functions consumption plan, you only pay for the time your code runs. Azure automatically handles scaling your functions to meet demand.
 
 Azure Functions uses special bindings that allow you to automatically trigger the function when an event happens (a document is added to Azure Cosmos DB, a file is uploaded to blob storage, an event is added to Event Hubs, an HTTP request to the function is made, etc.), as well as to retrieve or send information to and from various Azure services. In the case of our function for this solution, we are using the `CosmosDBTrigger` to automatically trigger the function through the Cosmos DB change feed. This trigger supplies an input binding of type `IReadOnlyList<Document>` we name "input", that contains the records that triggered the function. This removes any code you would have to otherwise write to query that data. We also have an output binding to the event hub, of type `IAsyncCollector<EventData>`, which we name "eventHubOutput". Again, this reduces code by automatically sending data added to this collection to the specified event hub.
+
+Notice we are using `PreferredLocations` to read changes from one specific region for this function. This setting allows you to enter one or more Cosmos DB regions in a comma-separated list from which you want to read. If you remove this setting, the function will read from all regions. There are two functions within this file (**CarEventProcessorRegion1** and **CarEventProcessorRegion2**). They perform identical actions, but are configured to read from one particular region each to demonstrate how you would use this setting in a multi-region architecture. In a real-world scenario, you may create several Function Apps, each located in a different region, and you would add these same regions to Cosmos DB. Then, you would use the `PreferredLocations` setting to have the functions within the Function App only read from the Cosmos DB region closest to them. This helps reduce latency and allow you to have the data processor as close as possible to the data source.
 
 ![The Cosmos DB trigger, input binding, and output binding are highlighted.](media/function-definition.png 'Azure function')
 
@@ -432,35 +461,57 @@ The `TelemetryProcessing` class contains a simple method named `ProcessEvent` th
 
 In this task, you will configure the Function App with the Azure Cosmos DB and Event Hubs connection strings.
 
-1.  Navigate to the [Azure portal](https://portal.azure.com).
+1. Navigate to the [Azure portal](https://portal.azure.com).
 
-2.  Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion-YOUR_UNIQUE_IDENTIFIER**.
+2. Select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion-YOUR_UNIQUE_IDENTIFIER**.
 
-    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
+   ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
 
-3.  Select the **App Service** (Azure Function App) that includes **day1** in its name from the list of resources in your resource group.
+3. Select your **Cosmos DB** service.
 
-    ![The App Service Function App is selected in the resource group.](media/tech-immersion-rg-function-app.png 'tech-immersion resource group')
+4. Select **Replicate data globally** on the left-hand menu.
 
-4.  Within the Function App Overview blade, scroll down and select **Application settings**.
+5. Copy your two region names and paste them into Notebook or similar text editor. You will use these to define your `Region1` and `Region2` application settings for your Azure Function App.
 
-    ![The Function App Overview blade is displayed with the Application Settings link highlighted.](media/function-app-app-settings-link.png 'Function App overview')
+   ![Copy the region names from the Replicate data globally blade in Cosmos DB.](media/cosmos-db-regions.png 'Cosmos DB regions')
 
-5.  Select **Add new setting** at the bottom of the Application settings section.
+6. Navigate back to your resource group.
 
-    ![The Add new setting link is highlighted on the bottom of the Application settings section.](media/function-app-app-settings-new-link.png 'Application settings')
+7. Select the **App Service** (Azure Function App) that includes **day1** in its name from the list of resources in your resource group.
 
-6.  Enter `CosmosDbConnectionString` into the **Name** field, then paste your Cosmos DB connection string into the **Value** field. If you cannot locate your connection string, refer to Task 1, step 10.
+   ![The App Service Function App is selected in the resource group.](media/tech-immersion-rg-function-app.png 'tech-immersion resource group')
+
+8. Within the Function App Overview blade, scroll down and select **Configuration**.
+
+   ![The Function App Overview blade is displayed with the Configuration link highlighted.](media/function-app-configuration.png 'Function App overview')
+
+9. Select **+ New application setting** at the top of the Application settings section.
+
+   ![The Add new setting link is highlighted on the top of the Application settings section.](media/function-app-app-settings-new-link.png 'Application settings')
+
+10. Enter `CosmosDbConnectionString` into the **Name** field, then paste your Cosmos DB connection string into the **Value** field, then select **Update**. If you cannot locate your connection string, refer to Task 1, step 10.
 
     ![The CosmosDbConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-cosmos-db.png 'Application settings')
 
-7.  Select **Add new setting** underneath the new application setting you just added to add a new one.
+11. Select **+ New application setting** again to add a new one.
 
-8.  Enter `EventHubsConnectionString` into the **Name** field, then paste your Event Hubs connection string into the **Value** field. This is the connection string for the **Write** shared access policy you created. If you cannot locate your connection string, refer to Task 2, step 17.
+12. Enter `EventHubsConnectionString` into the **Name** field, then paste your Event Hubs connection string into the **Value** field, then select **Update**. This is the connection string for the **Write** shared access policy you created. If you cannot locate your connection string, refer to Task 2, step 17.
 
     ![The EventHubsConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-event-hubs.png 'Application settings')
 
-9.  Scroll to the top of the page and select **Save** in the top toolbar to apply your changes.
+13. Select **+ New application setting** again to add a new one.
+
+14. Enter `Region1` into the **Name** field, then paste the name of your first region into the **Value** field, then select **Update**.
+
+    ![The EventHubsConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-region1.png 'Application settings')
+
+15. Select **+ New application setting** once more to add a new one.
+
+16. Enter `Region2` into the **Name** field, then paste the name of your first region into the **Value** field, then select **Update**.
+
+    ![The EventHubsConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-region2.png 'Application settings')
+
+17. Scroll to the top of the page and select **Save** in the top toolbar to apply your changes.
 
     ![The Save button is highlighted on top of the Application settings blade.](media/function-app-app-settings-save.png 'Application settings')
 
@@ -488,7 +539,7 @@ In this task, you will open the lab solution in Visual Studio, publish the Funct
 
     ![The TechImmersion.CarEventProcessor project and the Publish menu item are highlighted.](media/vs-publish-link.png 'Solution Explorer')
 
-4.  Select **Select Existing** underneath Azure App Service since you will be publishing this to an existing Function App. Click **Publish** on the bottom of the dialog window. If you are prompted to log into your Azure Account, log in with the Azure account you are using for this lab.
+4.  Select **Select Existing** underneath Azure App Service since you will be publishing this to an existing Function App. Check **Run from package file**. This configures the Function App to run from the zip file rather than extracting and copying all the files for each instance of your functions. Click **Publish** on the bottom of the dialog window. If you are prompted to log into your Azure Account, log in with the Azure account you are using for this lab.
 
     ![The Select Existing radio button and Publish button are highlighted.](media/vs-publish-target.png 'Pick a publish target')
 
@@ -548,7 +599,7 @@ The last bit of interesting code within the generator is where we create the Cos
 
 ![The InitializeCosmosDB method code.](media/telemetry-generator-initialize-cosmos.png 'InitializeCosmosDB method')
 
-## Task 6: View published function
+## Task 6: View published functions
 
 A few minutes ago, you published your Azure Function App from Visual Studio. This Function App contains a single function, `CarEventProcessor`. We will take a look at the published function in this task.
 
@@ -564,17 +615,19 @@ You will notice that the Function App is now set to read-only. This is because y
 
     ![The App Service Function App is selected in the resource group.](media/tech-immersion-rg-function-app.png 'tech-immersion resource group')
 
-4.  Expand **Functions (Read Only)** within the navigation tree to the left, then select **CarEventProcessor**.
+4.  Expand **Functions (Read Only)** within the navigation tree to the left, then select **CarEventProcessorRegion1**.
 
     ![The Functions node is expanded in the navigation tree, and the CarEventProcessor is selected.](media/function-app-tree.png 'Functions')
 
 5.  Looking at the **function.json** file to the right, notice that it was generated for you when you published from Visual Studio. Also notice how the `bindings` section lines up with the function method in `CarEventProcessorFunctions.cs`:
 
     ```csharp
-    [FunctionName("CarEventProcessor")]
-    public static async Task CarEventProcessor([CosmosDBTrigger(
+    [FunctionName("CarEventProcessorRegion1")]
+    public static async Task CarEventProcessorRegion1([CosmosDBTrigger(
         databaseName: "ContosoAuto",
         collectionName: "telemetry",
+        // Uses the "Region1" application configuration value to pass in the region 1 name:
+        PreferredLocations = "%Region1%",
         ConnectionStringSetting = "CosmosDbConnectionString",
         LeaseCollectionName = "leases",
         CreateLeaseCollectionIfNotExists = true)]IReadOnlyList<Document> input,
@@ -585,7 +638,23 @@ You will notice that the Function App is now set to read-only. This is because y
 
     ![The function.json file is displayed with the bindings highlighted.](media/function-app-functions-json.png 'function.json')
 
-## Task 7: Create Power BI dashboard
+## Task 7: View output from functions in App Insights
+
+The Function App was configured to send telemetry to Application Insights. This allows you to view metrics and usage information about your functions, but also logging information. At the top of both functions, we create a log entry for the number of documents received from the Cosmos DB change feed for the configured region. For example: `log.LogInformation($"Cosmos DB processor received {input.Count} documents from Region 1");`. In this task, you will open Application Insights and look for these log entries. Please ensure that the **TransactionGenerator** is still running before continuing.
+
+1. Navigate back to your Day 1 Function App's Overview blade as you did in the previous task. Select **Application Insights** underneath Configured Features.
+
+   ![Application Insights is highlighted on the Function App's Overview blade.](media/function-app-app-insights.png 'Overview blade')
+
+2. Within Application Insights, select **Live Metrics Stream** from the left-hand menu.
+
+   ![The Live Metrics Stream link is highlighted.](media/app-insights-live-metrics-stream-link.png 'Live Metrics Stream')
+
+3. Look at the log output within the **Sample Telemetry** on the right-hand side. You should be able to find the log outputs from both of the functions, showing how many documents were received from its configured region.
+
+   ![Log outputs in the Sample Telemetry window are displayed.](media/app-insights-sample-telemetry.png 'Sample Telemetry')
+
+## Task 8: Create Power BI dashboard
 
 In this task, you will use Power BI to create a report showing captured vehicle anomaly data. Then you will pin that report to a live dashboard for near real-time updates.
 
@@ -691,6 +760,40 @@ In this task, you will use Power BI to create a report showing captured vehicle 
 
     ![The live dashboard view.](media/pbi-dashboard.png 'Dashboard')
 
+## Task 9: View anomaly data in Cosmos DB
+
+As you recall, when you created the query in Stream Analytics, anomaly data output to both Power BI and Cosmos DB. This means that the detected anomaly data was saved back to the same Cosmos DB container in which the live vehicle telemetry data was being saved. This demonstrates the ability for Cosmos DB to handle ingesting streaming data at the same time as saving report data, and saving different entity types within the same container.
+
+In this task, you will view the anomaly data within Cosmos DB.
+
+1. If you have not yet done so, **stop** the **TransactionGenerator**.
+
+2. To start, open a new web browser window and navigate to <https://portal.azure.com>. Log in with the credentials provided to you for this lab.
+
+3. After logging into the Azure portal, select **Resource groups** from the left-hand menu. Then select the resource group named **tech-immersion-YOUR_UNIQUE_IDENTIFIER**. The `YOUR_UNIQUE_IDENTIFIER` portion of the name is the unique identifier assigned to you for this lab.
+
+   ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
+
+4. Select the **Azure Cosmos DB account** from the list of resources in your resource group.
+
+   ![The Azure Cosmos DB account is selected in the resource group.](media/tech-immersion-rg-cosmos-db.png 'tech-immersion resource group')
+
+5. Within the Cosmos DB account blade, select **Data Explorer** on the left-hand menu.
+
+   ![The Data Explorer link located in the left-hand menu is highlighted.](media/cosmos-db-data-explorer-link.png 'Data Explorer link')
+
+6. Expand the **telemetry** container, then select **Items**. Select **Edit Filter** above the items list.
+
+   ![The items menu item and Edit Filter button are both highlighted.](media/cosmos-db-edit-filter-button.png 'Data Explorer')
+
+7. In the filter text box, enter the following, then select **Apply Filter**: `where c.collectionType = 'Anomaly'`
+
+   ![The filter is shown.](media/cosmos-db-apply-filter.png 'Filter')
+
+8. Select a document from the list. Notice that it contains a `collectionType` value of "Anomaly", and either `enginetempanomaly`, `oilanomaly`, or `aggressivedriving` have a value equal to 1 (true).
+
+   ![An anomaly document is displayed.](media/cosmos-db-anomaly-document.png 'Data Explorer')
+
 ## Wrap-up
 
 Thank you for participating in the Leveraging Cosmos DB for near real-time analytics experience! There are many aspects of Cosmos DB that make it suitable for ingesting and serving real-time data at a global scale, some of which we have covered here today. Of course, there are other services that work alongside Cosmos DB to complete the processing pipeline.
@@ -699,6 +802,7 @@ To recap, you experienced:
 
 - How to configure and send real-time data to Cosmos DB.
 - Processing data as it is saved to Cosmos DB through the use of Azure functions, with the convenience of the Cosmos DB trigger to reduce code and automatically handle kicking off the processing logic as data arrives.
+- Using multiple regions in Cosmos DB, and processing the change feed of a specific region from an Azure function.
 - Ingesting processed data with Event Hubs and querying and reshaping that data with Azure Stream Analytics, then sending it to Power BI for reporting.
 - Rapidly creating a real-time dashboard in Power BI with interesting visualizations to view and explore vehicle anomaly data.
 
