@@ -128,6 +128,8 @@ Cosmos DB allows you to increment/decrement the RUs in small increments of 1000 
 
 When you set a number of RUs for a container, Cosmos DB ensures that those RUs are available in all regions associated with your Cosmos DB account. When you scale out the number of regions by adding a new one, Cosmos will automatically provision the same quantity of RUs in the newly added region. You cannot selectively assign different RUs to a specific region. These RUs are provisioned for a container (or database) for all associated regions.
 
+Before you start writing data to Cosmos DB, consider how many containers you will use. One common pitfall developers and database administrators experience, especially those who are used to using traditional relational databases, is that they tend to want to create a Cosmos DB container for each "table", or entity type they wish to store. Instead, you should consider storing any number of entity types within the same container. The reason for this is that there is a cost associated with each container that you add. Because containers do not enforce any type of schema, you are able to store entities of the same type with different schemas (likely due to changes over time or from excluding properties with no values), or entirely different entities within that container. A common approach to dealing with different types of entities within a container is to add a string property like `collectionType` so that you can filter query results by that type. For instance, Contoso Auto stores vehicle telemetry and report data within the same container. For instance, when vehicle telemetry data is written to Cosmos DB, a value of "Telemetry" is added to the vehicle data entities. If they need to store aggregated report data or reference information in the same container, they can assign entity type values to each for easy identification. These types and many others can coexist within the container and can easily be filtered by the `collectionType` property.
+
 In this task, you will create a new Cosmos DB database and collection, set the throughput units, and obtain the connection details.
 
 1.  To start, open a new web browser window and navigate to <https://portal.azure.com>. Log in with the credentials provided to you for this lab.
@@ -534,6 +536,12 @@ The `SendData` method outputs statistics about how much data was sent to Cosmos 
 // Send to Cosmos DB:
 var response = await _cosmosDbClient.CreateDocumentAsync(collectionUri, carEvent)
     .ConfigureAwait(false);
+```
+
+When you open the `TechImmersion.Common` project, then the `CarEvent.cs` file under the Models folder, you will see the model we use to hold the vehicle event data that we save to Cosmos DB. It contains a field named `CollectionType` with a value of "Telemetry". This allows us to indicate the type of document this is within the container, which enables consumers to query documents stored within the container by the type. This value is needed because a container can store any number of document types within since it does not enforce any sort of schema.
+
+```csharp
+public string collectionType => "Telemetry";
 ```
 
 The last bit of interesting code within the generator is where we create the Cosmos DB database and collection if it does not exist. We also specify the collection partition key, indexing policy, and the throughput set to 15,000 RU/s:
