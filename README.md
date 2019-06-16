@@ -44,8 +44,16 @@ In the user name box, enter your VM Admin User Name. Enter your VM Admin Passwor
 
 - **Day 2, Experience 3** - [Better models made easy with Automated Machine Learning](./day2-exp3/README.md)
 
-  Show how automated ML capability in Azure Machine Learning can be used for Life Cycle Management of the manufactured vehicles and how AML helps in creation of better vehicle maintenance plans. Attendees will train a Linear Regression model to predict the number of days until battery failure using Automated Machine Learning in Jupyter Notebooks.
+  Show how automated ML capability in Azure Machine Learning can be used for Life Cycle Management of the manufactured vehicles and how AML helps in creation of better vehicle maintenance plans. Attendees will train a Linear Regression model to predict the number of days until battery failure using Automated Machine Learning the visual interface from the Azure Portal and optionally from within Jupyter Notebooks. They will also use the model interpretability features of the Azure Machine Learning Python SDK to understand which features have the greatest impact on the model's predictions.
 
-- **Day 2, Experience 4** - [Making deep learning portable with ONNX](./day2-exp4/README.md)
+- **Day 2, Experience 4** - [Creating repeatable processes with Azure Machine Learning pipelines](./day2-exp4/README.md)
+
+  Attendees will learn how Contoso Auto can benefit from creating re-usable machine learning pipelines with Azure Machine Learning.
+
+- **Day 2, Experience 5** - [Making deep learning portable with ONNX](./day2-exp5/README.md)
 
   Attendees will experience how Contoso Auto can leverage Deep Learning technologies to scan through their vehicle specification documents to find compliance issues with new regulations. Then they will deploy this model, standardizing operationalization with ONNX. They will see how this simplifies inference runtime code, enabling pluggability of different models and targeting a broad range of runtime environments from Linux based web services to Windows/.NET based apps.
+
+- **Day 2, Experience 6** - [MLOps with Azure Machine Learning and Azure DevOps](./day2-exp6/README.md)
+
+  Attendees will experience how Contoso Auto can use MLOps to formalize the process of training and deploying new models using a DevOps (CI/CD) approach.

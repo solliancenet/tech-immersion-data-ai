@@ -13,6 +13,10 @@ local.settings.json
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+# Properties
+[Pp]roperties/
+PublishProfiles/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

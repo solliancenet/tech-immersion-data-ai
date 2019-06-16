@@ -1,60 +1,54 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-
-
-## Day 2, Experience 4 - Making deep learning portable with ONNX
+## Day 2, Experience 4 - Creating repeatable processes with Azure Machine Learning pipelines
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
-  - [Day 2, Experience 4 - Making deep learning portable with ONNX](#day-2-experience-4---making-deep-learning-portable-with-onnx)
-  - [Technology overview](#technology-overview)
-  - [Scenario overview](#scenario-overview)
-  - [Task 1: Train and deploy a deep learning model](#task-1-train-and-deploy-a-deep-learning-model)
+  - [Day 2, Experience 4 - Creating repeatable processes with Azure Machine Learning pipelines](#day-2-experience-4---creating-repeatable-processes-with-azure-machine-learning-pipelines)
+- [Technology overview](#technology-overview)
+  - [What are machine learning pipelines?](#what-are-machine-learning-pipelines)
+  - [Scenario Overview](#scenario-overview)
+  - [Task 1: Create the Azure Notebooks project](#task-1-create-the-azure-notebooks-project)
+  - [Task 2: Upload the starter notebook](#task-2-upload-the-starter-notebook)
   - [Wrap-up](#wrap-up)
   - [Additional resources and more information](#additional-resources-and-more-information)
 
-## Technology overview 
 
-Using the [main Python SDK](https://docs.microsoft.com/python/api/overview/azure/ml/intro?view=azure-ml-py) and the [Data Prep SDK](https://docs.microsoft.com/python/api/overview/azure/dataprep/intro?view=azure-dataprep-py) for Azure Machine Learning as well as open-source Python packages, you can build and train highly accurate machine learning and deep-learning models yourself in an Azure Machine Learning service Workspace. You can choose from many machine learning components available in open-source Python packages, such as the following examples:
+# Technology overview
 
-- [Scikit-learn](https://scikit-learn.org/stable/)
-- [Tensorflow](https://www.tensorflow.org/)
-- [PyTorch](https://pytorch.org/)
-- [CNTK](https://www.microsoft.com/en-us/cognitive-toolkit/)
-- [MXNet](https://mxnet.incubator.apache.org/)
+## What are machine learning pipelines?
 
-After you have a model, you use it to create a container, such as Docker, that can be deployed locally for testing. After testing is done, you can deploy the model as a production web service in either Azure Container Instances or Azure Kubernetes Service. For more information, see the article on [how to deploy and where](https://docs.microsoft.com/azure/machine-learning/service/how-to-deploy-and-where).
+Pipelines are used to create and manage workflows that stitch together machine learning phases. Various machine learning phases including data preparation, model training, model deployment, and inferencing.
 
-Then you can manage your deployed models by using the [Azure Machine Learning SDK for Python](https://docs.microsoft.com/python/api/overview/azure/ml/intro?view=azure-ml-py) or the [Azure portal](https://portal.azure.com). You can evaluate model metrics, retrain, and redeploy new versions of the model, all while tracking the model's experiments.
+Using [Azure Machine Learning SDK for Python](https://docs.microsoft.com/en-us/python/api/azureml-pipeline-core/?view=azure-ml-py), data scientists, data engineers, and IT professionals can collaborate on the steps involved.
 
-For deep neural network (DNN) training using TensorFlow, Azure Machine Learning provides a custom TensorFlow class of the Estimator. The Azure SDK's [TensorFlow estimator](https://docs.microsoft.com/python/api/azureml-train-core/azureml.train.dnn.tensorflow?view=azure-ml-py) (not to be conflated with the tf.estimator.Estimator class) enables you to easily submit TensorFlow training jobs for both single-node and distributed runs on Azure compute.
+The following diagram shows an example pipeline:
 
-The TensorFlow Estimator also enables you to train your models at scale across CPU and GPU clusters of Azure VMs. You can easily run distributed TensorFlow training with a few API calls, while Azure Machine Learning will manage behind the scenes all the infrastructure and orchestration needed to carry out these workloads.
+![azure machine learning pipelines](./media/pipelines.png)
 
-Azure Machine Learning supports two methods of distributed training in TensorFlow:
+## Scenario Overview
+In this experience, you will learn how Contoso Auto can benefit from creating re-usable machine learning pipelines with Azure Machine Learning.
 
-- MPI-based distributed training using the [Horovod](https://github.com/horovod/horovod) framework
-- Native [distributed TensorFlow](https://github.com/tensorflow/examples/blob/master/community/en/docs/deploy/distributed.md) via the parameter server method
+The goal is to build a pipeline that demonstrates the basic data science workflow of data preparation, model training, and predictions. Azure Machine Learning allows you to define distinct steps and make it possible to re-use these pipelines as well as to rerun only the steps you need as you tweak and test your workflow.
 
-The [Open Neural Network Exchange](https://onnx.ai/) (ONNX) format is an open standard for representing machine learning models. ONNX is supported by a [community of partners](https://onnx.ai/supported-tools), including Microsoft, who create compatible frameworks and tools. Microsoft is committed to open and interoperable AI so that data scientists and developers can:
+In this experience, you will be using a subset of data collected from Contoso Auto's fleet management program used by a fleet of taxis. The data is enriched with holiday and weather data. The goal is to train a regression model to predict taxi fares in New York City based on input features such as, number of passengers, trip distance, datetime, holiday information and weather information.
 
-- Use the framework of their choice to create and train models
-- Deploy models cross-platform with minimal integration work
+The machine learning pipeline in this quickstart is organized into three steps:
 
-Microsoft supports ONNX across its products including Azure and Windows to help you achieve these goals.
+- **Preprocess Training and Input Data:** We want to preprocess the data to better represent the datetime features, such as hours of the day, and day of the week to capture the cyclical nature of these features.
 
-The interoperability you get with ONNX makes it possible to get great ideas into production faster. With ONNX, data scientists can choose their preferred framework for the job. Similarly, developers can spend less time getting models ready for production, and deploy across the cloud and edge.
+- **Model Training:** We will use data transformations and the GradientBoostingRegressor algorithm from the scikit-learn library to train a regression model. The trained model will be saved for later making predictions.
 
-You can create ONNX models from many frameworks, including PyTorch, Chainer, Microsoft Cognitive Toolkit (CNTK), MXNet, ML.Net, TensorFlow, Keras, SciKit-Learn, and more.
-There is also an ecosystem of tools for visualizing and accelerating ONNX models. A number of pre-trained ONNX models are also available for common scenarios.
-[ONNX models can be deployed](https://docs.microsoft.com/azure/machine-learning/service/how-to-build-deploy-onnx#deploy) to the cloud using Azure Machine Learning and ONNX Runtime. They can also be deployed to Windows 10 devices using [Windows ML](https://docs.microsoft.com/windows/ai/). They can even be deployed to other platforms using converters that are available from the ONNX community.
+- **Model Inference:** In this scenario, we want to support **bulk predictions**. Each time an input file is uploaded to a data store, we want to initiate bulk model predictions on the input data. However, before we do model predictions, we will re-use the preprocess data step to process input data, and then make predictions on the processed data using the trained model.
 
-## Scenario overview
+Each of these pipelines is going to have implicit data dependencies and the example will demonstrate how AML make it possible to re-use previously completed steps and run only the modified or new steps in your pipeline.
 
-In this experience you will learn how Contoso Auto can leverage Deep Learning technologies to scan through their vehicle specification documents to find compliance issues with new regulations. Then they will deploy this model, standardizing operationalization with ONNX. You will see how this simplifies inference runtime code, enabling pluggability of different models and targeting a broad range of runtime environments from Linux based web services to Windows/.NET based apps.
+The pipelines will be run on the Azure Machine Learning compute.
 
-## Task 1: Train and deploy a deep learning model
+## Task 1: Create the Azure Notebooks project
 
-In this task, you will train a deep learning model to classify the descriptions of car components provided by technicians as compliant or non-compliant, convert it to ONNX, and deploy it as a web service. To accomplish this, you will use an Azure Notebook and Azure Machine Learning. 
+To complete this task, you will use an Azure Notebook and Azure Machine Learning. 
+
+If you have not already created the `connected-car` project in Azure Notebooks follow these steps. If you already have this project in your environment, continue with the **Task 2**.
 
 1. To start, open a new web browser window and navigate to <https://notebooks.azure.com>.
 
@@ -74,33 +68,36 @@ In this task, you will train a deep learning model to classify the descriptions 
 
     ![The Create New Project dialog](media/04.png 'Create New Project')
 
-6. Select the **Upload** menu and then choose **From URL**.
+## Task 2: Upload the starter notebook
+
+1. Navigate to your `connected-car` project in your Azure Notebook environment. 
+
+2. Select the **Upload** menu and then choose **From URL**.
 
     ![The Upload menu](media/05.png 'Upload')
 
 7. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
 
-    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4/deep-learning.ipynb
+    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4/pipelines-AML.ipynb
    
     Then select **Done** to upload and dismiss the dialog.
 
     ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
-8. In the listing, select the Notebook you just uploaded (deep-learning.ipynb) to open it.
+8. In the listing, select the Notebook you just uploaded (pipelines-AML.ipynb) to open it.
 
 9. Follow the instructions within the notebook to complete the experience.
 
 ## Wrap-up
 
-Congratulations on completing the deep learning with ONNX experience. In this experience you completed an end-to-end process for training a deep learning model, converting it to ONNX and deploying the model into production, all from within an Azure Notebook.
+Congratulations on completing the Azure Machine Learning pipelines experience.
 
 To recap, you experienced:
 
-1. Using [Keras](https://keras.io/) to create and train a deep learning model for classifying text data on a GPU enabled cluster provided by Azure Machine Learning.
-2. Converting the Keras model to an ONNX model.
-3. Using the ONNX model to classify text data.
-4. Creating and deploying a web service to [Azure Container Instances](https://docs.microsoft.com/azure/container-instances/) that uses the ONNX model for classification.
+1. Defining the steps for a pipeline that include data preprocessing, model training and model inferencing.
+2. Understanding how outputs are shared between steps in a pipeline.
+3. Scheduling an inferencing pipeline to execute on a scheduled basis.
 
 ## Additional resources and more information
 
-To learn more about the Azure Machine Learning service, visit the [documentation](https://docs.microsoft.com/azure/machine-learning/service)
+To learn more about the Azure Machine Learning service pipelines, visit the [documentation](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-ml-pipelines)
