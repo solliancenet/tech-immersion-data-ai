@@ -1,0 +1,16 @@
+{
+    "description": null,
+    "disabled": null,
+    "schedule": null,
+    "parameters": {
+        "batchSize": null,
+        "maxFailedItems": null,
+        "maxFailedItemsPerBatch": null,
+        "base64EncodeKeys": false,
+        "configuration": {
+            "assumeOrderByHighWaterMarkColumn": true
+        }
+    },
+    "fieldMappings": [],
+    "outputFieldMappings": []
+}
