@@ -10,37 +10,33 @@
   - [Experience requirements](#experience-requirements)
   - [Task 1: Connect to PostgreSQL](#task-1-connect-to-postgresql)
   - [Task 2: Create a table to store clickstream data](#task-2-create-a-table-to-store-clickstream-data)
-  - [Task 3: Shard tables across nodes](#task-3-shard-tables-across-nodes)
+  - [Task 3: Shard tables across nodes and create rollup tables](#task-3-shard-tables-across-nodes-and-create-rollup-tables)
+  - [Task 4: Create rollup functions](#task-4-create-rollup-functions)
+  - [Task 5: Copy data into raw events table](#task-5-copy-data-into-raw-events-table)
+  - [Task 6: Schedule periodic aggregation and execute dashboard queries](#task-6-schedule-periodic-aggregation-and-execute-dashboard-queries)
 
 ## Technology overview
 
 ### Azure Database for PostgreSQL
 
-Develop high-concurrency, low-latency applications with Azure Cosmos DB, a fully managed database service that supports NoSQL APIs and can scale out [multi-master](https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-multi-master) workloads anywhere in the world. Ensure blazing fast performance with [industry-leading service level agreements (SLAs)](https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/v1_2/) for single-digit-millisecond reads and writes, data consistency and throughput, and 99.999% high availability. Transparent [horizontally-partitioning](https://docs.microsoft.com/en-us/azure/cosmos-db/partitioning-overview) provides elastic scaling, matching capacity with demand to controls costs and ensures your applications maintains high performance during peak traffic.
-
-Azure Cosmos DB offers built-in, cloud-native capabilities to simplify app development and boost developer productivity, including five well-defined consistency models, [auto-indexing](https://docs.microsoft.com/en-us/azure/cosmos-db/index-policy), and multiple data models. Easily migrate existing NoSQL data with open-source APIs for [MongoDB](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction), [Cassandra](https://docs.microsoft.com/en-us/azure/cosmos-db/cassandra-introduction), Gremlin (Graph), and others. Developers can work with tools to build microservices and the languages of their choice, while enjoying seamless integration with Azure services for IoT, advanced analytics, AI and machine learning, and business intelligence.
-
-Azure Cosmos DB enables you to innovate with IoT data to build enhanced user experiences and turn insights into action:
-
-- Ingest and query diverse IoT data easily using Azure Cosmos DB's global presence to capture data from anywhere.
-- Scale elastically to accommodate real-time fluctuations in IoT data.
-- Seamlessly integrate into tools like Azure Event Hub, Azure IoT Hub and Azure Functions to ingest and stream data.
-
-Performing real-time analytics on data of any size or type from anywhere, using a Lambda architecture, and easy integration with Azure Databricks.
-
-- Source and serve data quickly through integration with other Azure services for real-time insights.
-- Run in-depth queries over diverse data sets to understand trends and make better decisions.
-- Apply Analytics, Machine Learning, and Cognitive capabilities to your NoSQL data.
-
-By using Azure Cosmos DB you no longer have to make the extreme [tradeoffs](https://docs.microsoft.com/en-us/azure/cosmos-db/consistency-levels-tradeoffs) between consistency, availability, latency and programmability. You can choose from five well-defined consistency choices (strong, bounded staleness, consistent-prefix, session, and eventual) to better control your user’s experience through consistency, availability, latency and programmability.
-
-Focus your time and attention on developing great apps while Azure handles management and optimization of infrastructure and databases. Deploy databases in a fraction of the time on Microsoft’s platform as a service and leverage built-in configuration options to get up and running fast. You can rest assured your apps are running on a fully managed database service built on world-class infrastructure with enterprise-grade security and compliance.
+ADD DESCRIPTION HERE
 
 ## Scenario overview
 
-Contoso Auto is collecting vehicle telemetry and wants to use Cosmos DB to rapidly ingest and store the data in its raw form, then do some processing in near real-time. In the end, they want to create a dashboard that automatically updates with new data as it flows in after being processed. What they would like to see on the dashboard are various visualizations of detected anomalies, like engines overheating, abnormal oil pressure, and aggressive driving, using components such as a map to show anomalies related to cities, as well as various charts and graphs depicting this information in a clear way.
+Contoso Auto has a host of online stores for their catalog of vehicles, targeted toward vehicle lines such as consumer, government, and recreational (RVs, ATVs, etc.). They have been conducting aggressive marketing campaigns to promote online sales and have been experiencing rapid growth on these sites. This has made it more challenging to analyze user clickstream data, online ad performance, and other marketing campaigns at scale, and to provide insights to the marketing team in real-time.
 
-In this experience, you will use Azure Cosmos DB to ingest streaming vehicle telemetry data as the entry point to a near real-time analytics pipeline built on Cosmos DB, Azure Functions, Event Hubs, Azure Stream Analytics, and Power BI. To start, you will complete configuration and performance-tuning on Cosmos DB to prepare it for data ingest, and use the change feed capability of Cosmos DB to trigger Azure Functions for data processing. The function will enrich the telemetry data with location information, then send it to Event Hubs. Azure Stream Analytics extracts the enriched sensor data from Event Hubs, performs aggregations over windows of time, then sends the aggregated data to Power BI for data visualization and analysis. A vehicle telemetry data generator will be used to send vehicle telemetry data to Cosmos DB.
+Real-time marketing analysis is provided through interactive reports and dashboards on Contoso Auto's home-grown web platform, ContosoAutoMarket. This platform has served them well, but they are currently hindered by their inability to keep up with demand. ContosoAutoMarket's primary users are members of the marketing team, and the secondary users are shoppers on their various online platforms for whom website interaction behavior is being tracked. Other sources of data are fed from online ad data generated by ads run on social media platforms and email marketing campaigns. They use this type of data to evaluate ad effectiveness and customer reach, ultimately leading to sales conversions.
+
+Contoso Auto needs to be able to efficiently build an analytical dashboard with the real-time marketing and website usage data that:
+
+- Supports a large number of concurrent users
+- Has subsecond response times
+- Incorporates new data within minutes of arrival
+- Supports advanced analytics
+
+Contoso Auto also has an Oracle database that they would like to migrate to PostgreSQL on Azure. They would like to use a tool that will ensure success and will simplify the migration.
+
+In this experience, you will use advanced features of the managed PostgreSQL PaaS service on Azure to make your database more scalable and able to handle the rapid ingest of streaming data while simultaneously generating and serving pre-aggregated data for reports. Then, you will migrate an Oracle database to PostgreSQL.
 
 ## Experience requirements
 
@@ -94,6 +90,8 @@ In this experience, you will use Azure Cosmos DB to ingest streaming vehicle tel
 
 In this task, you will create the `events` raw table to capture every clickstream event. This table is partitioned by `event_time` since we are using it to store time series data. The script you execute to create the schema creates a partition every 5 minutes, using [pg_partman](https://www.citusdata.com/blog/2018/01/24/citus-and-pg-partman-creating-a-scalable-time-series-database-on-PostgreSQL/).
 
+Partitioning is the key to high performance and being able to scale out across several database nodes. One of the keys to fast data loading is to avoid using large indexes. Traditionally, you would use block-range (BRIN) indexes to speed up range scans over roughly-sorted data. However, when you have unsorted data, BRIN indexes tend to perform poorly. Partitioning helps keep indexes small. It does this by dividing tables into partitions, avoiding fragmentation of data while maintaining smaller indexes.
+
 1. With the **Lab** server expanded under the Servers tree in pgAdmin, expand Databases then select **citus**. When the citus database is highlighted, select the **Query Tool** button above.
 
    ![The citus database is selected in pgAdmin, and the Query Tool is highlighted.](media/pgadmin-query-tool-button.png 'Query Tool')
@@ -128,7 +126,7 @@ In this task, you will create the `events` raw table to capture every clickstrea
 
    ![The new events table is displayed in the navigation tree on the left.](media/pgadmin-events-table.png 'Events table')
 
-## Task 3: Shard tables across nodes
+## Task 3: Shard tables across nodes and create rollup tables
 
 In this task, you will create two rollup tables for storing aggregated data pulled from the raw events table. Later, you will create rollup functions and schedule them to run periodically.
 
@@ -137,13 +135,19 @@ The two tables you will create are:
 - **rollup_events_5mins**: stores aggregated data in 5-minute intervals.
 - **rollup_events_1hr**: stores aggregated data every 1 hour.
 
-You will notice in the script below, as well as in the script above, that we are sharding each of the tables on `customer_id` column. The sharding logic is handled for you by the Hyperscale server group (enabled by Citus), allowing you to horizontally scale your database across multiple managed Postgres servers.
+You will notice in the script below, as well as in the script above, that we are sharding each of the tables on `customer_id` column. The sharding logic is handled for you by the Hyperscale server group (enabled by Citus), allowing you to horizontally scale your database across multiple managed Postgres servers. This provides you with multi-tenancy because the data is sharded by the same Tenant ID (customer_id). Because we are sharding on the same ID for our raw events table and rollup tables, our data stored in both types of table are automatically co-located for us by Citus. Furthermore, this means that aggregations can be performed locally without crossing network boundaries when we insert our events data into the rollup tables. Our dashboard queries that execute against the rollup tables are always for a particular tenant (customer id). Hyperscale clusters allow us to parallelize our aggregations across shards, then perform a SELECT on a rollup for a particular customer from the dashboard, and have it automatically routed to the appropriate shard.
+
+Another important thing to note about the rollup tables is that we are using [HyperLogLog](https://en.wikipedia.org/wiki/HyperLogLog) (HLL) data types to very rapid obtain distinct counts for devices and sessions (`device_distinct_count` and `session_distinct_count`). HyperLogLog is a fixed-size data structure that is extremely fast at estimating distinct value counts with tunable precision. For example, in 1280 bytes `HLL` can estimate the count of tens of billions of distinct values with only a few percent error ([source](https://github.com/citusdata/postgresql-hll)).
+
+It is very common to run `SELECT COUNT(DISTINCT)` on your database to update a dashboard with the number of unique items such as unique purchases of a particular item, unique users, unique page visits, etc. However, when you are using distributed systems, as Contoso Auto is in this situation, calculating unique counts is a difficult problem to solve. One reason for this is that there can be overlapping records across the workers. You could get around this by pulling all the data into a single machine and perform the count, but this does not scale well. Another option is to perform map/reduce functions, which scales, but are very slow to execute. The better option that provides scalability and speed is to use approximation algorithms to provide distinct count results within mathematically provable error bounds. This is why we are using HyperLogLog.
+
+If we were not using HLL, we would be limited to creating a large number of rollup tables. You would need rollup tables for various time periods, and rollup tables to calculate the distinct counts constrained by combinations of columns. For example, if you pre-aggregate over minutes, then you cannot answer queries asking for distinct counts over an hour. If you try and each minute's result to find hourly visits to a specific page, for example, the result will be unreliable because you are likely to have overlapping records within those different minutes. This problem is further complicated when you want to return a count of page visits filtered by time and unique page visit counts by user or a combination of the two. HLL allows us to use one or two rollup tables to answer all of these queries and more. This is because HLL overcomes the overlapping records problem by encoding the data in a way that allows summing up individual unique counts without re-counting overlapping records. When we write data to the HLL columns, we also hash it to ensure uniform distribution. We'll go over this in a bit.
 
 1. With the **Lab** server expanded under the Servers tree in pgAdmin, expand Databases then select **citus**. When the citus database is highlighted, select the **Query Tool** button above.
 
    ![The citus database is selected in pgAdmin, and the Query Tool is highlighted.](media/pgadmin-query-tool-button.png 'Query Tool')
 
-2. Paste the following query into the Query Editor:
+2. Replace the query in the Query Editor with the following:
 
    ```sql
    CREATE TABLE rollup_events_5min (
@@ -180,3 +184,312 @@ You will notice in the script below, as well as in the script above, that we are
 4. After executing the query, verify that the new `rollup_events_1hr` and `rollup_events_5min` tables were created under the **citus** database by expanding **Schemas** -> **public** -> **Tables** in the navigation tree on the left. You may have to refresh the Schemas list by right-clicking, then selecting Refresh.
 
    ![The new rollup tables are displayed in the navigation tree on the left.](media/pgadmin-rollup-tables.png 'Rollup tables')
+
+## Task 4: Create rollup functions
+
+In Contoso Auto's pipeline, they are storing event source data (clickstream time series data) in PostgreSQL, within the partitioned `events` table you created earlier. The next step of the pipeline is to aggregate this data into rollup tables so it can be efficiently accessed by their dashboard app or BI tools without impacting performance on the raw data tables.
+
+Rollups are an integral piece of this solution because they provide fast, indexed lookups of aggregates where compute-heavy work is performed periodically in the background. Because these rollups are compact, they can easily be consumed by various clients and kept over longer periods of time.
+
+When you look at the SQL scripts for the `five_minutely_aggregation` and `hourly_aggregation` functions below, you will notice that we are using incremental aggregation to support late, or incoming, data. This is accomplished by using `ON CONFLICT ... DO UPDATE` in the `INSERT` statement.
+
+When executing aggregations, you have the choice between append-only or incremental aggregation. Append-only aggregation (insert) supports all aggregates, including exact distinct and percentiles, but are more difficult to use when handling late data. This is because you have to keep track of which time periods have been aggregated already, since you aggregate events for a particular time period and append them to the rollup table once all the data for that period are available. Incremental aggregation (upsert), on the other hand, easily supports processing late data. The side effect is that it cannot handle all aggregates. We work around this limitation by using highly accurate approximation through HyperLogLog (HLL) and `TopN`. As stated previously, we are aggregating new events and upserting them to our rollup tables. You still need to be able to keep track of which events have already been aggregated.
+
+One way to keep track of which events have already been aggregated is to mark them as aggregated (`SET aggregated = true`). The problem with this approach is that it causes bloat and fragmentation. Another way would be to use a staging table to temporarily store events. This can cause catalog bloat and high overhead per batch, depending on how often your aggregation is run. The recommended approach is to [track the sequence number](https://www.citusdata.com/blog/2018/06/14/scalable-incremental-data-aggregation/). This means that each event has a monotonically increasing sequence number (`i`). We store sequence number `S` up to the point in which all events were aggregated. To aggregate, we pull a number from the sequence (`E`), briefly block writes to ensure there are no more in-flight transactions using sequence numbers <= `E` (`EXECUTE format('LOCK %s IN EXCLUSIVE MODE', table_to_lock)`), then incrementally aggregate all events with sequence numbers `S` < `i` <= `E`. Finally, we set `S` = `E` and repeat this process on each upsert. You can see exactly how we're doing this in the `incremental_rollup_window` function below. The `rollups` table keeps track of the sequence for us. The `five_minutely_aggregation` and `hourly_aggregation` functions call `incremental_rollup_window` to retrieve the range of page views that can be safely aggregated, using the start and end `event_id` values (`start_id` and `end_id`).
+
+Advanced aggregation is accomplished by using HyperLogLog (HLL) and `TopN`, as discussed earlier. For this topic, reference the `five_minutely_aggregation` and `hourly_aggregation` functions below. Also, please note that where you see the special `excluded` table in the query, it is used to reference values originally proposed for insertion. We are using `hll_has_bigint` to hash the HLL columns `device_id` and `session_id`. This hash function produces a uniformly distributed bit string. HLL does this by dividing values into streams and averaging the results. The `hll_add_agg` and `hll_union` are used to do incremental rollups. `TopN` keeps track of a set of counters in JSONB with the explicit goal of determining the top N (like top 10) items (or our "heavy hitters"). In our case, we're using it to return the top 1000 devices by `device_id`. Similar to HLL, we are using `topn_add_agg` and `topn_union` to do incremental rollups. The `topn_union` function merges `TopN` objects over time periods and dimensions.
+
+1. Open the Query Editor once more and replace the previous query with the following, then **execute the query**.
+
+   ```sql
+   CREATE TABLE rollups (
+       name text primary key,
+       event_table_name text not null,
+       event_id_sequence_name text not null,
+       last_aggregated_id bigint default 0
+   );
+
+   CREATE OR REPLACE FUNCTION incremental_rollup_window(rollup_name text, OUT window_start bigint, OUT window_end bigint)
+   RETURNS record
+   LANGUAGE plpgsql
+   AS $function$
+   DECLARE
+       table_to_lock regclass;
+   BEGIN
+       /*
+       * Perform aggregation from the last aggregated ID + 1 up to the last committed ID.
+       * We do a SELECT .. FOR UPDATE on the row in the rollup table to prevent
+       * aggregations from running concurrently.
+       */
+       SELECT event_table_name, last_aggregated_id+1, pg_sequence_last_value(event_id_sequence_name)
+       INTO table_to_lock, window_start, window_end
+       FROM rollups
+       WHERE name = rollup_name FOR UPDATE;
+
+       IF NOT FOUND THEN
+           RAISE 'rollup ''%'' is not in the rollups table', rollup_name;
+       END IF;
+
+       IF window_end IS NULL THEN
+           /* sequence was never used */
+           window_end := 0;
+           RETURN;
+       END IF;
+
+       /*
+       * Play a little trick: We very briefly lock the table for writes in order to
+       * wait for all pending writes to finish. That way, we are sure that there are
+       * no more uncommitted writes with a identifier lower or equal to window_end.
+       * By throwing an exception, we release the lock immediately after obtaining it
+       * such that writes can resume.
+       */
+       BEGIN
+           EXECUTE format('LOCK %s IN EXCLUSIVE MODE', table_to_lock);
+           RAISE 'release table lock';
+       EXCEPTION WHEN OTHERS THEN
+       END;
+
+       /*
+       * Remember the end of the window to continue from there next time.
+       */
+       UPDATE rollups SET last_aggregated_id = window_end WHERE name = rollup_name;
+   END;
+   $function$;
+
+   -- Entries for the rollup tables so that they are getting tracked in incremental rollup process.
+   INSERT INTO rollups (name, event_table_name, event_id_sequence_name)
+   VALUES ('rollup_events_5min', 'events','events_event_id_seq');
+
+   INSERT INTO rollups (name, event_table_name, event_id_sequence_name)
+   VALUES ('rollup_events_1hr', 'events','events_event_id_seq');
+   ```
+
+2. Replace the previous query with the following in the Query Editor to create a rollup function that populates the **5-minute rollup table**. Then **execute the query**.
+
+   ```sql
+   CREATE OR REPLACE FUNCTION five_minutely_aggregation(OUT start_id bigint, OUT end_id bigint)
+   RETURNS record
+   LANGUAGE plpgsql
+   AS $function$
+   BEGIN
+       /* determine which page views we can safely aggregate */
+       SELECT window_start, window_end INTO start_id, end_id
+       FROM incremental_rollup_window('rollup_events_5min');
+
+       /* exit early if there are no new page views to aggregate */
+       IF start_id > end_id THEN RETURN; END IF;
+
+       /* aggregate the page views, merge results if the entry already exists */
+       INSERT INTO rollup_events_5min
+           SELECT customer_id,
+                   event_type,
+                   country,
+                   browser,
+                   date_trunc('seconds', (event_time - TIMESTAMP 'epoch') / 300) * 300 + TIMESTAMP 'epoch' AS minute,
+                   count(*) as event_count,
+                   hll_add_agg(hll_hash_bigint(device_id)) as device_distinct_count,
+                   hll_add_agg(hll_hash_bigint(session_id)) as session_distinct_count,
+                   topn_add_agg(device_id::text) top_devices_1000
+           FROM events WHERE event_id BETWEEN start_id AND end_id
+           GROUP BY customer_id,event_type,country,browser,minute
+           ON CONFLICT (customer_id,event_type,country,browser,minute)
+           DO UPDATE
+           SET event_count=rollup_events_5min.event_count+excluded.event_count,
+               device_distinct_count = hll_union(rollup_events_5min.device_distinct_count, excluded.device_distinct_count),
+               session_distinct_count= hll_union(rollup_events_5min.session_distinct_count, excluded.session_distinct_count),
+               top_devices_1000 = topn_union(rollup_events_5min.top_devices_1000, excluded.top_devices_1000);
+
+   END;
+   $function$;
+   ```
+
+3. Replace the previous query with the following in the Query Editor to create a rollup function that populates the **hourly rollup table**. Then **execute the query**.
+
+   ```sql
+   CREATE OR REPLACE FUNCTION hourly_aggregation(OUT start_id bigint, OUT end_id bigint)
+   RETURNS record
+   LANGUAGE plpgsql
+   AS $function$
+   BEGIN
+       /* determine which page views we can safely aggregate */
+       SELECT window_start, window_end INTO start_id, end_id
+       FROM incremental_rollup_window('rollup_events_1hr');
+
+       /* exit early if there are no new page views to aggregate */
+       IF start_id > end_id THEN RETURN; END IF;
+
+       /* aggregate the page views, merge results if the entry already exists */
+       INSERT INTO rollup_events_1hr
+          SELECT customer_id,
+                  event_type,
+                  country,
+                  browser,
+                  date_trunc('hour', event_time) as hour,
+                  count(*) as event_count,
+                  hll_add_agg(hll_hash_bigint(device_id)) as device_distinct_count,
+                  hll_add_agg(hll_hash_bigint(session_id)) as session_distinct_count,
+                  topn_add_agg(device_id::text) top_devices_1000
+          FROM events WHERE event_id BETWEEN start_id AND end_id
+          GROUP BY customer_id,event_type,country,browser,hour
+          ON CONFLICT (customer_id,event_type,country,browser,hour)
+          DO UPDATE
+          SET event_count = rollup_events_1hr.event_count+excluded.event_count,
+              device_distinct_count = hll_union(rollup_events_1hr.device_distinct_count,excluded.device_distinct_count),
+              session_distinct_count = hll_union(rollup_events_1hr.session_distinct_count,excluded.session_distinct_count),
+              top_devices_1000 = topn_union(rollup_events_1hr.top_devices_1000, excluded.top_devices_1000);
+   END;
+   $function$;
+   ```
+
+## Task 5: Copy data into raw events table
+
+In this task, you will use the `psql` COPY utility to load raw clickstream event data into the `events` table. A few parallel COPY streams can load millions of events per second.
+
+1. On your desktop, or your lab VM if you were provided one, open a new Command Prompt. If you are unfamiliar with how to do this in Windows, click the Start button, type `cmd`, then press Enter.
+
+   ![The Windows start menu is displayed with the Command Prompt search entry.](media/launch-command-prompt.png 'Start menu')
+
+2. In the Command Prompt window, type in the following then press Enter to navigate to the lab files directory for this experience:
+
+   ```bash
+   cd C:\lab-files\data\5
+   ```
+
+3. For this next command, you will need to locate your PostgreSQL **coordinator name** that you copied from the Azure portal earlier. It should be in the form of `<your_postgres_name>-c.postgres.database.azure.com`. Use this value to replace `COORDINATOR_NAME` in the following command:
+
+   ```bash
+   psql -h COORDINATOR_NAME -d citus -U citus
+   ```
+
+4. After modifying the command above, paste it into the Command Prompt window, then press Enter. When prompted, enter your PostgreSQL password.
+
+   ![The psql connect command is highlighted.](media/psql-connect.png 'Command Prompt')
+
+5. After successfully entering your password and connecting to PostgreSQL, paste the following at the `citus=>` prompt, then hit Enter. This will copy the first set of records into the `events` table:
+
+   ```bash
+   \COPY events(customer_id,event_type,country,browser,device_id,session_id) FROM data/1.csv WITH (FORMAT CSV,HEADER TRUE);
+   ```
+
+   This should output that you have copied 200,000 records from the CSV file.
+
+   ![The Copy command is highlighted.](media/psql-copy1.png 'Command Prompt')
+
+6. **Leave the Command Prompt open**, then switch back to **pgAdmin**.
+
+7. Open the Query Editor once more and replace the previous query with the following, then **execute the query**. This will run our **5-minute aggregation** query.
+
+   ```sql
+   SELECT five_minutely_aggregation();
+   ```
+
+8. Replace the previous query with the following in the Query Editor to run our **hourly aggregation** function. Then **execute the query**.
+
+   ```sql
+   SELECT hourly_aggregation();
+   ```
+
+9. **Switch back** to your open Command Prompt window, then paste the following command into the window and press Enter.
+
+   ```bash
+   \COPY events(customer_id,event_type,country,browser,device_id,session_id) FROM data/2.csv WITH (FORMAT CSV,HEADER TRUE);
+   ```
+
+   ![The second Copy command is highlighted.](media/psql-copy2.png 'Command Prompt')
+
+   > This loads more data into our `events` table. We will now rerun the aggregations to demonstrate incrementally aggregating against new data into our rollup tables.
+
+10. **Leave the Command Prompt open**, then switch back to **pgAdmin**.
+
+11. Open the Query Editor once more and replace the previous query with the following, then **execute the query**. This will re-run our **5-minute aggregation** query.
+
+    ```sql
+    SELECT five_minutely_aggregation();
+    ```
+
+12. Replace the previous query with the following in the Query Editor to re-run our **hourly aggregation** function. Then **execute the query**.
+
+    ```sql
+    SELECT hourly_aggregation();
+    ```
+
+## Task 6: Schedule periodic aggregation and execute dashboard queries
+
+In this task, you will use [pg_cron](https://github.com/citusdata/pg_cron) to run the aggregation functions on a periodic basis. Next, you will load the remainder of the test data and execute the dashboard queries.
+
+You will then execute queries against the rollup tables that will be used for Contoso Auto's dashboard. This is to demonstrate that queries against the pre-aggregated tables that use HLL and TopN advanced aggregation features result in excellent query speeds and flexibility.
+
+1. Replace the previous query with the following in the Query Editor to re-run our **hourly aggregation** function. Then **execute the query**.
+
+   ```sql
+   SELECT cron.schedule('*/5 * * * *', 'SELECT five_minutely_aggregation();');
+   SELECT cron.schedule('*/5 * * * *', 'SELECT hourly_aggregation();');
+   ```
+
+2. **Switch back** to your open Command Prompt window, then paste the following command into the window and press Enter. This script will import the remaining 1.6 million rows.
+
+   ```bash
+   \i copy.sql
+   ```
+
+   This script simply executes the COPY command against the remaining 8 CSV files in the data folder. You should see a result of `COPY 200000` eight times.
+
+   ![The Command Prompt displays the copy script.](media/psql-copy-sql.png 'Command Prompt')
+
+3. **Switch back** to pgAdmin. Although we set the cron schedule to run our query aggregates every five minutes, it is possible that they have not yet run. For now, replace the previous query in the Query Editor with the following to manually run the **5-minute aggregation** query.
+
+   ```sql
+   SELECT five_minutely_aggregation();
+   ```
+
+4. Replace the previous query with the following in the Query Editor to re-run our **hourly aggregation** function. Then **execute the query**.
+
+   ```sql
+   SELECT hourly_aggregation();
+   ```
+
+5. Clear the query window and paste the following to retrieve the total number of events and count of distinct devices in the last 5 minutes:
+
+   ```sql
+   SELECT sum(event_count) num_events, hll_cardinality(hll_union_agg(device_distinct_count)) distinct_devices
+   FROM rollup_events_5min where minute >=now()-interval '5 minutes' AND minute <=now() AND customer_id=1;
+   ```
+
+   > **Note:** If you do not see any values in the result, try adjusting the `5 minutes` interval value to a higher value. If more than five minutes have passed since copying the data, you will not see results until you increase this value.
+
+   ![The results output of the first dashboard query is displayed.](media/dashboard-query1.png 'Dashboard query 1')
+
+6. Clear the query window and paste the following to return the count of distinct sessions over the past week:
+
+    ```sql
+    SELECT sum(event_count) num_events,
+          hll_cardinality(hll_union_agg(device_distinct_count)) distinct_devices
+    FROM rollup_events_1hr
+    WHERE hour >=date_trunc('day',now())-interval '7 days'
+      AND hour <=now()
+      AND customer_id=1;
+    ```
+
+7. Clear the query window and paste the following to return the trend of app usage in the past 2 days, broken down by hour:
+
+    ```sql
+    SELECT hour,
+          sum(event_count) event_count,
+          hll_cardinality(hll_union_agg(device_distinct_count)) device_count,
+          hll_cardinality(hll_union_agg(session_distinct_count)) session_count
+    FROM rollup_events_1hr
+    WHERE hour >=date_trunc('day',now())-interval '2 days'
+      AND hour <=now()
+      AND customer_id=1
+    GROUP BY hour;
+    ```
+
+8. Clear the query window and paste the following to return the top devices in the past 30 minutes:
+
+    ```sql
+    SELECT (topn(topn_union_agg(top_devices_1000), 10)).item device_id
+    FROM rollup_events_5min
+    WHERE minute >=date_trunc('day',now())-interval '30 minutes'
+      AND minute <=now()
+      AND customer_id=2;
+    ```
