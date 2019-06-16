@@ -40,7 +40,7 @@ In the user name box, enter your VM Admin User Name. Enter your VM Admin Passwor
 
 - **Day 2, Experience 2** - [Yield quick insights from unstructured data with Knowledge Mining and Cognitive Services](./day2-exp2/README.md)
 
-  Highlight how building a cognitive search pipeline using Cognitive Services and Knowledge Mining can yield quick insights on unstructured data. Cognitive search is an AI feature in Azure Search, used to extract text from images, blobs, and other unstructured data sources - enriching the content to make it more searchable in an Azure Search index. Attendees will create a cognitive search pipeline in Azure Search, using Cosmos DB and an Azure Storage account as data sources, and apply pre-configured and custom cognitive skills to enrich the data in the indexing pipeline.
+  Highlight how building a cognitive search pipeline using Cognitive Services and Knowledge Mining can yield quick insights into unstructured data. Cognitive search is an AI feature in Azure Search, used to extract text from images, blobs, and other unstructured data sources - enriching the content to make it more searchable in an Azure Search index. Attendees will create a cognitive search pipeline in Azure Search, using Cosmos DB and an Azure Storage account as data sources, and apply pre-configured and custom cognitive skills to enrich the data in the indexing pipeline.
 
 - **Day 2, Experience 3** - [Better models made easy with Automated Machine Learning](./day2-exp3/README.md)
 
