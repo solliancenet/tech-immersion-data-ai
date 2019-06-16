@@ -336,7 +336,7 @@ With tiering, applications can seamlessly access data in a variety of external s
 3. Once mssqlctl installs, connect to your Microsoft SQL Server 2019 Big Data Cluster:
 
     ```python
-      mssqlctl login -e https://<SQL SERVER MASTER INSTANCE IP ADDRESS>:31433
+      mssqlctl login -e https://<SQL SERVER Controller IP ADDRESS>:30080
     ```
     a.  You will be prompted for your big data cluster name.
     b.  The user name is admin
