@@ -79,7 +79,7 @@ If you have not already created the `connected-car` project in Azure Notebooks f
 
 7. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
 
-    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/5/pipelines-AML.ipynb
+    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4/pipelines-AML.ipynb
    
     Then select **Done** to upload and dismiss the dialog.
 
