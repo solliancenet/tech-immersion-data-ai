@@ -432,7 +432,6 @@ To recap, you experienced:
 1. Intelligent Query Processing (QP) performance improvements with SQL Server 2019's new database compatibility level: `150`.
 2. Using the [SQL Data Discovery & Classification](https://docs.microsoft.com/sql/relational-databases/security/sql-data-discovery-and-classification?view=sql-server-ver15) tool to identify and tag PII and GDPR-related compliance issues.
 3. Used dynamic data masking to automatically protect sensitive data from unauthorized users.
-4. Using HDFS tiering to mount files from ADLS Gen2 as if they were local to SQL Server 2019 in HDFS.
 
 ## Additional resources and more information
 
