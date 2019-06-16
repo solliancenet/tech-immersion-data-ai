@@ -1,7 +1,5 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-
-
 ## Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
@@ -21,8 +19,16 @@
 
 Cognitive search is an AI feature in Azure Search, used to extract text from images, blobs, and other unstructured data sources - enriching the content to make it more searchable in an Azure Search index. Extraction and enrichment are implemented through cognitive skills attached to an indexing pipeline. AI enrichments are supported in the following ways:
 
-- **Natural language processing** skills include [entity recognition](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-entity-recognition), [language detection](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-language-detection), [key phrase extraction](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-keyphrases), text manipulation, and [sentiment detection](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-sentiment). With these skills, unstructured text can assume new forms, mapped as searchable and filterable fields in an index.
-- **Image processing** skills include [Optical Character Recognition (OCR)](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-ocr) and identification of [visual features](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-image-analysis), such as facial detection, image interpretation, image recognition (famous people and landmarks) or attributes like colors or image orientation. You can create text-representations of image content, searchable using all the query capabilities of Azure Search.
+- **Natural language processing** skills include [entity recognition](https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-recognition), [language detection](https://docs.microsoft.com/azure/search/cognitive-search-skill-language-detection), [key phrase extraction](https://docs.microsoft.com/azure/search/cognitive-search-skill-keyphrases), text manipulation, and [sentiment detection](https://docs.microsoft.com/azure/search/cognitive-search-skill-sentiment). With these skills, unstructured text can assume new forms, mapped as searchable and filterable fields in an index.
+- **Image processing** skills include [Optical Character Recognition (OCR)](https://docs.microsoft.com/azure/search/cognitive-search-skill-ocr) and identification of [visual features](https://docs.microsoft.com/azure/search/cognitive-search-skill-image-analysis), such as facial detection, image interpretation, image recognition (famous people and landmarks) or attributes like colors or image orientation. You can create text-representations of image content, searchable using all the query capabilities of Azure Search.
+
+In addition to the built-in cognitive skills, it is also possible to use custom skills to include additional capabilities in your search pipeline.
+
+> TODO: Figure out how these should be introduced here...
+
+- **Form processing** skills use the [Form Recognizer](https://docs.microsoft.com/azure/cognitive-services/form-recognizer/overview) cognitive service to extract key-value pairs and table data from form documents.
+- **Anomaly detection** skills leverage the [Anomaly Detector API](https://docs.microsoft.com/azure/cognitive-services/anomaly-detector/overview), which enables you to monitor and detect abnormalities in your time series data with machine learning. Using your time series data, the API determines boundaries for anomaly detection, expected values, and which data points are anomalies.
+- **Personalization** skills make use of the [Personalizer API](https://docs.microsoft.com/en-us/azure/cognitive-services/personalizer/what-is-personalizer). The Personalizer allows you to choose the best experience to show your users, learning from their real-time behavior.
 
 ![Cognitive Search diagram](media/cognitive-search-diagram.png "Cognitive Search")
 
@@ -32,85 +38,96 @@ Natural language and image processing is applied during the data ingestion phase
 
 ## Scenario overview
 
-ContosoAuto is interested in using their unstructured data to gain further insights into how customers perceive their business, and the key things their customers are talking about. They are looking for a pilot that would use tweets streamed from Twitter into a `tweets` collection in their Cosmos DB instance to better understand what customers are saying about their organization on the platform. They are also looking to get a better understanding of whether the trend of messages is positive, negative, or neutral by performing sentiment analysis on the tweets.
+ContosoAuto is interested in leveraging their unstructured data to gain further insights into multiple business areas. First, they are interested in improving their understanding of how customers perceive their business, and the key things their customers are talking about. To accomplish this, they are looking for a pilot that would use tweets streamed from Twitter into a `tweets` container in their Cosmos DB instance to better understand what customers are saying about their organization on the platform. They are also looking to get a better understanding of whether the trend of messages is positive, negative, or neutral by performing sentiment analysis on the tweets. In addition, they are look for options for using the information gain through this process to better target content and experiences to those users.
 
-In this experience, you will learn the mechanics of using Cognitive Search and Knowledge Mining to yield rapid insights into unstructured data. Using a combination of preconfigured and custom cognitive skills in Azure Search, you will create a Cognitive Search indexing pipeline that enriches source data in route to an index. Cognitive skills are natural language processing (NLP) and image analysis operations that extract text and text representations of an image, detect language, entities, key phrases, and more. The end result is rich additional content in an Azure Search index, created by a cognitive search indexing pipeline. The output is a full-text searchable index on Azure Search.
+> TODO: Add something in here about Personalizer. Maybe something about ad campaign on Twitter, and looking to use information gleaned from tweets to personalize advertisements to individuals?
+
+> TODO: Add new technologies to the scenario. Form Recognizer and Anomaly detection. Might make sense to split each of these into slightly separate experiences.
+
+> Anomaly detector: Use auto telemetry generator from D1-E1 exercise to pull in data, and detect anomalies in that...
+
+> Form Recognizer: Pull invoices from Blob Storage and use Blob Storage as a data store for search index
+
+In this experience, you will learn the mechanics of using Cognitive Search and Knowledge Mining to yield rapid insights into unstructured data. Using a combination of pre-configured and custom cognitive skills in Azure Search, you will create a series of Cognitive Search indexing pipelines that enriches source data in route to an index. Cognitive skills are natural language processing (NLP) and image analysis operations that extract text and text representations of an image, detect language, entities, key phrases, and more. The end result is rich additional content in an Azure Search index, created by a cognitive search indexing pipeline. The output is a full-text searchable index on Azure Search.
 
 ## Task 1: Populate Cosmos DB with tweets from a generator
 
-For this experience, you will be using the `tweets` collection in ContosoAuto's Cosmos DB as the data source for your Cognitive Search pipeline. In order to use Cosmos DB as a data source, documents must exist in the target collection prior to creating the Data Source in Azure Search. In this task, you will populate the `tweets` collection in your Cosmos DB `ContosoAuto` database using a tweet generator application running in Visual Studio.
+For this experience, you will be using the `tweets` container in ContosoAuto's Cosmos DB as a data source for your Cognitive Search pipeline. In order to use Cosmos DB as a data source, documents must exist in the target container prior to creating the Data Source in Azure Search. In this task, you will populate the `tweets` container in your Cosmos DB `ContosoAuto` database using a tweet generator application running in Visual Studio.
 
 1. Open File Explorer and navigate to `C:\lab-files\ai\2`. Double-click on **`CognitiveSearch.sln`** to open the solution in Visual Studio. If you are prompted about how to open the file, choose **Visual Studio 2017**. If you are prompted by Visual Studio to log in, use the Azure credentials you are using for this workshop.
 
-   ![File Explorer window with `CognitiveSearch.sln` file highlighted.](media/windows-explorer-cognitive-search-sln.png "File Explorer")
+    ![File Explorer window with `CognitiveSearch.sln` file highlighted.](media/windows-explorer-cognitive-search-sln.png "File Explorer")
 
-   The Visual Studio solution contains the following projects:
+    The Visual Studio solution contains the following projects:
 
+   - **CosmosDb.Common**: Common library containing models and classes used by other projects within the solution to communicate with Azure Cosmos DB.
+   - **CustomSkillFunctions**: Contains Azure Functions that are used to perform the action behind custom cognitive skills, such as translating non-English tweets to English and recognizing form fields.
+   - **DataGenerator**: Console app that generates simulated tweets and vehicle telemetry data and sends it to Cosmos DB.
    - **PipelineEnhancer**: Console app that interacts with Azure Search Service REST APIs to enhance the Cognitive Search pipeline.
-   - **Search.Common**: Common library containing models and structs used by the `PipelineEnhancer` to communicate with the Azure Search Service APIs.
-   - **TextTranslateFunction**: Azure Function with an HTTP Trigger that will be used translate non-English tweets to English.
-   - **TweetGenerator**: Console app that generates simulated tweets and sends them to Cosmos DB.
-   - **Twitter.Common**: Common library containing models and structs used by the other projects within the solution.
 
 2. In the Solution Explorer on the left-hand side of Visual Studio, expand the **TweetGenerator** project, and then locate and open the `appsettings.json` file.
 
-   ![In the Solution Explorer, `appsettings.json` is highlighted in the TweetGenerator project.](media/visual-studio-solution-explorer-appsettings.png "Solution Explorer")
+    ![In the Solution Explorer, `appsettings.json` is highlighted in the TweetGenerator project.](media/visual-studio-solution-explorer-appsettings.png "Solution Explorer")
 
-3. Next, you need to retrieve your Cosmos DB connection string. This will be used to enable the TweetGenerator to write data into your `tweets` collection. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the left-hand menu, and then select the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
+3. Next, you need to retrieve your Cosmos DB connection string. This will be used to enable the TweetGenerator to write data into your `tweets` container. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the left-hand menu, and then select the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
 
-   ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
+    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
 
 4. Select the **tech-immersionXXXXX** Azure Cosmos DB account from the list of resources (where XXXXX is the unique identifier assigned to you for this workshop).
 
-   ![The Azure Cosmos DB account resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-cosmosdb.png "Tech Immersion resource group")
+    ![The Azure Cosmos DB account resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-cosmosdb.png "Tech Immersion resource group")
 
-   > **IMPORTANT**: There may be two Cosmos DB accounts in your resource group. Select the Cosmos DB account named **tech-immersionXXXXX**, with no hyphen between immersion and XXXXX.
+    > **IMPORTANT**: There may be two Cosmos DB accounts in your resource group. Select the Cosmos DB account named **tech-immersionXXXXX**, with no hyphen between immersion and XXXXX.
 
 5. On your Cosmos DB blade, select **Keys** from the left-hand menu.
 
-   ![The Keys link on the left-hand menu is highlighted.](media/cosmos-db-keys-link.png "Keys link")
+    ![The Keys link on the left-hand menu is highlighted.](media/cosmos-db-keys-link.png "Keys link")
 
 6. Copy the **Primary Connection String** value by selecting the copy button to the right of the field.
 
-   ![The Primary Connection String key is copied.](media/cosmos-db-keys.png "Keys")
+    ![The Primary Connection String key is copied.](media/cosmos-db-keys.png "Keys")
 
 7. Return to the `appsettings.json` file in Visual Studio and paste the Primary Connection String into the value for the `COSMOS_DB_CONNECTION_STRING` setting. Your `appsettings.json` file should look similar to the following:
 
-   ![Screenshot of the `appsettings.json` file.](media/appsettings-json-file.png "appsettings.json")
+    ![Screenshot of the `appsettings.json` file.](media/appsettings-json-file.png "appsettings.json")
 
 8. Save `appsettings.json`.
 
 9. Right-click on the `TweetGenerator` project, and select **Set as StartUp Project** from the context menu.
 
-   ![Set as Startup Project is highlighted on the context menu for the TweetGenerator project.](media/visual-studio-solution-explorer-tweetgenerator-set-as-startup-project.png "Set as Startup Project")
+    ![Set as Startup Project is highlighted on the context menu for the TweetGenerator project.](media/visual-studio-solution-explorer-tweetgenerator-set-as-startup-project.png "Set as Startup Project")
 
 10. Run the console app by selecting the button in the toolbar with the green arrow and text of **TweetGenerator**.
 
-   ![The Run TweetGenerator button is displayed.](media/visual-studio-run-tweetgenerator.png "Run TweetGenerator")
+    ![The Run TweetGenerator button is displayed.](media/visual-studio-run-tweetgenerator.png "Run TweetGenerator")
 
-> Leave the `TweetGenerator` console app running in the background while you move on to the remaining tasks in this experience. The app will run for 10 minutes, sending random tweets into your Cosmos DB `tweets` collection, so you have data to work with in the remaining tasks of this experience. In the next task, you will set up an Azure Search Index which points to the `tweets` collection in Cosmos DB, so as new tweets are added, they will be indexed.
+11. In the console window, you will see statistics about tweets being streamed into Cosmos DB.
+
+    ![The Tweet generator console application is displayed.](media/tweet-generator-console.png "Tweet generator console")
+
+> Leave the `TweetGenerator` console app running in the background while you move on to the remaining tasks in this experience. The app will run for 10 minutes, sending random tweets into your Cosmos DB `tweets` container, so you have data to work with in the remaining tasks of this experience. In the next task, you will set up an Azure Search Index which points to the `tweets` container in Cosmos DB, so as new tweets are added, they will be indexed.
 
 ## Task 2: Create a basic Cognitive Search pipeline using the Azure portal
 
-With data now streaming into your Cosmos DB `tweets` collection, you are ready to set up a basic Cognitive Search pipeline using the Azure portal. In this task, you will create an Azure Search Index and configure an Azure Search Indexer to read tweets from your Cosmos DB collection. You will also include several pre-configured skills linked to your Cognitive Services account to extract more information out of the tweets being indexed.
+With data now streaming into your Cosmos DB `tweets` container, you are ready to set up a basic Cognitive Search pipeline using the Azure portal. In this task, you will create an Azure Search Index and configure an Azure Search Indexer to read tweets from your Cosmos DB container. You will also include several pre-configured skills linked to your Cognitive Services account to extract more information out of the tweets being indexed.
 
 1. Return to your Azure Cosmos DB account blade in the [Azure portal](https://portal.azure.com), and select **Data Explorer** from the toolbar on the overview blade.
 
-   ![Data Explorer is highlighted in the Cosmos DB toolbar in the Azure portal.](media/cosmos-db-toolbar-data-explorer.png "Cosmos DB toolbar")
+    ![Data Explorer is highlighted in the Cosmos DB toolbar in the Azure portal.](media/cosmos-db-toolbar-data-explorer.png "Cosmos DB toolbar")
 
-2. Under the `ContosoAuto` database, expand the **tweets** collection and then select **Documents**.
+2. Under the `ContosoAuto` database, expand the **tweets** container and then select **Items**.
 
-   ![Documents is selected and highlighted under the tweets collection in the `ContosoAuto` Cosmos DB database.](media/cosmos-db-tweets-collection-documents.png "Documents")
+    ![Items is selected and highlighted under the tweets container in the `ContosoAuto` Cosmos DB database.](media/cosmos-db-tweets-collection-documents.png "Items")
 
-3. In the documents pane, select any of the documents listed and inspect a tweet document. Documents are stored in JSON (JavaScript Object Notation) format in Cosmos.
+3. In the Items pane, select any of the documents listed and inspect a tweet document. Documents are stored in JSON (JavaScript Object Notation) format in Cosmos.
 
-   ![A tweet document is displayed.](media/cosmos-db-tweet-document.png "Tweet document")
+    ![A tweet document is displayed, with the text field highlighted.](media/cosmos-db-tweet-document.png "Tweet document")
 
-   > The `text` field, which contains the content of the tweet, and is what you will be using as you begin building your Cognitive Search pipeline. You will be using other fields later, such as the `user` entity, so take time to review these structures in the document as well.
+    > The `text` field, which contains the content of the tweet, and is what you will be using as you begin building your Cognitive Search pipeline. You will be using other fields later, such as the `user` entity, so take time to review these structures in the document as well.
 
 4. With a better understanding of the structure of the tweet documents stored in Cosmos DB, let's move on to creating a basic Cognitive Search pipeline. From your Cosmos DB blade in the Azure portal, select **Add Azure Search** from the left-hand menu, select your **tech-immersion** search service, and then select **Next: Connect to your data**.
 
-   ![Add Azure Search is selected and highlighted on the left-hand menu and the tech-immersion search service is highlighted in the list of search services.](media/cosmos-db-add-azure-search-select-search-service.png "Select a search service")
+    ![Add Azure Search is selected and highlighted on the left-hand menu and the tech-immersion search service is highlighted in the list of search services.](media/cosmos-db-add-azure-search-select-search-service.png "Select a search service")
 
 5. On the **Connect to your data** tab, enter the following:
 
@@ -118,25 +135,25 @@ With data now streaming into your Cosmos DB `tweets` collection, you are ready t
    - **Name**: Enter **tweets-cosmosdb**.
    - **Cosmos DB account**: This should be pre-populated with the connection string for your Cosmos DB account.
    - **Database**: Select the **ContosoAuto** database.
-   - **Collection**: Select the **tweets** collection.
+   - **Collection**: Select the **tweets** container.
    - **Query**: Paste the SQL statement below into the field.
 
-     ```sql
-     SELECT * FROM c WHERE c._ts > @HighWaterMark ORDER BY c._ts
-     ```
+    ```sql
+    SELECT * FROM c WHERE c._ts > @HighWaterMark ORDER BY c._ts
+    ```
 
    - **Query results ordered by \_ts**: Check this box.
 
-   ![The Connect to your data tab is displayed, with the settings specified above entered into the form.](media/cosmos-db-add-azure-search-connect-to-data.png "Connect to your data")
+    ![The Connect to your data tab is displayed, with the settings specified above entered into the form.](media/cosmos-db-add-azure-search-connect-to-data.png "Connect to your data")
 
 6. Select **Next: Add cognitive search (Optional)**.
 
-   > In this step, you will add a set of enrichment steps to the data being ingested from Cosmos DB. In a Cognitive Search pipeline, individual enrichment steps are called _skills_, and the collection of enrichment steps is a _skillset_. The predefined skills available at this step through the UI use pre-trained models to extract additional information from the documents. The [EntityRecognitionSkill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-entity-recognition) extracts entities (people, location, organization, emails, URLs, DateTime fields) from the document. The [LanguageDetectionSkill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-language-detection) is used to detect the primary language used in the document, and the [KeyPhraseExtractionSkill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-keyphrases) detects important phrases based on term placement, linguistic rules, proximity to other terms, and how unusual the term is within the source data. Read about all of the available [predefined cognitive skills](https://docs.microsoft.com/en-us/azure/search/cognitive-search-predefined-skills) to learn more.
+    > In this step, you will add a set of enrichment steps to the data being ingested from Cosmos DB. In a Cognitive Search pipeline, individual enrichment steps are called _skills_, and the collection of enrichment steps is a _skillset_. The predefined skills available at this step through the UI use pre-trained models to extract additional information from the documents. The [EntityRecognitionSkill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-entity-recognition) extracts entities (people, location, organization, emails, URLs, DateTime fields) from the document. The [LanguageDetectionSkill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-language-detection) is used to detect the primary language used in the document, and the [KeyPhraseExtractionSkill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-keyphrases) detects important phrases based on term placement, linguistic rules, proximity to other terms, and how unusual the term is within the source data. Read about all of the available [predefined cognitive skills](https://docs.microsoft.com/en-us/azure/search/cognitive-search-predefined-skills) to learn more.
 
 7. On the **Add cognitive search (Optional)** tab:
 
-   - Expand **Attached Cognitive Services** and select your **tech-immersion-cogserv** instance. This will associate your Cognitive Services account with the Skillset you are creating.
-   - Expand **Add Enrichments**, enter **tweet-skillset** as the name, and select **text** as the source data field. Check the box next to Cognitive Skills to select all of the options.
+   - Expand **Attach Cognitive Services** and select your **tech-immersion-cogserv** instance. This will associate your Cognitive Services account with the Skillset you are creating.
+   - Expand **Add Enrichments**, enter **tweet-skillset** as the name, and select **text** as the source data field. Check the box next to the Text Cognitive Skills header to select all of the options.
 
    ![The Add cognitive search tab is displayed, with the settings specified above entered into the form.](media/cosmos-db-add-azure-search-add-cognitive-search.png "Add cognitive search")
 
@@ -150,18 +167,21 @@ With data now streaming into your Cosmos DB `tweets` collection, you are ready t
     - **Key**: Leave this set to **rid**.
     - **Suggester name**: Leave this blank.
     - **Search mode**: Leave this blank.
-    - Use the image below to set the checkboxes and settings for each field.
+    - Before setting the check boxes for each field, expand **users** and **entities**, and any sub-properties within each.
+      - Check the **Retrievable**, **Filterable**, and **Searchable** boxes at the top, to check all fields under each category, as shown in the image below.
 
     ![The Customize target index tab is displayed, with the settings specified above entered into the form.](media/cosmos-db-add-azure-search-customize-target-index.png "Customize target index")
 
-    > On the Index page, you are presented with a list of fields with a data type and a series of checkboxes for setting index attributes. You can bulk-select attributes by clicking the checkbox at the top of an attribute column. Choose Retrievable and Searchable for every field that should be returned to a client app and subject to full text search processing. You'll notice that integers are not full text or fuzzy searchable (numbers are evaluated verbatim and are often useful in filters). Read the description of [index attributes](https://docs.microsoft.com/en-us/rest/api/searchservice/create-index#bkmk_indexAttrib) for more information.
+    > On the Index page, you are presented with a list of fields with a data type and a series of check boxes for setting index attributes. You can bulk-select attributes by clicking the checkbox at the top of an attribute column. Choose Retrievable and Searchable for every field that should be returned to a client app and subject to full text search processing. You'll notice that integers are not full text or fuzzy searchable (numbers are evaluated verbatim and are often useful in filters). Read the description of [index attributes](https://docs.microsoft.com/en-us/rest/api/searchservice/create-index#bkmk_indexAttrib) for more information.
 
 10. Select **Next: Create an indexer**.
 
 11. On the **Create an indexer** tab, set the following:
 
     - **Name**: Enter **tweet-indexer**.
-    - **Schedule**: Select **Custom**, and enter **5** into the **Interval (minutes)** field.
+    - **Schedule**: Select **Custom**
+    - **Interval (minutes)**: Enter **5**.
+    - **Start time**: Leave the default date and time values.
 
     ![The Create an indexer tab is displayed, with the settings specified above entered into the form.](media/cosmos-db-add-azure-search-create-indexer.png "Create an indexer")
 
@@ -189,38 +209,79 @@ With data now streaming into your Cosmos DB `tweets` collection, you are ready t
 
     ![The Search button is highlighted on the Azure Search Index blade.](media/azure-search-index-search.png "Search")
 
-18. Looking at the items in the search results, you will see that they are resemble the following:
+18. Looking at the items in the search results, you will see that each result resembles the following:
 
     ```json
     {
       "@search.score": 1,
-      "created_at": "3/7/2019 6:11:28 PM",
-      "id_str": "707132469",
-      "text": "@ContosoAuto Thank you for the amazing service at the Phoenix, AZ service center #Tesla #Model3",
-      "id": "d9f80431-a1da-4cb8-84d8-093e9bdf9a8b",
-      "rid": "YmpnZEFKMUhibTAtQUFBQUFBQUFBQT090",
+      "created_at": "2019-06-09T18:34:23.335Z",
+      "id_str": "988777959",
+      "text": "@ContosoAuto Mi 2019 #Toyota #Tundra es el mejor auto de todos!",
+      "id": "dc26f05e-1c09-4da7-b705-65a9c20d8865",
+      "rid": "ZTR0eEFKdXRIZklIQUFBQUFBQUFBQT090",
       "people": [],
-      "organizations": [],
-      "locations": ["Phoenix", "AZ"],
-      "keyphrases": [
-        "amazing service",
-        "AZ service center",
-        "Phoenix",
-        "Tesla"
+      "organizations": [
+        "Toyota"
       ],
-      "language": "en"
+      "locations": [
+        "Tundra"
+      ],
+      "keyphrases": [
+        "Tundra",
+        "Toyota",
+        "mejor auto",
+        "ContosoAuto"
+      ],
+      "language": "es",
+      "user": {
+        "id": 962792147,
+        "id_str": "991150723",
+        "name": "Max Luikart",
+        "screen_name": "MaxLuikart",
+        "location": "San Diego, CA",
+        "url": "",
+        "description": ""
+      },
+      "entities": {
+        "symbols": [],
+        "urls": [],
+        "hashtags": [
+          {
+            "indices": null,
+            "text": "Toyota"
+          },
+          {
+            "indices": null,
+            "text": "Tundra"
+          }
+        ],
+        "user_mentions": [
+          {
+            "id": 2244994945,
+            "id_str": "2244994945",
+            "indices": [
+                0,
+                12
+            ],
+            "name": "Contoso Auto",
+            "screen_name": "ContosoAuto"
+          }
+        ]
+      }
     }
     ```
 
-    > You may notice that several of the fields available in the `tweet` documents stored in Cosmos DB are not in the search result JSON object. For example, the `user` entity, which is a child object of a `tweet`, is not available to add to your search index when using the UI. To leverage the full capabilities of Cognitive Search in Azure, you will need to use the REST APIs. To learn more about using the REST API and how to use them for building a more robust Cognitive Search pipeline, you can review the [Azure Search Service REST API documentation](https://docs.microsoft.com/en-us/rest/api/searchservice/).
+    > TODO: Add short discussion about the result documents, and the cognitive search components, e.g., people, organizations, locations, and key phrases...
 
 ## Task 3: Enhance the Cognitive Search pipeline
 
 In the previous task, you created the beginnings of your Cognitive Search pipeline when you added Cognitive Skills for extracting people, organization and location names, key phrases and for detecting the primary language. In this task, you will enhance your Cognitive Search pipeline using functionality available only through the [Azure Search Service REST APIs](https://docs.microsoft.com/en-us/rest/api/searchservice/).
 
-1. First, you will run a simple Visual Studio console application, `PipelineEnhancer`, which will make calls to the Azure Search Service REST APIs to update your Skillset, Index, and Indexer to accommodate the a new field named `sentiment`.
+> TODO: Switch this to just run as a console app, launched via an EXE. Still update the `appsettings.json` to put all the settings in place. Need to add in settings for Personalizer.
 
-2. To prepare the console application, you need to update the `appsettings.json` file for the project in information about your search service. Return to Visual Studio, and open the `appsettings.json` file located under the `PipelineEnhanceer` project.
+1. You will use a console application, `PipelineEnhancer`, running from Visual Studio to make calls to the Azure Search Service REST APIs to update your Skillset, Index, and Indexer with the enhancements.
+
+2. To prepare the console application, you need to update the `appsettings.json` file for the project in information about your search service. Return to Visual Studio, and open the `appsettings.json` file located under the `PipelineEnhancer` project.
 
    ![`appsettings.json` is highlighted under the PipelineEnhancer solution.](media/visual-studio-solution-explorer-pipeline-enhancer.png "Solution explorer")
 
@@ -284,6 +345,8 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
     "COGNITIVE_SERVICES_KEY": "872353ecac8d43a7bf5a60c3ece9ff4a"
     ```
 
+> TODO: Insert steps for getting the Personalizer Cognitive Service URL and Key.
+
 14. The final settings you need to retrieve are those for your Azure Function App. In the Azure portal, navigate to your **ti-function-day2-XXXXX** Function App (where XXXXX is the unique identifier assigned to you for this workshop), and copy the **URL** on the Overview blade.
 
     ![The URL field is highlighted on the overview blade of the Function App.](media/function-app-url.png "Function App")
@@ -307,6 +370,8 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
     ```json
     "AZURE_FUNCTION_APP_DEFAULT_HOST_KEY": "IMsboDWGI9brkZHFpL8aFCVxuPVLnVAr6l6f2D6eqlLZ511MK50JbQ=="
     ```
+
+> TODO: Update screen shot to one that includes the Personalizer settings.
 
 19. Save `appsettings.json`. The file should now look like the following.
 
@@ -373,23 +438,66 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
     ```json
     {
       "@search.score": 1,
-      "text": "@ContosoAuto Thank you for the amazing service at the Phoenix, AZ service center #Tesla #Model3",
-      "rid": "YmpnZEFKMUhibTAtQUFBQUFBQUFBQT090",
+      "created_at": "2019-06-09T18:34:23.335Z",
+      "id_str": "988777959",
+      "id": "dc26f05e-1c09-4da7-b705-65a9c20d8865",
+      "text": "@ContosoAuto Mi 2019 #Toyota #Tundra es el mejor auto de todos!",
+      "rid": "ZTR0eEFKdXRIZklIQUFBQUFBQUFBQT090",
       "people": [],
-      "organizations": [],
-      "locations": ["Phoenix", "AZ"],
-      "keyphrases": [
-        "amazing service",
-        "AZ service center",
-        "Phoenix",
-        "Tesla"
+      "organizations": [
+        "Toyota"
       ],
-      "language": "en",
-      "sentiment": 0.994744300842285
+      "locations": [
+        "Mi"
+      ],
+      "keyphrases": [
+        "Tundra es",
+        "Toyota",
+        "mejor",
+        "ContosoAuto Mi",
+        "todos"
+      ],
+      "language": "es",
+      "sentiment": 0.5,
+      "user": {
+        "id": 962792147,
+        "id_str": "991150723",
+        "name": "Max Luikart",
+        "screen_name": "MaxLuikart",
+        "location": "San Diego, CA",
+        "url": "",
+        "description": ""
+      },
+      "entities": {
+        "symbols": [],
+        "urls": [],
+        "hashtags": [
+          {
+            "indices": null,
+            "text": "Toyota"
+          },
+          {
+            "indices": null,
+            "text": "Tundra"
+          }
+        ],
+        "user_mentions": [
+          {
+            "id": 2244994945,
+            "id_str": "2244994945",
+            "indices": [
+              0,
+              12
+            ],
+            "name": "Contoso Auto",
+            "screen_name": "ContosoAuto"
+          }
+        ]
+      }
     }
     ```
 
-    > Notice the addition of the `sentiment` field to the bottom of the record. The value contained in this field is a numeric prediction made by a machine learning model about the sentiment of the contents of the `text` field in the tweet. Scores range from 0 to 1. Scores close to 1 indicate positive sentiment, and scores close to 0 indicate negative sentiment. Scores in the middle are considered to be neutral in the expression of sentiment. In the record above, the sentiment was determined to be very positive by the ML model.
+    > Notice the addition of the `sentiment` field in the results. The value contained in this field is a numeric prediction made by a machine learning model about the sentiment of the contents of the `text` field in the tweet. Scores range from 0 to 1. Scores close to 1 indicate positive sentiment, and scores close to 0 indicate negative sentiment. Scores in the middle are considered to be neutral in the expression of sentiment. In the record above, the sentiment was determined to be neutral, 0.5, by the ML model.
 
 29. Next, let's move on to adding user information from tweets to our search results. To accomplish this, you will use the [delete index](https://docs.microsoft.com/en-us/rest/api/searchservice/delete-index) and [delete indexer](https://docs.microsoft.com/en-us/rest/api/searchservice/delete-indexer) APIs to drop the index and indexer, and then use the [create index](https://docs.microsoft.com/en-us/rest/api/searchservice/create-index) and [create indexer](https://docs.microsoft.com/en-us/rest/api/searchservice/create-indexer) APIs to recreate them with a few fields added which point to the `user` object in the JSON tweet documents in Cosmos DB.
 

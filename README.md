@@ -1,16 +1,18 @@
 # Tech Immersion Mega Data & AI Workshop
 
 ## Setup: Connecting to your VM with Remote Desktop
-When setting up a cloud infrastructure, it's a good idea to create a VM where you can install all of the tools and applications you need to manage your environment.  This is called a jumpbox.  A jumpbox has been created for you.  In order to use it, you need to open Remote Desktop Connection.
-	
+
+When setting up a cloud infrastructure, it's a good idea to create a VM where you can install all of the tools and applications you need to manage your environment. This is called a jumpbox. A jumpbox has been created for you. In order to use it, you need to open Remote Desktop Connection.
+
 You will need three pieces of information:
+
 - Jump VM DNS Name
 - VM Admin User Name
-- VM Admin Password 
-	
-Start Remote Desktop and enter the Jump DNS Name as the computer name.  When you are asked to enter your credentials, click "More Choices".  Click "Use a different account".
+- VM Admin Password
 
-In the user name box, enter your VM Admin User Name.  Enter your VM Admin Password as the password.  Click "Connect".  When the warning comes up, click "Yes."  You are now connected to your jumpbox and can continue with each individual experience.
+Start Remote Desktop and enter the Jump DNS Name as the computer name. When you are asked to enter your credentials, click "More Choices". Click "Use a different account".
+
+In the user name box, enter your VM Admin User Name. Enter your VM Admin Password as the password. Click "Connect". When the warning comes up, click "Yes." You are now connected to your jumpbox and can continue with each individual experience.
 
 ## Day 1: Data-focused
 
@@ -38,7 +40,7 @@ In the user name box, enter your VM Admin User Name.  Enter your VM Admin Passwo
 
 - **Day 2, Experience 2** - [Yield quick insights from unstructured data with Knowledge Mining and Cognitive Services](./day2-exp2/README.md)
 
-  Show how building a cognitive search pipeline using Cognitive Services and Knowledge Mining can yield quick insights on unstructured data. Cognitive search is an AI feature in Azure Search, used to extract text from images, blobs, and other unstructured data sources - enriching the content to make it more searchable in an Azure Search index. Attendees will create a cognitive search pipeline in Azure Search, using Cosmos DB as a data source, and applying pre-configured and custom cognitive skills to enrich the data in the indexing pipeline.
+  Highlight how building a cognitive search pipeline using Cognitive Services and Knowledge Mining can yield quick insights into unstructured data. Cognitive search is an AI feature in Azure Search, used to extract text from images, blobs, and other unstructured data sources - enriching the content to make it more searchable in an Azure Search index. Attendees will create a cognitive search pipeline in Azure Search, using Cosmos DB and an Azure Storage account as data sources, and apply pre-configured and custom cognitive skills to enrich the data in the indexing pipeline.
 
 - **Day 2, Experience 3** - [Better models made easy with Automated Machine Learning](./day2-exp3/README.md)
 

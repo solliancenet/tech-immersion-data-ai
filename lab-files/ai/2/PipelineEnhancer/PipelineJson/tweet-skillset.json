@@ -1,0 +1,100 @@
+{
+  "description": "basic text skillset",
+  "skills": [
+    {
+      "@odata.type": "#Microsoft.Skills.Text.EntityRecognitionSkill",
+      "description": null,
+      "context": "/document/text",
+      "categories": [
+        "Person",
+        "Quantity",
+        "Organization",
+        "URL",
+        "Email",
+        "Location",
+        "DateTime"
+      ],
+      "defaultLanguageCode": "en",
+      "minimumPrecision": null,
+      "includeTypelessEntities": null,
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/text",
+          "sourceContext": null,
+          "inputs": []
+        },
+        {
+          "name": "languageCode",
+          "source": "/document/language",
+          "sourceContext": null,
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "persons",
+          "targetName": "people"
+        },
+        {
+          "name": "organizations",
+          "targetName": "organizations"
+        },
+        {
+          "name": "locations",
+          "targetName": "locations"
+        },
+        {
+          "name": "entities",
+          "targetName": "entities"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+      "description": null,
+      "context": "/document/text",
+      "defaultLanguageCode": "en",
+      "maxKeyPhraseCount": null,
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/text",
+          "sourceContext": null,
+          "inputs": []
+        },
+        {
+          "name": "languageCode",
+          "source": "/document/language",
+          "sourceContext": null,
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "keyPhrases",
+          "targetName": "keyphrases"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+      "description": null,
+      "context": "/document",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/text",
+          "sourceContext": null,
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "languageCode",
+          "targetName": "language"
+        }
+      ]
+    }
+  ]
+}
