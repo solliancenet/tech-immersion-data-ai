@@ -90,15 +90,14 @@ If you have not already created the `connected-car` project in Azure Notebooks f
 
 ## Wrap-up
 
-Congratulations on completing the experience ...
+Congratulations on completing the Azure Machine Learning pipelines experience.
 
 To recap, you experienced:
 
-1. Using [Keras](https://keras.io/) to create and train a deep learning model for classifying text data on a GPU enabled cluster provided by Azure Machine Learning.
-2. Converting the Keras model to an ONNX model.
-3. Using the ONNX model to classify text data.
-4. Creating and deploying a web service to [Azure Container Instances](https://docs.microsoft.com/azure/container-instances/) that uses the ONNX model for classification.
+1. Defining the steps for a pipeline that include data preprocessing, model training and model inferencing.
+2. Understanding how outputs are shared between steps in a pipeline.
+3. Scheduling an inferencing pipeline to execute on a scheduled basis.
 
 ## Additional resources and more information
 
-To learn more about the Azure Machine Learning service, visit the [documentation](https://docs.microsoft.com/azure/machine-learning/service)
+To learn more about the Azure Machine Learning service pipelines, visit the [documentation](https://docs.microsoft.com/en-us/azure/machine-learning/service/concept-ml-pipelines)
