@@ -12,10 +12,11 @@
     - [Task 1: Create an automated machine learning experiment using the Portal](#task-1-create-an-automated-machine-learning-experiment-using-the-portal)
     - [Task 2: Review the experiment run results](#task-2-review-the-experiment-run-results)
     - [Task 3: Register the Best Model](#task-3-register-the-best-model)
-  - [Exercise 2: Understanding the automated ML generated forecast model using model explainability](#exercise-2-understanding-the-automated-ml-generated-forecast-model-using-model-explainability)
-  - [Task 1: Create the Azure Notebooks project](#task-1-create-the-azure-notebooks-project)
-  - [Task 2: Upload the starter notebook](#task-2-upload-the-starter-notebook)
-  - [Task 3: Train and evaluate a model using Azure Machine Learning](#task-3-train-and-evaluate-a-model-using-azure-machine-learning)
+  - [Exercise 2: Understanding the automated ML generated model using model explainability](#exercise-2-understanding-the-automated-ml-generated-model-using-model-explainability)
+    - [Task 1: Create the Azure Notebooks project](#task-1-create-the-azure-notebooks-project)
+    - [Task 2: Upload the starter notebook](#task-2-upload-the-starter-notebook)
+  - [Exercise 3 (Optional): Train and evaluate a model using Azure Machine Learning](#exercise-3-optional-train-and-evaluate-a-model-using-azure-machine-learning)
+    - [Task 1: Upload and open the starter notebook](#task-1-upload-and-open-the-starter-notebook)
   - [Wrap-up](#wrap-up)
   - [Additional resources and more information](#additional-resources-and-more-information)
 
@@ -104,9 +105,9 @@ In this exercise, you will create a model that predicts battery failure from tim
 
 4. If you see your model in the above list, you are now ready to continue on to the next exercise.
 
-## Exercise 2: Understanding the automated ML generated forecast model using model explainability 
+## Exercise 2: Understanding the automated ML generated model using model explainability 
 
-## Task 1: Create the Azure Notebooks project
+### Task 1: Create the Azure Notebooks project
 
 To complete this task, you will use an Azure Notebook and Azure Machine Learning. 
 
@@ -130,7 +131,7 @@ If you have not already created the `connected-car` project in Azure Notebooks f
 
     ![The Create New Project dialog](media/04.png 'Create New Project')
 
-## Task 2: Upload the starter notebook
+### Task 2: Upload the starter notebook
 
 1. Navigate to your `connected-car` project in your Azure Notebook environment. 
 
@@ -151,33 +152,19 @@ If you have not already created the `connected-car` project in Azure Notebooks f
 9. Follow the instructions within the notebook to complete the experience.
 
 
-## Task 3: Train and evaluate a model using Azure Machine Learning
+## Exercise 3 (Optional): Train and evaluate a model using Azure Machine Learning 
 
-In this exercise, you will use compute resources provided by Azure Machine Learning to remotely train a set of models using Automated Machine Learning, evaluate performance of each model and pick the best performing model to deploy as a web service. You will perform this lab using Azure Notebooks.
+### Task 1: Upload and open the starter notebook
 
-1. To start, open a new web browser window and navigate to <https://notebooks.azure.com>.
+In this exercise, you will use compute resources provided by Azure Machine Learning to remotely train a set of models using Automated Machine Learning, evaluate performance of each model and pick the best performing model to deploy as a web service. You will perform this lab using Azure Notebooks. The model you train here is created using automated machine learning just as you did in exercise 1, except instead of using the visual interface in the Azure Portal you setup the model training using Python.
 
-2. Select **Sign In** and then use your Microsoft Account to complete the sign in process.
+1. Navigate to your `connected-car` project in your Azure Notebook environment. 
 
-    ![The Sign In button](media/01.png 'Sign In')
-
-3. Dismiss the dialog to create the user ID (you will not need this). Within the Microsoft Azure Notebooks portal, select **My Projects** from the menu at the top.
-
-    ![The My Projects button](media/02.png 'My Projects')
-
-4. Then select **New Project**.
-
-    ![The New Project button](media/03.png 'New Project')
-
-5. On the Create New Project dialog, provide a Project Name (this should be a user friendly description) and Project ID (this will form a part of the URL used to access this project in the browser) and uncheck Public. Select **Create**.
-
-    ![The Create New Project dialog](media/04.png 'Create New Project')
-
-6. Select the **Upload** menu and then choose **From URL**.
+2. Select the **Upload** menu and then choose **From URL**.
 
     ![The Upload menu](media/05.png 'Upload')
 
-7. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
+3. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
 
     https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/3/predict-battery-life-with-AML.ipynb
    
@@ -185,24 +172,23 @@ In this exercise, you will use compute resources provided by Azure Machine Learn
 
     ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
-8.  In the listing, select the Notebook you just uploaded (predict-battery-life-with-AML.ipynb) to open it.
+4. In the listing, select the Notebook you just uploaded (predict-battery-life-with-AML.ipynb) to open it.
 
-    ![Select the notebook](media/07.png 'Select the notebook')
+5.  Follow the instructions within the notebook to complete the experience.
 
-9.  Follow the instructions within the notebook to complete the experience.
 
 ## Wrap-up
 
-Congratulations on completing the Auto ML experience. In this experience you completed an end-to-end process for training a model and deploying the model into production, all from within a Jupyter Notebook hosted in Microsoft Azure Notebooks.  
+Congratulations on completing the Auto ML experience. 
 
 To recap, you experienced:
 
-1. How to use Azure Machine Learning Auto ML to simplify the processs of getting to a performant model.
-2. Using Auto ML to train multiple models locally as well by using remote capabilities provided by compute targets.
+1. How to use automated machine learning from the Azure Machine Learning workspace to simplify the process of getting to a performant model.
+2. Using Auto ML to train multiple models by using remote capabilities provided by compute targets.
 3. Capturing and querying the telemetry of training runs using an Experiment.
 4. Retrieving the best model created from an Auto ML session.
 5. Registering the best model with the Model Registry, which enables versioning and makes the model file available for deployment to a web service.
-6. Creating and deploying a web service to Azure Kubernetes Service that uses the best model for scoring.
+6. Understanding the model using the model interpretability features of the Azure Machine Learning Python SDK.
 
 ## Additional resources and more information
 
