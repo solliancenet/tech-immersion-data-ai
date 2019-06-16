@@ -342,7 +342,7 @@ With tiering, applications can seamlessly access data in a variety of external s
     b.  The user name is admin
     c.  The password is MySQLBigData2019
 
-4. Create an empty text file named file.creds in your temp folder on the c:\ drive.  Add this line as the contents:
+4. Create an empty text file named filename.creds in your temp folder on the c:\ drive.  Add this line as the contents:
 
 fs.azure.abfs.account.name=ikedatabricks.dfs.core.windows.net
 fs.azure.account.key.ikedatabricks.dfs.core.windows.net=HUYPk/VUjdYzkCvrKXTgFBObt5VQcp5DCY7C9KiSHX42lv65mjmBFmKFVTLy7Z7suQ0WV44mncuUOvnE8NkxGg==
@@ -350,7 +350,7 @@ fs.azure.account.key.ikedatabricks.dfs.core.windows.net=HUYPk/VUjdYzkCvrKXTgFBOb
 5. In PowerShell, type the following command to mount the drive
 
     ```powershell
-        mssqlctl cluster storage-pool mount create --remote-uri abfs://databricksfiels@ikedatabricks.dfs.core.windows.net/ --mount-path   /mounts/dbfiles --credential-file c:\temp\file.creds
+        mssqlctl cluster storage-pool mount create --remote-uri abfs://databricksfiles@ikedatabricks.dfs.core.windows.net/ --mount-path   /mounts/dbfiles --credential-file c:\temp\filename.creds
     ```
 5.  Once the storage account has been mounted, you can check the status:
 
