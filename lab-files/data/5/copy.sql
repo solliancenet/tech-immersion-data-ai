@@ -1,0 +1,8 @@
+ \COPY events(customer_id,event_type,country,browser,device_id,session_id) FROM data/3.csv WITH (FORMAT CSV,HEADER TRUE)
+ \COPY events(customer_id,event_type,country,browser,device_id,session_id) FROM data/4.csv WITH (FORMAT CSV,HEADER TRUE)
+ \COPY events(customer_id,event_type,country,browser,device_id,session_id) FROM data/5.csv WITH (FORMAT CSV,HEADER TRUE)
+ \COPY events(customer_id,event_type,country,browser,device_id,session_id) FROM data/6.csv WITH (FORMAT CSV,HEADER TRUE)
+ \COPY events(customer_id,event_type,country,browser,device_id,session_id) FROM data/7.csv WITH (FORMAT CSV,HEADER TRUE)
+ \COPY events(customer_id,event_type,country,browser,device_id,session_id) FROM data/8.csv WITH (FORMAT CSV,HEADER TRUE)
+ \COPY events(customer_id,event_type,country,browser,device_id,session_id) FROM data/9.csv WITH (FORMAT CSV,HEADER TRUE)
+ \COPY events(customer_id,event_type,country,browser,device_id,session_id) FROM data/10.csv WITH (FORMAT CSV,HEADER TRUE)
