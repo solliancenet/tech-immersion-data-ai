@@ -4,23 +4,22 @@ Complete the steps below to deploy and configure SQL Server 2019 for the [Day 1,
 
 ## Pre-requisites
 
-
-  - Expect event to have one SQL Big Data Cluster pre-provisioned
-  - Output of `deploy-sql-big-data-aks.py` script needs to be captured and processed to acquire SQL Server master instance IP/port and the HDFS/KNOX IP/port.
-  - The following databases are used:
-    - `ContosoAutoDW` - one instance of this database to be used for all attendees on the cluster. Attendees will need full permissions on this database (?).
-    - `sales` - multiple instances of this database, one instance for each attendee, each attendee has full permissions. (?)
-      - Permissions needed to create external tables:
-        CREATE TABLE
-        ALTER ANY SCHEMA
-        ALTER ANY EXTERNAL DATA SOURCE
-        ALTER ANY EXTERNAL FILE FORMAT
-        CONTROL DATABASE
-    - `CA_Commerce` - one instance of this Azure SQL Database needs to be deployed for all attendees. Attendees should only have read-only access to the `Reviews` table.
-  - The following data needs to be pre-loaded on HDFS:
-    - `data/stockitemholdings.csv` 
-    - `data/training-formatted.csv`
-    - `data/fleet-formatted.csv`
+- Expect event to have one SQL Big Data Cluster pre-provisioned
+- Output of `deploy-sql-big-data-aks.py` script needs to be captured and processed to acquire SQL Server master instance IP/port and the HDFS/KNOX IP/port.
+- The following databases are used:
+  - `ContosoAutoDW` - one instance of this database to be used for all attendees on the cluster. Attendees will need full permissions on this database (?).
+  - `sales` - multiple instances of this database, one instance for each attendee, each attendee has full permissions. (?)
+    - Permissions needed to create external tables:
+      CREATE TABLE
+      ALTER ANY SCHEMA
+      ALTER ANY EXTERNAL DATA SOURCE
+      ALTER ANY EXTERNAL FILE FORMAT
+      CONTROL DATABASE
+  - `CA_Commerce` - one instance of this Azure SQL Database needs to be deployed for all attendees. Attendees should only have read-only access to the `Reviews` table.
+- The following data needs to be pre-loaded on HDFS:
+  - `data/stockitemholdings.csv`
+  - `data/training-formatted.csv`
+  - `data/fleet-formatted.csv`
 
 The computer or VM on which you run the scripts to deploy the cluster and restore the databases requires the following:
 
@@ -91,10 +90,10 @@ Open PowerShell and execute the following to deploy the clusters in preparation 
     Example:
 
     - SQL Server master instance:
-        - IP
-          - 52.179.172.24
-        - PORT
-          - 31433
+      - IP
+        - 52.179.172.24
+      - PORT
+        - 31433
     - HDFS/KNOX:
       - IP
         - 52.167.114.239
@@ -113,7 +112,7 @@ Open PowerShell and execute the following to deploy the clusters in preparation 
     ./bootstrap-sample-db.sh sqlbigdata2019 52.179.172.24 MySQLBigData2019 ./ 52.167.114.239
     ```
 
-    > **Note:** the `tpcxbb_1gb.bak` file must be copied to the folder where the script is located before running.
+    > **Note:** the `tpcxbb_1gb.bak` file must be copied to the folder where the script is located before running. You can **download the database** [here](https://databricksdemostore.blob.core.windows.net/data/contoso-auto/tpcxbb_1gb.bak).
 
 6.  Execute the following to upload and restore the ContosoAutoDW database:
 
@@ -127,7 +126,7 @@ Open PowerShell and execute the following to deploy the clusters in preparation 
     ./bootstrap-sample-db_ContosoAutoDW.sh sqlbigdata2019 52.179.172.24 MySQLBigData2019 ./ 52.167.114.239
     ```
 
-    > **Note:** the `ContosoAutoDW.bak` file must be copied to the folder where the script is located before running.
+    > **Note:** the `ContosoAutoDW.bak` file must be copied to the folder where the script is located before running. You can **download the database** [here](https://databricksdemostore.blob.core.windows.net/data/contoso-auto/ContosoAutoDW.bak).
 
 ## Post-deployment
 
@@ -355,7 +354,7 @@ Upload required lab files to HDFS within the provisioned big data cluster.
 
 1.  Within Azure Data Studio, scroll down below the list of SQL Server 2019 databases to find the **Data Services** folder. Expand that folder, then expand the **HDFS** sub-folder. **Right-click on HDFS**, then select **New directory** on the context menu.
 
-    ![The HDFS folder and New directory menu items are highlighted.](../../../day1-exp1/media/ads-new-directory-link.png "New directory")
+    ![The HDFS folder and New directory menu items are highlighted.](../../../day1-exp1/media/ads-new-directory-link.png 'New directory')
 
 2.  In the new dialog that appears, type "data", then press Enter on your keyboard.
 
@@ -377,7 +376,7 @@ This needs to be done from each user's jump box. It is required for the Python l
 
 1.  Within Azure Data Studio, right-click on the connection (1) then select **Manage** (2). Select the **SQL Server Big Data Cluster** tab (3). Select **New Notebook** (4).
 
-     ![New Notebook.](../../../day1-exp1/media/ads-new-notebook.png 'New Notebook')
+    ![New Notebook.](../../../day1-exp1/media/ads-new-notebook.png 'New Notebook')
 
 2.  When prompted, select the option to install the required Python libraries to the default location.
 

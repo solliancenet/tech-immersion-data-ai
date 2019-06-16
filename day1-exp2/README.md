@@ -20,7 +20,7 @@
   - [Task 6: View published functions](#task-6-view-published-functions)
   - [Task 7: View output from functions in App Insights](#task-7-view-output-from-functions-in-app-insights)
   - [Task 8: Create Power BI dashboard](#task-8-create-power-bi-dashboard)
-  - [Task 9: View anomaly data in Cosmos DB](#task-9-view-anomaly-data-in-cosmos-db)
+  - [Task 9: View aggregate data in Cosmos DB](#task-9-view-aggregate-data-in-cosmos-db)
   - [Wrap-up](#wrap-up)
   - [Additional resources and more information](#additional-resources-and-more-information)
 
@@ -397,6 +397,16 @@ In this task, you will configure Stream Analytics to use the event hub you creat
                 a.averageSpeed >= 55 then 1 else 0 end) as aggressivedriving
         from eventhub t TIMESTAMP BY [timestamp]
         INNER JOIN Averages a ON DATEDIFF(second, t, a) BETWEEN 0 And 2
+    ),
+    VehicleAverages AS (
+        select
+            AVG(engineTemperature) averageEngineTemperature,
+            AVG(speed) averageSpeed,
+            System.TimeStamp() as snapshot
+        FROM
+            eventhub TIMESTAMP BY [timestamp]
+        GROUP BY
+            TumblingWindow(Duration(minute, 2))
     )
     -- INSERT INTO POWER BI
     SELECT
@@ -409,12 +419,12 @@ In this task, you will configure Stream Analytics to use the event hub you creat
     -- INSERT INTO COSMOS DB
     SELECT
         *,
-        collectionType = 'Anomaly'
+        vin = 'ALL',
+        collectionType = 'VehicleAverage'
     INTO
         cosmosDB
     FROM
-        Anomalies
-    where aggressivedriving = 1 OR enginetempanomaly = 1 OR oilanomaly = 1
+        VehicleAverages
     ```
 
     ![The query above has been inserted into the Query window.](media/stream-analytics-query.png 'Query window')
@@ -427,7 +437,7 @@ In this task, you will configure Stream Analytics to use the event hub you creat
 
     c. **aggressivedriving**: When the transmission gear position is in first, second, or third, and the brake pedal status is 1, the accelerator pedal position \>= 90, and the average speed is \>= 55.
 
-    Finally, the query outputs all fields from the anomalies step into the `powerBIAlerts` output where aggressivedriving = 1 or enginetempanomaly = 1 or oilanomaly = 1. The query also outputs these fields to the `cosmosDB` output, setting the `collectionType` value to "Anomaly". We set the `collectionType` value because the Cosmos DB container does not enforce a schema and can store any type of entity. Setting a field such as `collectionType` makes it easier for us to filter results by the type of entity we want to return.
+    The query outputs all fields from the anomalies step into the `powerBIAlerts` output where aggressivedriving = 1 or enginetempanomaly = 1 or oilanomaly = 1 for reporting. The query also aggregates the average engine temperature and speed of all vehicles over the past two minutes, using `TumblingWindow(Duration(minute, 2))`, and outputs these fields to the `cosmosDB` output, setting the `collectionType` value to "VehicleAverage". We set the `collectionType` value because the Cosmos DB container does not enforce a schema and can store any type of entity. Setting a field such as `collectionType` makes it easier for us to filter results by the type of entity we want to return.
 
 20. Select **Save** in the top toolbar when you are finished updating the query.
 
@@ -760,9 +770,9 @@ In this task, you will use Power BI to create a report showing captured vehicle 
 
     ![The live dashboard view.](media/pbi-dashboard.png 'Dashboard')
 
-## Task 9: View anomaly data in Cosmos DB
+## Task 9: View aggregate data in Cosmos DB
 
-As you recall, when you created the query in Stream Analytics, anomaly data output to both Power BI and Cosmos DB. This means that the detected anomaly data was saved back to the same Cosmos DB container in which the live vehicle telemetry data was being saved. This demonstrates the ability for Cosmos DB to handle ingesting streaming data at the same time as saving report data, and saving different entity types within the same container.
+As you recall, when you created the query in Stream Analytics, you aggregated the engine temperature and vehicle speed data over two-minute intervals and saved the document to Cosmos DB. This means that the aggregate data was saved back to the same Cosmos DB container in which the live vehicle telemetry data was being saved. This demonstrates the ability for Cosmos DB to handle ingesting streaming data at the same time as saving report data, and saving different entity types within the same container.
 
 In this task, you will view the anomaly data within Cosmos DB.
 
@@ -790,9 +800,9 @@ In this task, you will view the anomaly data within Cosmos DB.
 
    ![The filter is shown.](media/cosmos-db-apply-filter.png 'Filter')
 
-8. Select a document from the list. Notice that it contains a `collectionType` value of "Anomaly", and either `enginetempanomaly`, `oilanomaly`, or `aggressivedriving` have a value equal to 1 (true).
+8. Select a document from the list. Notice that it contains a `collectionType` value of "VehicleAverage", and the aggregate data stored in `averageEngineTemperature` and `averageSpeed`. The `snapshot` value changes in two-minute intervals between these documents. Right now, we're setting `vin` to "ALL" since it is our partition key and these aggregates are for all vehicles, but we could easily store these aggregates by vehicle, setting this value to each vehicle's VIN if we needed that level of granularity.
 
-   ![An anomaly document is displayed.](media/cosmos-db-anomaly-document.png 'Data Explorer')
+   ![An anomaly document is displayed.](media/cosmos-db-vehicleaverage-document.png 'Data Explorer')
 
 ## Wrap-up
 
@@ -804,6 +814,7 @@ To recap, you experienced:
 - Processing data as it is saved to Cosmos DB through the use of Azure functions, with the convenience of the Cosmos DB trigger to reduce code and automatically handle kicking off the processing logic as data arrives.
 - Using multiple regions in Cosmos DB, and processing the change feed of a specific region from an Azure function.
 - Ingesting processed data with Event Hubs and querying and reshaping that data with Azure Stream Analytics, then sending it to Power BI for reporting.
+- Storing aggregate data back to Cosmos DB from Stream Analytics, demonstrating a Cosmos DB container's ability to store entities of different types.
 - Rapidly creating a real-time dashboard in Power BI with interesting visualizations to view and explore vehicle anomaly data.
 
 ## Additional resources and more information

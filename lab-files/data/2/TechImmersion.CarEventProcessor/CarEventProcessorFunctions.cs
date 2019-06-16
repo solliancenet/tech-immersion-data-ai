@@ -8,6 +8,7 @@ using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using TechImmersion.CarEventProcessor.Helpers;
+using TechImmersion.Common;
 using TechImmersion.Common.Models;
 
 namespace TechImmersion.CarEventProcessor
@@ -57,6 +58,7 @@ namespace TechImmersion.CarEventProcessor
                 {
                     if (carData != null)
                     {
+                        if (!IsTelemetryData(carData)) continue; // Skip if this document is not telemetry data.
                         var carEventData = await carData.ReadAsAsync<CarEvent>();
                         await telemetryProcessing.ProcessEvent(carEventData,
                             _cityRegionMap, eventHubOutput);
@@ -112,6 +114,7 @@ namespace TechImmersion.CarEventProcessor
                 {
                     if (carData != null)
                     {
+                        if (!IsTelemetryData(carData)) continue; // Skip if this document is not telemetry data.
                         var carEventData = await carData.ReadAsAsync<CarEvent>();
                         await telemetryProcessing.ProcessEvent(carEventData,
                             _cityRegionMap, eventHubOutput);
@@ -124,6 +127,11 @@ namespace TechImmersion.CarEventProcessor
             }
             // Perform a final flush to send all remaining events in a batch.
             await eventHubOutput.FlushAsync();
+        }
+
+        private static bool IsTelemetryData(Document carData)
+        {
+            return carData.GetPropertyValue<string>("collectionType").ToLower() == "telemetry";
         }
     }
 }
