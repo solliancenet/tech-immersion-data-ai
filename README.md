@@ -42,7 +42,7 @@ In the user name box, enter your VM Admin User Name.  Enter your VM Admin Passwo
 
 - **Day 2, Experience 3** - [Better models made easy with Automated Machine Learning](./day2-exp3/README.md)
 
-  Show how automated ML capability in Azure Machine Learning can be used for Life Cycle Management of the manufactured vehicles and how AML helps in creation of better vehicle maintenance plans. Attendees will train a Linear Regression model to predict the number of days until battery failure using Automated Machine Learning in Jupyter Notebooks.
+  Show how automated ML capability in Azure Machine Learning can be used for Life Cycle Management of the manufactured vehicles and how AML helps in creation of better vehicle maintenance plans. Attendees will train a Linear Regression model to predict the number of days until battery failure using Automated Machine Learning the visual interface from the Azure Portal and optionally from within Jupyter Notebooks. They will also use the model interpretability features of the Azure Machine Learning Python SDK to understand which features have the greatest impact on the model's predictions.
 
 - **Day 2, Experience 4** - [Creating repeatable processes with Azure Machine Learning pipelines](./day2-exp4/README.md)
 
