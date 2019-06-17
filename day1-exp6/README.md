@@ -8,6 +8,7 @@
   - [Day 1, Experience 6 - Simplifying data flows with Azure Data Factory](#day-1-experience-6---simplifying-data-flows-with-azure-data-factory)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
+  - [Exercise 1: Using ADF Mapping Data Flows to visually configure data transformation pipelines](#exercise-1-using-adf-mapping-data-flows-to-visually-configure-data-transformation-pipelines)
     - [Task 1: Create the data flow](#task-1-create-the-data-flow)
     - [Task 2: Previewing the trip data](#task-2-previewing-the-trip-data)
     - [Task 3: Configuring the tripfare data source](#task-3-configuring-the-tripfare-data-source)
@@ -33,7 +34,7 @@ Like many organizations, ContosoAuto generates data from numerous system, each o
 
 In this experience, ​​you will see how you can use the capabilities of Azure Data Factory (ADF) to visually create data flows that read, transform and write data, perform data wrangling or data exploration with no code. 
 
-##Exercise 1: Using ADF Mapping Data Flows to visually configure data transformation pipelines
+## Exercise 1: Using ADF Mapping Data Flows to visually configure data transformation pipelines
 
 ###  Task 1: Create the data flow
 
