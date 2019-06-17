@@ -1,0 +1,18 @@
+{
+    "name": "tweets-cosmosdb",
+    "description": null,
+    "type": "cosmosdb",
+    "subtype": null,
+    "credentials": {
+        "connectionString": null
+    },
+    "container": {
+        "name": "tweets",
+        "query": "SELECT * FROM c WHERE c._ts >= @HighWaterMark ORDER BY c._ts"
+    },
+    "dataChangeDetectionPolicy": {
+        "@odata.type": "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy",
+        "highWaterMarkColumnName": "_ts"
+    },
+    "dataDeletionDetectionPolicy": null
+}

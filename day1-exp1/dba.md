@@ -420,6 +420,9 @@ In this task, you will apply dynamic data masking to one of the database fields 
 
     ![The query results are shown with the mask applied to the Postal Code field.](media/ssms-ddm-results-mask.png 'Query results')
 
+
+
+  
 ## Wrap-up
 
 Thank you for participating in the SQL Server 2019 Big Data Clusters experience! We hope you are excited about the new capabilities, and will refer back to this experience to learn more about these features.

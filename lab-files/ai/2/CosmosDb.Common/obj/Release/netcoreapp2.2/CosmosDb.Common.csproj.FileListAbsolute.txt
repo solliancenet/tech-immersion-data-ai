@@ -1,0 +1,9 @@
+R:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\bin\Release\netcoreapp2.2\CosmosDb.Common.deps.json
+R:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\bin\Release\netcoreapp2.2\CosmosDb.Common.dll
+R:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\bin\Release\netcoreapp2.2\CosmosDb.Common.pdb
+R:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Release\netcoreapp2.2\CosmosDb.Common.csprojAssemblyReference.cache
+R:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Release\netcoreapp2.2\CosmosDb.Common.csproj.CoreCompileInputs.cache
+R:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Release\netcoreapp2.2\CosmosDb.Common.AssemblyInfoInputs.cache
+R:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Release\netcoreapp2.2\CosmosDb.Common.AssemblyInfo.cs
+R:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Release\netcoreapp2.2\CosmosDb.Common.dll
+R:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Release\netcoreapp2.2\CosmosDb.Common.pdb

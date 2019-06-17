@@ -6,14 +6,17 @@ Complete the steps below to prepare the environment for the [Day 2, Experience 2
 
 The following services must be provisioned prior to the lab:
 
-Each attendee will have a resource group with:
+Each attendee will have a resource group containing the following resources:
 
-- Cosmos DB
-- Azure Search  
+- Cosmos DB (Core SQL API)
+- Azure Search (Basic tier)
 - Cognitive Services All-in-one instance (S0 Standard)
-- App Service Plan (associated with Function App)
-- Azure Function App
+- Azure Function App (Consumption Plan)
+  - Will also create an App Service Plan
 - Translator Text (S1 Standard)
+- Anomaly Detector (S0) - Only available in West US 2 or West Europe - In preview
+- Personalizer (S0) - Only available in West US 2 or West Europe - In preview
+- Form Recognizer?? - In limited private preview
 
 ## Lab computer pre-requisites
 

@@ -320,6 +320,111 @@ In this task, you will use Azure Data Studio to execute a notebook that will ena
 
     ![View data](media/task02-view-data.png 'View data')
 
+## Task 3: Mounting an Azure Data Lake Gen2 Storage Account to SQL Server 2019 Big Data Cluster using HDFS Tiering
+
+With tiering, applications can seamlessly access data in a variety of external stores as though the data resides in the local HDFS.   This allows you to interact with the files in Azure Data Lake Store Gen2 as if they were local files.  You can either use an Azure Storage access key or an Azure Active Directory User Account to gain permission to the files.  For this lab, we will use the access key.
+
+1.  In Windows, open PowerShell.  
+
+  ![Search for PowerShell .](media/powershell.png 'SQL Server Management Studio - Connect')
+
+2. In PowerShell, install the mssqlstl package using pip:
+
+    ```powershell
+      pip3 install -r  https://private-repo.microsoft.com/python/ctp3.0/mssqlctl/requirements.txt
+    ```
+3. Once mssqlctl installs, connect to your Microsoft SQL Server 2019 Big Data Cluster:
+
+    ```python
+      mssqlctl login -e https://<SQL SERVER Controller IP ADDRESS>:30080
+    ```
+    a.  You will be prompted for your big data cluster name.
+    b.  The user name is admin
+    c.  The password is MySQLBigData2019
+
+4. Create an empty text file named filename.creds in your temp folder on the c:\ drive.  Add this line as the contents:
+
+fs.azure.abfs.account.name=ikedatabricks.dfs.core.windows.net
+fs.azure.account.key.ikedatabricks.dfs.core.windows.net=HUYPk/VUjdYzkCvrKXTgFBObt5VQcp5DCY7C9KiSHX42lv65mjmBFmKFVTLy7Z7suQ0WV44mncuUOvnE8NkxGg==
+
+5. In PowerShell, type the following command to mount the drive
+
+    ```powershell
+        mssqlctl cluster storage-pool mount create --remote-uri abfs://databricksfiles@ikedatabricks.dfs.core.windows.net/ --mount-path   /mounts/dbfiles --credential-file c:\temp\filename.creds
+    ```
+6.  Once the storage account has been mounted, you can check the status:
+
+  ```powershell
+    mssqlctl cluster storage-pool mount status
+  ```  
+
+7. Now you can use Azure Data Studio and view the files from ADLS Gen2 under your HDFS folder in your Servers pane.  Look under /HDFS/mounts/dbfiles/
+
+    ![Azure Data Studio server pane for new dbfiles folder](media/data-studio-mounts.png)
+
+8.  Now that the drive is mounted, create an external file format for CSV.  Open a new query window and paste the following command:
+
+  ```sql
+    USE Sales;
+    GO
+    CREATE EXTERNAL FILE FORMAT csv_file
+    WITH (
+        FORMAT_TYPE = DELIMITEDTEXT,
+        FORMAT_OPTIONS(
+            FIELD_TERMINATOR = ',',
+            STRING_DELIMITER = '"',
+            FIRST_ROW = 2,
+            USE_TYPE_DEFAULT = TRUE)
+    );
+  ```
+9.  Now create an external connection to your HDFS cluster:
+
+  ```sql
+    IF NOT EXISTS(SELECT * FROM sys.external_data_sources WHERE name = 'SqlStoragePool')
+    BEGIN
+      CREATE EXTERNAL DATA SOURCE SqlStoragePool
+      WITH (LOCATION = 'sqlhdfs://controller-svc:8080/default');
+    END
+  ```
+ 10.  Now let's create two tables to two different files that exist in the storage account: 
+  
+  ```sql
+ 
+CREATE EXTERNAL TABLE planes
+("tailnum" VARCHAR(100),	"year" VARCHAR(4),	"type" VARCHAR(100)
+,	"manufacturer" VARCHAR(100),	"model" VARCHAR(20),	"engines" BIGINT
+,	"seats" BIGINT,	"speed" VARCHAR(20)
+,	"engine" VARCHAR(20))
+WITH
+(
+    DATA_SOURCE = SqlStoragePool,
+    LOCATION = '/mounts/dbfiles/planes.csv',
+    FILE_FORMAT = csv_file
+);
+GO
+
+ CREATE EXTERNAL TABLE flights
+("year" BIGINT, 	"month" BIGINT, 	"day" BIGINT,	"dep_time" BIGINT
+    ,	"dep_delay" BIGINT,	"arr_time" BIGINT,	"arr_delay" BIGINT,	"carrier" VARCHAR(100)
+    ,	"tailnum" VARCHAR(20),	"flight" VARCHAR(20),	"origin" VARCHAR(50)
+    ,	"dest" VARCHAR(50),	"air_time" BIGINT,	"distance" BIGINT,
+    	"hour" BIGINT,	"minute" BIGINT)
+WITH
+(
+    DATA_SOURCE = SqlStoragePool,
+    LOCATION = '/mounts/dbfiles/flights_small.csv',
+    FILE_FORMAT = csv_file
+);
+ ```
+9.  Once the tables are created, you can interact with them like normal tables.  For instance, you can run a query that joins the two tables like this:
+ ```sql
+ SELECT * 
+   FROM planes p 
+   JOIN flights f
+    on p.tailnum = f.tailnum
+ 
+  ```
+  
 ## Wrap-up
 
 Thank you for participating in the SQL Server 2019 Big Data Clusters experience! We hope you are excited about the new capabilities, and will refer back to this experience to learn more about these features.
@@ -328,6 +433,7 @@ To recap, you experienced:
 
 1. How to minimize or remove the need for ETL through **data virtualization** with [relational data sources](https://docs.microsoft.com/sql/relational-databases/polybase/data-virtualization?toc=%2fsql%2fbig-data-cluster%2ftoc.json&view=sql-server-ver15) and [CSV files](https://docs.microsoft.com/sql/relational-databases/polybase/data-virtualization-csv?view=sql-server-ver15), by being able to query against these alongside internal SQL 2019 tables with no data movement required.
 2. Training a machine learning model by running a Jupyter notebook on the Big Data cluster, then scoring data with the trained model and saving it as an external table for easy access.
+3. You learned to use HDFS tiering to mount files from an Azure Data Lake Store Gen2 account, which allowed you to create tables from files as if they were local to the cluster. 
 
 ## Additional resources and more information
 
