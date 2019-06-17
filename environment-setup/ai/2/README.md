@@ -23,7 +23,7 @@ Each attendee will have a resource group containing the following resources:
 
 The computer or VM used for this experience requires the following:
 
-- Visual Studio Community 2017 or higher
+- Visual Studio Community 2019 or higher
 
 ## Blob Storage
 
