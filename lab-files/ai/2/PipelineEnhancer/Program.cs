@@ -38,16 +38,11 @@ namespace PipelineEnhancer
                 {
                     Console.WriteLine("PipelineEnhancer creates and updates Cognitive Search pipelines.");
                     Console.WriteLine("=============");
-                    Console.WriteLine("Tasks to enhance Tweets search index");
                     Console.WriteLine("** Enter 1 to add a Sentiment Analysis cognitive skill to the Tweets search index.");
-                    Console.WriteLine("** Enter 2 to include Personalized ranking information in the Tweets search index.");
-                    Console.WriteLine("** Enter 3 to integrate a custom text translator skill to the Tweets search index.");
-                    Console.WriteLine("=============");
-                    Console.WriteLine("Task to create Form Recognizer pipeline");
-                    Console.WriteLine("** Enter 4 to create a new search pipeline for searching and recognizing forms in Blob Storage.");
-                    Console.WriteLine("=============");
-                    Console.WriteLine("Task to create Anomaly Detector pipeline");
-                    Console.WriteLine("** Enter 5 to create a new search pipeline for indexing vehicle telemetry and inspecting for engine temperature anomalies.");
+                    //Console.WriteLine("** Enter 2 to include Personalized ranking information in the Tweets search index.");
+                    Console.WriteLine("** Enter 2 to integrate a custom text translator skill to the Tweets search index.");
+                    Console.WriteLine("** Enter 3 to create a new search pipeline for searching and recognizing forms in Blob Storage.");
+                    Console.WriteLine("** Enter 4 to create a new search pipeline for indexing vehicle telemetry and inspecting for engine temperature anomalies.");
                     Console.WriteLine("=============");
                     Console.WriteLine("** Enter X to exit the console application.");
                     Console.WriteLine("=============");
@@ -64,7 +59,7 @@ namespace PipelineEnhancer
                             input.Equals("2", StringComparison.InvariantCultureIgnoreCase) ||
                             input.Equals("3", StringComparison.InvariantCultureIgnoreCase) ||
                             input.Equals("4", StringComparison.InvariantCultureIgnoreCase) ||
-                            input.Equals("5", StringComparison.InvariantCultureIgnoreCase) ||
+                            //input.Equals("5", StringComparison.InvariantCultureIgnoreCase) ||
                             input.Equals("X", StringComparison.InvariantCultureIgnoreCase))
                         {
                             userInput = input.Trim();
@@ -72,7 +67,7 @@ namespace PipelineEnhancer
                         }
                         else
                         {
-                            Console.WriteLine("Invalid input entered. Please enter a number between 1 and 5, or X.");
+                            Console.WriteLine("Invalid input entered. Please enter a number between 1 and 4, or X.");
                         }
                     }
 
@@ -94,25 +89,20 @@ namespace PipelineEnhancer
                         
                         switch(userInput)
                         {
-                            case "7":
+                            case "4":
                                 await CreateAnomalyDetectionPipeline(searchClient, appConfig);
                                 continue;
-                            case "4":
+                            case "3":
                                 var modelId = await TrainFormRecognizerModel(appConfig.FormRecognizer, appConfig.BlobStorage);
                                 await CreateFormsRecognitionPipeline(searchClient, appConfig, modelId);
                                 continue;
-                            case "3":
-                                AddCustomTranslateSkill(ref index, ref indexer, ref skillset, appConfig.FunctionApp);
-                                message = "Your custom translator skill was successfully integrated to the search pipeline.";
-                                goto case "2";
                             case "2":
-                                // TODO: AddPersonalizerSkill(ref index, ref indexer, ref skillset);
-                                //AddUserInfoToIndex(ref index, ref indexer, ref skillset);
-                                message = "Personalizer skill was successfully added to the search pipeline.";
+                                AddCustomTranslateSkill(ref index, ref indexer, ref skillset, appConfig.FunctionApp);
+                                Console.WriteLine("Your custom translator skill was successfully integrated to the search pipeline.");
                                 goto case "1";
                             case "1":
                                 AddSentimentAnalysisSkill(ref index, ref indexer, ref skillset);
-
+                                message = "The sentiment analysis skill was successfully added to the search pipeline.";
                                 await CognitiveSearchHelper.CreateCognitiveSearchPipeline(searchClient, appConfig.Search, index, indexer, skillset)
                                     .ContinueWith(t =>
                                     {
@@ -120,14 +110,12 @@ namespace PipelineEnhancer
                                             ? t.Exception.Message
                                             : message);
                                     });
-
-                                message = "The sentiment analysis skill was successfully added to the search pipeline.";
                                 break;
                             default:
                                 index = await CognitiveSearchHelper.GetIndexFromFile(appConfig.Search.IndexName);
                                 indexer = await CognitiveSearchHelper.GetIndexerFromFile(appConfig.Search);
                                 skillset = await CognitiveSearchHelper.GetSkillsetFromFile(appConfig.Search.SkillsetName, appConfig.CognitiveServices);
-
+                                message = "The search pipeline has been restored to its initial state";
                                 await CognitiveSearchHelper.CreateCognitiveSearchPipeline(searchClient, appConfig.Search, index, indexer, skillset)
                                     .ContinueWith(t =>
                                     {
@@ -135,8 +123,6 @@ namespace PipelineEnhancer
                                             ? t.Exception.Message
                                             : message);
                                     });
-
-                                message = "The search pipeline has been restored to its initial state";
                                 break;
                         }
                     }

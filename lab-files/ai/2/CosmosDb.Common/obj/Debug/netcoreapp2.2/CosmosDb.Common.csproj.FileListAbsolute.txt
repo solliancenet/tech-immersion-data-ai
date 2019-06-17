@@ -16,12 +16,3 @@ C:\CognitiveSearch\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.Assem
 C:\CognitiveSearch\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.AssemblyInfo.cs
 C:\CognitiveSearch\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.dll
 C:\CognitiveSearch\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.pdb
-Y:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\bin\Debug\netcoreapp2.2\CosmosDb.Common.deps.json
-Y:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\bin\Debug\netcoreapp2.2\CosmosDb.Common.dll
-Y:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\bin\Debug\netcoreapp2.2\CosmosDb.Common.pdb
-Y:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.csprojAssemblyReference.cache
-Y:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.csproj.CoreCompileInputs.cache
-Y:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.AssemblyInfoInputs.cache
-Y:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.AssemblyInfo.cs
-Y:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.dll
-Y:\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.pdb

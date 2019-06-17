@@ -18,7 +18,7 @@ namespace CustomSkillFunctions
     public static class AnalyzeFormFunction
     {
         private static readonly string serviceEndpoint = "https://westus2.api.cognitive.microsoft.com/";
-        private static readonly string key = "9d1079dd70494ac3b366a8a91e363b5b";
+        private static readonly string key = "<enter your api key here>";
 
         [FunctionName("AnalyzeForm")]
         public static async Task<IActionResult> Run(

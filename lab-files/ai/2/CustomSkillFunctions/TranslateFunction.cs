@@ -20,7 +20,7 @@ namespace CustomSkillFunctions
         static readonly string _path = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0";
 
         // NOTE: Replace this example key with a valid subscription key.
-        static readonly string _subscriptionKey = "e8c64ad67cb740079fd41ee6e0ddf35a"; //" < enter your api key here>";
+        static readonly string _subscriptionKey = " < enter your api key here>";
 
         [FunctionName("Translate")]
         public static async Task<IActionResult> Run(
