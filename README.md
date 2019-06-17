@@ -32,6 +32,17 @@ In the user name box, enter your VM Admin User Name. Enter your VM Admin Passwor
 
   A modern data warehouse lets you bring together all your data at any scale easily, and to get insights through analytical dashboards, operational reports, or advanced analytics for all your users. In this experience we will demonstrate how to use Azure Data Factory (ADF) to automate the movement and transformation of data gathered from various sources, including Cosmos DB, into Azure Data Lake Storage Gen2, Azure Databricks and Azure SQL DW to build a modern data warehouse.
 
+
+- **Day 1, Experience 5** - [Open Source Databases at Scale](./day1-exp5/README.md)
+
+  In this experience, attendees will use advanced features of the managed PostgreSQL PaaS service on Azure to make Conto Auto's database more scalable and able to handle the rapid ingest of streaming data while simultaneously generating and serving pre-aggregated data for reports. Additionally, attendees will migrate their existing Oracle database to PostgreSQL running Azure.
+
+
+- **Day 1, Experience 6** - [Simplifying data flows with Azure Data Factory](./day1-exp6/README.md)
+
+  In this exercise, attendees will learn how Contoso Auto can create data flows for data wrangling, exploration and transformation with a visual designer that is code-free. To accomplish this, attendees will leverage Azure Data Factory Mapping Data Flows and Wrangling Data Flows.
+
+
 ## Day 2: AI & Machine Learning-focused
 
 - **Day 2, Experience 1** - [Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator](./day2-exp1/README.md)
