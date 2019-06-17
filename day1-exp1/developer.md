@@ -352,15 +352,21 @@ fs.azure.account.key.ikedatabricks.dfs.core.windows.net=HUYPk/VUjdYzkCvrKXTgFBOb
     ```powershell
         mssqlctl cluster storage-pool mount create --remote-uri abfs://databricksfiles@ikedatabricks.dfs.core.windows.net/ --mount-path   /mounts/dbfiles --credential-file c:\temp\filename.creds
     ```
-5.  Once the storage account has been mounted, you can check the status:
+6.  Once the storage account has been mounted, you can check the status:
 
   ```powershell
     mssqlctl cluster storage-pool mount status
   ```  
-  
-6.  Now that the drive is mounted, create an external file format for CSV:
+
+7. Now you can use Azure Data Studio and view the files from ADLS Gen2 under your HDFS folder in your Servers pane.  Look under /HDFS/mounts/dbfiles/
+
+    ![Azure Data Studio server pane for new dbfiles folder](media/data-studio-mounts.png)
+
+8.  Now that the drive is mounted, create an external file format for CSV.  Open a new query window and paste the following command:
 
   ```sql
+    USE Sales;
+    GO
     CREATE EXTERNAL FILE FORMAT csv_file
     WITH (
         FORMAT_TYPE = DELIMITEDTEXT,
@@ -371,7 +377,7 @@ fs.azure.account.key.ikedatabricks.dfs.core.windows.net=HUYPk/VUjdYzkCvrKXTgFBOb
             USE_TYPE_DEFAULT = TRUE)
     );
   ```
-7.  Now create an external connection to your HDFS cluster:
+9.  Now create an external connection to your HDFS cluster:
 
   ```sql
     IF NOT EXISTS(SELECT * FROM sys.external_data_sources WHERE name = 'SqlStoragePool')
@@ -380,35 +386,42 @@ fs.azure.account.key.ikedatabricks.dfs.core.windows.net=HUYPk/VUjdYzkCvrKXTgFBOb
       WITH (LOCATION = 'sqlhdfs://controller-svc:8080/default');
     END
   ```
- 8.  Now let's create two tables to two different files that exist in the storage account: 
+ 10.  Now let's create two tables to two different files that exist in the storage account: 
   
   ```sql
- CREATE EXTERNAL TABLE planes
-("tailnum" VARCHAR(100),	"year" VARCHAR(4),	"type" VARCHAR(100),	"manufacturer" VARCHAR(100),	"model" VARCHAR(20),	"engines" BIGINT,	"seats" BIGINT,	"speed" VARCHAR(20),	"engine" VARCHAR(20))
+ 
+CREATE EXTERNAL TABLE planes
+("tailnum" VARCHAR(100),	"year" VARCHAR(4),	"type" VARCHAR(100)
+,	"manufacturer" VARCHAR(100),	"model" VARCHAR(20),	"engines" BIGINT
+,	"seats" BIGINT,	"speed" VARCHAR(20)
+,	"engine" VARCHAR(20))
 WITH
 (
     DATA_SOURCE = SqlStoragePool,
-    LOCATION = '/dbfiles/planes',
+    LOCATION = '/mounts/dbfiles/planes.csv',
     FILE_FORMAT = csv_file
 );
 GO
 
  CREATE EXTERNAL TABLE flights
-("year" BIGINT, 	"month" BIGINT, 	"day" BIGINT,	"dep_time" BIGINT,	"dep_delay" BIGINT,	"arr_time" BIGINT,	"arr_delay" BIGINT,	"carrier" VARCHAR(100),	"tailnum" VARCHAR(20),	"flight" VARCHAR(20),	"origin" VARCHAR(50),	"dest" VARCHAR(50),	"air_time" BIGINT,	"distance" BIGINT,	"hour" BIGINT,	"minute" BIGIN)
-)
+("year" BIGINT, 	"month" BIGINT, 	"day" BIGINT,	"dep_time" BIGINT
+    ,	"dep_delay" BIGINT,	"arr_time" BIGINT,	"arr_delay" BIGINT,	"carrier" VARCHAR(100)
+    ,	"tailnum" VARCHAR(20),	"flight" VARCHAR(20),	"origin" VARCHAR(50)
+    ,	"dest" VARCHAR(50),	"air_time" BIGINT,	"distance" BIGINT,
+    	"hour" BIGINT,	"minute" BIGINT)
 WITH
 (
     DATA_SOURCE = SqlStoragePool,
-    LOCATION = '/dbfiles/flights_small',
+    LOCATION = '/mounts/dbfiles/flights_small.csv',
     FILE_FORMAT = csv_file
 );
  ```
 9.  Once the tables are created, you can interact with them like normal tables.  For instance, you can run a query that joins the two tables like this:
  ```sql
-  SELECT * 
+ SELECT * 
    FROM planes p 
    JOIN flights f
-    on p.tail_num = f.tail_num
+    on p.tailnum = f.tailnum
  
   ```
   

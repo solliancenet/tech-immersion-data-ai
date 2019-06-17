@@ -99,6 +99,7 @@ Open PowerShell and execute the following to deploy the clusters in preparation 
         - 52.167.114.239
       - PORT
         - 30443
+    TODO:  Give the user the cluster admin portal id: https://40.78.93.8:30080
 
 5.  Execute the following to upload and restore the sales database:
 
