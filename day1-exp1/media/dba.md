@@ -10,10 +10,8 @@
   - [Task 1: Database migration](#Task-1-Database-migration)
     - [Perform assessment using Database Migration Assistant](#Perform-assessment-using-Database-Migration-Assistant)
     - [Test workloads on the target platform](#Test-workloads-on-the-target-platform)
-      - [Capture](#Capture)
-      - [Replay](#Replay)
-      - [Analysis](#Analysis)
     - [Migrate the database](#Migrate-the-database)
+    - [Evaluate potential improvements](#Evaluate-potential-improvements)
   - [Task 2: Connect to SQL Server 2019 with SSMS](#Task-2-Connect-to-SQL-Server-2019-with-SSMS)
   - [Task 3: Query performance improvements with intelligent query processing](#Task-3-Query-performance-improvements-with-intelligent-query-processing)
   - [Task 2: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS](#Task-2-Identify-PII-and-GDPR-related-compliance-issues-using-Data-Discovery--Classification-in-SSMS)
@@ -51,9 +49,11 @@ SQL Server 2019 also has powerful tools for Business Intelligence including Anal
 
 ## Scenario overview
 
-Contoso Auto is currently running their `ContosoAutoDb` operations database on an on-premises SQL Server 2008 R2 server. This database is critical to their operations, and they are concerned about the approaching end-of-support for SQL Server 2008 R2. They are looking to understand what is involved in upgrading their database and migrating it to a VM running in Azure. They are also interested in learning more about SQL Server 2019 and the many performance and security improvements that it includes.
+> TODO: Update scenario to reflect DBA experience in SQL Server 2019, and remove Big Data Clusters stuff...
 
-This experience will highlight the new features of SQL Server 2019 with a focus on performance and security. You will begin by performing an assessment of Contoso Auto's on-premises database to determine feasibility for migrating to SQL Server on a VM in Azure, and then complete the database migration. Next, you will gain hands-on experience by running queries using some of the new query performance enhancements and evaluating the results. You will evaluate the data security and compliance features provided by SQL Server 2019 by using the Data Discovery & Classification tool in SSMS to identify tables and columns with PII and GDPR-related compliance issues. You will then address some of the security issues by layering on dynamic data masking, row-level security, and Always Encrypted with secure enclaves.
+Contoso Auto is currently running the `sales` database on an on-premises SQL Server 2008 R2 server. This database is critical to their operations, and they are concerned about the approaching end-of-support for SQL Server 2008 R2. They are looking to understand what is involved in upgrading their database and migrating it to a VM running in Azure. They are also interested in learning more about SQL Server 2019 and the many performance and security improvements that it includes.
+
+This experience will highlight the new features of SQL Server 2019 with a focus on performance and security. You will gain hands-on experience by running queries using some of the new query performance enhancements and evaluating the results. Next, you will experience the data security and compliance features provided by SQL Server 2019 by using the Data Discovery & Classification tool in SSMS to identify tables and columns with PII and GDPR-related compliance issues. You will then address some of the issues by layering on dynamic data masking, row-level security, and Always Encrypted with secure enclaves.
 
 ## Experience requirements
 
@@ -64,15 +64,15 @@ Before you begin this lab, you need to find the following information on the Tec
 
 ## Task 1: Database migration
 
-Contoso Auto would like a proof-of-concept (POC) to upgrade and migration their on-premises SQL Server 2008 R2 `ContosoAutoDb` database to SQL Server 2017 running on a VM in Azure. As part of the process, they would like to know about any incompatible features that might block their eventual production move. In this task, you will use the [Microsoft Database Migration Assistant](https://docs.microsoft.com/en-us/sql/dma/dma-overview?view=sql-server-2017) (DMA) to perform an assessment on their SQL Server 2008 R2 database, and then migrate the `sales` database from the "on-premises" SQL Server 2008 R2 instance to [SQL Server 2017 on an Azure VM](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-sql-server-iaas-overview).
+Contoso Auto would like a proof-of-concept (POC) to upgrade and migration their on-premises SQL Server 2008 R2 `sales` database to SQL Server 2017 running on a VM in Azure. As part of the process, they would like to know about any incompatible features that might block their eventual production move. In this task, you will use the [Microsoft Database Migration Assistant](https://docs.microsoft.com/en-us/sql/dma/dma-overview?view=sql-server-2017) (DMA) to perform an assessment on their SQL Server 2008 R2 database, and then migrate the `sales` database from the "on-premises" SQL Server 2008 R2 instance to [SQL Server 2017 on an Azure VM](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-sql-server-iaas-overview).
 
-Microsoft provides multiple tools for streamlining the process of migrating and upgrading databases. Contoso Auto is currently running their `ContosoAutoDb` database on an on-premises SQL Server 2008 R2 instance. They are aware that SQL Server 2008 R2 is approaching end-of-support, and they are interested in seeing a proof-of-concept for migrating this database to a newer version of SQL Server.   In this task, you will be using several migration tools to perform an assessment on the Contoso Auto sales database, and then migrate the database from SQL Server 2008 R2 to SQL Server 2017.
+Microsoft provides multiple tools for streamlining the process of migrating and upgrading databases. Contoso Auto is currently running their `sales` database on an on-premises SQL Server 2008 R2 instance. They are aware that SQL Server 2008 R2 is approaching end-of-support, and they are interested in seeing a proof-of-concept for migrating this database to a newer version of SQL Server.   In this task, you will be using several migration tools to perform an assessment on the Contoso Auto sales database, and then migrate the database from SQL Server 2008 R2 to SQL Server 2017.
 
   > **NOTE**: SQL Server 2019 is currently in preview and most of the assessment and migration tools do not yet officially support it. However, the experience will be very similar to that of migrating the SQL Server 2017, so we will use that as a substitute for this workshop.
 
 ### Perform assessment using Database Migration Assistant
 
-Prior to migrating their database to a newer version, Contoso Auto would like to know about any incompatible features that might block their eventual production move. In this task, you will use the Microsoft [Data Migration Assistant](https://docs.microsoft.com/sql/dma/dma-overview?view=azuresqldb-mi-current) (DMA) to perform assessments on the `ContosoAutoDb` database. This assessment will provide reports about any feature parity and compatibility issues between the on-premises database and SQL Server on an Azure VM.
+Prior to migrating their database to a newer version, Contoso Auto would like to know about any incompatible features that might block their eventual production move. In this task, you will use the Microsoft [Data Migration Assistant](https://docs.microsoft.com/sql/dma/dma-overview?view=azuresqldb-mi-current) (DMA) to perform assessments on the `sales` database. This assessment will provide reports about any feature parity and compatibility issues between the on-premises database and SQL Server on an Azure VM.
 
 > DMA helps you upgrade to a modern data platform by detecting compatibility issues that can impact database functionality in your new version of SQL Server or Azure SQL Database. DMA recommends performance and reliability improvements for your target environment and allows you to move your schema, data, and uncontained objects from your source server to your target server.
 
@@ -110,151 +110,33 @@ Prior to migrating their database to a newer version, Contoso Auto would like to
 
    ![In the Connect to a server dialog, the values specified above are entered into the appropriate fields.](media/dma-connect-to-a-server.png "Connect to a server")
 
-7. Select **Connect**.
+8. In the **Add sources** dialog that appears, check the box next to **WorldWideImporters**, and select **Add**.
 
-8. On the **Add sources** dialog that appears next, check the box for **ContosoAutoDb** and select **Add**.
+    ![WorldWideImporters is selected and highlighted under SQLSERVER2008 in the Add sources dialog box.](./media/data-migration-assistant-select-sources-sqlserver2008-worldwideimporters.png "Select WorldWideImporters")
 
-   ![The ContosoAutoDb box is checked on the Add sources dialog.](media/dma-add-sources.png "Add sources")
+9.  Select **Start Assessment**.
 
-9. Select **Start Assessment**.
+10. Review the Assessment results, selecting both **SQL Server feature parity** and **Compatibility issues** options and viewing the reports.
 
-   ![Start assessment](media/dma-start-assessment-to-azure-sql-db.png "Start assessment")
+    ![Various information is selected on the Review results screen. At this time, we are unable to capture all of the information in the window. Future versions of this course should address this.](./media/data-migration-assistant-review-results-sqlserver2008-worldwideimporters.png "Review the Assessment results")
 
-10. Review the assessment of ability to migrate to Azure SQL Database by starting with any reported compatibility issues. You can review compatibility issues by analyzing the affected object, its details, and potentially a fix for every issue identified under Breaking changes, Behavior changes, and Deprecated features.
-
-    ![A behavioral change for Full-Text Search is listed as a possible compatibility issue.](media/dma-compatibility-issues.png "Compatibility issues")
-
-    > The DMA assessment for a migrating the `ContosoAutoDb` database to a target platform of SQL Server 2017 on a Windows VM running in Azure shows a compatibility issue associated with a change to Full-Text Search. This is a non-breaking change, and will not impact their ability to migrate the database.
-
-11. Next, select **Feature recommendations** in the DMA report, and select the **Security** tab.
-
-    ![Security recommendations are displayed in the DMA Feature recommendation page.](media/dma-feature-recommendations.png "Feature recommendations")
-
-    > DMA has made several security recommendations for improving the security posture of the `ContosoAutoDb` database. The details of the each recommendation are listed, as well as the recommended steps to apply the recommendation.
+11. You now have a list of the issues WWI will need to consider in upgrading their database to Azure SQL Database. Notice the assessment includes recommendations on the potential resolutions to issues. You can select **Export report** to save the report as a JSON file, if desired.
 
 ### Test workloads on the target platform
 
-Next, let's take a look at the Microsoft [Database Experimentation Assistant](https://docs.microsoft.com/en-us/sql/dea/database-experimentation-assistant-overview?view=sql-server-ver15) (DEA), and how it can help in choosing the right target platform for a SQL database upgrade and migration. DEA is an experimentation solution for SQL Server upgrades. DEA can help you evaluate a targeted version of SQL Server for a specific workload. Customers who are upgrading from earlier SQL Server versions (starting with 2005) to a more recent version of SQL Server can use the analysis metrics that the tool provides.
-
-> **NOTE**: Running DEA traces and replays takes a minimum of 10 minutes, which is more time than is alloted for this workshop experience, so we will just discuss the steps and benefits of using the tool in this task.
-
-DEA analysis metrics include:
-
-- Queries that have compatibility errors
-- Degraded queries and query plans
-- Other workload comparison data
-
-Comparison data can lead to higher confidence and a successful upgrade experience.
-
-DEA guides you through running an A/B test by completing three steps:
-
-- Capture
-- Replay
-- Analysis
-
-#### Capture
-
-The first step of SQL Server A/B testing is to capture a trace on your source server. The source server usually is the production server. Trace files capture the entire query workload on that server, including timestamps. Later, this trace is replayed on your target servers for analysis. The analysis report provides insights on the difference in performance of the workload between your two target servers. Traces can be run from 5 - 180 minutes.
-
-#### Replay
-
-The second step of SQL Server A/B testing is to replay the trace file that was captured to your target servers. Then, collect extensive traces from the replays for analysis.
-
-You replay the trace file on two target servers: one that mimics your source server (Target 1) and one that mimics your proposed change (Target 2). The hardware configurations of Target 1 and Target 2 should be as similar as possible so SQL Server can accurately analyze the performance effect of your proposed changes.
-
-#### Analysis
-
-The final step is to generate an analysis report by using the replay traces. The analysis report can help you gain insight about the performance implications of the proposed change.
+Intro to Database Experimentation Assistant (DEA)...
 
 ### Migrate the database
 
-Let's now look at how you can use the Database Migration Assistant to perform the migration from SQL Server 2008 R2 to SQL Server 2017.
+Use DMA to migrate the database from SQL Server 2008 R2 to SQL Server 2017.
 
-1. Return to the Microsoft Data Migration Assistant application, or launch it from the Windows Start menu within your lab environment if you closed it.
+Can copy some DMA steps from Data platform upgrade and migration lab...
 
-   ![The Microsoft Data Migration Assistant is highlighted in the Windows start menu.](media/windows-start-menu-dma.png "Data Migration Assistant")
+### Evaluate potential improvements
 
-2. In the Data Migration Assistant window, select the New **(+)** icon in the left-hand menu.
+Intro to Database Tuning Advisor (DTA)...
 
-    ![+ New is selected and highlighted in the Data Migration Assistant window.](./media/data-migration-assistant-new-project.png "Select + New")
-
-3. In the New project dialog, enter the following:
-
-    - **Project type**: Select Migration.
-    - **Project name**: Enter Migration.
-    - **Source server type**: SQL Server
-    - **Target server type**: SQL Server on Azure Virtual Machines
-
-    ![The above information is entered in the New project dialog box.](./media/data-migration-assistant-new-project-migration.png "Enter information in the New project dialog box")
-
-4. Select **Create**.
-
-5. On the **Specify source & target** dialog that appears next, enter the following:
-
-   - Source server details:
-
-     - **Server name**: Enter the DNS name of the shared sqlServer2008R2 VM, **`sqlserver2008r2.westus.cloudapp.azure.com`**.
-     - **Authentication type**: Select **SQL Server Authentication**.
-     - **Username**: Enter **WorkshopUser**
-     - **Password**: Enter **Password.1!!**
-     - **Encrypt connection**: Check this box.
-     - **Trust server certificate**: Check this box.
-
-   - Target server details:
-
-     - **Server name**: Enter the IP address of your sql-2017 VM, e.g, 52.229.17.189.
-     - **Authentication type**: Select **SQL Server Authentication**.
-     - **Username**: Enter **demouser**
-     - **Password**: Enter **Password.1!!**
-     - **Encrypt connection**: Check this box.
-     - **Trust server certificate**: Check this box.
-
-   ![The values specified above are entered into the Specify source & target screen.](media/dma-migration-source-target.png "Specify source & target")
-
-6. Select **Next**.
-
-7. On the Add databases screen, set the following configuration:
-
-   - Check the **ContosoAutoDb** database on the left, under the source database server.
-   - **Shared backup location**: Enter **`\\sqlserver2008r2\db-backups`**.
-   - **Location to restore data files**: Enter **`C:\Contoso\`.
-   - **Location to restore log files**: Enter **`C:\Contoso\`.
-
-   ![The values specified above are entered into the Add databases screen.](media/dma-migration-add-databases.png "Add databases")
-
-8. Select **Next**.
-
-9. Check the WorkshopUser and demouser logins.
-
-   ![The WorkshopUser and demouser accounts are checked in the list of logins.](media/dma-migration-select-logins.png "Select Logins")
-
-10. Select **Start Migration**.
-
-11. When the migration completes, you will see success messages for the `ContosoAutoDb` database and the two logins.
-
-    ![The successful database migration results are displayed.](media/dms-migration-results.png "Database Migration results")
-
-12. To verify the migration, you will connect to the new database running on your sql-2017 VM using SQL Server Management Studio (SSMS). On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **SQL Server Management** into the search box, then select the SQL Server Management Studio 18 desktop app in the search results.
-
-    ![The search box has "SQL Server Management" entered into it and the desktop app is highlighted in the results.](media/launch-ssms.png "Launch SQL Server Management Studio")
-
-13. Within the Connection dialog that appears, configure the following:
-
-    - **Server name:** Enter the IP address of your sql-2017 VM. Use the value from the `SQL_SERVER_2017_VM_IP` for this from the environment documentation.
-    - **Authentication:** Select SQL Server Authentication.
-    - **Login:** Enter `demouser`
-    - **Password:** Enter `Password.1!!`
-    - **Remember password:** Check this box.
-
-    ![The Connect form is filled out with the previously mentioned settings entered into the appropriate fields.](media/ssms-connection-sql-2017.png "SQL Server Management Studio - Connect")
-
-14. Select **Connect**.
-
-15. In the SSMS Object Explorer, expand Databases and confirm you see the `ContosoAutoDb` database listed.
-
-    ![The ContosoAutoDb database in highlighted in the SSMS Object Explorer.](media/ssms-object-explorer-contosoautodb.png "Object Explorer")
-
-16. You have successfully migrated the `ContosoAutoDb` database from SQL Server 2008 R2 to SQL Server 2017 running on a VM in Azure in just a few simple steps using the Database Migration Assistant.
+Take a look at some of the suggestions of DTA
 
 ## Task 2: Connect to SQL Server 2019 with SSMS
 

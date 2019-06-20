@@ -2,18 +2,19 @@
 
 ## Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
-  - [Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters](#day-1-experience-1---handling-big-data-with-sql-server-2019-big-data-clusters)
-  - [Technology overview](#technology-overview)
-  - [Scenario overview](#scenario-overview)
-  - [Experience requirements](#experience-requirements)
-  - [Before the lab: Connecting to SQL Server 2019](#before-the-lab-connecting-to-sql-server-2019)
-    - [Connect with Azure Data Studio](#connect-with-azure-data-studio)
-    - [Connect with SQL Server Management Studio](#connect-with-sql-server-management-studio)
-  - [Task 1: Query and join data from flat files, data from external database systems, and SQL Server](#task-1-query-and-join-data-from-flat-files-data-from-external-database-systems-and-sql-server)
-  - [Task 2: Train a machine learning model, score and save data as external table](#task-2-train-a-machine-learning-model-score-and-save-data-as-external-table)
-  - [Wrap-up](#wrap-up)
-  - [Additional resources and more information](#additional-resources-and-more-information)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
+  - [Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters](#Day-1-Experience-1---Handling-Big-Data-with-SQL-Server-2019-Big-Data-Clusters)
+  - [Technology overview](#Technology-overview)
+  - [Scenario overview](#Scenario-overview)
+  - [Experience requirements](#Experience-requirements)
+  - [Before the lab: Connecting to SQL Server 2019](#Before-the-lab-Connecting-to-SQL-Server-2019)
+    - [Connect with Azure Data Studio](#Connect-with-Azure-Data-Studio)
+    - [Connect with SQL Server Management Studio](#Connect-with-SQL-Server-Management-Studio)
+  - [Task 1: Query and join data from flat files, data from external database systems, and SQL Server](#Task-1-Query-and-join-data-from-flat-files-data-from-external-database-systems-and-SQL-Server)
+  - [Task 2: Train a machine learning model, score and save data as external table](#Task-2-Train-a-machine-learning-model-score-and-save-data-as-external-table)
+  - [Task 3: Mounting an Azure Data Lake Gen2 Storage Account to SQL Server 2019 Big Data Cluster using HDFS Tiering](#Task-3-Mounting-an-Azure-Data-Lake-Gen2-Storage-Account-to-SQL-Server-2019-Big-Data-Cluster-using-HDFS-Tiering)
+  - [Wrap-up](#Wrap-up)
+  - [Additional resources and more information](#Additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -91,8 +92,6 @@ A link to Azure Data Studio should already be on the desktop of the VM. If not, 
 4.  Click **Connect**.
 
 ### Connect with SQL Server Management Studio
-
-The version of SQL Server Management Studio (SSMS) used in this lab is v17.x. There is a [newer preview version (v18)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017#ssms-180-preview-7) that includes some SQL Server 2019 features, which is not included in the provided environment.
 
 1.  On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **SQL Server Management Studio**, then select the SQL Server Management Studio desktop app in the search results.
 

@@ -8,16 +8,31 @@ The following services must be provisioned prior to the lab:
 
 Each attendee will have a resource group containing the following resources:
 
-- Cosmos DB (Core SQL API) (name: tech-immersionXXXXX)
-- Azure Search (Basic tier) (name: tech-immersion)
-- Cognitive Services (S0 Standard) (name: tech-immersion-cog-serv)
-- Anomaly Detector (S0) (name: tech-immersion-anomaly-detector) - Only available in West US 2 or West Europe - In preview
-- Form Recognizer (name: tech-immersion-form-recog) - In limited private preview
-- Personalizer (S0) (name: tech-immersion-personalizer) - Only available in West US 2 or West Europe - In preview
-- Translator Text (S1 Standard) (name: tech-immersion-translator)
-- Azure Function App (Consumption Plan) (name: ti-function-day2)
-  - Will also create an App Service Plan
-- Azure Blob storage account (name: techimmersionstorageXXXXX)
+- Cosmos DB (Core SQL API)
+  - Name: tech-immersionXXXXX
+- Azure Search
+  - Basic tier
+  - Name: tech-immersion
+- Cognitive Services
+  - S0 Standard
+  - Name: tech-immersion-cog-serv
+- Anomaly Detector
+  - S0
+  - Name: tech-immersion-anomaly-detector
+  - Only available in West US 2 or West Europe - In preview
+- Form Recognizer
+  - Name: tech-immersion-form-recog
+  - In limited private preview
+  - Only available in West US 2 or West Europe regions
+- Translator Text
+  - S1 Standard
+  - Name: tech-immersion-translator
+- Azure Function App
+  - Consumption Plan
+  - Name: ti-function-day2
+- Azure Blob storage account
+  - Name: techimmersionstorageXXXXX
+  - Must be in the same region as the Form Recognizer service.
   
 ## Lab computer pre-requisites
 
