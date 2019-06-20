@@ -28,7 +28,7 @@ KNOX_ENDPOINT=$KNOX_IP:30443
 # Copy the backup file, restore the database, create necessary objects and data file
 echo Copying database backup file...
 pushd "$BACKUP_FILE_PATH"
-$DEBUG kubectl cp ContosoAutoDW.bak mssql-master-pool-0:/var/opt/mssql/data -c mssql-server -n $CLUSTER_NAMESPACE || (echo $ERROR_MESSAGE && sleep 15s)
+$DEBUG kubectl cp ContosoAutoDW.bak master-0:/var/opt/mssql/data -c mssql-server -n $CLUSTER_NAMESPACE || (echo $ERROR_MESSAGE && sleep 15s)
 popd
 
 echo Configuring sample database...
