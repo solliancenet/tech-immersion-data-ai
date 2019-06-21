@@ -2,18 +2,18 @@
 
 ## Day 1, Experience 5 - Open source databases at scale
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
-  - [Day 1, Experience 5 - Open source databases at scale](#day-1-experience-5---open-source-databases-at-scale)
-  - [Technology overview](#technology-overview)
-    - [Azure Database for PostgreSQL](#azure-database-for-postgresql)
-  - [Scenario overview](#scenario-overview)
-  - [Experience requirements](#experience-requirements)
-  - [Task 1: Connect to PostgreSQL](#task-1-connect-to-postgresql)
-  - [Task 2: Create a table to store clickstream data](#task-2-create-a-table-to-store-clickstream-data)
-  - [Task 3: Shard tables across nodes and create rollup tables](#task-3-shard-tables-across-nodes-and-create-rollup-tables)
-  - [Task 4: Create rollup functions](#task-4-create-rollup-functions)
-  - [Task 5: Copy data into raw events table](#task-5-copy-data-into-raw-events-table)
-  - [Task 6: Schedule periodic aggregation and execute dashboard queries](#task-6-schedule-periodic-aggregation-and-execute-dashboard-queries)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
+  - [Day 1, Experience 5 - Open source databases at scale](#Day-1-Experience-5---Open-source-databases-at-scale)
+  - [Technology overview](#Technology-overview)
+    - [Azure Database for PostgreSQL](#Azure-Database-for-PostgreSQL)
+  - [Scenario overview](#Scenario-overview)
+  - [Experience requirements](#Experience-requirements)
+  - [Task 1: Connect to PostgreSQL](#Task-1-Connect-to-PostgreSQL)
+  - [Task 2: Create a table to store clickstream data](#Task-2-Create-a-table-to-store-clickstream-data)
+  - [Task 3: Shard tables across nodes and create rollup tables](#Task-3-Shard-tables-across-nodes-and-create-rollup-tables)
+  - [Task 4: Create rollup functions](#Task-4-Create-rollup-functions)
+  - [Task 5: Copy data into raw events table](#Task-5-Copy-data-into-raw-events-table)
+  - [Task 6: Schedule periodic aggregation and execute dashboard queries](#Task-6-Schedule-periodic-aggregation-and-execute-dashboard-queries)
 
 ## Technology overview
 
@@ -419,7 +419,7 @@ In this task, you will use [pg_cron](https://github.com/citusdata/pg_cron) to ru
 
 You will then execute queries against the rollup tables that will be used for Contoso Auto's dashboard. This is to demonstrate that queries against the pre-aggregated tables that use HLL and TopN advanced aggregation features result in excellent query speeds and flexibility.
 
-1. Replace the previous query with the following in the Query Editor to re-run our **hourly aggregation** function. Then **execute the query**.
+1. Replace the previous query with the following in the Query Editor to schedule the rollup functions to execute every 5 minutes, then **execute the query**.
 
    ```sql
    SELECT cron.schedule('*/5 * * * *', 'SELECT five_minutely_aggregation();');
@@ -461,35 +461,35 @@ You will then execute queries against the rollup tables that will be used for Co
 
 6. Clear the query window and paste the following to return the count of distinct sessions over the past week:
 
-    ```sql
-    SELECT sum(event_count) num_events,
-          hll_cardinality(hll_union_agg(device_distinct_count)) distinct_devices
-    FROM rollup_events_1hr
-    WHERE hour >=date_trunc('day',now())-interval '7 days'
-      AND hour <=now()
-      AND customer_id=1;
-    ```
+   ```sql
+   SELECT sum(event_count) num_events,
+         hll_cardinality(hll_union_agg(device_distinct_count)) distinct_devices
+   FROM rollup_events_1hr
+   WHERE hour >=date_trunc('day',now())-interval '7 days'
+     AND hour <=now()
+     AND customer_id=1;
+   ```
 
 7. Clear the query window and paste the following to return the trend of app usage in the past 2 days, broken down by hour:
 
-    ```sql
-    SELECT hour,
-          sum(event_count) event_count,
-          hll_cardinality(hll_union_agg(device_distinct_count)) device_count,
-          hll_cardinality(hll_union_agg(session_distinct_count)) session_count
-    FROM rollup_events_1hr
-    WHERE hour >=date_trunc('day',now())-interval '2 days'
-      AND hour <=now()
-      AND customer_id=1
-    GROUP BY hour;
-    ```
+   ```sql
+   SELECT hour,
+         sum(event_count) event_count,
+         hll_cardinality(hll_union_agg(device_distinct_count)) device_count,
+         hll_cardinality(hll_union_agg(session_distinct_count)) session_count
+   FROM rollup_events_1hr
+   WHERE hour >=date_trunc('day',now())-interval '2 days'
+     AND hour <=now()
+     AND customer_id=1
+   GROUP BY hour;
+   ```
 
 8. Clear the query window and paste the following to return the top devices in the past 30 minutes:
 
-    ```sql
-    SELECT (topn(topn_union_agg(top_devices_1000), 10)).item device_id
-    FROM rollup_events_5min
-    WHERE minute >=date_trunc('day',now())-interval '30 minutes'
-      AND minute <=now()
-      AND customer_id=2;
-    ```
+   ```sql
+   SELECT (topn(topn_union_agg(top_devices_1000), 10)).item device_id
+   FROM rollup_events_5min
+   WHERE minute >=date_trunc('day',now())-interval '30 minutes'
+     AND minute <=now()
+     AND customer_id=2;
+   ```
