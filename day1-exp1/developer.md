@@ -80,7 +80,7 @@ A link to Azure Data Studio should already be on the desktop of the VM. If not, 
 3.  Within the Connection dialog, configure the following:
 
     - **Connection type:** Select Microsoft SQL Server.
-    - **Server:** Enter the IP address, followed by port number `31433`  to the SQL Server 2019 Big Data cluster. Use the value from the `SQL SERVER_2019_CLUSTER URL` for this from the environment documentation. It should have a format of IP separated by a comma from the port, such as: `11.122.133.144,31433`.
+    - **Server:** Enter the IP address, followed by port number `31433` to the SQL Server 2019 Big Data cluster. Use the value from the `SQL SERVER_2019_CLUSTER URL` for this from the environment documentation. It should have a format of IP separated by a comma from the port, such as: `11.122.133.144,31433`.
     - **Authentication type:** Select SQL Login.
     - **Username:** Enter `sa`.
     - **Password:** Enter the password provided to you for this lab, you can find this value documented as `SQL 2019 Big Data Cluster password`.
@@ -107,13 +107,7 @@ A link to Azure Data Studio should already be on the desktop of the VM. If not, 
 
     ![The Connect form is filled out with the previously mentioned settings entered into the appropriate fields.](media/ssms-connection.png 'SQL Server Management Studio - Connect')
 
-3.  Click **Options >>**.
-
-4.  Select the **Additional Connection Parameters** tab. In the text area below, enter `TrustServerCertificate=True`. This is needed because the server certificates are dynamically generated for the Big Data Clusters, and are self-signed.
-
-    ![The Additional Connection Parameters tab is selected and the TrustServerCertificate=True value is highlighted.](media/ssms-connection-additional.png 'Additional Connection Parameters')
-
-5.  Click **Connect**.
+3.  Click **Connect**.
 
 ## Task 1: Query and join data from flat files, data from external database systems, and SQL Server
 
@@ -195,33 +189,29 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
 
     ![The CSV file and the Create External Table From CSV Files menu item are highlighted.](media/ads-create-external-table-csv.png 'Create External Table From CSV Files')
 
-15. The first dialog has you select the SQL Server Master instance containing your Big Data Cluster. Select the connection underneath **Active SQL Server connections** that includes the cluster's IP address and the **sales_YOUR_UNIQUE_IDENTIFIER** database name.
+15. In the Create External Table from CSV dialog, confirm that the **sales** database is selected and that the name of the external table is **stockitemholdings**.
 
-    ![The active SQL Server connection is highlighted.](media/ads-external-table-csv-wizard-active-connection.png 'Active SQL Server connections')
+    ![The previously mentioned form is displayed.](media/ads-external-table-csv-wizard-active-connection.png 'Active SQL Server connections')
 
 16. Click **Next**.
 
-17. In the destination database step, select the **sales_YOUR_UNIQUE_IDENTIFIER** database underneath **Database the external table will be created in**. Leave the name and schema at their defaults, then click **Next**.
-
-    ![The sales database is selected and highlighted.](media/ads-external-table-csv-destination.png 'Destination database')
-
-18. The next step displays a preview of the first 50 rows CSV data for validation. Click **Next** to continue.
+17. The next step displays a preview of the first 50 rows CSV data for validation. Click **Next** to continue.
 
     ![A preview of the CSV data is displayed.](media/ads-external-table-csv-preview.png 'Preview Data')
 
-19. In the next step, you will be able to modify the columns of the external table you intend to create. You are able to alter the column name, change the data type, and allow for Nullable rows. For now, leave everything as-is and click **Next**.
+18. In the next step, you will be able to modify the columns of the external table you intend to create. You are able to alter the column name, change the data type, and allow for Nullable rows. For now, leave everything as-is and click **Next**.
 
     ![The Modify Columns step is displayed.](media/ads-external-table-csv-modify.png 'Modify Columns')
 
-20. Verify that everything looks correct in the Summary step, then click **Create Table**.
+19. Verify that everything looks correct in the Summary step, then click **Create Table**.
 
     ![The Summary step is displayed.](media/ads-external-table-csv-create.png 'Summary')
 
-21. As with the previous external table you created, a "Create External Table succeeded" dialog will appear under your task history in a few moments. Select the Servers link (Ctrl+G) on the left-hand menu, then expand the Tables list underneath your **sales** database and find the **dbo.stockitemholdings (External)** table. If you do not see it, right-click on the Tables folder, then select Refresh. **Right-click** the **dbo.stockitemholdings (External)** table, then select **Select Top 1000** from the context menu.
+20. As with the previous external table you created, a "Create External Table succeeded" dialog will appear under your task history in a few moments. Select the Servers link (Ctrl+G) on the left-hand menu, then expand the Tables list underneath your **sales** database and find the **dbo.stockitemholdings (External)** table. If you do not see it, right-click on the Tables folder, then select Refresh. **Right-click** the **dbo.stockitemholdings (External)** table, then select **Select Top 1000** from the context menu.
 
     ![The Select Top 1000 rows menu item is highlighted.](media/ads-stockitemholdings-select-top-1000.png 'Select Top 1000')
 
-22. Just as before, you should see a SQL query selecting the top 1000 rows and its query results, this time from the `stockitemholdings` table. Again, the SQL query is the same type of query you would write to select from a table internal to the sales database.
+21. Just as before, you should see a SQL query selecting the top 1000 rows and its query results, this time from the `stockitemholdings` table. Again, the SQL query is the same type of query you would write to select from a table internal to the sales database.
 
     ![The stockitemholdings query and results are displayed.](media/ads-stockitemholdings-results.png 'Stockitemholdings results')
 
@@ -238,11 +228,11 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
     FROM [sales_YOUR_UNIQUE_IDENTIFIER].[dbo].[stockitemholdings]
     ```
 
-23. Now that we have our two external tables added, we will now join those two external tables and two internal tables with a new SQL query to demonstrate how you can seamlessly combine all these data sources without having to copy any files or with separate queries or additional processing of that data. **Right-click** the **sales_YOUR_UNIQUE_IDENTIFIER** database, then select **New Query**.
+22. Now that we have our two external tables added, we will now join those two external tables and two internal tables with a new SQL query to demonstrate how you can seamlessly combine all these data sources without having to copy any files or with separate queries or additional processing of that data. **Right-click** the **sales_YOUR_UNIQUE_IDENTIFIER** database, then select **New Query**.
 
     ![The sales database and New Query menu item are highlighted.](media/ads-new-query.png 'New Query')
 
-24. Paste the following into the new query window:
+23. Paste the following into the new query window:
 
     ```sql
     SELECT i.i_item_sk AS ItemID, i.i_item_desc AS Item, c.c_first_name AS FirstName,
@@ -253,11 +243,11 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
     JOIN dbo.stockitemholdings AS s ON i.i_item_sk = s.StockItemID
     ```
 
-25. Click the **Run** button above the query window to execute.
+24. Click the **Run** button above the query window to execute.
 
     ![The Run button above the query window is highlighted.](media/ads-run.png 'Run')
 
-26. At the bottom of the query window, you will see results that include columns from the four data sources.
+25. At the bottom of the query window, you will see results that include columns from the four data sources.
 
     ![Query results from the four data sets.](media/ads-query-results.png 'Query results')
 
@@ -265,165 +255,159 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
 
 In this task, you will use Azure Data Studio to execute a notebook that will enable you to train a model to predict the battery lifetime, apply the model to make batch predictions against a set of vehicle telemetry and save the scored telemetry to an external table that you can query using SQL.
 
-1.  Open Azure Data Studio and select Servers.
+1. In Azure Data Studio, click **File**, then **Open File...**.
 
-2.  Right click your Big Data Cluster node select `Manage`.
+2. In the folder browser dialog, navigate to the **C:\lab-files\data\1** folder and select **predict-battery-life-with-sqlbdc.ipynb**.
 
-    ![Manage cluster](media/task02-manage-cluster.png 'Manage cluster')
+3. When the notebook opens, you need to select the **Kernel** you would like to use to run the notebook. Locate the **Kernel** dropdown in the toolbar above the notebook, then select **Python 3**.
 
-3.  In the window, select the `SQL Big Data Cluster` tab and then select the `Open Notebook` tile.
+   ![The Python 3 kernel is selected.](media/ads-notebook-select-kernel.png 'Kernel dropdown')
 
-    ![Open notebook](media/task02-sql-bdc-manage.png 'Open notebook')
+4. Follow the instructions in the notebook and return to the next step after you have completed the notebook.
 
-4.  Browse to **C:\lab-files\data\1**, select **predict-battery-life-with-sqlbdc.ipynb** and select `Open`.
+   > There may be a kernel error pertaining to there not being a valid SQL connection when you open the notebook. If this happens, close the notebook and Azure Data Studio, then re-launch, reconnect, then re-open the notebook.
 
-5.  Follow the instructions in the notebook and return to the next step after you have completed the notebook.
+5. In Azure Data Studio, under Servers, expand your Big Data Cluster, `Data Services`, `HDFS`, `data`.
 
-    > There may be a kernel error pertaining to there not being a valid SQL connection when you open the notebook. If this happens, close the notebook and Azure Data Studio, then re-launch, reconnect, then re-open the notebook.
+6. Right click the `data` folder and select `Refresh` to see the newly created folder.
 
-6.  In Azure Data Studio, under Servers, expand your Big Data Cluster, `Data Services`, `HDFS`, `data`.
+   ![Refresh data](media/task02-refresh-data.png 'Refresh data')
 
-7.  Right click the `data` folder and select `Refresh` to see the newly created folder.
+7. You should see `battery-life-YOUR_UNIQUE_IDENTIFIER.csv` as a folder (where `YOUR_UNIQUE_IDENTIFIER` is your assigned identifier), expand it and then right click on the CSV file whose name starts with `part-00000-` and select `Create External Table From CSV Files`.
 
-    ![Refresh data](media/task02-refresh-data.png 'Refresh data')
+   ![Create External Table](media/task02-create-external-menu.png 'Create External Table')
 
-8.  You should see `battery-life-YOUR_UNIQUE_IDENTIFIER.csv` as a folder (where `YOUR_UNIQUE_IDENTIFIER` is your assigned identifier), expand it and then right click on the CSV file whose name starts with `part-00000-` and select `Create External Table From CSV Files`.
+8. In Step 1 of the wizard, select the `sales` database and for the `Name for new external table` field provide **battery-life-predictions**. Click **Next**.
 
-    ![Create External Table](media/task02-create-external-menu.png 'Create External Table')
+   ![Step 1 of the wizard is displayed.](media/ads-predictions-csv-wizard-step1.png 'Step 1')
 
-9.  In Step 1 of the wizard, select your Active SQL Server connection to connect to your Big Data Cluster endpoint and select `Next`.
+9. On Step 2, Preview Data, click **Next**.
 
-    ![Select endpoint](media/task02-ext-step1.png 'Select endpoint')
+10. On Step 3, for the column `Car_Has_EcoStart` set the Data Type to **char(10)**. Click **Next**.
 
-10. In Step 2, select the `sales_YOUR_UNIQUE_IDENTIFIER` database and for the `Name for new external table` field provide `battery-life-predictions`. Select Next.
+    ![Step 3 of the wizard is displayed.](media/ads-predictions-csv-wizard-step3.png 'Step 3')
 
-    ![Step 2](media/task02-ext-step2.png 'Step 2')
+11. On Step, click **Create Table**. Your predictions are now available for SQL querying in the battery-life-predictions table in the sales database.
 
-11. On Step 3, select `Next`.
-
-12. On Step 4, for the column `Car_Has_EcoStart` set the Data Type to `char(10)`. Select `Next`.
-
-    ![Step 4](media/task02-ext-step4.png 'Step 4')
-
-13. On Step 5, select `Create Table`. Your predictions are now available for SQL querying in the battery-life-predictions table in the sales database.
-
-14. In Azure Data Studio, Servers, expand your Big Data Cluster, `Databases`, `sales_YOUR-UNIQUE-IDENTIFIER`, right click `Tables` and then select `Refresh`.
+12. In Azure Data Studio, Servers, expand your Big Data Cluster, `Databases`, `sales_YOUR-UNIQUE-IDENTIFIER`, right click `Tables` and then select `Refresh`.
 
     ![Refresh sales](media/task02-refresh-sales.png 'Refresh sales')
 
-15. Expand `tables`, right click `battery-life-prediction` and select `query` to view the data contained by the external table.
+13. Expand `tables`, right click `battery-life-prediction` and select `query` to view the data contained by the external table.
 
     ![Select Top 1000](media/task02-select-top.png 'Select Top 1000')
 
-16. The vehicle telemetry along with predictions will appear. These are queried from the external table which is sourced from the CSV you created using the notebook.
+14. The vehicle telemetry along with predictions will appear. These are queried from the external table which is sourced from the CSV you created using the notebook.
 
     ![View data](media/task02-view-data.png 'View data')
 
 ## Task 3: Mounting an Azure Data Lake Gen2 Storage Account to SQL Server 2019 Big Data Cluster using HDFS Tiering
 
-With tiering, applications can seamlessly access data in a variety of external stores as though the data resides in the local HDFS.   This allows you to interact with the files in Azure Data Lake Store Gen2 as if they were local files.  You can either use an Azure Storage access key or an Azure Active Directory User Account to gain permission to the files.  For this lab, we will use the access key.
+With tiering, applications can seamlessly access data in a variety of external stores as though the data resides in the local HDFS. This allows you to interact with the files in Azure Data Lake Store Gen2 as if they were local files. You can either use an Azure Storage access key or an Azure Active Directory User Account to gain permission to the files. For this lab, we will use the access key.
 
-1.  In Windows, open PowerShell.  
+1. In Windows, open PowerShell.
 
-  ![Search for PowerShell .](media/powershell.png 'SQL Server Management Studio - Connect')
+   ![Search for PowerShell .](media/powershell.png 'SQL Server Management Studio - Connect')
 
-2. In PowerShell, install the mssqlstl package using pip:
+2. Connect to your Microsoft SQL Server 2019 Big Data Cluster:
 
-    ```powershell
-      pip3 install -r  https://private-repo.microsoft.com/python/ctp3.0/mssqlctl/requirements.txt
-    ```
-3. Once mssqlctl installs, connect to your Microsoft SQL Server 2019 Big Data Cluster:
+   ```python
+   mssqlctl login -e https://<SQL SERVER Controller IP ADDRESS>:30080
+   ```
 
-    ```python
-      mssqlctl login -e https://<SQL SERVER Controller IP ADDRESS>:30080
-    ```
-    a.  You will be prompted for your big data cluster name.
-    b.  The user name is admin
-    c.  The password is MySQLBigData2019
+   - You will be prompted for your big data cluster name.
+   - The user name is admin
+   - The password is MySQLBigData2019
 
-4. Create an empty text file named filename.creds in your temp folder on the c:\ drive.  Add this line as the contents:
+3. Create an empty text file named filename.creds in your temp folder on the c:\ drive. Add this line as the contents:
 
-fs.azure.abfs.account.name=ikedatabricks.dfs.core.windows.net
-fs.azure.account.key.ikedatabricks.dfs.core.windows.net=HUYPk/VUjdYzkCvrKXTgFBObt5VQcp5DCY7C9KiSHX42lv65mjmBFmKFVTLy7Z7suQ0WV44mncuUOvnE8NkxGg==
+   ```text
+   fs.azure.abfs.account.name=ikedatabricks.dfs.core.windows.net
+   fs.azure.account.key.ikedatabricks.dfs.core.windows.net=HUYPk/VUjdYzkCvrKXTgFBObt5VQcp5DCY7C9KiSHX42lv65mjmBFmKFVTLy7Z7suQ0WV44mncuUOvnE8NkxGg==
+   ```
 
-5. In PowerShell, type the following command to mount the drive
+4. In PowerShell, type the following command to mount the drive
 
-    ```powershell
-        mssqlctl cluster storage-pool mount create --remote-uri abfs://databricksfiles@ikedatabricks.dfs.core.windows.net/ --mount-path   /mounts/dbfiles --credential-file c:\temp\filename.creds
-    ```
-6.  Once the storage account has been mounted, you can check the status:
+   ```powershell
+   mssqlctl cluster storage-pool mount create --remote-uri abfs://databricksfiles@ikedatabricks.dfs.core.windows.net/ --mount-path /mounts/dbfiles --credential-file c:\temp\filename.creds
+   ```
 
-  ```powershell
-    mssqlctl cluster storage-pool mount status
-  ```  
+5. Once the storage account has been mounted, you can check the status:
 
-7. Now you can use Azure Data Studio and view the files from ADLS Gen2 under your HDFS folder in your Servers pane.  Look under /HDFS/mounts/dbfiles/
+   ```powershell
+   mssqlctl cluster storage-pool mount status
+   ```
 
-    ![Azure Data Studio server pane for new dbfiles folder](media/data-studio-mounts.png)
+6. Now you can use Azure Data Studio and view the files from ADLS Gen2 under your HDFS folder in your Servers pane. Look under /HDFS/mounts/dbfiles/
 
-8.  Now that the drive is mounted, create an external file format for CSV.  Open a new query window and paste the following command:
+   ![Azure Data Studio server pane for new dbfiles folder](media/data-studio-mounts.png)
 
-  ```sql
-    USE Sales;
-    GO
-    CREATE EXTERNAL FILE FORMAT csv_file
-    WITH (
-        FORMAT_TYPE = DELIMITEDTEXT,
-        FORMAT_OPTIONS(
-            FIELD_TERMINATOR = ',',
-            STRING_DELIMITER = '"',
-            FIRST_ROW = 2,
-            USE_TYPE_DEFAULT = TRUE)
+7. Now that the drive is mounted, create an external file format for CSV. Open a new query window and paste the following command:
+
+   ```sql
+     USE Sales;
+     GO
+     CREATE EXTERNAL FILE FORMAT csv_file
+     WITH (
+         FORMAT_TYPE = DELIMITEDTEXT,
+         FORMAT_OPTIONS(
+             FIELD_TERMINATOR = ',',
+             STRING_DELIMITER = '"',
+             FIRST_ROW = 2,
+             USE_TYPE_DEFAULT = TRUE)
+     );
+   ```
+
+8. Now create an external connection to your HDFS cluster:
+
+   ```sql
+     IF NOT EXISTS(SELECT * FROM sys.external_data_sources WHERE name = 'SqlStoragePool')
+     BEGIN
+       CREATE EXTERNAL DATA SOURCE SqlStoragePool
+       WITH (LOCATION = 'sqlhdfs://controller-svc:8080/default');
+     END
+   ```
+
+9. Now let's create two tables to two different files that exist in the storage account:
+
+
+    ```sql
+    CREATE EXTERNAL TABLE planes
+    ("tailnum" VARCHAR(100),	"year" VARCHAR(4),	"type" VARCHAR(100)
+    ,	"manufacturer" VARCHAR(100),	"model" VARCHAR(20),	"engines" BIGINT
+    ,	"seats" BIGINT,	"speed" VARCHAR(20)
+    ,	"engine" VARCHAR(20))
+    WITH
+    (
+        DATA_SOURCE = SqlStoragePool,
+        LOCATION = '/mounts/dbfiles/planes.csv',
+        FILE_FORMAT = csv_file
     );
-  ```
-9.  Now create an external connection to your HDFS cluster:
+    GO
 
-  ```sql
-    IF NOT EXISTS(SELECT * FROM sys.external_data_sources WHERE name = 'SqlStoragePool')
-    BEGIN
-      CREATE EXTERNAL DATA SOURCE SqlStoragePool
-      WITH (LOCATION = 'sqlhdfs://controller-svc:8080/default');
-    END
-  ```
- 10.  Now let's create two tables to two different files that exist in the storage account: 
-  
-  ```sql
- 
-CREATE EXTERNAL TABLE planes
-("tailnum" VARCHAR(100),	"year" VARCHAR(4),	"type" VARCHAR(100)
-,	"manufacturer" VARCHAR(100),	"model" VARCHAR(20),	"engines" BIGINT
-,	"seats" BIGINT,	"speed" VARCHAR(20)
-,	"engine" VARCHAR(20))
-WITH
-(
-    DATA_SOURCE = SqlStoragePool,
-    LOCATION = '/mounts/dbfiles/planes.csv',
-    FILE_FORMAT = csv_file
-);
-GO
+    CREATE EXTERNAL TABLE flights
+    ("year" BIGINT, 	"month" BIGINT, 	"day" BIGINT,	"dep_time" BIGINT
+        ,	"dep_delay" BIGINT,	"arr_time" BIGINT,	"arr_delay" BIGINT,	"carrier" VARCHAR(100)
+        ,	"tailnum" VARCHAR(20),	"flight" VARCHAR(20),	"origin" VARCHAR(50)
+        ,	"dest" VARCHAR(50),	"air_time" BIGINT,	"distance" BIGINT,
+          "hour" BIGINT,	"minute" BIGINT)
+    WITH
+    (
+        DATA_SOURCE = SqlStoragePool,
+        LOCATION = '/mounts/dbfiles/flights_small.csv',
+        FILE_FORMAT = csv_file
+    );
+    ```
 
- CREATE EXTERNAL TABLE flights
-("year" BIGINT, 	"month" BIGINT, 	"day" BIGINT,	"dep_time" BIGINT
-    ,	"dep_delay" BIGINT,	"arr_time" BIGINT,	"arr_delay" BIGINT,	"carrier" VARCHAR(100)
-    ,	"tailnum" VARCHAR(20),	"flight" VARCHAR(20),	"origin" VARCHAR(50)
-    ,	"dest" VARCHAR(50),	"air_time" BIGINT,	"distance" BIGINT,
-    	"hour" BIGINT,	"minute" BIGINT)
-WITH
-(
-    DATA_SOURCE = SqlStoragePool,
-    LOCATION = '/mounts/dbfiles/flights_small.csv',
-    FILE_FORMAT = csv_file
-);
- ```
-9.  Once the tables are created, you can interact with them like normal tables.  For instance, you can run a query that joins the two tables like this:
- ```sql
- SELECT * 
-   FROM planes p 
-   JOIN flights f
-    on p.tailnum = f.tailnum
- 
-  ```
-  
+11. Once the tables are created, you can interact with them like normal tables. For instance, you can run a query that joins the two tables like this:
+
+    ```sql
+    SELECT *
+      FROM planes p
+      JOIN flights f
+        on p.tailnum = f.tailnum
+    ```
+
 ## Wrap-up
 
 Thank you for participating in the SQL Server 2019 Big Data Clusters experience! We hope you are excited about the new capabilities, and will refer back to this experience to learn more about these features.
@@ -432,7 +416,7 @@ To recap, you experienced:
 
 1. How to minimize or remove the need for ETL through **data virtualization** with [relational data sources](https://docs.microsoft.com/sql/relational-databases/polybase/data-virtualization?toc=%2fsql%2fbig-data-cluster%2ftoc.json&view=sql-server-ver15) and [CSV files](https://docs.microsoft.com/sql/relational-databases/polybase/data-virtualization-csv?view=sql-server-ver15), by being able to query against these alongside internal SQL 2019 tables with no data movement required.
 2. Training a machine learning model by running a Jupyter notebook on the Big Data cluster, then scoring data with the trained model and saving it as an external table for easy access.
-3. You learned to use HDFS tiering to mount files from an Azure Data Lake Store Gen2 account, which allowed you to create tables from files as if they were local to the cluster. 
+3. You learned to use HDFS tiering to mount files from an Azure Data Lake Store Gen2 account, which allowed you to create tables from files as if they were local to the cluster.
 
 ## Additional resources and more information
 
