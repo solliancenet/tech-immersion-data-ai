@@ -79,8 +79,8 @@ In this task, you will train a deep learning model to classify the descriptions 
     ![The Upload menu](media/05.png 'Upload')
 
 7. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
-
-    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4/deep-learning.ipynb
+    
+    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/5/deep-learning.ipynb
    
     Then select **Done** to upload and dismiss the dialog.
 

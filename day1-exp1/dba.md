@@ -1,9 +1,9 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-## Day 1, Experience 1 - SQL Server 2019 for DBAs
+## Day 1, Experience 1 - Business Critical Performance and Security with SQL Server 2019
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Day 1, Experience 1 - SQL Server 2019 for DBAs](#Day-1-Experience-1---SQL-Server-2019-for-DBAs)
+  - [Day 1, Experience 1 - Business Critical Performance and Security with SQL Server 2019](#Day-1-Experience-1---Business-Critical-Performance-and-Security-with-SQL-Server-2019)
   - [Technology overview](#Technology-overview)
   - [Scenario overview](#Scenario-overview)
   - [Experience requirements](#Experience-requirements)
@@ -118,9 +118,9 @@ Prior to migrating their database to a newer version, Contoso Auto would like to
 
 9. Select **Start Assessment**.
 
-   ![Start assessment](media/dma-start-assessment-to-azure-sql-db.png "Start assessment")
+   ![Start assessment](media/dma-start-assessment.png "Start assessment")
 
-10. Review the assessment of ability to migrate to Azure SQL Database by starting with any reported compatibility issues. You can review compatibility issues by analyzing the affected object, its details, and potentially a fix for every issue identified under Breaking changes, Behavior changes, and Deprecated features.
+10. Review the assessment of ability to migrate to SQL Server 2017 on an Azure VM by starting with any reported compatibility issues. You can review compatibility issues by analyzing the affected object, its details, and potentially a fix for every issue identified under Breaking changes, Behavior changes, and Deprecated features.
 
     ![A behavioral change for Full-Text Search is listed as a possible compatibility issue.](media/dma-compatibility-issues.png "Compatibility issues")
 
