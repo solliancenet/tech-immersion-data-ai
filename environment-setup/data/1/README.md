@@ -1,6 +1,8 @@
 # SQL Server 2019 big data cluster setup
 
-Complete the steps below to deploy and configure SQL Server 2019 for the [Day 1, Experience 1](../../../day1-exp1/README.md) lab.
+Complete the steps below to deploy and configure SQL Server 2019 for the [Day 1, Experience 1 - Developer edition](../../../day1-exp1/developer.md) lab.
+
+**For the DBA edition environment setup instructions**, go [here](dba/README.md).
 
 ## Pre-requisites
 
