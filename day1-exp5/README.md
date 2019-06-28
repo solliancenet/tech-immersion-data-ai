@@ -2,10 +2,10 @@
 
 
 
-## Day 1, Experience 6 - Simplifying data flows with Azure Data Factory
+## Day 1, Experience 5 - Simplifying data flows with Azure Data Factory
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Day 1, Experience 6 - Simplifying data flows with Azure Data Factory](#Day-1-Experience-6---Simplifying-data-flows-with-Azure-Data-Factory)
+  - [Day 1, Experience 5 - Simplifying data flows with Azure Data Factory](#Day-1-Experience-5---Simplifying-data-flows-with-Azure-Data-Factory)
   - [Technology overview](#Technology-overview)
   - [Scenario overview](#Scenario-overview)
   - [Exercise 1: Using ADF Mapping Data Flows to visually configure data transformation pipelines](#Exercise-1-Using-ADF-Mapping-Data-Flows-to-visually-configure-data-transformation-pipelines)
@@ -18,6 +18,7 @@
     - [Task 7: Run the pipeline](#Task-7-Run-the-pipeline)
   - [Exercise 2: Execute an ADF Pipeline to copy data](#Exercise-2-Execute-an-ADF-Pipeline-to-copy-data)
     - [Task 1: Prepare the ADLS file system](#Task-1-Prepare-the-ADLS-file-system)
+    - [Task 2: Using the Copy activity in Azure Data Factory](#Task-2-Using-the-Copy-activity-in-Azure-Data-Factory)
   - [Wrap-up](#Wrap-up)
   - [Additional resources and more information](#Additional-resources-and-more-information)
 
@@ -270,35 +271,37 @@ In this task, you will set up your ADLS Gen2 filesystem using a Databricks noteb
 
 4.  Select **+ File System** and in the dialog that appears enter `contosoauto` for the name of the file system and select **OK**.
 
-3.  In the Azure portal, navigate to the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) as you did in step 1 above, and then select **tech-immersion-data-factory** from the list of resources.
+### Task 2: Using the Copy activity in Azure Data Factory
+
+1.  In the Azure portal, navigate to the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) as you did in step 1 above, and then select **tech-immersion-data-factory** from the list of resources.
 
     ![The Data Factory resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-data-factory.png "Tech Immersion resource group")
 
-4.  On the Data Factory blade, select the **Author & Monitor** tile to launch the Azure Data Factory management page.
+2.  On the Data Factory blade, select the **Author & Monitor** tile to launch the Azure Data Factory management page.
 
     ![The Author & Monitor tile is highlighted on the Data Factory overview blade.](media/data-factory-author-and-monitor.png "Author & Monitor")
 
-5.  On the Azure Data Factory page, select the **Author** (pencil) icon from the left-hand menu.
+3.  On the Azure Data Factory page, select the **Author** (pencil) icon from the left-hand menu.
 
     ![The Author icon is highlighted on the left-hand menu of the Azure Data Factory page.](media/data-factory-home-author.png "Data Factory Author icon")
 
-6.  On the ADF Author page, select **Pipelines** to expand the list, and then select the **CopyData** pipeline from the list.
+4.  On the ADF Author page, select **Pipelines** to expand the list, and then select the **CopyData** pipeline from the list.
 
     ![Azure Data Factory pipelines](media/data-factory-pipelines-copydata.png "ADF pipelines")
 
     > The `CopyData` pipeline consists of three copy activities. Two of the activities connect to your Azure SQL Database instance to retrieve vehicle data from tables there. The third connects to Cosmos DB to retrieve batch vehicle telemetry data. Each of the copy activities writes data into files in ADLS Gen2.
 
-7.  On the pipeline toolbar, select **Trigger** to run the `CopyData` pipeline, and then select **Finish** on the Pipeline Run dialog. You will receive a notification that they `CopyData` pipeline is running.
+5.  On the pipeline toolbar, select **Trigger** to run the `CopyData` pipeline, and then select **Finish** on the Pipeline Run dialog. You will receive a notification that they `CopyData` pipeline is running.
 
     ![Trigger is highlighted in the Data Factory pipeline toolbar.](media/data-factory-pipeline-toolbar.png "Data Factory pipeline toolbar")
 
-8.  To observe the pipeline run, select the **Monitor** icon from the left-hand menu, which will bring up a list of active and recent pipeline runs.
+6.  To observe the pipeline run, select the **Monitor** icon from the left-hand menu, which will bring up a list of active and recent pipeline runs.
 
     ![Azure Data Factory pipeline runs](media/data-factory-monitor-pipeline-runs.png "Azure Data Factory Monitor")
 
     > On the pipeline runs monitor page, you can see all active and recent pipeline runs. The **Status** field provide and indication of the state of the pipeline run, from In Progress to Failed or Canceled. You also have the option to filter by Status and set custom date ranges to get a specific status and time period.
 
-9.  Select the **Activity Runs** icon under Actions for the currently running pipeline to view the status of the individual activities which make up the pipeline.
+7.  Select the **Activity Runs** icon under Actions for the currently running pipeline to view the status of the individual activities which make up the pipeline.
 
     ![Data Factory activity runs](media/data-factory-monitor-activity-runs.png "Data Factory activity runs")
 
