@@ -531,7 +531,7 @@ The data generator console application creates and sends simulated vehicle senso
 
 In this task, you will open the lab solution in Visual Studio, publish the Function App, and configure and run the data generator. The data generator saves simulated vehicle telemetry data to Cosmos DB, which triggers the Azure function to run and process the data, sending it to Event Hubs, prompting your Stream Analytics job to aggregate and analyze the enriched data and send it to Power BI. The final step will be to create the Power BI report in the task that follows.
 
-1.  Open File Explorer and navigate to `C:\lab-files\data\2`. Double-click on **TechImmersion.sln** to open the solution in Visual Studio. **NOTE:** If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab (they are called `Username` and `Password` under the heading Azure Credentials in the documentation).
+1.  Open File Explorer and navigate to `C:\lab-files\data\4`. Double-click on **TechImmersion.sln** to open the solution in Visual Studio. **NOTE:** If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab (they are called `Username` and `Password` under the heading Azure Credentials in the documentation).
 
     ![The TechImmersion.sln file is highlighted in the C:\tech-immersion folder.](media/vs-solution.png 'Windows explorer')
 
