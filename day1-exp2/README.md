@@ -26,6 +26,10 @@ SQL Server 2019 is a hub for data integration. Data virtualization allows querie
 
 Customers will be able to deliver transformational insights over structured and unstructured data with the power of SQL Server, Hadoop and Spark. SQL Server 2019 big data clusters offer scalable compute and storage composed of SQL Server, Spark and HDFS. Big data clusters will also cache data in scale-out data marts.
 
+![SQL and Spark easily access the data lake.](media/sql-data-lake.png 'Managed SQL Server, Spark, and data lake')
+
+SQL Server 2019 Big Data Clusters include a storage pool that consists of storage nodes comprised of SQL Server on Linux, Spark, and HDFS. All the storage nodes in a SQL big data cluster are members of a scalable HDFS cluster. These components of the storage pool can be combined to create a data lake to store big data, potentially ingested from multiple, disparate external sources. This data can be either structured or unstructured data. Once the big data is stored in HDFS in the big data cluster, you can analyze and query the data and combine it with your relational data.
+
 SQL Server 2019 is a complete AI platform to train and operationalize R and Python models in SQL Server Machine Learning Services or Spark ML using Azure Data Studio notebooks.
 
 SQL Server 2019 will give customers and ISVs the choice of programming language and platform. They will be able to build modern applications with innovative features using .NET, PHP, Node.JS, Java, Python, Ruby, and more – and deploy the application on either Windows, Linux, or containers both on-premises and in the cloud. Application developers are now able to run Java code on SQL Server and store and analyze graph data.
@@ -299,9 +303,9 @@ In this task, you will use Azure Data Studio to execute a notebook that will ena
 
 ![SQL and Spark easily access the data lake.](media/sql-data-lake.png 'Managed SQL Server, Spark, and data lake')
 
-SQL Server 2019 data pools helps you create a data lake by storing data in scalable, shared storage provided by Hadoop File System (HDFS). Store high volume data in this layer and access it easily using either SQL or Apache Spark. You can expand your HDFS storage by using tiering.
+SQL Server 2019 storage pools help you create a data lake by storing data in scalable, shared storage provided by Hadoop File System (HDFS). Store high volume data in this layer and access it easily using either SQL or Apache Spark. You can expand your HDFS storage by using tiering.
 
-With tiering, applications can seamlessly access data in a variety of external stores as though the data resides in the local HDFS. This allows you to interact with the files in Azure Data Lake Store Gen2 as if they were local files. You can either use an Azure Storage access key or an Azure Active Directory User Account to gain permission to the files. For this lab, we will use the access key.
+HDFS also provides data persistency, as HDFS data is spread across all the storage nodes in the SQL big data cluster. However, you can add external HDFS data sources to the HDFS cluster through tiering. With tiering, applications can seamlessly access data in a variety of external stores as though the data resides in the local HDFS. This allows you to interact with the files in Azure Data Lake Storage Gen2 or Amazon S3 as if they were local files. Both options allow you to mount the data store using storage keys. However, with Azure Data Lake Storage Gen 2, you can either use an Azure Storage access key or an Azure Active Directory User Account to gain permission to the files. For this lab, we will use the access key.
 
 1. In Windows, open PowerShell.
 
