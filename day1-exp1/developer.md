@@ -257,7 +257,7 @@ In this task, you will use Azure Data Studio to execute a notebook that will ena
 
 1. In Azure Data Studio, click **File**, then **Open File...**.
 
-2. In the folder browser dialog, navigate to the **C:\lab-files\data\1** folder and select **predict-battery-life-with-sqlbdc.ipynb**.
+2. In the folder browser dialog, navigate to the **C:\lab-files\data\2** folder and select **predict-battery-life-with-sqlbdc.ipynb**.
 
 3. When the notebook opens, you need to select the **Kernel** you would like to use to run the notebook. Locate the **Kernel** dropdown in the toolbar above the notebook, then select **Python 3**.
 

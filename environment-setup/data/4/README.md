@@ -1,133 +1,112 @@
-# Modern Data Warehouse setup
+# Azure SQL Managed Instance setup
 
-Complete the steps below to prepare the environment for the [Day 1, Experience 4](../../../day1-exp4/README.md) lab.
+Complete the steps below to prepare the environment for the [Day 1, Experience 3](../../../day1-exp3/README.md) lab.
 
 ## Pre-requisites
 
-### Shared resources
+### Shared resource
 
 The following resources should be provisioned as a shared resource for all lab participants.
 
-- Service Principal account
-  - Name: tech-immersion-sp
+1. **Azure SQL Database Managed Instance**
+   - Provision a single SQL Managed Instance to be shared by all lab attendees.
+   - Business Critical service tier
+     - Gen5
+     - 16 vCores
+     - 64 GB storage
+   - Admin credentials:
+     - Login: tiuser
+     - Password: Password.1234567890
+2. **SQL Server 2008 R2 on Windows Server 2008 VM**
+   - Provision a single SQL Server 2008 R2 on Windows 2008 VM. This will be accessed via IP address.
+   - Attendees will need the IP address of this server, and read-only access to the `ContosoAutoDb` database for performing assessments using Data Migration Assistant.
+3. **App Service Environment (ASE)**
+   - Provision a single ASE to be shared by all lab attendees.
+   - Must be added to the same VNet as the SQL MI.
 
 ### Per attendee resources
 
-The following resources should be provisioned on a per-attendee basis in the attendee's resource group:
+The following services must be provisioned per attendee prior to the lab:
 
-- Azure Data Factory v2
-- Cosmos DB
-- Azure Data Lake Storage Gen2 (ADLS Gen2)
-- Azure Blob Storage Account
-- Azure SQL Data Warehouse
-- Azure Key Vault
-- Azure Databricks workspace
+1. **Azure Blob Storage account**
+   - A shared Blob Storage account should be created for storing a backup of the `ContosoAutoDb` database (ContosoAutoDb.bak).
+2. **Lab VM or jumpbox**
+   - Per attendee, provision a VM created in the same VNet as the SQL MI.
+3. **App Service (Web App)**
+   - Provision one App Service (Web app) per attendee, each deployed into the ASE.
+   - Name: tech-immersion-web-XXXX (where XXXX is the attendee's unique ID).
 
-## Azure Data Factory v2 configuration
+### SQL MI configuration
 
-Each ADF instance should have the following activities and configuration:
+The following configuration must be applied to the SQL MI prior to the workshop.
 
-- Pipelines:
-  - CopyData
-    - Activities:
-      - CopyVehicleInfoFromStorage
-        - Retrieves the `VehicleInfo.csv` file from blob storage container `day1-exp3-data`
-        - Writes data to ADLS Gen2 account filesystem `contosoauto/VehicleInfo.csv`
-      - CopyTelemetryDataFromCosmos
-        - Needs Key to connect to Cosmos DB in Linked Service
-        - Writes data to ADLS Gen2 account filesystem `contosoauto/VehicleTelemetry.json`
-          - File format: JSON
-          - File pattern: Set of objects
-      - CopyCarDataFromStorage
-        - Retrieves the `Cars.csv` file from blob storage container `day1-exp3-data`
-        - Writes data to ADLS Gen2 account filesystem `contosoauto/Cars.csv`
+#### Add Gateway subnet
 
-> The files `VehicleInfo.csv` and `Cars.csv` can be placed in the user's storage account, or can be placed into a shared storage account. ADF will need to be configured to connect to the `day1-exp3-data` container in the target storage account using a key or SAS token.
+In the Azure portal, navigate to the VNet where the SQL MI is deployed, and do the following:
 
-- There is an ARM template at `environment-setup/data/4/adf-arm-template.zip` that can be used to set up the ADF pipeline.
-- You can also view the pipeline JSON in the `environment-setup/data/4/pipeline.json` file.
+1. Select **Subnets** from the left-hand menu.
+2. Select **+ Gateway subnet** to add a Gateway subnet.
+3. Accept all the default values, and select **OK**.
 
-## Cosmos DB configuration
+#### Add Virtual Network Gateway
 
-There is no additional configuration needed for Cosmos DB.
+1. In the Azure portal, create a Virtual Network Gateway, and associate it to the SQL MI VNet.
+2. On the VNet Gateway, add a Point-to-site configuration with the IP range: 10.2.1.0/24 or something similar.
 
-## Azure Data Lake Storage Gen 2
+#### Create ContosoAutoDb database
 
-- Filesystem will be initialized by attendees, so no additional configuration needed for ADLS Gen2.
+- A `ContosoAutoDb` database should be created, from the **ContosoAutoDb.bak** file (found under lab-files/data/3), as a shared read-only database for attendees.
+- All attendees must have the ability to restore a copy of the `ContosoAutoDb` database to the SQL MI, and name it `ContosoAutoDb-<unique-user-id>`.
 
-## Azure Blob Storage account
+#### Enable Advanced Data Security
+
+1. On the SQL MI blade, select **Advanced Data Security** from the left-hand menu, under Security, and then turn on Advanced Data Security by selecting **ON**.
+2. On the Advanced Data Security screen enter the following:
+   - **Subscription**: Select the subscription you are using for this workshop.
+   - **Storage account**: Select this and then select **+ Create new**. On the Create storage account blade, enter a globally unique name (e.g., **techimmersionsqlmi**), and select **OK**, accepting the default values for everything else.
+   - **Periodic recurring scans**: Select **ON**.
+   - **Send scan reports to**: Enter your email address.
+   - **Send alerts to**: Enter you email address.
+   - **Advanced Threat Protection types**: Select this and ensure all options are checked.
+3. Your **Advanced Data Security** form should look similar to the following:
+4. Select **Save** to enable **Advanced Data Security**.
+
+### SQL Server 2008 R2 configuration
+
+After provisioning the SQL Server 2008 R2 on Windows 2008 VM, the SQL Server 2008 R2 instance requires the following configuration:
+
+- Open port 1433 using an Inbound port rule added to the VM firewall in the Azure portal.
+- Open port 1433 on the VM's Windows firewall using an inbound port rule on the VM.
+- Add the **ContosoAutoDb** database to the VM by restoring from the provided `ContosoAutoDb.bak` file.
+- Reset the `sa` password, enable mixed mode authentication, enable Service broker, and create the `WorkshopUser` account by running the `configure-sql-2008.sql` script found under lab-files/data/3.
+- Restart the SQL Server (MSSQLSERVER) Service using Sql Server Configuration Manager.
+
+### Blob Storage account configuration
 
 The following step should be taken for the Blob Storage account:
 
-1. Create a container in the storage account named `day1-exp3-data`.
-2. Upload the provided `Cars.csv` and `VehicleInfo.csv` files to the `day1-exp3-data` container.
-3. Create a container in the storage account named `dwtemp`.
+1. Create a container in the storage account named `database-backup`.
+2. Upload the provided `ContosoAutoDb.bak` file to the `database-backup` container.
+3. Create a SAS token providing read access to the Storage account.
+4. Update `Day 1 Experience 3, Task 2, Step 6` with the proper storage account uri, ending with `/database-backup` and SAS key. The SAS key should begin with `sv=`, so the leading "?" should be removed from the generated key.
+5. Update `Day 1 Experience 3, Task 2` Steps `8` and `9` with the proper storage account URI, ending with `/database-backup/ContosoAutoDb.bak`.
 
-## Azure SQL Data Warehouse
+### App Service configuration
 
-The following configuration needs to be performed on the SQL DW:
+The following configuration must be applied to each App Service prior to the workshop.
 
-1. Admin credentials
-   - User name: ti-admin
-   - Password: Password.1!!
-2. Database name: tech-immersion-sql-dw
-3. Add the user's jumpbox IP address to the SQL DW firewall
-4. Create a master key in the database by running the following script against the tech-immersion-sql-dw database
-   1. `CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'Password.1!!';`
+1. Configure VNet integration with SQL MI VNet.
+   1. Will click continue when prompted about ASE VNet settings, and click configure, selecting the SQL MI VNet.
+2. Deploy the **ContosoAutoOpsWeb** application, found under `lab-files/data/3` folder.
+   - Open the `ContosoAutoOpsWeb.sln` file, and deploy the application to each App Service.
+3. Add two connection string values to each web app. These should be under the Connection Strings section on the Application Settings page of each App Service.
+   - **ContosoAutoDbContext**: Will initially contain the connection string to the SQL Server 2008 R2 database (e.g., `Server=tcp:40.70.209.101,1433;Database=ContosoAutoDb;User ID=WorkshopUser;Password=Password.1!!;Trusted_Connection=False;Encrypt=True;`)
+   - **ContosoAutoDbReadOnlyContext**: Will initially contain the connection string to the SQL Server 2008 R2 database (e.g., `Server=tcp:40.70.209.101,1433;Database=ContosoAutoDb;User ID=WorkshopUser;Password=Password.1!!;Trusted_Connection=False;Encrypt=True;`)
 
-## Service Principal configuration
+### Lab computer configuration
 
-A service principal (SP) should be created in Azure Active Directory for the subscription hosting the lab environments. Only one SP is needed, and it can be shared by all lab attendees.
+The jumpbox VM requires the following:
 
-- Copy Application ID (will be added to Key Vault)
-- Generate password key for the SP (will be added to Key Vault)
-- Assign to Storage Blob Data Contributor role in the ADLS Gen2 account
-  - Select Access Control (IAM) on the ADLS Gen2 account blade.
-  - Select Add.
-  - Select the role of Storage Blob Data Contributor.
-  - Select the Service Principal tech-immersion-sp Service Principal used for this workshop.
-  - Save the role assignment.
-
-## Azure Key Vault configuration
-
-Key Vault is used to store secrets and values which need to be accessible from Databricks notebooks.
-
-The following Access policies should be added to Key Vault:
-
-- Azure Databricks account
-  - Access rights to Secrets (Get, List permissions)
-
-The following secrets must be added to Key Vault:
-
-| Name | Value |
-| ---- | ----- |
-| ADLS-Gen2-Account-Name | `adlsstrgXXXXX` |
-| Azure-Tenant-ID | `f94768c8-8714-4abe-8e2d-37a64b18216a` |
-| ContosoAuto-SP-Client-ID | `ea2ca9d8-6691-4e6e-b5ee-2d246fd3f0c7` |
-| ContosoAuto-SP-Client-Key | `eSQ8LALrZqo74YcxXhHPRML2Fz37aHOmxI/Z89TCk+o=` |
-| Cosmos-DB-Key | The Primary Key for the user's Cosmos DB instance |
-| Cosmos-DB-Uri | The URI for the user's Cosmos DB instance |
-| Sql-Dw-Password | `Password.1!!`  |
-| Sql-Dw-Server-Name | The server name of the user's SQL DW |
-| Storage-Account-Key | The primary key for the user's Blob Storage account |
-| Storage-Account-Name | The account name of the user's Blob Storage account |
-
-## Azure Databricks workspace configuration
-
-For each attendee's Databricks workspace, the following configuration should be set:
-
-1. Run the `Cluster Setup.dbc` notebook (found in environment-setup/data/4) to create a `Standard_DS3_v2` cluster
-   - Running Databricks version `5.2.x-scala2.11`
-   - Using Python Version 3
-   - Cluster should have the Azure Spark Cosmos DB Spark connector library installed (Maven Coordinates: `com.microsoft.azure:azure-cosmosdb-spark_2.4.0_2.11:1.3.5`)
-   - Spark Config
-     - Add value: `spark.databricks.delta.preview.enabled true`
-2. Key Vault-backed secrets and scopes should be enabled
-   - Instructions <https://docs.azuredatabricks.net/user-guide/secrets/secret-scopes.html#akv-ss>
-   - Secret scope name: **key-vault-secrets**
-   - Managed Principal: Select **Creator**
-   - DNS Name: This will be the DNS name assigned to each user-specific Azure Key Vault instance.
-     - Can be copied from the Overview blade of the user's Key Vault.
-   - Resource ID: This will be the resource ID assigned to the user-specific Azure Key Vault instances.
-     - Can be copied from the **Properties** blade of the user's Key Vault.
-3. Add the `Tech-Immersion.dbc` notebook (found in lab-files/data/4) to the Shared workspace folder.
+- [SQL Server Management Studio](https://go.microsoft.com/fwlink/?linkid=2043154) (SSMS) v 17.9.1 or greater.
+- [Microsoft Data Migration Assistant](https://www.microsoft.com/download/details.aspx?id=53595)
+- Must be in the same VNet as the SQL MI

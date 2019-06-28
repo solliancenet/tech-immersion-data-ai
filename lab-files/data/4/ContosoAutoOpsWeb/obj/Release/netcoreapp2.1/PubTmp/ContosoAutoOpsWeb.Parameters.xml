@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="tech-immersion-app" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^Y:\\tech-immersion-data-ai\\lab-files\\ContosoAutoOpsWeb\\ContosoAutoOpsWeb\\obj\\Release\\netcoreapp2\.1\\PubTmp\\Out\\$" />
+  </parameter>
+</parameters>
