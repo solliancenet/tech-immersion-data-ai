@@ -101,7 +101,7 @@ In this experience you will learn how Contoso Auto can use MLOps to formalize th
 
 3. Provide the following information in the `Add an Azure Resource Manager service connection` dialog box and then select **Ok**:
  
-   a. Connection name: `quick-starts-sc` (*note: do not change this name*)
+   a. Connection name: `quick-starts-sc` (*note: provide exact name as shown*)
    
    b. Subscription: Select the Azure subscription to use
    
