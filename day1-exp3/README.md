@@ -186,7 +186,7 @@ The final step is to generate an analysis report by using the replay traces. The
 
 ## Task 3: Migrate the database to SQL MI
 
-In this task, you will migrate the `ContosoAutoDb` database from the on-premises SQL 2008 R2 database to SQL MI, targeting the [Business Critical service tier](https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance#managed-instance-service-tiers).
+In this task, you will migrate the `ContosoAutoDb` database from the on-premises SQL 2008 R2 database to SQL MI. The migration will be done using the [Azure Database Migration Service](https://docs.microsoft.com/azure/dms/dms-overview). Use the [Database Migration Guide](https://datamigration.microsoft.com/) for recommendations, step-by-step guidance, and expert tips on your specific database migration. To meet the customer's requirements, the migration will target the [Business Critical service tier](https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance#managed-instance-service-tiers) of SQL Managed Instance.
 
 > The Business Critical service tier is designed for business applications with the highest performance and high-availability (HA) requirements.
 
