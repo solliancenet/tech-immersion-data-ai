@@ -1,26 +1,28 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-
-
 ## Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
-  - [Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance](#day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-database-managed-instance)
-  - [Technology overview](#technology-overview)
-    - [Migrate your SQL Server databases without changing your apps](#migrate-your-sql-server-databases-without-changing-your-apps)
-    - [Accelerate your database migration](#accelerate-your-database-migration)
-    - [Maximize ROI by migrating to the cloud](#maximize-roi-by-migrating-to-the-cloud)
-  - [Scenario overview](#scenario-overview)
-  - [Task 1: Perform database assessments for migration](#task-1-perform-database-assessments-for-migration)
-  - [Task 2: Migrate the database to SQL MI](#task-2-migrate-the-database-to-sql-mi)
-  - [Task 3: Update the web application to use the new SQL MI database](#task-3-update-the-web-application-to-use-the-new-sql-mi-database)
-  - [Task 4: Enable Dynamic Data Masking](#task-4-enable-dynamic-data-masking)
-  - [Task 5: Add clustered columnstore index](#task-5-add-clustered-columnstore-index)
-  - [Task 6: Use online secondary for read-only queries](#task-6-use-online-secondary-for-read-only-queries)
-  - [Task 7: Review Advanced Data Security Vulnerability Assessment](#task-7-review-advanced-data-security-vulnerability-assessment)
-  - [Task 8: SQL Data Discovery and Classification](#task-8-sql-data-discovery-and-classification)
-  - [Wrap-up](#wrap-up)
-  - [Additional resources and more information](#additional-resources-and-more-information)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
+  - [Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance](#Day-1-Experience-3---Unlocking-new-capabilities-with-friction-free-migrations-to-Azure-SQL-Database-Managed-Instance)
+  - [Technology overview](#Technology-overview)
+    - [Migrate your SQL Server databases without changing your apps](#Migrate-your-SQL-Server-databases-without-changing-your-apps)
+    - [Accelerate your database migration](#Accelerate-your-database-migration)
+    - [Maximize ROI by migrating to the cloud](#Maximize-ROI-by-migrating-to-the-cloud)
+  - [Scenario overview](#Scenario-overview)
+  - [Task 1: Perform database assessments for migration](#Task-1-Perform-database-assessments-for-migration)
+  - [Task 2: Use DEA to test workloads on the target platform](#Task-2-Use-DEA-to-test-workloads-on-the-target-platform)
+    - [Capture](#Capture)
+    - [Replay](#Replay)
+    - [Analysis](#Analysis)
+  - [Task 3: Migrate the database to SQL MI](#Task-3-Migrate-the-database-to-SQL-MI)
+  - [Task 4: Update the web application to use the new SQL MI database](#Task-4-Update-the-web-application-to-use-the-new-SQL-MI-database)
+  - [Task 5: Enable Dynamic Data Masking](#Task-5-Enable-Dynamic-Data-Masking)
+  - [Task 6: Add clustered columnstore index](#Task-6-Add-clustered-columnstore-index)
+  - [Task 7: Use online secondary for read-only queries](#Task-7-Use-online-secondary-for-read-only-queries)
+  - [Task 8: Review Advanced Data Security Vulnerability Assessment](#Task-8-Review-Advanced-Data-Security-Vulnerability-Assessment)
+  - [Task 9: SQL Data Discovery and Classification](#Task-9-SQL-Data-Discovery-and-Classification)
+  - [Wrap-up](#Wrap-up)
+  - [Additional resources and more information](#Additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -148,7 +150,41 @@ In this task, you will use the Microsoft [Data Migration Assistant](https://docs
 
     > The assessment report for a migrating the `ContosoAutoDb` database to a target platform of Azure SQL Database Managed Instance shows no feature parity. The database, including the cross-database references and Service broker features, can be migrated as is, providing the opportunity for ContosoAuto to have a fully managed PaaS database instance running in Azure. Previously, their options for migrating a database using features, such as Service Broker, incompatible with Azure SQL Database, were to deploy the database to a virtual machine running in Azure (IaaS) or modify their database and applications to not use the unsupported features. The introduction of Azure SQL MI, however, provides the ability to migrate databases into a managed Azure SQL database with near 100% compatibility, including the features that prevented them from using Azure SQL Database.
 
-## Task 2: Migrate the database to SQL MI
+## Task 2: Use DEA to test workloads on the target platform
+
+Next, let's take a look at the Microsoft [Database Experimentation Assistant](https://docs.microsoft.com/en-us/sql/dea/database-experimentation-assistant-overview?view=sql-server-ver15) (DEA), and how it can help in choosing the right target platform for a SQL database upgrade and migration. DEA is an experimentation solution for SQL Server upgrades. DEA can help you evaluate a targeted version of SQL Server for a specific workload. Customers who are upgrading from earlier SQL Server versions (starting with 2005) to a more recent version of SQL Server can use the analysis metrics that the tool provides.
+
+> **NOTE**: Running DEA traces and replays takes a minimum of 10 minutes, which is more time than is alloted for this workshop experience, so we will just discuss the steps and benefits of using the tool in this task.
+
+DEA analysis metrics include:
+
+- Queries that have compatibility errors
+- Degraded queries and query plans
+- Other workload comparison data
+
+Comparison data can lead to higher confidence and a successful upgrade experience.
+
+DEA guides you through running an A/B test by completing three steps:
+
+- Capture
+- Replay
+- Analysis
+
+### Capture
+
+The first step of SQL Server A/B testing is to capture a trace on your source server. The source server usually is the production server. Trace files capture the entire query workload on that server, including timestamps. Later, this trace is replayed on your target servers for analysis. The analysis report provides insights on the difference in performance of the workload between your two target servers. Traces can be run from 5 - 180 minutes.
+
+### Replay
+
+The second step of SQL Server A/B testing is to replay the trace file that was captured to your target servers. Then, collect extensive traces from the replays for analysis.
+
+You replay the trace file on two target servers: one that mimics your source server (Target 1) and one that mimics your proposed change (Target 2). The hardware configurations of Target 1 and Target 2 should be as similar as possible so SQL Server can accurately analyze the performance effect of your proposed changes.
+
+### Analysis
+
+The final step is to generate an analysis report by using the replay traces. The analysis report can help you gain insight about the performance implications of the proposed change.
+
+## Task 3: Migrate the database to SQL MI
 
 In this task, you will migrate the `ContosoAutoDb` database from the on-premises SQL 2008 R2 database to SQL MI, targeting the [Business Critical service tier](https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance#managed-instance-service-tiers).
 
@@ -205,7 +241,7 @@ To migrate the `ContosoAutoDb` database from SQL 2008 R2 to SQL MI you will use 
 
     > NOTE: Your database name will differ from the above screen shot, in that it will contain the unique identifier assigned to you for this workshop, such as `ContosoAutoDb-01234`. The SQL Managed Instance is shared for all workshop participants, so you may also see databases for other participants.
 
-## Task 3: Update the web application to use the new SQL MI database
+## Task 4: Update the web application to use the new SQL MI database
 
 With the `ContosoAutoDb` database now running on SQL MI in Azure, the next step is to make the required modifications to the ContosoAuto operations web application. The operations web app is currently running an [Azure App Service Environment](https://docs.microsoft.com/azure/app-service/environment/intro), which was provisioned in the same virtual network as the SQL Managed Instance.
 
@@ -257,7 +293,7 @@ In this task, you will make updates to the ContosoAuto operations web applicatio
 
 > That is it. You were able to successfully connect your application to the new SQL MI database by simply updating the application's connection string. No code changes or other updates are needed!
 
-## Task 4: Enable Dynamic Data Masking
+## Task 5: Enable Dynamic Data Masking
 
 [Dynamic Data Masking](https://docs.microsoft.com/azure/sql-database/sql-database-dynamic-data-masking-get-started) (DDM) limits sensitive data exposure by masking it to non-privileged users. This feature helps prevent unauthorized access to sensitive data by enabling customers to designate how much of the sensitive data to reveal with minimal impact on the application layer. It’s a policy-based security feature that hides the sensitive data in the result set of a query over designated database fields, while the data in the database is not changed.
 
@@ -335,7 +371,7 @@ In this task, you will enable DDM on the `CardNumber` field in the `CreditCard` 
 
     > The `CardNumber` is now displayed using the mask applied to it, so only the last four digits of the card number are visible. Dynamic Data Masking is a powerful feature that enables you to prevent unauthorized users from viewing sensitive or restricted information. It’s a policy-based security feature that hides the sensitive data in the result set of a query over designated database fields, while the data in the database is not changed.
 
-## Task 5: Add clustered columnstore index
+## Task 6: Add clustered columnstore index
 
 ContosoAuto is looking to take advantage of some of the performance improvement features available in Azure SQL MI. In particular, they are interested in optimizing performance by using [In-Memory technologies](https://docs.microsoft.com/azure/sql-database/sql-database-in-memory).
 
@@ -465,7 +501,7 @@ In this task, you will create a new table based on the existing `[Sales].[SalesO
 
     ![Various information is highlighted on the Messages tab of the Results pane.](./media/ssms-query-results-messages-stastics-io.png "Compare the information")
 
-## Task 6: Use online secondary for read-only queries
+## Task 7: Use online secondary for read-only queries
 
 In this task, you will look at how you can use the automatically created online secondary for reporting, without feeling the impacts of a heavy transactional load on the primary database. Each database in the SQL MI Business Critical tier is automatically provisioned with several AlwaysON replicas to support the availability SLA.
 
@@ -535,7 +571,7 @@ Server=tcp:tech-immersion-sql-mi.3e134c88d9f6.database.windows.net;Database=Cont
 
     > Notice the `updability` option is now displaying as `READ_ONLY`. With a simple addition to your database connection string, you are able to send read-only queries to the online secondary of your SQL MI database, allowing you to load-balance read-only workloads using the capacity of one read-only replica. The SQL MI Business Critical cluster has built-in Read Scale-Out capability that provides free-of charge built-in read-only node that can be used to run read-only queries that should not affect performance of your primary workload.
 
-## Task 7: Review Advanced Data Security Vulnerability Assessment
+## Task 8: Review Advanced Data Security Vulnerability Assessment
 
 [SQL Database Advance Data Security](https://docs.microsoft.com/azure/sql-database/sql-database-advanced-data-security) (ADS) provides advanced SQL security capabilities, including functionality for discovering and classifying sensitive data, surfacing and mitigating potential database vulnerabilities, and detecting anomalous activities that could indicate a threat to your database. ADS is enabled at the managed instance level by selecting **ON** on the **Advanced Data Security** blade for your managed instance. This turns ADS on for all databases on the managed instance. ADS uses an Azure Blob Storage account to save the associated outputs (e.g., assessment and vulnerability reports). In the interest of time for this workshop, the steps to enable ADS have already been performed on the shared SQL MI.
 
@@ -637,7 +673,7 @@ In this task, you will review an assessment report generated by [Advance Data Se
 
     > Using the SQL Vulnerability Assessment it is simple to identify and remediate potential database vulnerabilities, allowing you to proactively improve your database security.
 
-## Task 8: SQL Data Discovery and Classification
+## Task 9: SQL Data Discovery and Classification
 
 In this task, you will look at another **Advanced Data Security** feature available within the SQL MI database, [SQL Data Discovery and Classification](https://docs.microsoft.com/sql/relational-databases/security/sql-data-discovery-and-classification?view=sql-server-2017). Data Discovery & Classification introduces a new tool built into SQL Server Management Studio (SSMS) for discovering, classifying, labeling & reporting the sensitive data in your databases. It introduces a set of advanced services, forming a new SQL Information Protection paradigm aimed at protecting the data in your database, not just the database. Discovering and classifying your most sensitive data (business, financial, healthcare, etc.) can play a pivotal role in your organizational information protection stature.
 
