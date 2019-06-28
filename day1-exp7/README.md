@@ -1,11 +1,11 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-## Day 1, Experience 5 - Open source databases at scale
+## Day 1, Experience 7 - Open source databases at scale
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Day 1, Experience 5 - Open source databases at scale](#Day-1-Experience-5---Open-source-databases-at-scale)
+  - [Day 1, Experience 7 - Open source databases at scale](#Day-1-Experience-7---Open-source-databases-at-scale)
   - [Technology overview](#Technology-overview)
-    - [Azure Database for PostgreSQL](#Azure-Database-for-PostgreSQL)
+    - [Azure Database for PostgreSQL Hyperscale (Citus)](#Azure-Database-for-PostgreSQL-Hyperscale-Citus)
   - [Scenario overview](#Scenario-overview)
   - [Experience requirements](#Experience-requirements)
   - [Task 1: Connect to PostgreSQL](#Task-1-Connect-to-PostgreSQL)
@@ -14,12 +14,20 @@
   - [Task 4: Create rollup functions](#Task-4-Create-rollup-functions)
   - [Task 5: Copy data into raw events table](#Task-5-Copy-data-into-raw-events-table)
   - [Task 6: Schedule periodic aggregation and execute dashboard queries](#Task-6-Schedule-periodic-aggregation-and-execute-dashboard-queries)
+  - [Wrap-up](#Wrap-up)
+  - [Additional resources and more information](#Additional-resources-and-more-information)
 
 ## Technology overview
 
-### Azure Database for PostgreSQL
+### Azure Database for PostgreSQL Hyperscale (Citus)
 
-ADD DESCRIPTION HERE
+Azure Database for PostgreSQL is a fully managed service built on the open source PostgreSQL database engine. It provides high availability and performance with monitoring and alerting, enterprise-grade security and compliance, automatic backups, data secured at-rest and in-motion, and full compatibility with PostgreSQL extensions with little to no administration required.
+
+Hyperscale clusters are enabled by Citus, which is an extension of PostgreSQL that allows you to horizontally scale queries across multiple machines, using sharding and partitioning techniques. Because of this, the query engine parallelizes incoming SQL queries across these servers for faster response times on large datasets. Data sharding is transparently handled for you and allows your existing PostgreSQL applications to take advantage of the benefits distributed data storage and querying provides, with minimal changes. This means that Contoso Auto's multi-tenant, real-time operational analytics requirements will be met with little effort on their part.
+
+A Hyperscale server group (database cluster) consists of a coordinator node and several worker nodes. To scale up, you define the number of cores and storage you require per coordinator node and worker node. You can select up to 32 vCores with 8 GiB RAM per vCore and up to 2 TiB of storage with up to 3 IOPS / GiB per node. To scale out, you can define the number of worker nodes, between 2 and 20. If you require more than 20 worker nodes, you can submit a support request.
+
+You can define the compute and storage settings independently for your nodes, giving you flexibility by adding more of one or the other depending on your needs. The storage includes database files, temporary files, transaction logs, and the Postgres server logs. The total amount of storage you provision also defines the I/O capacity available to each worker and coordinator node.
 
 ## Scenario overview
 
@@ -493,3 +501,20 @@ You will then execute queries against the rollup tables that will be used for Co
      AND minute <=now()
      AND customer_id=2;
    ```
+
+## Wrap-up
+
+Thank you for participating in the open source databases at scale experience! We hope you have learned how managed PostgreSQL on Azure, using the Hyperscale (Citus) offering, can better help you manage and run high-scale PostgreSQL databases while meeting multi-tenancy and scale-out requirements.
+
+To recap, you experienced:
+
+1. How to shard tables across nodes and create rollup tables for fast access to large data volumes.
+2. Create and schedule rollup functions.
+3. Use advanced aggregations using HyperLogLog and TopN.
+
+## Additional resources and more information
+
+- [Azure PostgreSQL documentation](https://docs.microsoft.com/en-us/azure/postgresql/)
+- [PostgreSQL time series data processing](https://docs.microsoft.com/en-us/azure/postgresql/tutorial-design-database-hyperscale-realtime)
+- [PostgreSQL distribution columns and multi-tenant apps](https://docs.microsoft.com/en-us/azure/postgresql/concepts-hyperscale-choose-distribution-column)
+- [PostgreSQL HyperLogLog extension](https://github.com/citusdata/postgresql-hll)

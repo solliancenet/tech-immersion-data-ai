@@ -22,21 +22,35 @@
 
 ## Technology overview
 
-SQL Server 2019 brings innovative security and compliance features, industry leading performance, mission-critical availability, and advanced analytics to all data workloads, now with support for big data built-in.
+![Diagram shows improvements to SQL Server with version 2019, as detailed below.](media/sql-2019-overview.png 'Modernize with SQL Server 2019')
 
-SQL Server 2019 is a hub for data integration. Data virtualization allows queries across relational and non-relational data without movement or replication. The enhanced PolyBase feature of SQL Server 2019 is able to connect to Hadoop clusters, Oracle, Teradata, MongoDB, and more.
+Modernize with SQL Server 2019 with new features that help combine new technologies, and updates to existing SQL Server features you use today. New big data clusters brings Apache Spark and enhanced PolyBase features that allow you to easily access structured and unstructured data stored in HDFS and external relational stores, enabling data virtualization and analytics at scale.
 
-Customers will be able to deliver transformational insights over structured and unstructured data with the power of SQL Server, Hadoop and Spark. SQL Server 2019 big data clusters offer scalable compute and storage composed of SQL Server, Spark and HDFS. Big data clusters will also cache data in scale-out data marts.
+![A tree shows the available IQP features.](media/iqp-family.png 'The Intelligent Query Processing feature family')
 
-SQL Server 2019 is a complete AI platform to train and operationalize R and Python models in SQL Server Machine Learning Services or Spark ML using Azure Data Studio notebooks.
+> The IQP features shown in bold are new and improved features in SQL Server 2019.
 
-SQL Server 2019 will give customers and ISVs the choice of programming language and platform. They will be able to build modern applications with innovative features using .NET, PHP, Node.JS, Java, Python, Ruby, and more – and deploy the application on either Windows, Linux, or containers both on-premises and in the cloud. Application developers are now able to run Java code on SQL Server and store and analyze graph data.
+Intelligent Query Processing (IQP) features in SQL Server 2019 improve scaling of queries, and Automatic Plan Correction resolves performance problems. In addition, you can gain performance insights anytime and anywhere with Lightweight Query Profiling.
 
-SQL Server 2019 allows customers to run real-time analytics on operational data using HTAP (Hybrid Transactional and Analytical Processing), leverage the in-memory technologies for faster transactions and analytical queries, and get higher concurrency and scale through persistent memory.
+To further boost performance, SQL Server 2019 provides more in-memory database options than ever before, such as:
 
-Intelligent Query Processing features in SQL Server 2019 improve scaling of queries, and Automatic Plan Correction resolves performance problems.
+- Hybrid Buffer Pool
+- Memory-Optimized TempDB Metadata
+- In-Memory OLTP
+- Persistent Memory Support
 
-SQL Server 2019 enables several layers of security including protection of computations in Always Encrypted secure enclaves. Customers can track compliance with sophisticated tools such as Data Discovery & Classification labeling for GDPR and Vulnerability Assessment tool.
+![Always Encrypted with secure enclaves](media/always-encrypted-with-secure-enclaves-overview.png 'Always Encrypted with secure enclaves')
+
+SQL Server 2019 enables several layers of security including protection of computations in Always Encrypted with secure enclaves. Customers can track compliance with sophisticated tools such as Data Discovery & Classification labeling for GDPR and Vulnerability Assessment tool. Transparent Data Encryption (TDE) encryption scanning now offers more control with suspend and resume syntax so that you can pause the scan while the workload on the system is heavy, or during business-critical hours, and then resume the scan later.
+
+SSL/TLS certificates are widely used to secure access to SQL Server. In previous editions, certificate management was a more manual and time-consuming process, through developing scripts and running manual commands. With SQL Server 2019, certificate management is integrated into the SQL Server Configuration Manager, simplifying common tasks such as:
+
+- Viewing and validating certificates installed in a SQL Server instance.
+- Identifying which certificates may be close to expiring.
+- Deploying certificates across Availability Group machines from the node holding the primary replica.
+- Deploying certificates across machines participating in a Failover Cluster instance from the active node.
+
+![Availability groups on Kubernetes.](media/availability-groups-kubernetes.png 'Availability groups on Kubernetes')
 
 For High Availability and Disaster Recovery, SQL Server 2019 now supports up to eight secondary replicas in an Always On Availability Group. Customers can also run Always On Availability Groups on containers using Kubernetes.
 
@@ -59,17 +73,17 @@ You will be accessing a shared SQL Server 2019 server for this experience. Pleas
 
 1. On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **SQL Server Management** into the search box, then select the SQL Server Management Studio 18 desktop app in the search results.
 
-    ![The search box has "SQL Server Management" entered into it and the desktop app is highlighted in the results.](media/launch-ssms.png "Launch SQL Server Management Studio")
+   ![The search box has "SQL Server Management" entered into it and the desktop app is highlighted in the results.](media/launch-ssms.png 'Launch SQL Server Management Studio')
 
 2. Within the Connection dialog that appears, configure the following:
 
-    - **Server name:** Enter the SQL Server 2019 VM IP address. Use the value from the `SQL_SERVER_2019_VM_IP` for this from the environment documentation.
-    - **Authentication:** Select SQL Server Authentication.
-    - **Login:** Enter `demouser`
-    - **Password:** Enter `Password.1!!`
-    - **Remember password:** Check this box.
+   - **Server name:** Enter the SQL Server 2019 VM IP address. Use the value from the `SQL_SERVER_2019_VM_IP` for this from the environment documentation.
+   - **Authentication:** Select SQL Server Authentication.
+   - **Login:** Enter `demouser`
+   - **Password:** Enter `Password.1!!`
+   - **Remember password:** Check this box.
 
-    ![The Connect form is filled out with the previously mentioned settings entered into the appropriate fields.](media/ssms-connection-sql-2019.png "SQL Server Management Studio - Connect")
+   ![The Connect form is filled out with the previously mentioned settings entered into the appropriate fields.](media/ssms-connection-sql-2019.png 'SQL Server Management Studio - Connect')
 
 3. Select **Connect**.
 
@@ -81,7 +95,7 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
 
 1. To get started, expand databases in the SQL Server Management Studio (SSMS) Object Explorer, right-click the `sales_XXXXX` database (where XXXXX is the unique identifier assigned to you for this workshop), and then select **New Query**.
 
-   ![The sales database and New Query menu item are highlighted.](media/ssms-sales-new-query.png "New Query")
+   ![The sales database and New Query menu item are highlighted.](media/ssms-sales-new-query.png 'New Query')
 
 2. The first query you will run is to set the database compatibility level to `150`, which is the new compatibility level for SQL Server 2019, enabling the most recent intelligent QP features. Copy the SQL script below and paste it into the new query window. Replace `XXXXX` with the unique identifier you have been given for this workshop in both the `USE` and `ALTER DATABASE` statements.
 
@@ -96,7 +110,7 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
 
 3. To run the query, select **Execute** in the SSMS toolbar.
 
-   ![The Execute button is highlighted in the SSMS toolbar.](media/ssms-execute-query.png "Execute")
+   ![The Execute button is highlighted in the SSMS toolbar.](media/ssms-execute-query.png 'Execute')
 
 4. Next, you will run a query to create a user-defined function (UDF) named `customer_category`. This UDF contains several steps to identify the discount price category for each customer. Notice that at the top of the query we run to create this UDF sets the database compatibility level to `150`, which is the new compatibility level for SQL Server 2019, enabling the most recent intelligent QP features. This UDF will be called inline from the two queries that follow in order to show QP improvements on scalar UDF inlining. Paste the following SQL code into your query window, overwriting the current content, replace `XXXXX` in the `USE` statement with the unique identifier assigned to you for this workshop, and then select **Execute** on the SSMS toolbar.
 
@@ -136,32 +150,32 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
 
 5. Right-click on the `sales_XXXXX` database (where XXXXX is the unique identifier assigned to you for this workshop), then select **New Query**. This will open a new query window into which you can paste the following queries. You may wish to reuse the same query window, replacing its contents with each SQL statement blocks below, or follow these same steps to create new query windows for each.
 
-   ![The sales database and New Query menu item are highlighted.](media/ssms-sales-new-query.png "New Query")
+   ![The sales database and New Query menu item are highlighted.](media/ssms-sales-new-query.png 'New Query')
 
 6. The query below selects the top 100 rows from the `customer` table, calling the `customer_category` user-defined function (UDF) inline for each row. It uses the `DISABLE_TSQL_SCALAR_UDF_INLINING` hint to disable the new scalar UDF inlining QP feature. Paste the following query into the the empty query window. Replace `XXXXX` in the `USE` statement with the unique identifier assigned to you for this workshop. **Do not execute yet**.
 
-    ```sql
-    USE sales_XXXXX;
-    GO
+   ```sql
+   USE sales_XXXXX;
+   GO
 
-    -- Before (show actual query execution plan for legacy behavior)
-    SELECT TOP 100
-        [c_customer_sk], [c_first_name], [c_last_name],
-          dbo.customer_category([c_customer_sk]) AS [Discount Category]
-    FROM [dbo].[customer]
-    ORDER BY [c_customer_sk]
-    OPTION (RECOMPILE, USE HINT('DISABLE_TSQL_SCALAR_UDF_INLINING'));
-    ```
+   -- Before (show actual query execution plan for legacy behavior)
+   SELECT TOP 100
+       [c_customer_sk], [c_first_name], [c_last_name],
+         dbo.customer_category([c_customer_sk]) AS [Discount Category]
+   FROM [dbo].[customer]
+   ORDER BY [c_customer_sk]
+   OPTION (RECOMPILE, USE HINT('DISABLE_TSQL_SCALAR_UDF_INLINING'));
+   ```
 
 7. Select the **Include Actual Execution Plan** (Ctrl+M) button in the toolbar above the query window. This will allow us to view the actual (not estimated) query plan after executing the query.
 
-   ![The Actual Query Plan button is highlighted in the toolbar.](media/ssms-enable-actual-query-plan-customer.png "Enable Actual Query Plan")
+   ![The Actual Query Plan button is highlighted in the toolbar.](media/ssms-enable-actual-query-plan-customer.png 'Enable Actual Query Plan')
 
 8. Execute the query by selecting **Execute** from the SSMS toolbar.
 
 9. After the query executes, select the **Execution plan** tab. As the plan shows, SQL Server adopts a simple strategy here: for every tuple in the `customer` table, invoke the UDF and output the results (single line from the clustered index scan to compute scalar). This strategy is naïve and inefficient, especially with more complex queries.
 
-   ![This screenshot shows the query execution plan using the legacy method.](media/ssms-udf-inlining-before.png "Query execution plan with legacy method")
+   ![This screenshot shows the query execution plan using the legacy method.](media/ssms-udf-inlining-before.png 'Query execution plan with legacy method')
 
 10. Clear the query window, or open a new one, then paste the following query that makes use of the scalar UDF inlining QP feature. Replace `XXXXX` in the `USE` statement with the unique identifier assigned to you for this workshop. If you opened a new query window instead of reusing this one, make sure to select the **Include Actual Execution Plan** button to enable it. **Execute** the query.
 
@@ -180,7 +194,7 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
 
 11. After the query executes, select the **Execution plan** tab once again. With scalar UDF inlining, this UDF is transformed into equivalent scalar subqueries, which are substituted in the calling query in place of the UDF.
 
-    ![This screenshot shows the query execution plan using the new QP feature.](media/ssms-udf-inlining-after.png "Query execution plan with new method")
+    ![This screenshot shows the query execution plan using the new QP feature.](media/ssms-udf-inlining-after.png 'Query execution plan with new method')
 
     > As you can see, the query plan no longer has a user-defined function operator, but its effects are now observable in the plan, like views or inline TVFs. Here are some key observations from the above plan:
 
@@ -223,13 +237,13 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
 
     There are two plans. The one you want to observe is the second query plan. When we mouse over the INNER JOIN to view the estimated number of rows and the output list, which shows the join algorithm. The estimated number of rows is 1. Also, observe the execution time. In our case, it took 10 seconds to complete.
 
-    ![This screenshot shows the query execution plan using the legacy method.](media/ssms-tvdc-old-method.png "Query execution plan with old method")
+    ![This screenshot shows the query execution plan using the legacy method.](media/ssms-tvdc-old-method.png 'Query execution plan with old method')
 
     **New method**
 
     After the query above executes, select the **Execution plan** tab once again. Since our database compatibility level is set to 150, notice that the join algorithm is a hash match, and that the overall query execution plan looks different. When you hover over the INNER JOIN, notice that there is a high value for estimated number of rows and that the output list shows the use of hash keys and an optimized join algorithm. Once again, observe the execution time. In our case, it took 6 seconds to complete, which is approximately half the time it took to execute without the table variable deferred compilation feature.
 
-    ![This screenshot shows the query execution plan using the new method.](media/ssms-tvdc-new-method.png "Query execution plan with new method")
+    ![This screenshot shows the query execution plan using the new method.](media/ssms-tvdc-new-method.png 'Query execution plan with new method')
 
     > Table variable deferred compilation improves plan quality and overall performance for queries that reference table variables. During optimization and initial compilation, this feature propagates cardinality estimates that are based on actual table variable row counts. This accurate row count information optimizes downstream plan operations. Table variable deferred compilation defers compilation of a statement that references a table variable until the first actual run of the statement. This deferred compilation behavior is the same as that of temporary tables. This change results in the use of actual cardinality instead of the original one-row guess. _For more information, see [Table variable deferred compilation](https://docs.microsoft.com/sql/t-sql/data-types/table-transact-sql?view=sql-server-2017#table-variable-deferred-compilation)._
 
@@ -256,7 +270,7 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
 
 14. After the query executes, select the **Execution plan** tab. Hover over the Hash Match step of the execution plan. You should see a warning toward the bottom of the Hash Match dialog showing spilled data. Also observe the execution time. In our case, this query took 16 seconds to execute.
 
-    ![The Hash Match dialog shows spilled data warnings.](media/ssms-memory-grant-feedback-old.png "Query execution plan showing spilled data")
+    ![The Hash Match dialog shows spilled data warnings.](media/ssms-memory-grant-feedback-old.png 'Query execution plan showing spilled data')
 
 15. Either highlight and delete everything in the query window, or open a new query window. Paste the following query to execute the select query that contains the hash match once more, replacing `XXXXX` in the `USE` statement with the unique identifier assigned to you for this workshop. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
 
@@ -276,7 +290,7 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
 
 16. After the query executes, select the **Execution plan** tab. Hover over the Hash Match step of the execution plan. You should **no longer** see a warning about spilled data. Also observe the execution time. In our case, this query took 11 seconds to execute.
 
-    ![The Hash Match dialog no longer contains spilled data warnings.](media/ssms-memory-grant-feedback-fix.png "Query execution plan with no spilled data")
+    ![The Hash Match dialog no longer contains spilled data warnings.](media/ssms-memory-grant-feedback-fix.png 'Query execution plan with no spilled data')
 
     > So what happened? A query's post-execution plan in SQL Server includes the minimum required memory needed for execution and the ideal memory grant size to have all rows fit in memory. Performance suffers when memory grant sizes are incorrectly sized. Excessive grants result in wasted memory and reduced concurrency. Insufficient memory grants cause expensive spills to disk. By addressing repeating workloads, batch mode memory grant feedback recalculates the actual memory required for a query and then updates the grant value for the cached plan. **When an identical query statement is executed**, the query uses the revised memory grant size, reducing excessive memory grants that impact concurrency and fixing underestimated memory grants that cause expensive spills to disk. Row mode memory grant feedback expands on the batch mode memory grant feedback feature by adjusting memory grant sizes for both batch and row mode operators. _For more information, see [Row mode memory grant feedback](https://docs.microsoft.com/sql/relational-databases/performance/adaptive-query-processing?view=sql-server-2017#row-mode-memory-grant-feedback)._
 
@@ -294,37 +308,37 @@ In this exercise, you will run the SQL Data Discovery & Classification tool agai
 
 1. To get started, expand databases in the SQL Server Management Studio (SSMS) Object Explorer, right-click the `sales_XXXXX` database (where XXXXX is the unique identifier assigned to you for this workshop), and then choose **Tasks > Classify Data...**.
 
-    ![The sales database, Tasks menu, and Classify Data items are highlighted.](media/ssms-classify-data-link.png "Data Classification")
+   ![The sales database, Tasks menu, and Classify Data items are highlighted.](media/ssms-classify-data-link.png 'Data Classification')
 
 2. When the tool runs, it will analyze all of the columns within all of the tables and recommend appropriate data classifications for each. What you should see is the Data Classification dashboard showing no currently classified columns, and a classification recommendations box at the top showing that there are 45 columns that the tool identified as containing sensitive (PII) or GDPR-related data. **Click** on this classification recommendations box.
 
-    ![The data classification recommendations box is highlighted.](media/ssms-classification-recommendations-box.png "Data classification recommendations box")
+   ![The data classification recommendations box is highlighted.](media/ssms-classification-recommendations-box.png 'Data classification recommendations box')
 
 3. The list of recommendations displays the schema, table, column, type of information, and recommended sensitivity label for each identified column. You can change the information type and sensitivity labels for each if desired. In this case, accept all recommendations by **checking the checkbox** in the recommendations table header.
 
-    ![The recommendations are shown with each checkbox checked.](media/ssms-recommendations.png "Classification recommendations")
+   ![The recommendations are shown with each checkbox checked.](media/ssms-recommendations.png 'Classification recommendations')
 
 4. Click **Accept selected recommendations**.
 
-    ![The Accept selected recommendations button is highlighted.](media/ssms-accept-selected-recommendations.png "Accept selected recommendations")
+   ![The Accept selected recommendations button is highlighted.](media/ssms-accept-selected-recommendations.png 'Accept selected recommendations')
 
 5. Click **Save** in the toolbar above to apply your changes.
 
-    ![The Save button is highlighted.](media/ssms-save-classification-changes.png "Save classification changes")
+   ![The Save button is highlighted.](media/ssms-save-classification-changes.png 'Save classification changes')
 
 6. After the changes are saved, click **View Report**.
 
-    ![The View Report button is highlighted.](media/ssms-view-report.png "View Report")
+   ![The View Report button is highlighted.](media/ssms-view-report.png 'View Report')
 
 7. What you should see is a report with a full summary of the database classification state. When you right-click on the report, you can see options to print or export the report in different formats.
 
-    ![The report is displayed, as well as the context menu showing export options after right-clicking on the report.](media/ssms-report.png "SQL Data Classification Report")
+   ![The report is displayed, as well as the context menu showing export options after right-clicking on the report.](media/ssms-report.png 'SQL Data Classification Report')
 
 ## Task 4: Fix compliance issues with dynamic data masking
 
 Some of the columns identified by the Data Discovery & Classification tool as containing sensitive (PII/GDPR) information include phone numbers, email addresses, billing addresses, and credit card numbers. One way to ensure compliance with various rules and regulations that enforce policies to protect such sensitive data is to prevent those who are not authorized from seeing it. An example would be displaying `XXX-XXX-XX95` instead of `123-555-2695` when outputting a phone number within a SQL query result, report, web page, etc. This is commonly called data masking. Traditionally, modifying systems and applications to implement data masking can be challenging. This is especially true when the masking has to apply all the way down to the data source level. Fortunately, SQL Server and its cloud-related product, Azure SQL Database, provides a feature named [Dynamic Data Masking](https://docs.microsoft.com/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver15) (DDM) to automatically protect this sensitive data from non-privileged users.
 
-![Dynamic Data Masking graphic.](media/dynamic-data-masking.png "Dynamic Data Masking")
+![Dynamic Data Masking graphic.](media/dynamic-data-masking.png 'Dynamic Data Masking')
 
 DDM helps prevent unauthorized access to sensitive data by enabling customers to designate how much of the sensitive data to reveal with minimal impact on the application layer. DDM can be configured on the database to hide sensitive data in the result sets of queries over designated database fields, while the data in the database is not changed. Dynamic Data Masking is easy to use with existing applications, since masking rules are applied in the query results. Many applications can mask sensitive data without modifying existing queries.
 
@@ -332,7 +346,7 @@ In this task, you will apply DDM to one of the database fields so you can see ho
 
 1. To get started, expand databases in the SQL Server Management Studio (SSMS) Object Explorer, right-click the `sales_XXXXX` database (where XXXXX is the unique identifier assigned to you for this workshop), and then select **New Query**.
 
-   ![The sales database and New Query menu item are highlighted.](media/ssms-sales-new-query.png "New Query")
+   ![The sales database and New Query menu item are highlighted.](media/ssms-sales-new-query.png 'New Query')
 
 2. Add a dynamic data mask to the existing `dbo.customer.c_last_name` field by pasting the below query into the new query window:
 
@@ -345,7 +359,7 @@ In this task, you will apply DDM to one of the database fields so you can see ho
 
 3. Execute the query by selecting the **Execute** button in the SSMS toolbar, or pressing the _F5_ key on your keyboard.
 
-   ![The dynamic data mask query is shown and the Execute button is highlighted above.](media/ssms-execute-ddm-query.png "Execute query")
+   ![The dynamic data mask query is shown and the Execute button is highlighted above.](media/ssms-execute-ddm-query.png 'Execute query')
 
 4. Clear the query window and replace the previous query with the following to add a dynamic data mask to the `dbo.customer.c_email_address` field:
 
@@ -362,7 +376,7 @@ In this task, you will apply DDM to one of the database fields so you can see ho
    SELECT * FROM dbo.customer
    ```
 
-   ![The query results are shown with no mask applied to the Postal Code field.](media/ssms-ddm-results-no-mask.png "Query results")
+   ![The query results are shown with no mask applied to the Postal Code field.](media/ssms-ddm-results-no-mask.png 'Query results')
 
 6. Notice that the full last name and email address values are visible. That is because the user you are logged in as is a privileged user. Let's create a new user and execute the query again:
 
@@ -377,13 +391,13 @@ In this task, you will apply DDM to one of the database fields so you can see ho
 
 7. Run the query by selecting the **Execute** button. Observe that with the the `c_last_name` and `c_email_address` filed values are now masked, hiding the full value contained within the field and preventing expose of sensitive information.
 
-   ![The query results are shown with the mask applied to the c_last_name and c_email_address fields.](media/ssms-ddm-results-mask.png "Query results")
+   ![The query results are shown with the mask applied to the c_last_name and c_email_address fields.](media/ssms-ddm-results-mask.png 'Query results')
 
 ## Task 5: Restrict data access with Row-level security
 
 [Row-Level Security](https://docs.microsoft.com/en-us/sql/relational-databases/security/row-level-security?view=sql-server-ver15) (RLS) enables you to use group membership or execution context to control access to rows in a database table. RLS simplifies the design and coding of security in your application by helping you implement restrictions on data row access. For example, a hospital can create a security policy that allows doctors to view data rows for their patients only. Another example is a multi-tenant application can create a policy to enforce a logical separation of each tenant's data rows from every other tenant's rows. Efficiencies are achieved by the storage of data for many tenants in a single table. Each tenant can see only its data rows.
 
-![Row-level security graphic.](media/row-level-security.png "Row-level security")
+![Row-level security graphic.](media/row-level-security.png 'Row-level security')
 
 The access restriction logic is located in the database tier rather than away from the data in another application tier. The database system applies the access restrictions every time that data access is attempted from any tier. This makes your security system more reliable and robust by reducing the surface area of your security system.
 
@@ -391,19 +405,19 @@ In this task, you will apply row-level security to one of the database tables an
 
 1. To get started, expand databases in the SQL Server Management Studio (SSMS) Object Explorer, right-click the `sales_XXXXX` database (where XXXXX is the unique identifier assigned to you for this workshop), and then select **New Query**.
 
-   ![The sales database and New Query menu item are highlighted.](media/ssms-sales-new-query.png "New Query")
+   ![The sales database and New Query menu item are highlighted.](media/ssms-sales-new-query.png 'New Query')
 
 2. Within the `store` table, there are three stores located in Kentucky. Using RLS, we will restrict access to sales records so that user can only see sales from their own store, while the regional manager for Kentucky will be able to see all sales data for the state. In the new query window, enter the following SQL commands to create users that will be used for querying data secured by RLS with different contexts, and then grant them `SELECT` permissions on the `dbo.store_sales` table. Run the query by selecting **Execute** on the SSMS toolbar.
 
    ```sql
-   CREATE USER ManagerKY WITHOUT LOGIN;  
-   CREATE USER Elmwood WITHOUT LOGIN;  
+   CREATE USER ManagerKY WITHOUT LOGIN;
+   CREATE USER Elmwood WITHOUT LOGIN;
    CREATE USER Egypt WITHOUT LOGIN;
    CREATE USER Bedford WITHOUT LOGIN;
    GO
 
-   GRANT SELECT ON dbo.store_sales TO ManagerKY;  
-   GRANT SELECT ON dbo.store_sales TO Elmwood;  
+   GRANT SELECT ON dbo.store_sales TO ManagerKY;
+   GRANT SELECT ON dbo.store_sales TO Elmwood;
    GRANT SELECT ON dbo.store_sales TO Egypt;
    GRANT SELECT ON dbo.store_sales TO Bedford;
    GO
@@ -414,8 +428,8 @@ In this task, you will apply row-level security to one of the database tables an
 3. Next, you will create a new schema, and an inline table-valued function that will be used to apply the RLS policy. The function returns 1 when a row in the `ss_store_sk` column is the same as the store for the user executing the query (`s.s_store_sk = @StoreId`) and the store name is the same of the user's store (`s.s_store_name = USER_NAME()`), or if the user executing the query is the Manager user (`USER_NAME() = 'ManagerKY'`). Create a new query window and paste the following SQL script into the window, and then select **Execute**.
 
    ```sql
-   CREATE SCHEMA Security;  
-   GO  
+   CREATE SCHEMA Security;
+   GO
 
    CREATE FUNCTION Security.fn_securitypredicate(@StoreId AS INT)
      RETURNS TABLE
@@ -447,8 +461,8 @@ In this task, you will apply row-level security to one of the database tables an
 5. Allow `SELECT` permissions to the `fn_securitypredicate` function by executing the following query in a new query window.
 
    ```sql
-   GRANT SELECT ON security.fn_securitypredicate TO ManagerKY;  
-   GRANT SELECT ON security.fn_securitypredicate TO Elmwood;  
+   GRANT SELECT ON security.fn_securitypredicate TO ManagerKY;
+   GRANT SELECT ON security.fn_securitypredicate TO Elmwood;
    GRANT SELECT ON security.fn_securitypredicate TO Egypt;
    GRANT SELECT ON security.fn_securitypredicate TO Bedford;
    GO
@@ -457,36 +471,36 @@ In this task, you will apply row-level security to one of the database tables an
 6. Now test the filtering predicate, by selecting from the `store_sales` table as each user. Paste each of the queries below into a new query window and run each the commands. Observe the count of records returned, as well as the data in the `ss_store_sk` column.
 
    ```sql
-   EXECUTE AS USER = 'Elmwood';  
+   EXECUTE AS USER = 'Elmwood';
    SELECT * FROM dbo.store_sales;
    REVERT;
    ```
 
-   ![Results for query run within the Elmwood user context.](media/rls-result-elmwood.png "Query results")
+   ![Results for query run within the Elmwood user context.](media/rls-result-elmwood.png 'Query results')
 
    ```sql
-   EXECUTE AS USER = 'Egypt';  
+   EXECUTE AS USER = 'Egypt';
    SELECT * FROM dbo.store_sales;
    REVERT;
    ```
 
-   ![Results for query run within the Egypt user context.](media/rls-result-egypt.png "Query results")
+   ![Results for query run within the Egypt user context.](media/rls-result-egypt.png 'Query results')
 
    ```sql
-   EXECUTE AS USER = 'Bedford';  
+   EXECUTE AS USER = 'Bedford';
    SELECT * FROM dbo.store_sales;
    REVERT;
    ```
 
-   ![Results for query run within the Bedford user context.](media/rls-result-bedford.png "Query results")
+   ![Results for query run within the Bedford user context.](media/rls-result-bedford.png 'Query results')
 
    ```sql
-   EXECUTE AS USER = 'ManagerKY';  
+   EXECUTE AS USER = 'ManagerKY';
    SELECT * FROM dbo.store_sales;
    REVERT;
    ```
 
-   ![Results for query run within the ManagerKY user context.](media/rls-results-manager.png "Query results")
+   ![Results for query run within the ManagerKY user context.](media/rls-results-manager.png 'Query results')
 
 > As you can see within each set of results, users in a Store context see only the data for their store, while queries run within the Manager context see data for all three stores. Row-Level Security makes it easy to implement filtering to restrict access to data within SQL Server tables.
 
@@ -498,7 +512,7 @@ Always Encrypted protects data by encrypting it on the client side and never all
 
 [Always Encrypted with secure enclaves](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/always-encrypted-enclaves?view=sql-server-ver15) addresses these limitations by allowing computations on plaintext data inside a secure enclave on the server side. A secure enclave is a protected region of memory within the SQL Server process, and acts as a trusted execution environment for processing sensitive data inside the SQL Server engine. A secure enclave appears as a black box to the rest of the SQL Server and other processes on the hosting machine. There is no way to view any data or code inside the enclave from the outside, even with a debugger.
 
-![Always Encrypted with secure enclaves](media/always-encrypted-with-secure-enclaves.png "Always Encrypted with secure enclaves")
+![Always Encrypted with secure enclaves](media/always-encrypted-with-secure-enclaves.png 'Always Encrypted with secure enclaves')
 
 When parsing an application's query, the SQL Server Engine determines if the query contains any operations on encrypted data that require the use of the secure enclave. For queries where the secure enclave needs to be accessed:
 
@@ -522,9 +536,9 @@ In this task, you will use SSMS to verify that Always Encrypted with secure encl
 
 2. The query should return the following result:
 
-   |name|value|value_in_use|
-   |----|-----|------------|
-   |column encryption enclave type|1|1|
+   | name                           | value | value_in_use |
+   | ------------------------------ | ----- | ------------ |
+   | column encryption enclave type | 1     | 1            |
 
 3. Next, enable [rich computations](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/configure-always-encrypted-enclaves?view=sql-server-ver15#configure-a-secure-enclave) on encrypted columns by running the following query:
 
@@ -540,27 +554,27 @@ In this step, you will create a column master key and a column encryption key th
 
 1. Expand databases in the SQL Server Management Studio (SSMS) Object Explorer, then expand the `sales_XXXXX` database (where XXXXX is the unique identifier assigned to you for this workshop), and locate the **Security** folder under the database.
 
-   ![The sales database and Security folder are highlighted.](media/ssms-sales-security.png "Database security")
+   ![The sales database and Security folder are highlighted.](media/ssms-sales-security.png 'Database security')
 
 2. Expand the **Security** folder, right-click **Always Encrypted Keys**, and then select **New Column Master Key...**"
 
-   ![New Column master key is highlighted in the Always Encrypted Keys context menu.](media/ssms-sales-new-column-master-key.png "New Column master key")
+   ![New Column master key is highlighted in the Always Encrypted Keys context menu.](media/ssms-sales-new-column-master-key.png 'New Column master key')
 
 3. In the New Column Master Key dialog, enter **TI-MK** as the name, ensure the Key store is set to **Windows Certificate Store - Current User**, and then select **Generate Certificate**.
 
-   ![On the New Column Master Key dialog, the name and key store fields are highlighted and the Generate Certificate button is highlighted.](media/ssms-new-column-master-key-dialog.png "New Column Master Key")
+   ![On the New Column Master Key dialog, the name and key store fields are highlighted and the Generate Certificate button is highlighted.](media/ssms-new-column-master-key-dialog.png 'New Column Master Key')
 
 4. Ensure the generated key is highlighted in the list of keys, and then select **OK** in the New Column Master Key dialog.
 
-   ![The generated column master key is highlighted and selected in the keys list.](media/ssms-new-column-master-key-keys.png "Keys")
+   ![The generated column master key is highlighted and selected in the keys list.](media/ssms-new-column-master-key-keys.png 'Keys')
 
 5. Right-click on **Always Encrypted Keys** again, and this time select **New Column Encryption Key...**
 
-   ![New Column Encryption Key is highlighted in the Always Encrypted Keys context menu.](media/ssms-sales-new-column-encryption-key.png "New Column Encryption Key")
+   ![New Column Encryption Key is highlighted in the Always Encrypted Keys context menu.](media/ssms-sales-new-column-encryption-key.png 'New Column Encryption Key')
 
 6. In the **New Column Encryption Key** dialog, enter **TI-EK** for the name, select **TI-MK** for the Column master key, and select **OK**.
 
-   ![In the New Column Encryption Key dialog, the name is set to TI-EK and TI-MK is selected as the Column master key.](media/ssms-new-column-encryption-key-dialog.png "New Column Encryption Key")
+   ![In the New Column Encryption Key dialog, the name is set to TI-EK and TI-MK is selected as the Column master key.](media/ssms-new-column-encryption-key-dialog.png 'New Column Encryption Key')
 
 ### Encrypt customer email column
 
@@ -570,11 +584,11 @@ In this step, you will encrypt the data stored in the email column inside the se
 
 2. Right-click anywhere in the new query window, and select **Connection > Change Connection**.
 
-   ![Change Connection is highlighted under Connection in the query window context menu.](media/new-query-change-connection.png "Change connection")
+   ![Change Connection is highlighted under Connection in the query window context menu.](media/new-query-change-connection.png 'Change connection')
 
 3. In the Connect to Database Engine dialog, select **Options**, navigate to the **Always Encrypted** tab, then check the **Enable Always Encrypted** box and enter the following URL into the Enclave Attestation URL box: `http://10.0.0.8/Attestation`.
 
-   ![On the Always Encrypted tab of the Connect to Database Engine dialog, Enable Always Encrypted is checked, and the URL above is entered into the Enclave Attestation URL field.](media/ssms-connect-enable-always-encrypted-checked.png "Connect to Database Engine")
+   ![On the Always Encrypted tab of the Connect to Database Engine dialog, Enable Always Encrypted is checked, and the URL above is entered into the Enclave Attestation URL field.](media/ssms-connect-enable-always-encrypted-checked.png 'Connect to Database Engine')
 
 4. Select **Connect**.
 
@@ -598,7 +612,7 @@ In this step, you will encrypt the data stored in the email column inside the se
 
 7. In the Connect to Database Engine dialog, select **Options**, navigate to the **Always Encrypted** tab and make sure **Enable Always Encrypted** is not checked, and then select **Connect**.
 
-   ![On the Always Encrypted tab of the Connect to Database Engine dialog, Enable Always Encrypted is unchecked.](media/ssms-connect-enable-always-encrypted-unchecked.png "Connect to Database Engine")
+   ![On the Always Encrypted tab of the Connect to Database Engine dialog, Enable Always Encrypted is unchecked.](media/ssms-connect-enable-always-encrypted-unchecked.png 'Connect to Database Engine')
 
 8. To verify the `c_email_address` column is now encrypted, paste in and execute the below statement in the query window with Always Encrypted disabled. The query window should return encrypted values in the SSN and Salary columns.
 
@@ -610,7 +624,7 @@ In this step, you will encrypt the data stored in the email column inside the se
 
 9. Now, run the same query in the query window with the Always Encrypted enabled. The returned results should contain the data decrypted.
 
-  > TODO: Add screen shot of results
+> TODO: Add screen shot of results
 
 ### Run rich queries against an encrypted column
 
@@ -618,11 +632,11 @@ Now, you can run rich queries against the encrypted columns. Some query processi
 
 1. Ensure that Parameterization for Always Encrypted is enabled, by selecting **Query** from the main menu of SSMS, and then selecting **Query Option...**.
 
-   ![In the SSMS Query menu, Query options is highlighted.](media/ssms-query-menu.png "SSMS Query menu")
+   ![In the SSMS Query menu, Query options is highlighted.](media/ssms-query-menu.png 'SSMS Query menu')
 
 2. On the Query Options dialog, select **Advanced** under Execution, and then check the box for **Enable Parameterization for Always Encrypted**.
 
-   ![In the Query Options dialog, Advanced is selected and highlighted under Execution, and the Enable Parameterization for Always Encrypted box is checked.](media/query-options.png "Query options")
+   ![In the Query Options dialog, Advanced is selected and highlighted under Execution, and the Enable Parameterization for Always Encrypted box is checked.](media/query-options.png 'Query options')
 
 3. Select **OK**.
 
