@@ -2,10 +2,10 @@
 
 
 
-## Day 2, Experience 5 - MLOps with Azure Machine Learning and Azure DevOps
+## Day 2, Experience 6 - MLOps with Azure Machine Learning and Azure DevOps
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
-  - [Day 2, Experience 5 - MLOps with Azure Machine Learning and Azure DevOps](#day-2-experience-5---mlops-with-azure-machine-learning-and-azure-devops)
+  - [Day 2, Experience 6 - MLOps with Azure Machine Learning and Azure DevOps](#day-2-experience-6---mlops-with-azure-machine-learning-and-azure-devops)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
 - [Exercise 1: Setup New Project in Azure DevOps](#exercise-1-setup-new-project-in-azure-devops)
