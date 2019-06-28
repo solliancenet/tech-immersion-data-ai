@@ -206,10 +206,50 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
 
     > Depending upon the complexity of the logic in the UDF, the resulting query plan might also get bigger and more complex. As we can see, the operations inside the UDF are now no longer a black box, and hence the query optimizer is able to cost and optimize those operations. Also, since the UDF is no longer in the plan, iterative UDF invocation is replaced by a plan that completely avoids function call overhead.
 
-12. Either highlight and delete everything in the query window, or open a new query window. Paste the following query into the query window, replacing `XXXXX` in the `USE` statement with the unique identifier assigned to you for this workshop. This query makes use of the table variable deferred compilation feature, since the database compatibility level is set to `150`. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
+12. Either highlight and delete everything in the query window, or open a new query window. Paste the following query into the query window. This query makes use of the table variable deferred compilation feature, since the database compatibility level is set to `150`. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
 
     ```sql
-    USE sales_XXXXX
+    USE sales
+    GO
+
+    DECLARE @ItemClick TABLE (
+      [itemKey] BIGINT NOT NULL,
+      [clickDate] BIGINT NOT NULL
+    );
+
+    INSERT @ItemClick
+    SELECT [wcs_item_sk], [wcs_click_date_sk]
+    FROM [dbo].[web_clickstreams]
+
+    -- Look at estimated rows, speed, join algorithm
+    SELECT i.[i_item_sk], i.[i_current_price], c.[clickDate]
+    FROM dbo.item AS i
+    INNER JOIN @ItemClick AS c
+      ON i.[i_item_sk] = c.[itemKey]
+    WHERE i.[i_current_price] > 90
+    ORDER BY i.[i_current_price] DESC
+    OPTION (USE HINT('DISABLE_DEFERRED_COMPILATION_TV'));
+    GO
+    ```
+
+    > The script above assigns a table variable, `@ItemClick`, storing the `itemKey` and `clickDate` fields from the `web_clickstreams` table to be used in an INNER JOIN below.
+
+    > The `DISABLE_DEFERRED_COMPILATION_TV` hint **disables** the table-deferred compilation feature.
+
+    **Old method**
+
+    In prior versions of SQL Server (compatibility level of 140 or lower), the table variable deferred compilation QP feature is not used (more on this below).
+
+    There are two plans. The one you want to observe is the second query plan. Because we disabled the table-deferred compilation feature with the `DISABLE_DEFERRED_COMPILATION_TV` hint, when we mouse over the INNER JOIN to view the estimated number of rows and the output list, which shows the join algorithm. The estimated number of rows is 1. Also, observe the execution time. In our case, it took 10 seconds to complete.
+
+    ![This screenshot shows the query execution plan using the legacy method.](media/ssms-tvdc-old-method.png 'Query execution plan with old method')
+
+    **New method**
+
+    Execute the following updated query, which removes the hint we used in the previous query to disable the table-deferred compilation feature:
+
+    ```sql
+    USE sales
     GO
 
     DECLARE @ItemClick TABLE (
@@ -230,18 +270,6 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
     ORDER BY i.[i_current_price] DESC;
     GO
     ```
-
-    > The script above assigns a table variable, `@ItemClick`, storing the `itemKey` and `clickDate` fields from the `web_clickstreams` table to be used in an INNER JOIN below.
-
-    **Old method**
-
-    In prior versions of SQL Server (compatibility level of 140 or lower), the table variable deferred compilation QP feature is not used (more on this below).
-
-    There are two plans. The one you want to observe is the second query plan. When we mouse over the INNER JOIN to view the estimated number of rows and the output list, which shows the join algorithm. The estimated number of rows is 1. Also, observe the execution time. In our case, it took 10 seconds to complete.
-
-    ![This screenshot shows the query execution plan using the legacy method.](media/ssms-tvdc-old-method.png 'Query execution plan with old method')
-
-    **New method**
 
     After the query above executes, select the **Execution plan** tab once again. Since our database compatibility level is set to 150, notice that the join algorithm is a hash match, and that the overall query execution plan looks different. When you hover over the INNER JOIN, notice that there is a high value for estimated number of rows and that the output list shows the use of hash keys and an optimized join algorithm. Once again, observe the execution time. In our case, it took 6 seconds to complete, which is approximately half the time it took to execute without the table variable deferred compilation feature.
 
@@ -274,23 +302,27 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
 
     ![The Hash Match dialog shows spilled data warnings.](media/ssms-memory-grant-feedback-old.png 'Query execution plan showing spilled data')
 
-15. Either highlight and delete everything in the query window, or open a new query window. Paste the following query to execute the select query that contains the hash match once more, replacing `XXXXX` in the `USE` statement with the unique identifier assigned to you for this workshop. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
+15. Either highlight and delete everything in the query window, or open a new query window. Paste the following query to execute the select query that contains the hash match once more. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
 
-    ```sql
-    USE sales_XXXXX;
-    GO
+   ```sql
+   USE sales;
+   GO
 
-    SELECT
-      ws.[ws_order_number], ws.ws_quantity,
-      i.[i_current_price], i.[i_item_desc]
-    FROM    dbo.web_sales AS ws
-    INNER HASH JOIN dbo.[item] AS i
-      ON ws.[ws_item_sk] = i.[i_item_sk]
-    WHERE   i.[i_current_price] > 10
-      AND ws.[ws_quantity] > 40;
-    ```
+   SELECT
+     ws.[ws_order_number], ws.ws_quantity,
+     i.[i_current_price], i.[i_item_desc]
+   FROM    dbo.web_sales AS ws
+   INNER HASH JOIN dbo.[item] AS i
+     ON ws.[ws_item_sk] = i.[i_item_sk]
+   WHERE   i.[i_current_price] > 10
+     AND ws.[ws_quantity] > 40;
+   ```
 
-16. After the query executes, select the **Execution plan** tab. Hover over the Hash Match step of the execution plan. You should **no longer** see a warning about spilled data. Also observe the execution time. In our case, this query took 11 seconds to execute.
+16. After the query executes, select the **Execution plan** tab. Hover over the Hash Match step of the execution plan. You may no longer see a warning about spilled data. If you do, the **number of pages Hash wrote** should have decreased. This happens as the STATISTICS table is updated with each run.
+
+    ![The Hash Match dialog shows spilled data warnings, but with fewer written pages.](media/ssms-memory-grant-feedback-pages-decreased.png "Query execution plan showing fewer pages.")
+
+17. Execute the query 2-3 more times. Each time, select the **Execution plan** tab and hover over the Hash Match step of the execution plan. After a few executions, you should **no longer** see a warning about spilled data.
 
     ![The Hash Match dialog no longer contains spilled data warnings.](media/ssms-memory-grant-feedback-fix.png 'Query execution plan with no spilled data')
 

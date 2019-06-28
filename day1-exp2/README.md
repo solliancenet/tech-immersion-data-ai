@@ -9,7 +9,6 @@
   - [Experience requirements](#Experience-requirements)
   - [Before the lab: Connecting to SQL Server 2019](#Before-the-lab-Connecting-to-SQL-Server-2019)
     - [Connect with Azure Data Studio](#Connect-with-Azure-Data-Studio)
-    - [Connect with SQL Server Management Studio](#Connect-with-SQL-Server-Management-Studio)
   - [Task 1: Query and join data from flat files, data from external database systems, and SQL Server](#Task-1-Query-and-join-data-from-flat-files-data-from-external-database-systems-and-SQL-Server)
   - [Task 2: Train a machine learning model, score and save data as external table](#Task-2-Train-a-machine-learning-model-score-and-save-data-as-external-table)
   - [Task 3: Mounting an Azure Data Lake Gen2 Storage Account to SQL Server 2019 Big Data Cluster using HDFS Tiering](#Task-3-Mounting-an-Azure-Data-Lake-Gen2-Storage-Account-to-SQL-Server-2019-Big-Data-Cluster-using-HDFS-Tiering)
@@ -88,24 +87,6 @@ A link to Azure Data Studio should already be on the desktop of the VM. If not, 
     ![The Connection form is filled out with the previously mentioned settings entered into the appropriate fields.](media/ads-new-connection.png 'Azure Data Studio - New Connection')
 
 4.  Click **Connect**.
-
-### Connect with SQL Server Management Studio
-
-1.  On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **SQL Server Management Studio**, then select the SQL Server Management Studio desktop app in the search results.
-
-    ![The search box has "SQL Server Management Studio" entered into it and the desktop app is highlighted in the results.](media/launch-ssms.png 'Launch SQL Server Management Studio')
-
-2.  Within the Connection dialog that appears, configure the following:
-
-    - **Server name:** Enter the IP address, followed by port number `31433` to the SQL Server 2019 Big Data cluster. Use the value from the `SQL SERVER_2019_CLUSTER URL` for this from the environment documentation. It should have a format of IP separated by a comma from the port, such as: `11.122.133.144,31433`.
-    - **Authentication:** Select SQL Server Authentication.
-    - **Login:** Enter `sa`.
-    - **Password:** Enter the password provided to you for this lab, you can find this value documented as `SQL 2019 Big Data Cluster password`.
-    - **Remember password:** Checked.
-
-    ![The Connect form is filled out with the previously mentioned settings entered into the appropriate fields.](media/ssms-connection.png 'SQL Server Management Studio - Connect')
-
-3.  Click **Connect**.
 
 ## Task 1: Query and join data from flat files, data from external database systems, and SQL Server
 
