@@ -7,19 +7,12 @@
   - [Technology overview](#Technology-overview)
   - [Scenario overview](#Scenario-overview)
   - [Experience requirements](#Experience-requirements)
-  - [Task 1: Database migration](#Task-1-Database-migration)
-    - [Perform assessment using Database Migration Assistant](#Perform-assessment-using-Database-Migration-Assistant)
-    - [Test workloads on the target platform](#Test-workloads-on-the-target-platform)
-      - [Capture](#Capture)
-      - [Replay](#Replay)
-      - [Analysis](#Analysis)
-    - [Migrate the database](#Migrate-the-database)
-  - [Task 2: Connect to SQL Server 2019 with SSMS](#Task-2-Connect-to-SQL-Server-2019-with-SSMS)
-  - [Task 3: Query performance improvements with intelligent query processing](#Task-3-Query-performance-improvements-with-intelligent-query-processing)
-  - [Task 2: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS](#Task-2-Identify-PII-and-GDPR-related-compliance-issues-using-Data-Discovery--Classification-in-SSMS)
-  - [Task 3: Fix compliance issues with dynamic data masking](#Task-3-Fix-compliance-issues-with-dynamic-data-masking)
-  - [Task 4: Restrict data access with Row-level security](#Task-4-Restrict-data-access-with-Row-level-security)
-  - [Task 5: Always Encrypted with secure enclaves](#Task-5-Always-Encrypted-with-secure-enclaves)
+  - [Task 1: Connect to SQL Server 2019 with SSMS](#Task-1-Connect-to-SQL-Server-2019-with-SSMS)
+  - [Task 2: Query performance improvements with intelligent query processing](#Task-2-Query-performance-improvements-with-intelligent-query-processing)
+  - [Task 3: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS](#Task-3-Identify-PII-and-GDPR-related-compliance-issues-using-Data-Discovery--Classification-in-SSMS)
+  - [Task 4: Fix compliance issues with dynamic data masking](#Task-4-Fix-compliance-issues-with-dynamic-data-masking)
+  - [Task 5: Restrict data access with Row-level security](#Task-5-Restrict-data-access-with-Row-level-security)
+  - [Task 6: Always Encrypted with secure enclaves](#Task-6-Always-Encrypted-with-secure-enclaves)
     - [Configure a secure enclave](#Configure-a-secure-enclave)
     - [Provision enclave-enabled keys](#Provision-enclave-enabled-keys)
     - [Encrypt customer email column](#Encrypt-customer-email-column)
@@ -51,8 +44,6 @@ SQL Server 2019 also has powerful tools for Business Intelligence including Anal
 
 ## Scenario overview
 
-Contoso Auto is currently running their `ContosoAutoDb` operations database on an on-premises SQL Server 2008 R2 server. This database is critical to their operations, and they are concerned about the approaching end-of-support for SQL Server 2008 R2. They are looking to understand what is involved in upgrading their database and migrating it to a VM running in Azure. They are also interested in learning more about SQL Server 2019 and the many performance and security improvements that it includes.
-
 This experience will highlight the new features of SQL Server 2019 with a focus on performance and security. You will begin by performing an assessment of Contoso Auto's on-premises database to determine feasibility for migrating to SQL Server on a VM in Azure, and then complete the database migration. Next, you will gain hands-on experience by running queries using some of the new query performance enhancements and evaluating the results. You will evaluate the data security and compliance features provided by SQL Server 2019 by using the Data Discovery & Classification tool in SSMS to identify tables and columns with PII and GDPR-related compliance issues. You will then address some of the security issues by layering on dynamic data masking, row-level security, and Always Encrypted with secure enclaves.
 
 ## Experience requirements
@@ -62,201 +53,7 @@ Before you begin this lab, you need to find the following information on the Tec
 - SQL Server 2019 VM IP address: `SQL_SERVER_2019_VM_IP`
 - Sales database name (your unique copy): `SALES_DB`
 
-## Task 1: Database migration
-
-Contoso Auto would like a proof-of-concept (POC) to upgrade and migration their on-premises SQL Server 2008 R2 `ContosoAutoDb` database to SQL Server 2017 running on a VM in Azure. As part of the process, they would like to know about any incompatible features that might block their eventual production move. In this task, you will use the [Microsoft Database Migration Assistant](https://docs.microsoft.com/en-us/sql/dma/dma-overview?view=sql-server-2017) (DMA) to perform an assessment on their SQL Server 2008 R2 database, and then migrate the `sales` database from the "on-premises" SQL Server 2008 R2 instance to [SQL Server 2017 on an Azure VM](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-sql-server-iaas-overview).
-
-Microsoft provides multiple tools for streamlining the process of migrating and upgrading databases. Contoso Auto is currently running their `ContosoAutoDb` database on an on-premises SQL Server 2008 R2 instance. They are aware that SQL Server 2008 R2 is approaching end-of-support, and they are interested in seeing a proof-of-concept for migrating this database to a newer version of SQL Server.   In this task, you will be using several migration tools to perform an assessment on the Contoso Auto sales database, and then migrate the database from SQL Server 2008 R2 to SQL Server 2017.
-
-  > **NOTE**: SQL Server 2019 is currently in preview and most of the assessment and migration tools do not yet officially support it. However, the experience will be very similar to that of migrating the SQL Server 2017, so we will use that as a substitute for this workshop.
-
-### Perform assessment using Database Migration Assistant
-
-Prior to migrating their database to a newer version, Contoso Auto would like to know about any incompatible features that might block their eventual production move. In this task, you will use the Microsoft [Data Migration Assistant](https://docs.microsoft.com/sql/dma/dma-overview?view=azuresqldb-mi-current) (DMA) to perform assessments on the `ContosoAutoDb` database. This assessment will provide reports about any feature parity and compatibility issues between the on-premises database and SQL Server on an Azure VM.
-
-> DMA helps you upgrade to a modern data platform by detecting compatibility issues that can impact database functionality in your new version of SQL Server or Azure SQL Database. DMA recommends performance and reliability improvements for your target environment and allows you to move your schema, data, and uncontained objects from your source server to your target server.
-
-1. Launch the Microsoft Data Migration Assistant from the Windows Start menu within your lab environment.
-
-   ![The Microsoft Data Migration Assistant is highlighted in the Windows start menu.](media/windows-start-menu-dma.png "Data Migration Assistant")
-
-2. In the Data Migration Assistant window, select the New **(+)** icon in the left-hand menu.
-
-    ![+ New is selected and highlighted in the Data Migration Assistant window.](./media/data-migration-assistant-new-project.png "Select + New")
-
-3. In the New project dialog, enter the following:
-
-    - **Project type**: Select Assessment.
-    - **Project name**: Enter Assessment.
-    - **Source server type**: SQL Server
-    - **Target server type**: SQL Server on Azure Virtual Machines
-
-    ![The above information is entered in the New project dialog box.](./media/data-migration-assistant-new-project-assessment.png "Enter information in the New project dialog box")
-
-4. Select **Create**.
-
-5. On the **Options** tab, select a target version of **SQL Server 2017 on Windows** and ensure the **Check database compatibility** and **Check feature parity** report types are checked, and select **Next**.
-
-    ![Check database compatibility and Check feature parity are selected and highlighted on the Options screen.](./media/data-migration-assistant-options.png "Select the report types")
-
-6. In the **Connect to a server** dialog on the **Select sources** tab, enter the following:
-
-   - **Server name**: Enter the DNS name of the shared sqlServer2008R2 VM, **`sqlserver2008r2.westus.cloudapp.azure.com`**.
-   - **Authentication type**: Select **SQL Server Authentication**.
-   - **Username**: Enter **WorkshopUser**
-   - **Password**: Enter **Password.1!!**
-   - **Encrypt connection**: Check this box.
-   - **Trust server certificate**: Check this box.
-
-   ![In the Connect to a server dialog, the values specified above are entered into the appropriate fields.](media/dma-connect-to-a-server.png "Connect to a server")
-
-7. Select **Connect**.
-
-8. On the **Add sources** dialog that appears next, check the box for **ContosoAutoDb** and select **Add**.
-
-   ![The ContosoAutoDb box is checked on the Add sources dialog.](media/dma-add-sources.png "Add sources")
-
-9. Select **Start Assessment**.
-
-   ![Start assessment](media/dma-start-assessment.png "Start assessment")
-
-10. Review the assessment of ability to migrate to SQL Server 2017 on an Azure VM by starting with any reported compatibility issues. You can review compatibility issues by analyzing the affected object, its details, and potentially a fix for every issue identified under Breaking changes, Behavior changes, and Deprecated features.
-
-    ![A behavioral change for Full-Text Search is listed as a possible compatibility issue.](media/dma-compatibility-issues.png "Compatibility issues")
-
-    > The DMA assessment for a migrating the `ContosoAutoDb` database to a target platform of SQL Server 2017 on a Windows VM running in Azure shows a compatibility issue associated with a change to Full-Text Search. This is a non-breaking change, and will not impact their ability to migrate the database.
-
-11. Next, select **Feature recommendations** in the DMA report, and select the **Security** tab.
-
-    ![Security recommendations are displayed in the DMA Feature recommendation page.](media/dma-feature-recommendations.png "Feature recommendations")
-
-    > DMA has made several security recommendations for improving the security posture of the `ContosoAutoDb` database. The details of the each recommendation are listed, as well as the recommended steps to apply the recommendation.
-
-### Test workloads on the target platform
-
-Next, let's take a look at the Microsoft [Database Experimentation Assistant](https://docs.microsoft.com/en-us/sql/dea/database-experimentation-assistant-overview?view=sql-server-ver15) (DEA), and how it can help in choosing the right target platform for a SQL database upgrade and migration. DEA is an experimentation solution for SQL Server upgrades. DEA can help you evaluate a targeted version of SQL Server for a specific workload. Customers who are upgrading from earlier SQL Server versions (starting with 2005) to a more recent version of SQL Server can use the analysis metrics that the tool provides.
-
-> **NOTE**: Running DEA traces and replays takes a minimum of 10 minutes, which is more time than is alloted for this workshop experience, so we will just discuss the steps and benefits of using the tool in this task.
-
-DEA analysis metrics include:
-
-- Queries that have compatibility errors
-- Degraded queries and query plans
-- Other workload comparison data
-
-Comparison data can lead to higher confidence and a successful upgrade experience.
-
-DEA guides you through running an A/B test by completing three steps:
-
-- Capture
-- Replay
-- Analysis
-
-#### Capture
-
-The first step of SQL Server A/B testing is to capture a trace on your source server. The source server usually is the production server. Trace files capture the entire query workload on that server, including timestamps. Later, this trace is replayed on your target servers for analysis. The analysis report provides insights on the difference in performance of the workload between your two target servers. Traces can be run from 5 - 180 minutes.
-
-#### Replay
-
-The second step of SQL Server A/B testing is to replay the trace file that was captured to your target servers. Then, collect extensive traces from the replays for analysis.
-
-You replay the trace file on two target servers: one that mimics your source server (Target 1) and one that mimics your proposed change (Target 2). The hardware configurations of Target 1 and Target 2 should be as similar as possible so SQL Server can accurately analyze the performance effect of your proposed changes.
-
-#### Analysis
-
-The final step is to generate an analysis report by using the replay traces. The analysis report can help you gain insight about the performance implications of the proposed change.
-
-### Migrate the database
-
-Let's now look at how you can use the Database Migration Assistant to perform the migration from SQL Server 2008 R2 to SQL Server 2017.
-
-1. Return to the Microsoft Data Migration Assistant application, or launch it from the Windows Start menu within your lab environment if you closed it.
-
-   ![The Microsoft Data Migration Assistant is highlighted in the Windows start menu.](media/windows-start-menu-dma.png "Data Migration Assistant")
-
-2. In the Data Migration Assistant window, select the New **(+)** icon in the left-hand menu.
-
-    ![+ New is selected and highlighted in the Data Migration Assistant window.](./media/data-migration-assistant-new-project.png "Select + New")
-
-3. In the New project dialog, enter the following:
-
-    - **Project type**: Select Migration.
-    - **Project name**: Enter Migration.
-    - **Source server type**: SQL Server
-    - **Target server type**: SQL Server on Azure Virtual Machines
-
-    ![The above information is entered in the New project dialog box.](./media/data-migration-assistant-new-project-migration.png "Enter information in the New project dialog box")
-
-4. Select **Create**.
-
-5. On the **Specify source & target** dialog that appears next, enter the following:
-
-   - Source server details:
-
-     - **Server name**: Enter the DNS name of the shared sqlServer2008R2 VM, **`sqlserver2008r2.westus.cloudapp.azure.com`**.
-     - **Authentication type**: Select **SQL Server Authentication**.
-     - **Username**: Enter **WorkshopUser**
-     - **Password**: Enter **Password.1!!**
-     - **Encrypt connection**: Check this box.
-     - **Trust server certificate**: Check this box.
-
-   - Target server details:
-
-     - **Server name**: Enter the IP address of your sql-2017 VM, e.g, 52.229.17.189.
-     - **Authentication type**: Select **SQL Server Authentication**.
-     - **Username**: Enter **demouser**
-     - **Password**: Enter **Password.1!!**
-     - **Encrypt connection**: Check this box.
-     - **Trust server certificate**: Check this box.
-
-   ![The values specified above are entered into the Specify source & target screen.](media/dma-migration-source-target.png "Specify source & target")
-
-6. Select **Next**.
-
-7. On the Add databases screen, set the following configuration:
-
-   - Check the **ContosoAutoDb** database on the left, under the source database server.
-   - **Shared backup location**: Enter **`\\sqlserver2008r2\db-backups`**.
-   - **Location to restore data files**: Enter **`C:\Contoso\`.
-   - **Location to restore log files**: Enter **`C:\Contoso\`.
-
-   ![The values specified above are entered into the Add databases screen.](media/dma-migration-add-databases.png "Add databases")
-
-8. Select **Next**.
-
-9. Check the WorkshopUser and demouser logins.
-
-   ![The WorkshopUser and demouser accounts are checked in the list of logins.](media/dma-migration-select-logins.png "Select Logins")
-
-10. Select **Start Migration**.
-
-11. When the migration completes, you will see success messages for the `ContosoAutoDb` database and the two logins.
-
-    ![The successful database migration results are displayed.](media/dms-migration-results.png "Database Migration results")
-
-12. To verify the migration, you will connect to the new database running on your sql-2017 VM using SQL Server Management Studio (SSMS). On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **SQL Server Management** into the search box, then select the SQL Server Management Studio 18 desktop app in the search results.
-
-    ![The search box has "SQL Server Management" entered into it and the desktop app is highlighted in the results.](media/launch-ssms.png "Launch SQL Server Management Studio")
-
-13. Within the Connection dialog that appears, configure the following:
-
-    - **Server name:** Enter the IP address of your sql-2017 VM. Use the value from the `SQL_SERVER_2017_VM_IP` for this from the environment documentation.
-    - **Authentication:** Select SQL Server Authentication.
-    - **Login:** Enter `demouser`
-    - **Password:** Enter `Password.1!!`
-    - **Remember password:** Check this box.
-
-    ![The Connect form is filled out with the previously mentioned settings entered into the appropriate fields.](media/ssms-connection-sql-2017.png "SQL Server Management Studio - Connect")
-
-14. Select **Connect**.
-
-15. In the SSMS Object Explorer, expand Databases and confirm you see the `ContosoAutoDb` database listed.
-
-    ![The ContosoAutoDb database in highlighted in the SSMS Object Explorer.](media/ssms-object-explorer-contosoautodb.png "Object Explorer")
-
-16. You have successfully migrated the `ContosoAutoDb` database from SQL Server 2008 R2 to SQL Server 2017 running on a VM in Azure in just a few simple steps using the Database Migration Assistant.
-
-## Task 2: Connect to SQL Server 2019 with SSMS
+## Task 1: Connect to SQL Server 2019 with SSMS
 
 You will be accessing a shared SQL Server 2019 server for this experience. Please follow the steps below to connect to the SQL Server 2019 VM with SQL Server Management Studio (SSMS).
 
@@ -276,7 +73,7 @@ You will be accessing a shared SQL Server 2019 server for this experience. Pleas
 
 3. Select **Connect**.
 
-## Task 3: Query performance improvements with intelligent query processing
+## Task 2: Query performance improvements with intelligent query processing
 
 In this task, you will execute a series of SQL scripts in SQL Server Management Studio (SSMS) to explore the improvements to the family of intelligent query processing (QP) features in SQL Server 2019. These features improve the performance of existing workloads with minimal work on your part to implement. The key to enabling these features in SQL Server 2019 is to set the [database compatibility level](https://docs.microsoft.com/en-us/sql/t-sql/statements/alter-database-transact-sql-compatibility-level?view=sql-server-ver15) to `150`. You will be executing these queries against the `sales_XXXXX` database (where XXXXX is the unique identifier assigned to you for this workshop).
 
@@ -483,7 +280,7 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
 
     > So what happened? A query's post-execution plan in SQL Server includes the minimum required memory needed for execution and the ideal memory grant size to have all rows fit in memory. Performance suffers when memory grant sizes are incorrectly sized. Excessive grants result in wasted memory and reduced concurrency. Insufficient memory grants cause expensive spills to disk. By addressing repeating workloads, batch mode memory grant feedback recalculates the actual memory required for a query and then updates the grant value for the cached plan. **When an identical query statement is executed**, the query uses the revised memory grant size, reducing excessive memory grants that impact concurrency and fixing underestimated memory grants that cause expensive spills to disk. Row mode memory grant feedback expands on the batch mode memory grant feedback feature by adjusting memory grant sizes for both batch and row mode operators. _For more information, see [Row mode memory grant feedback](https://docs.microsoft.com/sql/relational-databases/performance/adaptive-query-processing?view=sql-server-2017#row-mode-memory-grant-feedback)._
 
-## Task 2: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS
+## Task 3: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS
 
 Contoso Auto has several databases that include tables containing sensitive data, such as personally identifiable information (PII) like phone numbers, social security numbers, financial data, etc. Since some of their personnel and customer data include individuals who reside within the European Union (EU), they need to adhere to the General Data Protection Regulation ([GDPR](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation)) as well. Because of this, Contoso Auto is required to provide periodic data auditing reports to identify sensitive and GDPR-related data that reside within their various databases.
 
@@ -523,7 +320,7 @@ In this exercise, you will run the SQL Data Discovery & Classification tool agai
 
     ![The report is displayed, as well as the context menu showing export options after right-clicking on the report.](media/ssms-report.png "SQL Data Classification Report")
 
-## Task 3: Fix compliance issues with dynamic data masking
+## Task 4: Fix compliance issues with dynamic data masking
 
 Some of the columns identified by the Data Discovery & Classification tool as containing sensitive (PII/GDPR) information include phone numbers, email addresses, billing addresses, and credit card numbers. One way to ensure compliance with various rules and regulations that enforce policies to protect such sensitive data is to prevent those who are not authorized from seeing it. An example would be displaying `XXX-XXX-XX95` instead of `123-555-2695` when outputting a phone number within a SQL query result, report, web page, etc. This is commonly called data masking. Traditionally, modifying systems and applications to implement data masking can be challenging. This is especially true when the masking has to apply all the way down to the data source level. Fortunately, SQL Server and its cloud-related product, Azure SQL Database, provides a feature named [Dynamic Data Masking](https://docs.microsoft.com/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver15) (DDM) to automatically protect this sensitive data from non-privileged users.
 
@@ -582,7 +379,7 @@ In this task, you will apply DDM to one of the database fields so you can see ho
 
    ![The query results are shown with the mask applied to the c_last_name and c_email_address fields.](media/ssms-ddm-results-mask.png "Query results")
 
-## Task 4: Restrict data access with Row-level security
+## Task 5: Restrict data access with Row-level security
 
 [Row-Level Security](https://docs.microsoft.com/en-us/sql/relational-databases/security/row-level-security?view=sql-server-ver15) (RLS) enables you to use group membership or execution context to control access to rows in a database table. RLS simplifies the design and coding of security in your application by helping you implement restrictions on data row access. For example, a hospital can create a security policy that allows doctors to view data rows for their patients only. Another example is a multi-tenant application can create a policy to enforce a logical separation of each tenant's data rows from every other tenant's rows. Efficiencies are achieved by the storage of data for many tenants in a single table. Each tenant can see only its data rows.
 
@@ -693,7 +490,7 @@ In this task, you will apply row-level security to one of the database tables an
 
 > As you can see within each set of results, users in a Store context see only the data for their store, while queries run within the Manager context see data for all three stores. Row-Level Security makes it easy to implement filtering to restrict access to data within SQL Server tables.
 
-## Task 5: Always Encrypted with secure enclaves
+## Task 6: Always Encrypted with secure enclaves
 
 [Always Encrypted](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/always-encrypted-database-engine?view=sql-server-ver15) is a feature designed to protect sensitive data, such as credit card numbers or national identification numbers (for example, U.S. social security numbers), stored in SQL Server databases. It allows clients to encrypt sensitive data inside client applications and never reveal the encryption keys to the Database Engine. As a result, Always Encrypted provides a separation between those who own the data (and can view it) and those who manage the data (but should have no access). By ensuring on-premises database administrators, cloud database operators, or other high-privileged, but unauthorized users, cannot access the encrypted data, Always Encrypted enables customers to confidently store sensitive data outside of their direct control.
 
@@ -860,14 +657,10 @@ To recap, you experienced:
 ## Additional resources and more information
 
 - [What's new in SQL Server 2019 preview](https://docs.microsoft.com/en-us/sql/sql-server/what-s-new-in-sql-server-ver15?view=sql-server-ver15)
-- [SQL Server 2019 big data clusters overview and architecture](https://docs.microsoft.com/en-us/sql/big-data-cluster/big-data-cluster-overview?view=sql-server-ver15)
-- [How to run a sample notebook in Azure Data Studio on a SQL Server 2019 big data cluster, and leverage Spark](https://docs.microsoft.com/en-us/sql/big-data-cluster/tutorial-notebook-spark?view=sqlallproducts-allversions)
-- [What is Azure Data Studio?](https://docs.microsoft.com/en-us/sql/azure-data-studio/what-is?view=sql-server-ver15)
 - [Security Center for SQL Server Database Engine and Azure SQL Database](https://docs.microsoft.com/en-us/sql/relational-databases/security/security-center-for-sql-server-database-engine-and-azure-sql-database?view=sql-server-2017)
 - [SQL Data Discovery and Classification tool documentation](https://docs.microsoft.com/en-us/sql/relational-databases/security/sql-data-discovery-and-classification?view=sql-server-2017)
 - [Intelligent query processing in SQL databases](https://docs.microsoft.com/en-us/sql/relational-databases/performance/intelligent-query-processing?view=sql-server-2017)
 - [What's new in SQL Server Machine Learning Services](https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services?view=sql-server-ver15)
-- [How to run Java code in SQL Server 2019](https://docs.microsoft.com/en-us/sql/advanced-analytics/java/extension-java?view=sql-server-ver15)
 - [Learning content in GitHub: SQL Server Workshops](https://github.com/Microsoft/sqlworkshops)
 - [SQL Server Samples Repository in GitHub. Feature demos, code samples etc.](https://github.com/Microsoft/sql-server-samples)
 - [Always Encrypted with secure enclaves](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/always-encrypted-enclaves?view=sql-server-ver15)
