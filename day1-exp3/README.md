@@ -10,7 +10,7 @@
     - [Maximize ROI by migrating to the cloud](#Maximize-ROI-by-migrating-to-the-cloud)
   - [Scenario overview](#Scenario-overview)
   - [Task 1: Perform database assessments for migration](#Task-1-Perform-database-assessments-for-migration)
-  - [Task 2: Use DEA to test workloads on the target platform](#Task-2-Use-DEA-to-test-workloads-on-the-target-platform)
+  - [Task 2: Review how to test workloads on the target platform with DEA](#Task-2-Review-how-to-test-workloads-on-the-target-platform-with-DEA)
     - [Capture](#Capture)
     - [Replay](#Replay)
     - [Analysis](#Analysis)
@@ -150,7 +150,7 @@ In this task, you will use the Microsoft [Data Migration Assistant](https://docs
 
     > The assessment report for a migrating the `ContosoAutoDb` database to a target platform of Azure SQL Database Managed Instance shows no feature parity. The database, including the cross-database references and Service broker features, can be migrated as is, providing the opportunity for ContosoAuto to have a fully managed PaaS database instance running in Azure. Previously, their options for migrating a database using features, such as Service Broker, incompatible with Azure SQL Database, were to deploy the database to a virtual machine running in Azure (IaaS) or modify their database and applications to not use the unsupported features. The introduction of Azure SQL MI, however, provides the ability to migrate databases into a managed Azure SQL database with near 100% compatibility, including the features that prevented them from using Azure SQL Database.
 
-## Task 2: Use DEA to test workloads on the target platform
+## Task 2: Review how to test workloads on the target platform with DEA
 
 Next, let's take a look at the Microsoft [Database Experimentation Assistant](https://docs.microsoft.com/en-us/sql/dea/database-experimentation-assistant-overview?view=sql-server-ver15) (DEA), and how it can help in choosing the right target platform for a SQL database upgrade and migration. DEA is an experimentation solution for SQL Server upgrades. DEA can help you evaluate a targeted version of SQL Server for a specific workload. Customers who are upgrading from earlier SQL Server versions (starting with 2005) to a more recent version of SQL Server can use the analysis metrics that the tool provides.
 
