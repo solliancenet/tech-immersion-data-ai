@@ -2,22 +2,22 @@
 
 
 
-## Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI
+## Day 1, Experience 6 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
-  - [Day 1, Experience 4 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI](#day-1-experience-4---delivering-the-modern-data-warehouse-with-azure-sql-data-warehouse-azure-databricks-azure-data-factory-and-power-bi)
-  - [Technology overview](#technology-overview)
-  - [Scenario overview](#scenario-overview)
-  - [Task 1: Start the vehicle telemetry generator](#task-1-start-the-vehicle-telemetry-generator)
-  - [Task 2: Execute ADF Pipeline to copy data](#task-2-execute-adf-pipeline-to-copy-data)
-  - [Task 3: Read streaming data from Cosmos DB using Databricks](#task-3-read-streaming-data-from-cosmos-db-using-databricks)
-  - [Task 4: Perform data aggregation and summarization](#task-4-perform-data-aggregation-and-summarization)
-  - [Task 5: Persisting data to Databricks Delta tables](#task-5-persisting-data-to-databricks-delta-tables)
-  - [Task 6: Visualizations and dashboards with Databricks](#task-6-visualizations-and-dashboards-with-databricks)
-  - [Task 7: Send summarized data to Azure SQL DW](#task-7-send-summarized-data-to-azure-sql-dw)
-  - [Task 8: Generate reports in Power BI with data from Azure SQL DW](#task-8-generate-reports-in-power-bi-with-data-from-azure-sql-dw)
-  - [Wrap-up](#wrap-up)
-  - [Additional resources and more information](#additional-resources-and-more-information)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
+  - [Day 1, Experience 6 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI](#Day-1-Experience-6---Delivering-the-Modern-Data-Warehouse-with-Azure-SQL-Data-Warehouse-Azure-Databricks-Azure-Data-Factory-and-Power-BI)
+  - [Technology overview](#Technology-overview)
+  - [Scenario overview](#Scenario-overview)
+  - [Task 1: Start the vehicle telemetry generator](#Task-1-Start-the-vehicle-telemetry-generator)
+  - [Task 2: Execute ADF Pipeline to copy data](#Task-2-Execute-ADF-Pipeline-to-copy-data)
+  - [Task 3: Read streaming data from Cosmos DB using Databricks](#Task-3-Read-streaming-data-from-Cosmos-DB-using-Databricks)
+  - [Task 4: Perform data aggregation and summarization](#Task-4-Perform-data-aggregation-and-summarization)
+  - [Task 5: Persisting data to Databricks Delta tables](#Task-5-Persisting-data-to-Databricks-Delta-tables)
+  - [Task 6: Visualizations and dashboards with Databricks](#Task-6-Visualizations-and-dashboards-with-Databricks)
+  - [Task 7: Send summarized data to Azure SQL DW](#Task-7-Send-summarized-data-to-Azure-SQL-DW)
+  - [Task 8: Generate reports in Power BI with data from Azure SQL DW](#Task-8-Generate-reports-in-Power-BI-with-data-from-Azure-SQL-DW)
+  - [Wrap-up](#Wrap-up)
+  - [Additional resources and more information](#Additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -65,9 +65,9 @@ In this task, you will configure and run the data generator to save simulated ve
 
     ![Open File is highlighted in the File menu.](media/file-menu.png "File menu")
 
-3. In the Open File window, navigate to `C:\lab-files\data\4\TelemetryGenerator`. Select `appsettings.json` to and then select **Open**.
+3. In the Open File window, navigate to `C:\lab-files\data\6\TelemetryGenerator`. Select `appsettings.json` to and then select **Open**.
 
-    ![The `appsettings.json` file is highlighted in the C:\lab-files\data\4\TelemetryGenerator folder.](media/windows-explorer-appsettings-json.png "Windows explorer")
+    ![The `appsettings.json` file is highlighted in the C:\lab-files\data\6\TelemetryGenerator folder.](media/windows-explorer-appsettings-json.png "Windows explorer")
 
 4. To retrieve your Cosmos DB connection string, open a web browser and navigate to the [Azure portal](https://portal.azure.com). Select **Resource groups** from the left-hand menu, and then select the **tech-immersionXXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
 
@@ -104,7 +104,7 @@ In this task, you will configure and run the data generator to save simulated ve
 
 9. Save the `appsettings.json` file.
 
-10. In your open Windows Explorer window, locate and double-click the `TransactionGenerator.exe` file (located in the same `C:\lab-files\data\4\TelemetryGenerator` folder as `appsettings.json`) to launch the console application.
+10. In your open Windows Explorer window, locate and double-click the `TransactionGenerator.exe` file (located in the same `C:\lab-files\data\6\TelemetryGenerator` folder as `appsettings.json`) to launch the console application.
 
     ![Screenshot of the console window.](media/telemetry-generator-console.png "Console window")
 
@@ -142,13 +142,11 @@ In this task, you will quickly set up your ADLS Gen2 filesystem using a Databric
 
    ![Import is highlighted in the context menu for the Shared workspace in Databricks.](media/databricks-workspace-shared-import.png "Import")
 
-7. On the Import Notebooks dialog, select **Browse** and select the **`Tech-Immersion.dbc`** file located in the `C:\lab-files\data\4` folder on your lab VM, and then select **Import**.
+7. On the Import Notebooks dialog, select **Browse** and select the **`Tech-Immersion.dbc`** file located in the `C:\lab-files\data\6` folder on your lab VM, and then select **Import**.
 
    ![The Import Notebooks dialog is displayed, with the `Tech-Immersion.dbc` file listed in the import box.](media/databricks-workspace-import-notebooks.png "Import notebooks")
 
-8. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day-1** and **Experience-4** folders. Then select the notebook named **1-Environment-Setup**.
-
-   ![In the shared workspace, the 1-Environment-Setup notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.](media/databricks-workspace-day1-exp4-notebook1.png "Notebooks in the shared workspace")
+8. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day-1** and **Experience-6** folders. Then select the notebook named **1-Environment-Setup**.
 
 9. In the **1-Environment-Setup** notebook, follow the instructions contained in the notebook, and then return here to complete the remaining steps of this task.
 
@@ -192,9 +190,7 @@ You have now used ADF to move data from various sources, including Cosmos DB, in
 
 1. Return to the Azure Databricks Workspace you opened previously, and in your Databricks workspace, select **Workspace** from the left-hand menu, and then select **Shared**.
 
-2. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day-1** and **Experience-4** folders. Then select the notebook named **2-Cosmos-DB-Change-Feed**.
-
-   ![In the shared workspace, the 2-Cosmos-DB-Change-Feed notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.](media/databricks-workspace-day1-exp4-notebook2.png "Notebooks in the shared workspace")
+2. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day-1** and **Experience-6** folders. Then select the notebook named **2-Cosmos-DB-Change-Feed**.
 
 3. In the **2-Cosmos-DB-Change-Feed** notebook, follow the instructions to complete the remaining steps of this task.
 
@@ -206,9 +202,7 @@ In this task, you will using Databricks to perform data preparation, aggregation
 
 1. In your Databricks workspace, select **Workspace** from the left-hand menu, then select **Shared**.
 
-2. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day 1** and **Experience 4** folders. Then select the notebook named **3-Aggregation-and-Summarization**.
-
-   ![In the shared workspace, the 3-Aggregation-and-Summarization notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.](media/databricks-workspace-day1-exp4-notebook3.png "Notebooks in the shared workspace")
+2. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day 1** and **Experience 6** folders. Then select the notebook named **3-Aggregation-and-Summarization**.
 
 3. In the **3-Aggregation-and-Summarization** notebook, follow the instructions to complete the remaining steps of this task.
 
@@ -220,9 +214,7 @@ In this task, you will see how Databricks Delta provides capabilities previous u
 
 1. In your Databricks workspace, select **Workspace** from the left-hand menu, then select **Shared**.
 
-2. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day-1** and **Experience-4** folders. Then select the notebook named **4-Databricks-Delta**.
-
-   ![In the shared workspace, the 4-Databricks-Delta notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.](media/databricks-workspace-day1-exp4-notebook4.png "Notebooks in the shared workspace")
+2. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day-1** and **Experience-6** folders. Then select the notebook named **4-Databricks-Delta**.
 
 3. In the **4-Databricks-Delta** notebook, follow the instructions to complete the remaining steps of this task.
 
@@ -234,9 +226,7 @@ In this task, you will use visualizations configured within a Databricks noteboo
 
 1. In your Databricks workspace, select **Workspace** from the left-hand menu, then select **Shared**.
 
-2. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day-1** and **Experience-4** folders. Then select the notebook named **5-Databricks-Dashboards**.
-
-   ![In the shared workspace, the 5-Databricks-Dashboards notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.](media/databricks-workspace-day1-exp4-notebook5.png "Notebooks in the shared workspace")
+2. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day-1** and **Experience-6** folders. Then select the notebook named **5-Databricks-Dashboards**.
 
 3. In the **5-Databricks-Dashboards** notebook, follow the instructions to complete the remaining steps of this task.
 
@@ -248,9 +238,7 @@ In this task, you will use the Azure SQL Data Warehouse connector to write aggre
 
 1. In your Databricks workspace, select **Workspace** from the left-hand menu, then select **Shared**.
 
-2. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day-1** and **Experience-4** folders. Then select the notebook named **6-Write-to-SQL-DW**.
-
-   ![In the shared workspace, the 6-Write-to-SQL-DW notebook is selected under the Tech-Immersion/Day-1/Experience-4 folder.](media/databricks-workspace-day1-exp4-notebook6.png "Notebooks in the shared workspace")
+2. In the shared workspace, select the **Tech-Immersion** folder, followed by the **Day-1** and **Experience-6** folders. Then select the notebook named **6-Write-to-SQL-DW**.
 
 3. In the **6-Write-to-SQL-DW** notebook, follow the instructions to complete the remaining steps of this task.
 
