@@ -81,7 +81,7 @@ In this experience you will learn how Contoso Auto can use MLOps to formalize th
 ## Task 3: Update the build YAML file
 
 1. Select and open the `azure-pipelines.yml` file
-2. Select **Edit** and update the following variables: `resourcegroup`, `workspace` and `location`. If you are using your own Azure subscription, please provide names to use. If an environment is provided to you be sure to replace XXXXX in the values below with your unique identifier and update the `location` variable.
+2. Select **Edit** and update the following variables: `resourcegroup`, and `workspace`. If you are using your own Azure subscription, please provide names to use. If an environment is provided to you, provide values for `resourcegroup` and `workspace` for your enviroment. Typically, for the provided enviroment, the format for the resourcegroup is `tech-immersion-XXXXX` and for workspace is `tech-immersion-ws-XXXXX` where XXXXX is your unique identifier.
 
     ![Open build YAML file](media/05.png)
 
@@ -101,7 +101,7 @@ In this experience you will learn how Contoso Auto can use MLOps to formalize th
 
 3. Provide the following information in the `Add an Azure Resource Manager service connection` dialog box and then select **Ok**:
  
-   a. Connection name: `quick-starts-sc`
+   a. Connection name: `quick-starts-sc` (*note: do not change this name*)
    
    b. Subscription: Select the Azure subscription to use
    
