@@ -1,641 +1,655 @@
 <h1 id="data-ai-tech-immersion-workshop-product-review-guide-and-lab-instructions">Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions</h1>
-<h2 id="day-1-experience-2---leveraging-cosmos-db-for-near-real-time-analytics">Day 1, Experience 2 - Leveraging Cosmos DB for near real-time analytics</h2>
+<h2 id="day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-database-managed-instance">Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance</h2>
 <ul>
 <li><a href="#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions">Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions</a>
 <ul>
-<li><a href="#day-1-experience-2---leveraging-cosmos-db-for-near-real-time-analytics">Day 1, Experience 2 - Leveraging Cosmos DB for near real-time analytics</a></li>
+<li><a href="#day-1-experience-3---unlocking-new-capabilities-with-friction-free-migrations-to-azure-sql-database-managed-instance">Day 1, Experience 3 - Unlocking new capabilities with friction-free migrations to Azure SQL Database Managed Instance</a></li>
 <li><a href="#technology-overview">Technology overview</a>
 <ul>
-<li><a href="#azure-cosmos-db">Azure Cosmos DB</a></li>
-<li><a href="#azure-functions">Azure Functions</a></li>
-<li><a href="#azure-stream-analytics">Azure Stream Analytics</a></li>
-<li><a href="#power-bi">Power BI</a></li>
-<li><a href="#serverless-computing-using-azure-cosmos-db-and-azure-functions">Serverless computing using Azure Cosmos DB and Azure Functions</a></li>
+<li><a href="#migrate-your-sql-server-databases-without-changing-your-apps">Migrate your SQL Server databases without changing your apps</a></li>
+<li><a href="#accelerate-your-database-migration">Accelerate your database migration</a></li>
+<li><a href="#maximize-roi-by-migrating-to-the-cloud">Maximize ROI by migrating to the cloud</a></li>
 </ul></li>
 <li><a href="#scenario-overview">Scenario overview</a></li>
-<li><a href="#experience-requirements">Experience requirements</a></li>
-<li><a href="#task-1-configure-cosmos-db">Task 1: Configure Cosmos DB</a></li>
-<li><a href="#task-2-configure-event-hubs">Task 2: Configure Event Hubs</a></li>
-<li><a href="#task-3-configure-stream-analytics">Task 3: Configure Stream Analytics</a></li>
-<li><a href="#task-4-configure-azure-function-app">Task 4: Configure Azure Function App</a></li>
-<li><a href="#task-5-publish-function-app-and-run-data-generator">Task 5: Publish Function App and run data generator</a></li>
-<li><a href="#task-6-view-published-function">Task 6: View published function</a></li>
-<li><a href="#task-7-create-power-bi-dashboard">Task 7: Create Power BI dashboard</a></li>
+<li><a href="#task-1-perform-database-assessments-for-migration">Task 1: Perform database assessments for migration</a></li>
+<li><a href="#task-2-migrate-the-database-to-sql-mi">Task 2: Migrate the database to SQL MI</a></li>
+<li><a href="#task-3-update-the-web-application-to-use-the-new-sql-mi-database">Task 3: Update the web application to use the new SQL MI database</a></li>
+<li><a href="#task-4-enable-dynamic-data-masking">Task 4: Enable Dynamic Data Masking</a></li>
+<li><a href="#task-5-add-clustered-columnstore-index">Task 5: Add clustered columnstore index</a></li>
+<li><a href="#task-6-use-online-secondary-for-read-only-queries">Task 6: Use online secondary for read-only queries</a></li>
+<li><a href="#task-7-review-advanced-data-security-vulnerability-assessment">Task 7: Review Advanced Data Security Vulnerability Assessment</a></li>
+<li><a href="#task-8-sql-data-discovery-and-classification">Task 8: SQL Data Discovery and Classification</a></li>
 <li><a href="#wrap-up">Wrap-up</a></li>
 <li><a href="#additional-resources-and-more-information">Additional resources and more information</a></li>
 </ul></li>
 </ul>
 <h2 id="technology-overview">Technology overview</h2>
-<h3 id="azure-cosmos-db">Azure Cosmos DB</h3>
-<p>Develop high-concurrency, low-latency applications with Azure Cosmos DB, a fully managed database service that supports NoSQL APIs and can scale out <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-multi-master">multi-master</a> workloads anywhere in the world. Ensure blazing fast performance with <a href="https://azure.microsoft.com/en-us/support/legal/sla/cosmos-db/v1_2/">industry-leading service level agreements (SLAs)</a> for single-digit-millisecond reads and writes, data consistency and throughput, and 99.999% high availability. Transparent <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/partitioning-overview">horizontally-partitioning</a> provides elastic scaling, matching capacity with demand to controls costs and ensures your applications maintains high performance during peak traffic.</p>
-<p>Azure Cosmos DB offers built-in, cloud-native capabilities to simplify app development and boost developer productivity, including five well-defined consistency models, <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/index-policy">auto-indexing</a>, and multiple data models. Easily migrate existing NoSQL data with open-source APIs for <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction">MongoDB</a>, <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/cassandra-introduction">Cassandra</a>, Gremlin (Graph), and others. Developers can work with tools to build microservices and the languages of their choice, while enjoying seamless integration with Azure services for IoT, advanced analytics, AI and machine learning, and business intelligence.</p>
-<p>Azure Cosmos DB enables you to innovate with IoT data to build enhanced user experiences and turn insights into action:</p>
-<ul>
-<li>Ingest and query diverse IoT data easily using Azure Cosmos DB’s global presence to capture data from anywhere.</li>
-<li>Scale elastically to accommodate real-time fluctuations in IoT data.</li>
-<li>Seamlessly integrate into tools like Azure Event Hub, Azure IoT Hub and Azure Functions to ingest and stream data.</li>
-</ul>
-<p>Performing real-time analytics on data of any size or type from anywhere, using a Lambda architecture, and easy integration with Azure Databricks.</p>
-<ul>
-<li>Source and serve data quickly through integration with other Azure services for real-time insights.</li>
-<li>Run in-depth queries over diverse data sets to understand trends and make better decisions.</li>
-<li>Apply Analytics, Machine Learning, and Cognitive capabilities to your NoSQL data.</li>
-</ul>
-<p>By using Azure Cosmos DB you no longer have to make the extreme <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/consistency-levels-tradeoffs">tradeoffs</a> between consistency, availability, latency and programmability. You can choose from five well-defined consistency choices (strong, bounded staleness, consistent-prefix, session, and eventual) to better control your user’s experience through consistency, availability, latency and programmability.</p>
-<p>Focus your time and attention on developing great apps while Azure handles management and optimization of infrastructure and databases. Deploy databases in a fraction of the time on Microsoft’s platform as a service and leverage built-in configuration options to get up and running fast. You can rest assured your apps are running on a fully managed database service built on world-class infrastructure with enterprise-grade security and compliance</p>
-<h3 id="azure-functions">Azure Functions</h3>
-<p><a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview">Azure Functions</a> enables you to easily build the apps you need using simple, serverless functions that <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale">scale</a> to meet demand.</p>
-<p>Azure Functions allows you to focus on running great apps, instead of the infrastructure on which they run. You don’t need to worry about provisioning and maintaining servers. Azure Functions provides a fully managed compute platform with high reliability and security. With <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale">scale</a> on demand, your code gets the compute resources it needs, when it needs them, freeing you of capacity planning concerns.</p>
-<p>Write code only for what truly matters to your business. Utilize innovative programming model for everything else such as <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale">communicating with other services</a>, building <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook">HTTP-based API</a> or orchestrating complex workflows. Azure Functions naturally leads you to a microservices-friendly approach for building more scalable and stable applications.</p>
-<p>You can create Functions in the <a href="https://docs.microsoft.com/en-us/azure/azure-functions/supported-languages">programming language of your choice</a>. Write code in an easy-to-use web-based interface or build and debug on your local machine with your favorite development tool. You can take advantage of built-in continuous deployment and use integrated monitoring tools to <a href="https://docs.microsoft.com/en-us/azure/app-service/overview-diagnostics">troubleshoot issues</a>.</p>
-<h3 id="azure-stream-analytics">Azure Stream Analytics</h3>
-<p>As more and more data is generated from a variety of connected devices and sensors, transforming this data into actionable insights and predictions in near real-time is now an operational necessity. <a href="https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-introduction">Azure Stream Analytics</a> seamlessly integrates with your real-time application architecture to enable powerful, real-time analytics on your data no matter what the volume.</p>
-<p>Azure Stream Analytics enables you to develop massively parallel Complex Event Processing (CEP) pipelines with simplicity. It allows you to author powerful, real-time analytics solutions using very simple, declarative <a href="https://docs.microsoft.com/en-us/stream-analytics-query/stream-analytics-query-language-reference">SQL like language</a> with embedded support for temporal logic. Extensive array of <a href="https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-define-outputs">out-of-the-box connectors</a>, advanced debugging and job monitoring capabilities help keep costs down by significantly lowering the developer skills required. Additionally, Azure Stream Analytics is highly extensible through support for custom code with <a href="https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-javascript-user-defined-functions">JavaScript User Defined functions</a> further extending the streaming logic written in SQL.</p>
-<p>Getting started in seconds is easy with Azure Stream Analytics as there is no infrastructure to worry about, and no servers, virtual machines, or clusters to manage. You can instantly <a href="https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-streaming-unit-consumption">scale-out the processing power</a> from one to hundreds of streaming units for any job. You only pay for the processing used per job.</p>
-<p><a href="https://docs.microsoft.com/en-us/stream-analytics-query/event-delivery-guarantees-azure-stream-analytics">Guaranteed event delivery</a> and an enterprise grade SLA, provide the three 9’s of availability, making sure that Azure Stream Analytics is suitable for mission critical workloads. Automated checkpoints enable fault tolerant operation with fast restarts with no data loss.</p>
-<p>Azure Stream Analytics can be used to allow you to quickly build real-time dashboards with Power BI for a live command and control view. <a href="https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-power-bi-dashboard">Real-time dashboards</a> help transform live data into actionable and insightful visuals, and help you focus on what matters to you the most.</p>
-<h3 id="power-bi">Power BI</h3>
-<p><a href="https://docs.microsoft.com/en-us/power-bi/">Power BI</a> is a business analytics service that delivers insights to enable fast, informed decisions. Enabling you to transform data into stunning visuals and share them with colleagues on any device. Power BI provides a rich canvas on which to visually <a href="https://docs.microsoft.com/en-us/power-bi/service-basic-concepts">explore and analyze your data</a>. The ability to collaborate on and share customized <a href="https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-power-bi-dashboard">dashboards</a> and interactive reports is part of the experience, enabling you to scale across your organization with built-in governance and security.</p>
-<h3 id="serverless-computing-using-azure-cosmos-db-and-azure-functions">Serverless computing using Azure Cosmos DB and Azure Functions</h3>
+<h3 id="migrate-your-sql-server-databases-without-changing-your-apps">Migrate your SQL Server databases without changing your apps</h3>
+<p><a href="https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance">Azure SQL Database Managed Instance</a> (SQL MI) is a new deployment option of Azure SQL Database which enables the migration of existing on-premises SQL Server databases to the cloud with minimal or no application and database changes. With SQL MI, you get the broadest SQL Server engine compatibility and native virtual network (VNET) support. This option gives you the best of SQL Server, plus the operational and cost benefits of an intelligent, fully managed service. SQL MI is ideal for migrating a large number of existing SQL Server databases from on-premises or virtual machines to SQL Database.</p>
 <figure>
-<img src="media/cosmos-db-and-azure-functions.png" title="Azure Cosmos DB and Functions" alt="The diagram shows events being fed into Cosmos DB, and the change feed triggering Azure functions." /><figcaption>The diagram shows events being fed into Cosmos DB, and the change feed triggering Azure functions.</figcaption>
+<img src="media/azure-sql-database-managed-instance.png" title="What is SQL MI?" alt="Diagram outlining the key features of managed instances." /><figcaption>Diagram outlining the key features of managed instances.</figcaption>
 </figure>
-<p>Serverless computing is all about the ability to focus on individual pieces of logic that are repeatable and stateless. These pieces require no infrastructure management and they consume resources only for the seconds, or milliseconds, they run for. At the core of the serverless computing movement are functions, which are made available in the Azure ecosystem by Azure Functions. To learn about other serverless execution environments in Azure see ‘serverless in Azure’ page.</p>
-<p>With the native integration between <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/serverless-computing-database">Azure Cosmos DB and Azure Functions</a>, you can create database triggers, input bindings, and output bindings directly from your Azure Cosmos DB account.</p>
-<p>Azure Functions and Azure Cosmos DB allow you can create, deploy, and easily manage great low-latency event-driven serverless apps based on rich data, and serving a globally distributed user base seamlessly.</p>
-<figure>
-<img src="media/cosmos-db-azure-function.png" title="Cosmos DB and Azure Functions" alt="Use an Azure Cosmos DB trigger to invoke an Azure Function." /><figcaption>Use an Azure Cosmos DB trigger to invoke an Azure Function.</figcaption>
-</figure>
-<p>• For an example of event sourcing architectures based on Azure Cosmos DB in a real world use case see <a href="https://blogs.msdn.microsoft.com/azurecat/2018/05/17/azure-cosmos-db-customer-profile-jet-com">https://blogs.msdn.microsoft.com/azurecat/2018/05/17/azure-cosmos-db-customer-profile-jet-com</a></p>
+<h3 id="accelerate-your-database-migration">Accelerate your database migration</h3>
+<p>Reduce the complexity of your cloud migration by using a single comprehensive service instead of multiple tools. <a href="https://docs.microsoft.com/azure/dms/dms-overview">Azure Database Migration Service</a> is designed as a seamless, end-to-end solution for moving on-premises SQL Server databases to the cloud. Use the <a href="https://datamigration.microsoft.com/">Database Migration Guide</a> for recommendations, step-by-step guidance, and expert tips on your specific database migration.</p>
+<h3 id="maximize-roi-by-migrating-to-the-cloud">Maximize ROI by migrating to the cloud</h3>
+<p>Reduce the burden of data-tier management and save time and costs by migrating workloads to the cloud. <a href="https://azure.microsoft.com/pricing/hybrid-benefit/">Azure Hybrid Benefit</a> for SQL Server provides a cost-effective path for migrating hundreds or thousands of SQL Server databases with minimal effort. Use your SQL Server licenses with Software Assurance to pay a reduced rate when migrating to the cloud. Save up to 55 percent with Azure Hybrid Benefit, and up to 80 percent with <a href="https://docs.microsoft.com/azure/sql-database/sql-database-reserved-capacity">reserved capacity</a>. Learn how <a href="https://azure.microsoft.com/resources/forrester-tei-sql-database-managed-instance/">customers have increased productivity</a> by up to 40 percent by migrating to Azure SQL Database.</p>
 <h2 id="scenario-overview">Scenario overview</h2>
-<p>Contoso Auto is collecting vehicle telemetry and wants to use Cosmos DB to rapidly ingest and store the data in its raw form, then do some processing in near real-time. In the end, they want to create a dashboard that automatically updates with new data as it flows in after being processed. What they would like to see on the dashboard are various visualizations of detected anomalies, like engines overheating, abnormal oil pressure, and aggressive driving, using components such as a map to show anomalies related to cities, as well as various charts and graphs depicting this information in a clear way.</p>
-<p>In this experience, you will use Azure Cosmos DB to ingest streaming vehicle telemetry data as the entry point to a near real-time analytics pipeline built on Cosmos DB, Azure Functions, Event Hubs, Azure Stream Analytics, and Power BI. To start, you will complete configuration and performance-tuning on Cosmos DB to prepare it for data ingest, and use the change feed capability of Cosmos DB to trigger Azure Functions for data processing. The function will enrich the telemetry data with location information, then send it to Event Hubs. Azure Stream Analytics extracts the enriched sensor data from Event Hubs, performs aggregations over windows of time, then sends the aggregated data to Power BI for data visualization and analysis. A vehicle telemetry data generator will be used to send vehicle telemetry data to Cosmos DB.</p>
-<h2 id="experience-requirements">Experience requirements</h2>
-<ul>
-<li>Azure subscription</li>
-<li>Visual Studio 2017 Community (or better)</li>
-<li>Power BI account (sign up at <a href="https://powerbi.microsoft.com" class="uri">https://powerbi.microsoft.com</a>)</li>
-</ul>
-<h2 id="task-1-configure-cosmos-db">Task 1: Configure Cosmos DB</h2>
-<p><a href="https://docs.microsoft.com/en-us/azure/cosmos-db/introduction">Azure Cosmos DB</a> provides a multi-model, globally available NoSQL database with high concurrency, low latency, and predictable results. One of its biggest strengths is that it transparently synchronizes data to all regions around the globe, which can quickly and easily be added at any time. This adds value by reducing the amount of development required to read and write the data and removes any need for synchronization. The speed in which Cosmos DB can ingest as well as return data, coupled with its ability to do so at a global scale, makes it ideal for both ingesting real-time data and serving that data to consumers worldwide.</p>
-<p>When storing and delivering your data on a global scale, there are some things to consider. Most distributed databases offer two consistency levels: strong and eventual. These live at different ends of a spectrum, where strong consistency often results in slower transactions because it synchronously writes data to each replica set. This guarantees that the reader will always see the most recent committed version of the data. Eventual consistency, on the other hand, asynchronously writes to each replica set with no ordering guarantee for reads. The replicas eventually converge, but the risk is that it can take several reads to retrieve the most up-to-date data.</p>
-<p>Azure Cosmos DB was designed with control over the tradeoffs between read consistency, availability, latency, and throughput. This is why Cosmos DB offers five consistency levels: strong, bounded staleness, session, consistent prefix, and eventual. As a general rule of thumb, you can get about 2x read throughput for session, consistent prefix, and eventual consistency models compared to bounded staleness or strong consistency.</p>
-<p>The Session consistency level is the default, and is suitable for most operations. It provides strong consistency for the session (application or connection), where all reads are current with writes from that session. Data from other sessions come in the correct order, but aren’t guaranteed to be current. Session consistency level provides a balance of good performance and good availability at half the cost of both strong consistency and bounded staleness. As mentioned before, session provides about 2x read throughput compared to these two stronger consistency levels as well.</p>
-<p>For this scenario, Contoso Auto does not need to ingest and serve their data globally just yet. Right now, they are working on a POC to rapidly ingest vehicle telemetry data, process that data as it arrives, and visualize the processed data through a real-time dashboard. Cosmos DB gives them the flexibility to add regions in the future either programmatically through its APIs, or through the “Replicate data globally” Cosmos DB settings in the portal.</p>
-<p>To do this, go to the “Replicate data globally” settings, select the option to add a region, then choose the region you wish to add.</p>
-<figure>
-<img src="media/cosmos-add-region.png" title="Configure regions" alt="The Add Region button is highlighted." /><figcaption>The Add Region button is highlighted.</figcaption>
-</figure>
-<p>Once you are finished adding regions, simply select the Save button to apply your changes. You will see the regions highlighted on a map.</p>
-<figure>
-<img src="media/cosmos-region-map.png" title="Regions" alt="A map is displayed showing the regions that were added." /><figcaption>A map is displayed showing the regions that were added.</figcaption>
-</figure>
-<p>To ensure high write and read availability, configure your Cosmos account to span at least two regions with multiple-write regions. This configuration will provide the availability, lowest latency, and scalability for both reads and writes backed by SLAs. To learn more, see <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/tutorial-global-distribution-sql-api">how to configure your Cosmos account with multiple write-regions</a>. To configure multi-master in your applications, see <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-multi-master">How to configure multi-master</a>.</p>
-<p>You may be wondering how you can control the throughput, or speed at which data can be written to or read from Cosmos DB at a global level. In Azure Cosmos DB, provisioned throughput is represented as request units/second (RUs). RUs measure the cost of both read and write operations against your Cosmos DB container. Because Cosmos DB is designed with transparent horizontal scaling (e.g., scale out) and multi-master replication, you can very quickly and easily increase or decrease the number of RUs to handle thousands to hundreds of millions of requests per second around the globe with a single API call.</p>
-<p>Cosmos DB allows you to increment/decrement the RUs in small increments of 1000 at the database level, and in even smaller increments of 100 RU/s at the container level. It is recommended that you configure throughput at the container granularity for guaranteed performance for the container all the time, backed by SLAs. Other guarantees that Cosmos DB delivers are 99.999% read and write availability all around the world, with those reads and writes being served in less than 10 milliseconds at the 99th percentile.</p>
-<p>When you set a number of RUs for a container, Cosmos DB ensures that those RUs are available in all regions associated with your Cosmos DB account. When you scale out the number of regions by adding a new one, Cosmos will automatically provision the same quantity of RUs in the newly added region. You cannot selectively assign different RUs to a specific region. These RUs are provisioned for a container (or database) for all associated regions.</p>
-<p>In this task, you will create a new Cosmos DB database and collection, set the throughput units, and obtain the connection details.</p>
-<ol type="1">
-<li><p>To start, open a new web browser window and navigate to <a href="https://portal.azure.com" class="uri">https://portal.azure.com</a>. Log in with the credentials provided to you for this lab.</p></li>
-<li><p>After logging into the Azure portal, select <strong>Resource groups</strong> from the left-hand menu. Then select the resource group named <strong>tech-immersion-YOUR_UNIQUE_IDENTIFIER</strong>. The <code>YOUR_UNIQUE_IDENTIFIER</code> portion of the name is the unique identifier assigned to you for this lab.</p>
-<figure>
-<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
-</figure></li>
-<li><p>Select the <strong>Azure Cosmos DB account</strong> from the list of resources in your resource group.</p>
-<figure>
-<img src="media/tech-immersion-rg-cosmos-db.png" title="tech-immersion resource group" alt="The Azure Cosmos DB account is selected in the resource group." /><figcaption>The Azure Cosmos DB account is selected in the resource group.</figcaption>
-</figure></li>
-<li><p>Within the Cosmos DB account blade, select <strong>Data Explorer</strong> on the left-hand menu.</p>
-<figure>
-<img src="media/cosmos-db-data-explorer-link.png" title="Data Explorer link" alt="The Data Explorer link located in the left-hand menu is highlighted." /><figcaption>The Data Explorer link located in the left-hand menu is highlighted.</figcaption>
-</figure></li>
-<li><p>If the ContosoAuto database and telemetry collection already exist, <strong>skip ahead</strong> to step 9.</p>
-<figure>
-<img src="media/cosmos-db-database-exists.png" title="Data Explorer" alt="Screenshot shows the database and collection already exists." /><figcaption>Screenshot shows the database and collection already exists.</figcaption>
-</figure></li>
-<li><p>Select <strong>New Collection</strong> in the top toolbar.</p>
-<figure>
-<img src="media/cosmos-db-new-collection-link.png" title="New Collection link" alt="The New Collection link in the top toolbar is highlighted." /><figcaption>The New Collection link in the top toolbar is highlighted.</figcaption>
-</figure></li>
-<li><p>In the <strong>Add Collection</strong> blade, configure the following:</p>
-<ul>
-<li><strong>Database id:</strong> Select <strong>Create new</strong>, then enter “ContosoAuto” for the id.</li>
-<li><strong>Provision database throughput:</strong> Unchecked.</li>
-<li><strong>Collection id:</strong> Enter “telemetry”.</li>
-<li><strong>Partition key:</strong> Enter “/vin”.</li>
-<li><strong>Throughput:</strong> Enter 15000.</li>
-</ul>
+<p>ContosoAuto runs their operations and finance database, <code>ContosoAutoDb</code>, on an on-premises SQL Server 2008 R2 database. This system is vital to the company’s daily activities and as SQL Server 2008 R2 is approaching end of support, they are looking at options for migrating this database into Azure. They have read about some of the advanced security and performance tuning options that are available only in Azure and would prefer to a migrate the database into a platform-as-a-service (PaaS) offering, if possible.</p>
+<p>ContosoAuto is using the Service Broker feature of SQL Server within the <code>ContosoAutoDb</code> database. Service Broker is a feature of SQL Server used for sending and receiving guaranteed, asynchronous messages by using extensions to the Transact-SQL Data Manipulation Language (DML). This functionality is being used for several critical business processes, and they cannot afford to lose this capability when migrating their operations database to the cloud. They have also stated that, at this time, they do not have the resources to rearchitect the solution to use an alternative message broker.</p>
+<p>In this experience, you will use the Microsoft Data Migration Assistant (DMA) to perform assessments of feature parity and compatibility against both Azure SQL Database and Azure SQL Database Managed Instance, with the goal of migrating the <code>ContosoAutoDb</code> database into an Azure PaaS offering with minimal or no changes. After completing the assessments, you will perform the database migration and then update ContosoAuto’s operations web application to use the new database. Once that is complete, you will review and enable some of the database features that are only available in Azure.</p>
+<h2 id="task-1-perform-database-assessments-for-migration">Task 1: Perform database assessments for migration</h2>
+<p>In this task, you will use the Microsoft <a href="https://docs.microsoft.com/sql/dma/dma-overview?view=azuresqldb-mi-current">Data Migration Assistant</a> (DMA) to perform assessments on the <code>ContosoAutoDb</code> database. You will create two assessments, one for a migration to Azure SQL Database, and then a second for SQL MI. These assessments will provide reports about any feature parity and compatibility issues between the on-premises database and the Azure managed SQL database service options.</p>
 <blockquote>
-<p>The /vin partition was selected because the data will include this value, and it allows us to partition by vehicle from which the transaction originated. This field also contains a wide range of values, which is preferable for partitions.</p>
+<p>DMA helps you upgrade to a modern data platform by detecting compatibility issues that can impact database functionality in your new version of SQL Server or Azure SQL Database. DMA recommends performance and reliability improvements for your target environment and allows you to move your schema, data, and uncontained objects from your source server to your target server.</p>
 </blockquote>
-<figure>
-<img src="media/cosmos-db-new-collection.png" title="Add Collection" alt="The Add Collection form is filled out with the previously mentioned settings entered into the appropriate fields." /><figcaption>The Add Collection form is filled out with the previously mentioned settings entered into the appropriate fields.</figcaption>
-</figure>
-<p>On the subject of partitions, choosing an appropriate partition key for Cosmos DB is a critical step for ensuring balanced reads and writes, scaling, and, in this case, in-order change feed processing per partition. While there are no limits, per se, on the number of logical partitions, a single logical partition is allowed an upper limit of 10 GB of storage. Logical partitions cannot be split across physical partitions. For the same reason, if the partition key chosen is of bad cardinality, you could potentially have skewed storage distribution. For instance, if one logical partition becomes larger faster than the others and hits the maximum limit of 10 GB, while the others are nearly empty, the physical partition housing the maxed out logical partition cannot split and could cause an application downtime. This is why we specified <code>vin</code> as the partition key. It has good cardinality for this data set.</p></li>
-<li><p>Select <strong>OK</strong> on the bottom of the form when you are finished entering the values.</p></li>
-<li><p>Select <strong>Firewall and virtual networks</strong> from the left-hand menu and confirm that Allow access from <strong>All networks</strong> is selected. If it was not previously set to this, select <strong>Save</strong>. This will allow the vehicle telemetry generator application to send data to your Cosmos DB collection.</p>
-<figure>
-<img src="media/cosmos-db-firewall.png" title="Firewall and virtual networks" alt="The All networks option is selected within the Firewall and virtual networks blade." /><figcaption>The All networks option is selected within the Firewall and virtual networks blade.</figcaption>
-</figure></li>
-<li><p>Select <strong>Keys</strong> from the left-hand menu.</p>
-<figure>
-<img src="media/cosmos-db-keys-link.png" title="Keys link" alt="The Keys link on the left-hand menu is highlighted." /><figcaption>The Keys link on the left-hand menu is highlighted.</figcaption>
-</figure></li>
-<li><p>Copy the <strong>Primary Connection String</strong> value by selecting the copy button to the right of the field. <strong>SAVE THIS VALUE</strong> in Notepad or similar text editor for later.</p>
-<figure>
-<img src="media/cosmos-db-keys.png" title="Keys" alt="The Primary Connection String key is copied." /><figcaption>The Primary Connection String key is copied.</figcaption>
-</figure></li>
-</ol>
-<h2 id="task-2-configure-event-hubs">Task 2: Configure Event Hubs</h2>
-<p>Azure Event Hubs is a Big Data streaming platform and event ingestion service, capable of receiving and processing millions of events per second. We are using it to temporarily store vehicle telemetry data that is processed and ready to be sent to the real-time dashboard. As data flows into Event Hubs, Azure Stream Analytics will query the data, applying aggregates and tagging anomalies, then send it to Power BI.</p>
-<p>In this task, you will create and configure a new event hub within the provided Event Hubs namespace. This will be used to capture vehicle telemetry after it has been processed and enriched by the Azure function you will create later on.</p>
 <ol type="1">
-<li><p>Navigate to the <a href="https://portal.azure.com">Azure portal</a>.</p></li>
-<li><p>Select <strong>Resource groups</strong> from the left-hand menu. Then select the resource group named <strong>tech-immersion-YOUR_UNIQUE_IDENTIFIER</strong>.</p>
+<li><p>Launch the Microsoft Data Migration Assistant from the Windows Start menu within your lab environment.</p>
 <figure>
-<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
+<img src="media/windows-start-menu-dma.png" title="Data Migration Assistant" alt="The Microsoft Data Migration Assistant is highlighted in the Windows start menu." /><figcaption>The Microsoft Data Migration Assistant is highlighted in the Windows start menu.</figcaption>
 </figure></li>
-<li><p>Select the <strong>Event Hubs Namespace</strong> (<code>tech-immersion-hub-YOUR_UNIQUE_ID</code>) from the list of resources in your resource group.</p>
+<li><p>In the DMA dialog, select <strong>+</strong> from the left-hand menu to create a new project.</p>
 <figure>
-<img src="media/tech-immersion-rg-event-hubs.png" title="tech-immersion resource group" alt="The Event Hubs Namespace is selected in the resource group." /><figcaption>The Event Hubs Namespace is selected in the resource group.</figcaption>
+<img src="media/dma-new.png" title="New DMA project" alt="The new project icon is highlighted in DMA." /><figcaption>The new project icon is highlighted in DMA.</figcaption>
 </figure></li>
-<li><p>Within the Event Hubs Namespace blade, select <strong>Event Hubs</strong> within the left-hand menu.</p>
-<figure>
-<img src="media/event-hubs-link.png" title="Event Hubs link" alt="The Event Hubs link is selected in the left-hand menu." /><figcaption>The Event Hubs link is selected in the left-hand menu.</figcaption>
-</figure></li>
-<li><p>Select <strong>+ Event Hub</strong> in the top toolbar to create a new event hub in the namespace.</p>
-<figure>
-<img src="media/event-hubs-new-event-hub-link.png" title="New event hub link" alt="The new Event Hub link is highlighted in the top toolbar." /><figcaption>The new Event Hub link is highlighted in the top toolbar.</figcaption>
-</figure></li>
-<li><p>In the <strong>Create Event Hub</strong> blade, configure the following:</p>
+<li><p>In the New project pane, set the following:</p>
 <ul>
-<li><strong>Name:</strong> Enter “telemetry”.</li>
-<li><strong>Partition Count:</strong> Select 2.</li>
-<li><strong>Message Retention</strong>: Select 1.</li>
-<li><strong>Capture:</strong> Select Off.</li>
+<li><strong>Project type</strong>: Select Assessment.</li>
+<li><strong>Project name</strong>: Enter ToAzureSqlDb.</li>
+<li><strong>Source server type</strong>: Select SQL Server.</li>
+<li><strong>Target server type</strong>: Select Azure SQL Database.</li>
 </ul>
 <figure>
-<img src="media/event-hubs-create-event-hub.png" title="Create Event Hub" alt="The Create Event Hub form is filled out with the previously mentioned settings entered into the appropriate fields." /><figcaption>The Create Event Hub form is filled out with the previously mentioned settings entered into the appropriate fields.</figcaption>
+<img src="media/dma-new-project-to-azure-sql-db.png" title="New project settings" alt="New project settings for doing an assessment of a migration from SQL Server to Azure SQL Database." /><figcaption>New project settings for doing an assessment of a migration from SQL Server to Azure SQL Database.</figcaption>
 </figure></li>
-<li><p>Select <strong>Create</strong> on the bottom of the form when you are finished entering the values.</p></li>
-<li><p>Select your newly created <strong>telemetry</strong> event hub from the list after it is created.</p>
+<li><p>Select <strong>Create</strong>.</p></li>
+<li><p>On the <strong>Options</strong> screen, ensure <strong>Check database compatibility</strong> and <strong>Check feature parity</strong> are both checked, and then select <strong>Next</strong>.</p>
 <figure>
-<img src="media/event-hubs-select.png" title="Event hubs" alt="The newly created telemetry event hub is selected." /><figcaption>The newly created telemetry event hub is selected.</figcaption>
+<img src="media/dma-options.png" title="DMA options" alt="Check database compatibility and check feature parity are checked on the Options screen." /><figcaption>Check database compatibility and check feature parity are checked on the Options screen.</figcaption>
 </figure></li>
-<li><p>Select <strong>Shared access policies</strong> from the left-hand menu.</p>
-<figure>
-<img src="media/event-hubs-shared-access-policies-link.png" title="Shared access policies link" alt="The Shared access policies link is selected in the left-hand menu." /><figcaption>The Shared access policies link is selected in the left-hand menu.</figcaption>
-</figure></li>
-<li><p>Select <strong>+ Add</strong> in the top toolbar to create a new shared access policy.</p>
-<figure>
-<img src="media/event-hubs-shared-access-policies-add-link.png" title="Add" alt="The Add button is highlighted." /><figcaption>The Add button is highlighted.</figcaption>
-</figure></li>
-<li><p>In the <strong>Add SAS Policy</strong> blade, configure the following:</p>
+<li><p>On the <strong>Sources</strong> screen, enter the following into the <strong>Connect to a server</strong> dialog that appears on the right-hand side:</p>
 <ul>
-<li><strong>Name:</strong> Enter “Read”.</li>
-<li><strong>Managed:</strong> Unchecked.</li>
-<li><strong>Send:</strong> Unchecked.</li>
-<li><strong>Listen:</strong> Checked.</li>
+<li><strong>Server name</strong>: Enter the DNS name of the shared sqlServer2008R2 VM, <strong><code>sqlserver2008r2.westus.cloudapp.azure.com</code></strong>.</li>
+<li><strong>Authentication type</strong>: Select <strong>SQL Server Authentication</strong>.</li>
+<li><strong>Username</strong>: Enter <strong>WorkshopUser</strong></li>
+<li><strong>Password</strong>: Enter <strong>Password.1!!</strong></li>
+<li><strong>Encrypt connection</strong>: Check this box.</li>
+<li><strong>Trust server certificate</strong>: Check this box.</li>
 </ul>
 <figure>
-<img src="media/event-hubs-add-sas-policy-read.png" title="Add SAS Policy" alt="The Add SAS Policy form is filled out with the previously mentioned settings entered into the appropriate fields." /><figcaption>The Add SAS Policy form is filled out with the previously mentioned settings entered into the appropriate fields.</figcaption>
+<img src="media/dma-connect-to-a-server.png" title="Connect to a server" alt="In the Connect to a server dialog, the values specified above are entered into the appropriate fields." /><figcaption>In the Connect to a server dialog, the values specified above are entered into the appropriate fields.</figcaption>
+</figure></li>
+<li><p>Select <strong>Connect</strong>.</p></li>
+<li><p>On the <strong>Add sources</strong> dialog that appears next, check the box for <strong>ContosoAutoDb</strong> and select <strong>Add</strong>.</p>
+<figure>
+<img src="media/dma-add-sources.png" title="Add sources" alt="The ContosoAutoDb box is checked on the Add sources dialog." /><figcaption>The ContosoAutoDb box is checked on the Add sources dialog.</figcaption>
+</figure></li>
+<li><p>Select <strong>Start Assessment</strong>.</p>
+<figure>
+<img src="media/dma-start-assessment-to-azure-sql-db.png" title="Start assessment" alt="Start assessment" /><figcaption>Start assessment</figcaption>
+</figure></li>
+<li><p>Review the assessment of ability to migrate to Azure SQL Database.</p>
+<figure>
+<img src="media/dma-feature-parity-service-broker-not-supported.png" title="Database feature parity" alt="For a target platform of Azure SQL Database, feature parity shows two features which are not supported in Azure SQL Database. The Service broker feature is selected on the left and on the right Service Broker feature is not supported in Azure SQL Database is highlighted." /><figcaption>For a target platform of Azure SQL Database, feature parity shows two features which are not supported in Azure SQL Database. The Service broker feature is selected on the left and on the right Service Broker feature is not supported in Azure SQL Database is highlighted.</figcaption>
 </figure>
 <blockquote>
-<p>It is a best practice to create separate policies for reading, writing, and managing events. This follows the principle of least privilege to prevent services and applications from performing unauthorized operations.</p>
+<p>The DMA assessment for a migrating the <code>ContosoAutoDb</code> database to a target platform of Azure SQL Database shows two features in use which are not supported in Azure SQL Database. These features, cross-database references and Service broker, will prevent ContosoAuto from being able to migrate to the Azure SQL Database PaaS offering.</p>
 </blockquote></li>
-<li><p>Select <strong>Create</strong> on the bottom of the form when you are finished entering the values.</p></li>
-<li><p>Select <strong>+ Add</strong> in the top toolbar to create a new shared access policy.</p>
+<li><p>With one PaaS offering ruled out due to feature parity, you will now perform a second assessment, this time for a migration to Azure SQL Database Managed Instance (SQL MI). To get started, select <strong>+</strong> on the left-hand menu in DMA to create another new project.</p>
 <figure>
-<img src="media/event-hubs-shared-access-policies-add-link.png" title="Add" alt="The Add button is highlighted." /><figcaption>The Add button is highlighted.</figcaption>
+<img src="media/dma-new.png" title="New DMA project" alt="The new project icon is highlighted in DMA." /><figcaption>The new project icon is highlighted in DMA.</figcaption>
 </figure></li>
-<li><p>In the <strong>Add SAS Policy</strong> blade, configure the following:</p>
+<li><p>In the New project pane, set the following:</p>
 <ul>
-<li><strong>Name:</strong> Enter “Write”.</li>
-<li><strong>Managed:</strong> Unchecked.</li>
-<li><strong>Send:</strong> Checked.</li>
-<li><strong>Listen:</strong> Unchecked.</li>
+<li><strong>Project type</strong>: Select Assessment.</li>
+<li><strong>Project name</strong>: Enter ToAzureSqlMi.</li>
+<li><strong>Source server type</strong>: Select SQL Server.</li>
+<li><strong>Target server type</strong>: Select Azure SQL Database Managed Instance.</li>
 </ul>
 <figure>
-<img src="media/event-hubs-add-sas-policy-write.png" title="Add SAS Policy" alt="The Add SAS Policy form is filled out with the previously mentioned settings entered into the appropriate fields." /><figcaption>The Add SAS Policy form is filled out with the previously mentioned settings entered into the appropriate fields.</figcaption>
+<img src="media/dma-new-project-to-azure-sql-mi.png" title="New project settings" alt="New project settings for doing an assessment of a migration from SQL Server to Azure SQL Database Managed Instance." /><figcaption>New project settings for doing an assessment of a migration from SQL Server to Azure SQL Database Managed Instance.</figcaption>
 </figure></li>
-<li><p>Select <strong>Create</strong> on the bottom of the form when you are finished entering the values.</p></li>
-<li><p>Select your <strong>Write</strong> policy from the list. Copy the <strong>Connection string - primary key</strong> value by selecting the Copy button to the right of the field. <strong>SAVE THIS VALUE</strong> in Notepad or similar text editor for later.</p>
+<li><p>Select <strong>Create</strong>.</p></li>
+<li><p>On the <strong>Options</strong> screen, ensure <strong>Check database compatibility</strong> and <strong>Check feature parity</strong> are both checked, and then select <strong>Next</strong>.</p>
 <figure>
-<img src="media/event-hubs-write-policy-key.png" title="SAS Policy: Write" alt="The Write policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted." /><figcaption>The Write policy is selected and its blade displayed. The Copy button next to the Connection string - primary key field is highlighted.</figcaption>
+<img src="media/dma-options.png" title="DMA options" alt="Check database compatibility and check feature parity are checked on the Options screen." /><figcaption>Check database compatibility and check feature parity are checked on the Options screen.</figcaption>
 </figure></li>
-</ol>
-<h2 id="task-3-configure-stream-analytics">Task 3: Configure Stream Analytics</h2>
-<p>Azure Stream Analytics is an event-processing engine that allows you to examine high volumes of data streaming from devices. Incoming data can be from devices, sensors, web sites, social media feeds, applications, and more. It also supports extracting information from data streams, identifying patterns, and relationships. You can then use these patterns to trigger other actions downstream, such as create alerts, feed information to a reporting tool, or store it for later use.</p>
-<p>In this task, you will configure Stream Analytics to use the event hub you created as a source, query and analyze that data, then send it to Power BI for reporting.</p>
-<ol type="1">
-<li><p>Navigate to the <a href="https://portal.azure.com">Azure portal</a>.</p></li>
-<li><p>Select <strong>Resource groups</strong> from the left-hand menu. Then select the resource group named <strong>tech-immersion-YOUR_UNIQUE_IDENTIFIER</strong>.</p>
-<figure>
-<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
-</figure></li>
-<li><p>Select the <strong>Stream Analytics job</strong> (<code>tech-immersion-analytics-YOUR_UNIQUE_ID</code>) from the list of resources in your resource group.</p>
-<figure>
-<img src="media/tech-immersion-rg-stream-analytics.png" title="tech-immersion resource group" alt="The Stream Analytics job is selected in the resource group." /><figcaption>The Stream Analytics job is selected in the resource group.</figcaption>
-</figure></li>
-<li><p>Within the Stream Analytics job blade, select <strong>Inputs</strong> within the left-hand menu.</p>
-<figure>
-<img src="media/inputs-link.png" title="Inputs link" alt="The Inputs link is selected in the left-hand menu." /><figcaption>The Inputs link is selected in the left-hand menu.</figcaption>
-</figure></li>
-<li><p>Select <strong>+ Add stream input</strong> in the top toolbar, then select <strong>Event Hub</strong> to create a new Event Hub input.</p>
-<figure>
-<img src="media/stream-analytics-add-input-link.png" title="Add stream input - Event Hub" alt="The Add stream input button and Event Hub menu item are highlighted." /><figcaption>The Add stream input button and Event Hub menu item are highlighted.</figcaption>
-</figure></li>
-<li><p>In the <strong>New Input</strong> blade, configure the following:</p>
+<li><p>On the <strong>Sources</strong> screen, enter the following into the <strong>Connect to a server</strong> dialog that appears on the right-hand side:</p>
 <ul>
-<li><strong>Name:</strong> Enter “eventhub”.</li>
-<li><strong>Select Event Hub from your subscriptions:</strong> Selected.</li>
-<li><strong>Subscription:</strong> Make sure the subscription you are using for this lab is selected.</li>
-<li><strong>Event Hub namespace:</strong> Select the Event Hub namespace you are using for this lab.</li>
-<li><strong>Event Hub name:</strong> Select <strong>Use existing</strong>, then select <strong>telemetry</strong>, which you created earlier.</li>
-<li><strong>Event Hub policy name:</strong> Select <strong>Read</strong>.</li>
-<li>Leave all other values at their defaults.</li>
+<li><strong>Server name</strong>: Enter the DNS name of the shared sqlServer2008R2 VM, <strong><code>sqlserver2008r2.westus.cloudapp.azure.com</code></strong>.</li>
+<li><strong>Authentication type</strong>: Select <strong>SQL Server Authentication</strong>.</li>
+<li><strong>Username</strong>: Enter <strong>WorkshopUser</strong></li>
+<li><strong>Password</strong>: Enter <strong>Password.1!!</strong></li>
+<li><strong>Encrypt connection</strong>: Check this box.</li>
+<li><strong>Trust server certificate</strong>: Check this box.</li>
 </ul>
 <figure>
-<img src="media/stream-analytics-new-input.png" title="New Input" alt="The New Input form is filled out with the previously mentioned settings entered into the appropriate fields." /><figcaption>The New Input form is filled out with the previously mentioned settings entered into the appropriate fields.</figcaption>
+<img src="media/dma-connect-to-a-server.png" title="Connect to a server" alt="In the Connect to a server dialog, the values specified above are entered into the appropriate fields." /><figcaption>In the Connect to a server dialog, the values specified above are entered into the appropriate fields.</figcaption>
 </figure></li>
-<li><p>Select <strong>Save</strong> on the bottom of the form when you are finished entering the values.</p></li>
-<li><p>Within the Stream Analytics job blade, select <strong>Outputs</strong> within the left-hand menu.</p>
+<li><p>Select <strong>Connect</strong>.</p></li>
+<li><p>On the <strong>Add sources</strong> dialog that appears next, check the box for <strong>ContosoAutoDb</strong> and select <strong>Add</strong>.</p>
 <figure>
-<img src="media/outputs-link.png" title="Outputs link" alt="The Outputs link is selected in the left-hand menu." /><figcaption>The Outputs link is selected in the left-hand menu.</figcaption>
+<img src="media/dma-add-sources.png" title="Add sources" alt="The ContosoAutoDb box is checked on the Add sources dialog." /><figcaption>The ContosoAutoDb box is checked on the Add sources dialog.</figcaption>
 </figure></li>
-<li><p>Select <strong>+ Add</strong> in the top toolbar, then select <strong>Power BI</strong> to create a new Power BI output.</p>
+<li><p>Select <strong>Start Assessment</strong>.</p>
 <figure>
-<img src="media/stream-analytics-add-output-link.png" title="Add output - Power BI" alt="The Add button and Power BI menu item are highlighted." /><figcaption>The Add button and Power BI menu item are highlighted.</figcaption>
+<img src="media/dma-start-assessment-to-azure-sql-mi.png" title="Start assessment" alt="Start assessment" /><figcaption>Start assessment</figcaption>
 </figure></li>
-<li><p>In the <strong>New Output</strong> blade, select the <strong>Authorize</strong> button to authorize a connection from Stream Analytics to your Power BI account.</p>
+<li><p>Review the assessment of ability to migrate to Azure SQL Database Managed Instance.</p>
 <figure>
-<img src="media/stream-analytics-new-output-authorize.png" title="New Output" alt="The Authorize button is highlighted in the New Output blade." /><figcaption>The Authorize button is highlighted in the New Output blade.</figcaption>
-</figure></li>
-<li><p>When prompted, sign in to your Power BI account, which is the same username and password you were provided with and used to login to the Azure Portal.</p>
-<figure>
-<img src="media/power-bi-sign-in.png" title="Power BI Sign In" alt="The Power BI sign in form is displayed." /><figcaption>The Power BI sign in form is displayed.</figcaption>
-</figure></li>
-<li><p>After successfully signing in to your Power BI account, the New Output blade will update to show you are currently authorized.</p>
-<figure>
-<img src="media/stream-analytics-new-output-authorized.png" title="Authorized" alt="The New Output blade has been updated to show user is authorized to Power BI." /><figcaption>The New Output blade has been updated to show user is authorized to Power BI.</figcaption>
-</figure></li>
-<li><p>In the <strong>New Output</strong> blade, configure the following:</p>
-<ul>
-<li><strong>Output alias:</strong> Enter “powerBIAlerts”.</li>
-<li><strong>Group workspace:</strong> Select My Workspace.</li>
-<li><strong>Dataset name:</strong> Enter “VehicleAnomalies”.</li>
-<li><strong>Table name:</strong> Enter “Alerts”.</li>
-</ul>
-<figure>
-<img src="media/stream-analytics-new-output.png" title="New Output" alt="The New Output form is filled out with the previously mentioned settings entered into the appropriate fields." /><figcaption>The New Output form is filled out with the previously mentioned settings entered into the appropriate fields.</figcaption>
-</figure></li>
-<li><p>Select <strong>Save</strong> on the bottom of the form when you are finished entering the values.</p></li>
-<li><p>Within the Stream Analytics job blade, select <strong>Query</strong> within the left-hand menu.</p>
-<figure>
-<img src="media/query-link.png" title="Query link" alt="The Query link is selected in the left-hand menu." /><figcaption>The Query link is selected in the left-hand menu.</figcaption>
-</figure></li>
-<li><p>Clear the edit <strong>Query</strong> window and paste the following in its place:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">WITH</span></a>
-<a class="sourceLine" id="cb1-2" title="2">Averages <span class="kw">AS</span> (</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw">select</span></a>
-<a class="sourceLine" id="cb1-4" title="4">    <span class="fu">AVG</span>(engineTemperature) averageEngineTemperature,</a>
-<a class="sourceLine" id="cb1-5" title="5">    <span class="fu">AVG</span>(speed) averageSpeed</a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="kw">FROM</span></a>
-<a class="sourceLine" id="cb1-7" title="7">    eventhub <span class="dt">TIMESTAMP</span> <span class="kw">BY</span> [<span class="dt">timestamp</span>]</a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="kw">GROUP</span> <span class="kw">BY</span></a>
-<a class="sourceLine" id="cb1-9" title="9">    TumblingWindow(Duration(<span class="dt">second</span>, <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb1-10" title="10">),</a>
-<a class="sourceLine" id="cb1-11" title="11">Anomalies <span class="kw">AS</span> (</a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="kw">select</span></a>
-<a class="sourceLine" id="cb1-13" title="13">    t.vin,</a>
-<a class="sourceLine" id="cb1-14" title="14">    t.[<span class="dt">timestamp</span>],</a>
-<a class="sourceLine" id="cb1-15" title="15">    t.city,</a>
-<a class="sourceLine" id="cb1-16" title="16">    t.region,</a>
-<a class="sourceLine" id="cb1-17" title="17">    t.outsideTemperature,</a>
-<a class="sourceLine" id="cb1-18" title="18">    t.engineTemperature,</a>
-<a class="sourceLine" id="cb1-19" title="19">    a.averageEngineTemperature,</a>
-<a class="sourceLine" id="cb1-20" title="20">    t.speed,</a>
-<a class="sourceLine" id="cb1-21" title="21">    a.averageSpeed,</a>
-<a class="sourceLine" id="cb1-22" title="22">    t.fuel,</a>
-<a class="sourceLine" id="cb1-23" title="23">    t.engineoil,</a>
-<a class="sourceLine" id="cb1-24" title="24">    t.tirepressure,</a>
-<a class="sourceLine" id="cb1-25" title="25">    t.odometer,</a>
-<a class="sourceLine" id="cb1-26" title="26">    t.accelerator_pedal_position,</a>
-<a class="sourceLine" id="cb1-27" title="27">    t.parking_brake_status,</a>
-<a class="sourceLine" id="cb1-28" title="28">    t.headlamp_status,</a>
-<a class="sourceLine" id="cb1-29" title="29">    t.brake_pedal_status,</a>
-<a class="sourceLine" id="cb1-30" title="30">    t.transmission_gear_position,</a>
-<a class="sourceLine" id="cb1-31" title="31">    t.ignition_status,</a>
-<a class="sourceLine" id="cb1-32" title="32">    t.windshield_wiper_status,</a>
-<a class="sourceLine" id="cb1-33" title="33">    t.<span class="fu">abs</span>,</a>
-<a class="sourceLine" id="cb1-34" title="34">    (<span class="cf">case</span> <span class="cf">when</span> a.averageEngineTemperature <span class="op">&gt;=</span> <span class="dv">405</span> <span class="kw">OR</span> a.averageEngineTemperature <span class="op">&lt;=</span> <span class="dv">15</span> <span class="cf">then</span> <span class="dv">1</span> <span class="cf">else</span> <span class="dv">0</span> <span class="cf">end</span>) <span class="kw">as</span> enginetempanomaly,</a>
-<a class="sourceLine" id="cb1-35" title="35">    (<span class="cf">case</span> <span class="cf">when</span> t.engineoil <span class="op">&lt;=</span> <span class="dv">1</span> <span class="cf">then</span> <span class="dv">1</span> <span class="cf">else</span> <span class="dv">0</span> <span class="cf">end</span>) <span class="kw">as</span> oilanomaly,</a>
-<a class="sourceLine" id="cb1-36" title="36">    (<span class="cf">case</span> <span class="cf">when</span> (t.transmission_gear_position <span class="op">=</span> <span class="st">&#39;first&#39;</span> <span class="kw">OR</span></a>
-<a class="sourceLine" id="cb1-37" title="37">        t.transmission_gear_position <span class="op">=</span> <span class="st">&#39;second&#39;</span> <span class="kw">OR</span></a>
-<a class="sourceLine" id="cb1-38" title="38">        t.transmission_gear_position <span class="op">=</span> <span class="st">&#39;third&#39;</span>) <span class="kw">AND</span></a>
-<a class="sourceLine" id="cb1-39" title="39">        t.brake_pedal_status <span class="op">=</span> <span class="dv">1</span> <span class="kw">AND</span></a>
-<a class="sourceLine" id="cb1-40" title="40">        t.accelerator_pedal_position <span class="op">&gt;=</span> <span class="dv">90</span> <span class="kw">AND</span></a>
-<a class="sourceLine" id="cb1-41" title="41">        a.averageSpeed <span class="op">&gt;=</span> <span class="dv">55</span> <span class="cf">then</span> <span class="dv">1</span> <span class="cf">else</span> <span class="dv">0</span> <span class="cf">end</span>) <span class="kw">as</span> aggressivedriving</a>
-<a class="sourceLine" id="cb1-42" title="42"><span class="kw">from</span> eventhub t <span class="dt">TIMESTAMP</span> <span class="kw">BY</span> [<span class="dt">timestamp</span>]</a>
-<a class="sourceLine" id="cb1-43" title="43"><span class="kw">INNER</span> <span class="kw">JOIN</span> Averages a <span class="kw">ON</span> DATEDIFF(<span class="dt">second</span>, t, a) <span class="kw">BETWEEN</span> <span class="dv">0</span> <span class="kw">And</span> <span class="dv">2</span></a>
-<a class="sourceLine" id="cb1-44" title="44">)</a>
-<a class="sourceLine" id="cb1-45" title="45"><span class="kw">SELECT</span></a>
-<a class="sourceLine" id="cb1-46" title="46">    <span class="op">*</span></a>
-<a class="sourceLine" id="cb1-47" title="47"><span class="kw">INTO</span></a>
-<a class="sourceLine" id="cb1-48" title="48">    powerBIAlerts</a>
-<a class="sourceLine" id="cb1-49" title="49"><span class="kw">FROM</span></a>
-<a class="sourceLine" id="cb1-50" title="50">    Anomalies</a>
-<a class="sourceLine" id="cb1-51" title="51"><span class="kw">where</span> aggressivedriving <span class="op">=</span> <span class="dv">1</span> <span class="kw">OR</span> enginetempanomaly <span class="op">=</span> <span class="dv">1</span> <span class="kw">OR</span> oilanomaly <span class="op">=</span> <span class="dv">1</span></a></code></pre></div>
-<figure>
-<img src="media/stream-analytics-query.png" title="Query window" alt="The query above has been inserted into the Query window." /><figcaption>The query above has been inserted into the Query window.</figcaption>
-</figure>
-<p>The query averages the engine temperature and speed over a two second duration. Then it selects all telemetry data, including the average values from the previous step, and specifies the following anomalies as new fields:</p>
-<ol type="a">
-<li><p><strong>enginetempanomaly</strong>: When the average engine temperature is &gt;= 405 or &lt;= 15.</p></li>
-<li><p><strong>oilanomaly</strong>: When the engine oil &lt;= 1.</p></li>
-<li><p><strong>aggressivedriving</strong>: When the transmission gear position is in first, second, or third, and the brake pedal status is 1, the accelerator pedal position &gt;= 90, and the average speed is &gt;= 55.</p></li>
-</ol>
-<p>Finally, the query outputs all fields from the anomalies step into the <code>powerBIAlerts</code> output where aggressivedriving = 1 or enginetempanomaly = 1 or oilanomaly = 1.</p></li>
-<li><p>Select <strong>Save</strong> in the top toolbar when you are finished updating the query.</p></li>
-<li><p>Within the Stream Analytics job blade, select <strong>Overview</strong> within the left-hand menu. On top of the Overview blade, select <strong>Start</strong>.</p>
-<figure>
-<img src="media/stream-analytics-overview-start-button.png" title="Overview" alt="The Start button is highlighted on top of the Overview blade." /><figcaption>The Start button is highlighted on top of the Overview blade.</figcaption>
-</figure></li>
-<li><p>In the Start job blade that appears, select <strong>Now</strong> for the job output start time, then select <strong>Start</strong>. This will start the Stream Analytics job so it will be ready to start processing and sending your events to Power BI later on.</p>
-<figure>
-<img src="media/stream-analytics-start-job.png" title="Start job" alt="The Now and Start buttons are highlighted within the Start job blade." /><figcaption>The Now and Start buttons are highlighted within the Start job blade.</figcaption>
-</figure></li>
-</ol>
-<h2 id="task-4-configure-azure-function-app">Task 4: Configure Azure Function App</h2>
-<p>Azure Functions is a solution for easily running small pieces of code, or “functions,” in the cloud. You can write just the code you need for the problem at hand, without worrying about a whole application or the infrastructure to run it. Functions can make development even more productive, and you can use your development language of choice, such as C#, F#, Node.js, Java, or PHP.</p>
-<p>When you use the Azure Functions consumption plan, you only pay for the time your code runs. Azure automatically handles scaling your functions to meet demand.</p>
-<p>Azure Functions uses special bindings that allow you to automatically trigger the function when an event happens (a document is added to Azure Cosmos DB, a file is uploaded to blob storage, an event is added to Event Hubs, an HTTP request to the function is made, etc.), as well as to retrieve or send information to and from various Azure services. In the case of our function for this solution, we are using the <code>CosmosDBTrigger</code> to automatically trigger the function through the Cosmos DB change feed. This trigger supplies an input binding of type <code>IReadOnlyList&lt;Document&gt;</code> we name “input”, that contains the records that triggered the function. This removes any code you would have to otherwise write to query that data. We also have an output binding to the event hub, of type <code>IAsyncCollector&lt;EventData&gt;</code>, which we name “eventHubOutput”. Again, this reduces code by automatically sending data added to this collection to the specified event hub.</p>
-<figure>
-<img src="media/function-definition.png" title="Azure function" alt="The Cosmos DB trigger, input binding, and output binding are highlighted." /><figcaption>The Cosmos DB trigger, input binding, and output binding are highlighted.</figcaption>
-</figure>
-<p>The function code itself is very lightweight, lending to the resource bindings and the <code>TelemetryProcessing.ProcessEvent</code> method that it calls:</p>
-<figure>
-<img src="media/function-code.png" title="Function code" alt="The function code is very lightweight." /><figcaption>The function code is very lightweight.</figcaption>
-</figure>
-<p>The <code>TelemetryProcessing</code> class contains a simple method named <code>ProcessEvent</code> that evaluates the vehicle telemetry data sent by Cosmos DB and enriches it with the region name based on a simple map.</p>
-<figure>
-<img src="media/function-process-event.png" title="TelemetryProcessing.ProcessEvent method" alt="Source code for the ProcessEvent method." /><figcaption>Source code for the ProcessEvent method.</figcaption>
-</figure>
-<p>In this task, you will configure the Function App with the Azure Cosmos DB and Event Hubs connection strings.</p>
-<ol type="1">
-<li><p>Navigate to the <a href="https://portal.azure.com">Azure portal</a>.</p></li>
-<li><p>Select <strong>Resource groups</strong> from the left-hand menu. Then select the resource group named <strong>tech-immersion-YOUR_UNIQUE_IDENTIFIER</strong>.</p>
-<figure>
-<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
-</figure></li>
-<li><p>Select the <strong>App Service</strong> (Azure Function App) that includes <strong>day1</strong> in its name from the list of resources in your resource group.</p>
-<figure>
-<img src="media/tech-immersion-rg-function-app.png" title="tech-immersion resource group" alt="The App Service Function App is selected in the resource group." /><figcaption>The App Service Function App is selected in the resource group.</figcaption>
-</figure></li>
-<li><p>Within the Function App Overview blade, scroll down and select <strong>Application settings</strong>.</p>
-<figure>
-<img src="media/function-app-app-settings-link.png" title="Function App overview" alt="The Function App Overview blade is displayed with the Application Settings link highlighted." /><figcaption>The Function App Overview blade is displayed with the Application Settings link highlighted.</figcaption>
-</figure></li>
-<li><p>Select <strong>Add new setting</strong> at the bottom of the Application settings section.</p>
-<figure>
-<img src="media/function-app-app-settings-new-link.png" title="Application settings" alt="The Add new setting link is highlighted on the bottom of the Application settings section." /><figcaption>The Add new setting link is highlighted on the bottom of the Application settings section.</figcaption>
-</figure></li>
-<li><p>Enter <code>CosmosDbConnectionString</code> into the <strong>Name</strong> field, then paste your Cosmos DB connection string into the <strong>Value</strong> field. If you cannot locate your connection string, refer to Task 1, step 10.</p>
-<figure>
-<img src="media/function-app-app-settings-cosmos-db.png" title="Application settings" alt="The CosmosDbConnectionString name and value pair has been added and is highlighted." /><figcaption>The CosmosDbConnectionString name and value pair has been added and is highlighted.</figcaption>
-</figure></li>
-<li><p>Select <strong>Add new setting</strong> underneath the new application setting you just added to add a new one.</p></li>
-<li><p>Enter <code>EventHubsConnectionString</code> into the <strong>Name</strong> field, then paste your Event Hubs connection string into the <strong>Value</strong> field. This is the connection string for the <strong>Write</strong> shared access policy you created. If you cannot locate your connection string, refer to Task 2, step 17.</p>
-<figure>
-<img src="media/function-app-app-settings-event-hubs.png" title="Application settings" alt="The EventHubsConnectionString name and value pair has been added and is highlighted." /><figcaption>The EventHubsConnectionString name and value pair has been added and is highlighted.</figcaption>
-</figure></li>
-<li><p>Scroll to the top of the page and select <strong>Save</strong> in the top toolbar to apply your changes.</p>
-<figure>
-<img src="media/function-app-app-settings-save.png" title="Application settings" alt="The Save button is highlighted on top of the Application settings blade." /><figcaption>The Save button is highlighted on top of the Application settings blade.</figcaption>
-</figure></li>
-</ol>
-<h2 id="task-5-publish-function-app-and-run-data-generator">Task 5: Publish Function App and run data generator</h2>
-<p>The data generator console application creates and sends simulated vehicle sensor telemetry for an array of vehicles (denoted by VIN (vehicle identification number)) directly to Cosmos DB. For this to happen, you first need to configure it with the Cosmos DB connection string.</p>
-<p>In this task, you will open the lab solution in Visual Studio, publish the Function App, and configure and run the data generator. The data generator saves simulated vehicle telemetry data to Cosmos DB, which triggers the Azure function to run and process the data, sending it to Event Hubs, prompting your Stream Analytics job to aggregate and analyze the enriched data and send it to Power BI. The final step will be to create the Power BI report in the task that follows.</p>
-<ol type="1">
-<li><p>Open File Explorer and navigate to <code>C:\lab-files\data\2</code>. Double-click on <strong>TechImmersion.sln</strong> to open the solution in Visual Studio. <strong>NOTE:</strong> If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab (they are called <code>Username</code> and <code>Password</code> under the heading Azure Credentials in the documentation).</p>
-<figure>
-<img src="media/vs-solution.png" title="Windows explorer" alt="The TechImmersion.sln file is highlighted in the C:-immersion folder." /><figcaption>The TechImmersion.sln file is highlighted in the C:-immersion folder.</figcaption>
-</figure>
-<p>The Visual Studio solution contains the following projects:</p>
-<ul>
-<li><strong>TechImmersion.CarEventProcessor</strong>: Azure Function App project from which you will publish the Azure function that processes Cosmos DB documents as they arrive, and sends them to Event Hubs.</li>
-<li><strong>TechImmersion.Common</strong>: Common library that contains models and structs used by the other projects within the solution.</li>
-<li><strong>TransactionGenerator</strong>: Console app that generates simulated vehicle telemetry and writes it to Cosmos DB.</li>
-</ul></li>
-<li><p>Select the <strong>Build</strong> menu item, then select <strong>Build Solution</strong>. You should see a message in the output window on the bottom of the Visual Studio window that the build successfully completed. One of the operations that completes during this process is to download and install all NuGet packages.</p>
-<figure>
-<img src="media/vs-build-solution.png" title="Build Solution" alt="The Build menu item and Build Solution sub-menu item are highlighted." /><figcaption>The Build menu item and Build Solution sub-menu item are highlighted.</figcaption>
-</figure></li>
-<li><p>You will see the projects listed within the Solution Explorer in Visual Studio. Right-click the <strong>TechImmersion.CarEventProcessor</strong> solution, then select <strong>Publish…</strong> in the context menu.</p>
-<figure>
-<img src="media/vs-publish-link.png" title="Solution Explorer" alt="The TechImmersion.CarEventProcessor project and the Publish menu item are highlighted." /><figcaption>The TechImmersion.CarEventProcessor project and the Publish menu item are highlighted.</figcaption>
-</figure></li>
-<li><p>Select <strong>Select Existing</strong> underneath Azure App Service since you will be publishing this to an existing Function App. Click <strong>Publish</strong> on the bottom of the dialog window. If you are prompted to log into your Azure Account, log in with the Azure account you are using for this lab.</p>
-<figure>
-<img src="media/vs-publish-target.png" title="Pick a publish target" alt="The Select Existing radio button and Publish button are highlighted." /><figcaption>The Select Existing radio button and Publish button are highlighted.</figcaption>
-</figure></li>
-<li><p>In the App Service dialog that follows, make sure your Azure <strong>Subscription</strong> for this lab is selected, then find and expand the <strong>tech-immersion-YOUR_UNIQUE_IDENTIFIER</strong> resource group. Select your Function App that includes <strong>day1</strong> in its name, then click <strong>OK</strong> on the bottom of the dialog window</p>
-<figure>
-<img src="media/vs-publish-app-service.png" title="App Service" alt="The Function App and OK button are highlighted." /><figcaption>The Function App and OK button are highlighted.</figcaption>
-</figure></li>
-<li><p>The Function App will start publishing in a moment. You can watch the output window for the publish status. When it is done publishing, you should see a “Publish completed” message on the bottom of the output window.</p>
-<figure>
-<img src="media/vs-publish-output.png" title="Publish output" alt="The Publish Succeeded and Publish Completed messages are highlighted in the output window." /><figcaption>The Publish Succeeded and Publish Completed messages are highlighted in the output window.</figcaption>
-</figure></li>
-<li><p>Expand the <strong>TransactionGenerator</strong> project within the Solution Explorer, then double-click on <strong>appsettings.json</strong> to open it.</p>
-<figure>
-<img src="media/vs-appsettings-link.png" title="Solution Explorer" alt="The appsettings.json file is highlighted in Solution Explorer." /><figcaption>The appsettings.json file is highlighted in Solution Explorer.</figcaption>
-</figure></li>
-<li><p>Paste your Cosmos DB connection string value next to <code>COSMOS_DB_CONNECTION_STRING</code>. Make sure you have quotes ("") around the value, as shown. <strong>Save</strong> the file.</p>
-<figure>
-<img src="media/vs-appsettings.png" title="appsettings.json" alt="The Cosmos DB connection string is highlighted within the appsettings.json file." /><figcaption>The Cosmos DB connection string is highlighted within the appsettings.json file.</figcaption>
-</figure>
-<p><code>SECONDS_TO_LEAD</code> is the amount of time to wait before sending vehicle telemetry data. Default value is <code>0</code>.</p>
-<p><code>SECONDS_TO_RUN</code> is the maximum amount of time to allow the generator to run before stopping transmission of data. The default value is <code>1800</code>. Data will also stop transmitting when you enter Ctrl+C while the generator is running, or if you close the window.</p></li>
-<li><p>Now you are ready to run the transaction generator. Select the <strong>Debug</strong> menu item, then select <strong>Start Debugging</strong>, or press <em>F-5</em> on your keyboard.</p>
-<figure>
-<img src="media/vs-debug.png" title="Debug" alt="The Debug menu item and Start Debugging sub-menu item are selected" /><figcaption>The Debug menu item and Start Debugging sub-menu item are selected</figcaption>
-</figure></li>
-<li><p>A new console window will open, and you should see it start to send data after a few seconds. Once you see that it is sending data to Cosmos DB, <em>minimize</em> the window and keep it running in the background.</p>
-<figure>
-<img src="media/vs-console.png" title="Console window" alt="Screenshot of the console window." /><figcaption>Screenshot of the console window.</figcaption>
-</figure>
-<p>The top of the output displays information about the Cosmos DB collection you created (telemetry), the requested RU/s as well as estimated hourly and monthly cost. After every 500 records are requested to be sent, you will see output statistics.</p></li>
-</ol>
-<hr />
-<p>Some key areas to point out about the data generator code are as follows:</p>
-<p>Within the <code>Program.cs</code> file, we instantiate a new Cosmos DB client (<code>DocumentClient</code>), passing in the Cosmos DB service endpoint, authorization key, and connection policy (direct connect over TCP for fastest results). Next, we retrieve the Cosmos DB collection information and create an offer query (<code>CreateOfferQuery</code>) to pull statistics about the offered throughput in RU/s so we can estimate the monthly and hourly cost. Finally, we call the <code>SendData</code> method to start sending telemetry data to Cosmos DB.</p>
-<figure>
-<img src="media/telemetry-generator-code.png" title="Telemetry generator code" alt="The telemetry generator code is displayed showing the Cosmos DB client instantiation." /><figcaption>The telemetry generator code is displayed showing the Cosmos DB client instantiation.</figcaption>
-</figure>
-<p>The <code>SendData</code> method outputs statistics about how much data was sent to Cosmos DB and how long it took to send, which varies based on your available system resources and internet bandwidth. It sends the telemetry data (<code>carEvent</code>) in one line of code:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode csharp"><code class="sourceCode cs"><a class="sourceLine" id="cb2-1" title="1"><span class="co">// Send to Cosmos DB:</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="dt">var</span> response = await _cosmosDbClient.<span class="fu">CreateDocumentAsync</span>(collectionUri, carEvent)</a>
-<a class="sourceLine" id="cb2-3" title="3">    .<span class="fu">ConfigureAwait</span>(<span class="kw">false</span>);</a></code></pre></div>
-<p>The last bit of interesting code within the generator is where we create the Cosmos DB database and collection if it does not exist. We also specify the collection partition key, indexing policy, and the throughput set to 15,000 RU/s:</p>
-<figure>
-<img src="media/telemetry-generator-initialize-cosmos.png" title="InitializeCosmosDB method" alt="The InitializeCosmosDB method code." /><figcaption>The InitializeCosmosDB method code.</figcaption>
-</figure>
-<h2 id="task-6-view-published-function">Task 6: View published function</h2>
-<p>A few minutes ago, you published your Azure Function App from Visual Studio. This Function App contains a single function, <code>CarEventProcessor</code>. We will take a look at the published function in this task.</p>
-<p>You will notice that the Function App is now set to read-only. This is because you published a generated function.json file from Visual Studio. Function Apps adds this protection when you publish so you do not accidentally overwrite the function.json file or related files through the UI.</p>
-<ol type="1">
-<li><p>Navigate to the <a href="https://portal.azure.com">Azure portal</a>.</p></li>
-<li><p>Select <strong>Resource groups</strong> from the left-hand menu. Then select the resource group named <strong>tech-immersion-YOUR_UNIQUE_IDENTIFIER</strong>.</p>
-<figure>
-<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
-</figure></li>
-<li><p>Select the <strong>App Service</strong> (Azure Function App) that includes <strong>day1</strong> in its name from the list of resources in your resource group.</p>
-<figure>
-<img src="media/tech-immersion-rg-function-app.png" title="tech-immersion resource group" alt="The App Service Function App is selected in the resource group." /><figcaption>The App Service Function App is selected in the resource group.</figcaption>
-</figure></li>
-<li><p>Expand <strong>Functions (Read Only)</strong> within the navigation tree to the left, then select <strong>CarEventProcessor</strong>.</p>
-<figure>
-<img src="media/function-app-tree.png" title="Functions" alt="The Functions node is expanded in the navigation tree, and the CarEventProcessor is selected." /><figcaption>The Functions node is expanded in the navigation tree, and the CarEventProcessor is selected.</figcaption>
-</figure></li>
-<li><p>Looking at the <strong>function.json</strong> file to the right, notice that it was generated for you when you published from Visual Studio. Also notice how the <code>bindings</code> section lines up with the function method in <code>CarEventProcessorFunctions.cs</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode csharp"><code class="sourceCode cs"><a class="sourceLine" id="cb3-1" title="1">[<span class="fu">FunctionName</span>(<span class="st">&quot;CarEventProcessor&quot;</span>)]</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw">public</span> <span class="kw">static</span> async Task <span class="fu">CarEventProcessor</span>([<span class="fu">CosmosDBTrigger</span>(</a>
-<a class="sourceLine" id="cb3-3" title="3">    databaseName: <span class="st">&quot;ContosoAuto&quot;</span>,</a>
-<a class="sourceLine" id="cb3-4" title="4">    collectionName: <span class="st">&quot;telemetry&quot;</span>,</a>
-<a class="sourceLine" id="cb3-5" title="5">    ConnectionStringSetting = <span class="st">&quot;CosmosDbConnectionString&quot;</span>,</a>
-<a class="sourceLine" id="cb3-6" title="6">    LeaseCollectionName = <span class="st">&quot;leases&quot;</span>,</a>
-<a class="sourceLine" id="cb3-7" title="7">    CreateLeaseCollectionIfNotExists = <span class="kw">true</span>)]IReadOnlyList&lt;Document&gt; input,</a>
-<a class="sourceLine" id="cb3-8" title="8">    [<span class="fu">EventHub</span>(<span class="st">&quot;telemetry&quot;</span>,</a>
-<a class="sourceLine" id="cb3-9" title="9">        Connection=<span class="st">&quot;EventHubsConnectionString&quot;</span>)]IAsyncCollector&lt;EventData&gt; eventHubOutput,</a>
-<a class="sourceLine" id="cb3-10" title="10">    ILogger log)</a></code></pre></div>
-<figure>
-<img src="media/function-app-functions-json.png" title="function.json" alt="The function.json file is displayed with the bindings highlighted." /><figcaption>The function.json file is displayed with the bindings highlighted.</figcaption>
-</figure></li>
-</ol>
-<h2 id="task-7-create-power-bi-dashboard">Task 7: Create Power BI dashboard</h2>
-<p>In this task, you will use Power BI to create a report showing captured vehicle anomaly data. Then you will pin that report to a live dashboard for near real-time updates.</p>
-<ol type="1">
-<li><p>Open your web browser and navigate to <a href="https://powerbi.microsoft.com/" class="uri">https://powerbi.microsoft.com/</a>. Select <strong>Sign in</strong> on the upper-right.</p>
-<figure>
-<img src="media/pbi-signin.png" title="Power BI home page" alt="The Power BI home page is shown with the Sign in link highlighted." /><figcaption>The Power BI home page is shown with the Sign in link highlighted.</figcaption>
-</figure></li>
-<li><p>Enter your Power BI credentials you used when creating the Power BI output for Stream Analytics.</p></li>
-<li><p>After signing in, select <strong>My Workspace</strong> on the left-hand menu.</p>
-<figure>
-<img src="media/pbi-my-workspace-link.png" title="My Workspace" alt="The My Workspace link is selected on the left-hand menu." /><figcaption>The My Workspace link is selected on the left-hand menu.</figcaption>
-</figure></li>
-<li><p>Select the <strong>Datasets</strong> tab on top of the workspace. Locate the dataset named <strong>VehicleAnomalies</strong>, then select the <strong>Create Report</strong> action button to the right of the name. If you do not see the dataset, you may need to wait a few minutes and refresh the page.</p>
-<figure>
-<img src="media/pbi-my-workspace.png" title="Datasets" alt="The Datasets tab is selected in My Workspace and the VehicleAnomalies dataset is highlighted." /><figcaption>The Datasets tab is selected in My Workspace and the VehicleAnomalies dataset is highlighted.</figcaption>
+<img src="media/dma-feature-parity-azure-sql-mi.png" title="Database feature parity" alt="For a target platform of Azure SQL Database Managed Instance, there are no feature parity issues found." /><figcaption>For a target platform of Azure SQL Database Managed Instance, there are no feature parity issues found.</figcaption>
 </figure>
 <blockquote>
-<p><strong>Note:</strong> It can take several minutes for the dataset to appear. You may need to periodically refresh the page before you see the Datasets tab.</p>
+<p>The assessment report for a migrating the <code>ContosoAutoDb</code> database to a target platform of Azure SQL Database Managed Instance shows no feature parity. The database, including the cross-database references and Service broker features, can be migrated as is, providing the opportunity for ContosoAuto to have a fully managed PaaS database instance running in Azure. Previously, their options for migrating a database using features, such as Service Broker, incompatible with Azure SQL Database, were to deploy the database to a virtual machine running in Azure (IaaS) or modify their database and applications to not use the unsupported features. The introduction of Azure SQL MI, however, provides the ability to migrate databases into a managed Azure SQL database with near 100% compatibility, including the features that prevented them from using Azure SQL Database.</p>
 </blockquote></li>
-<li><p>You should see a new blank report for VehicleAnomalies with the field list on the far right.</p>
+</ol>
+<h2 id="task-2-migrate-the-database-to-sql-mi">Task 2: Migrate the database to SQL MI</h2>
+<p>In this task, you will migrate the <code>ContosoAutoDb</code> database from the on-premises SQL 2008 R2 database to SQL MI, targeting the <a href="https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance#managed-instance-service-tiers">Business Critical service tier</a>.</p>
+<blockquote>
+<p>The Business Critical service tier is designed for business applications with the highest performance and high-availability (HA) requirements.</p>
+</blockquote>
+<p>To migrate the <code>ContosoAutoDb</code> database from SQL 2008 R2 to SQL MI you will use a backup of the database stored in an Azure Blob storage account. <code>RESTORE</code> of native backups (.bak files) taken from SQL Server on-premises or SQL Server on Virtual Machines, available on Azure Storage, is one of key capabilities of the managed instance deployment option that enables quick and easy offline database migration. The following diagram provides a high-level overview of the process:</p>
 <figure>
-<img src="media/pbi-blank-report.png" title="Blank report" alt="A new blank report is displayed with the field list on the right." /><figcaption>A new blank report is displayed with the field list on the right.</figcaption>
+<img src="media/sql-mi-native-restore.png" title="Native RESTORE" alt="Diagram of the native RESTORE from URL capability." /><figcaption>Diagram of the native RESTORE from URL capability.</figcaption>
+</figure>
+<ol type="1">
+<li><p>Open <strong>SQL Server Management Studio 17</strong> (SSMS) from the Microsoft SQL Server Tools 17 folder in the Windows Start menu and connect to your SQL MI database. On the connection dialog enter the following:</p>
+<ul>
+<li><strong>Server name</strong>: Enter the name of the shared SQL MI server, <strong><code>tech-immersion-sqlmi-shared.521f7783692d.database.windows.net</code></strong>.</li>
+<li><strong>Authentication</strong>: Select <strong>SQL Server Authentication</strong>.</li>
+<li><strong>Login</strong>: Enter <strong>tiuser</strong></li>
+<li><strong>Password</strong>: Enter <strong>Password.1234567890</strong></li>
+<li>Check the <strong>Remember password</strong> box.</li>
+</ul>
+<figure>
+<img src="media/ssms-connect-sql-mi.png" title="SSMS" alt="Connection dialog for SSMS." /><figcaption>Connection dialog for SSMS.</figcaption>
 </figure></li>
-<li><p>Select the <strong>Map</strong> visualization within the Visualizations section on the right.</p>
+<li><p>Select <strong>Connect</strong>.</p></li>
+<li><p>To perform the <code>RESTORE</code> process, credentials for a pre-configured storage account and SAS token have already been added to the Managed Instance using the <a href="https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017">create a credential</a> method. This process essentially creates a connection from your SQL MI database to the Blob storage account, allowing you to access files stored in the target container, <code>database-backup</code>. Because this is a shared SQL MI, only one credential is needed for all attendees. If you are curious, you would create it with a SQL statement similar to the below. <strong>NOTE: You should NOT run the following SQL, it is just for illustration.</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">CREATE</span> CREDENTIAL [https:<span class="op">//</span>techimmersion.<span class="dt">blob</span>.core.windows.net<span class="op">/</span>labfiles<span class="op">/</span><span class="kw">data</span><span class="op">/</span><span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">WITH</span> IDENTITY <span class="op">=</span> <span class="st">&#39;SHARED ACCESS SIGNATURE&#39;</span>,</a>
+<a class="sourceLine" id="cb1-3" title="3">SECRET <span class="op">=</span> <span class="st">&#39;sv=2018-03-28</span><span class="ch">&amp;ss</span><span class="st">=bfqt</span><span class="ch">&amp;srt</span><span class="st">=sco</span><span class="ch">&amp;sp</span><span class="st">=rwdlacup</span><span class="ch">&amp;se</span><span class="st">=2099-03-22T05:33:07Z</span><span class="ch">&amp;st</span><span class="st">=2019-03-21T21:33:07Z</span><span class="ch">&amp;spr</span><span class="st">=https</span><span class="ch">&amp;sig</span><span class="st">=xCq7hZfgdtM1UaN9%2FToz04GT5d5RsKaeb1JjWrpuKHE%3D&#39;</span></a></code></pre></div></li>
+<li><p>You can verify the credential’s access to the Blob storage account by selecting <strong>New Query</strong> from the SSMS toolbar. Paste the following SQL script to get a backup file list from the storage account into the new query window and select <strong>Execute</strong> from the toolbar.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb2-1" title="1">RESTORE FILELISTONLY <span class="kw">FROM</span> URL <span class="op">=</span> <span class="st">&#39;https://techimmersion.blob.core.windows.net/labfiles/data/3/ContosoAutoDb.bak&#39;</span></a></code></pre></div>
 <figure>
-<img src="media/pbi-map-vis.png" title="Visualizations" alt="The Map visualization is highlighted." /><figcaption>The Map visualization is highlighted.</figcaption>
+<img src="media/ssms-sql-mi-restore-filelistonly.png" title="SSMS" alt="Script to list files in a backup file in Blob storage." /><figcaption>Script to list files in a backup file in Blob storage.</figcaption>
 </figure></li>
-<li><p>Drag the <strong>city</strong> field to <strong>Location</strong>, and <strong>aggressivedriving</strong> to <strong>Size</strong>. This will place points of different sizes over cities on the map, depending on how many aggressive driving records there are.</p>
+<li><p>You are now ready to restore the <code>ContosoAutoDb</code> database in SQL MI. In this step, you will be creating a new database on the Managed Instance. Select <strong>New Query</strong> on the SSMS toolbar again, then paste the following SQL script into the new query window. <strong>Replace the <code>XXXXX</code> value</strong> with the unique identifier assigned to your for this workshop. The database name in the query should look something like <code>ContosoAutoDb-01234</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb3-1" title="1">RESTORE <span class="kw">DATABASE</span> [ContosoAutoDb<span class="op">-</span>XXXXX] <span class="kw">FROM</span> URL <span class="op">=</span> <span class="st">&#39;https://techimmersion.blob.core.windows.net/labfiles/data/3/ContosoAutoDb.bak&#39;</span></a></code></pre></div>
+<blockquote>
+<p><strong>NOTE</strong>: You may notice multiple databases in on the Managed Instance. This is because the SQL MI is a shared resource for all workshop attendees, so make sure you use your assigned unique ID when restoring and accessing the database.</p>
+</blockquote></li>
+<li><p>Select <strong>Execute</strong> on the SSMS toolbar.</p></li>
+<li><p>The restore will take 1 - 2 minutes to complete. You will receive a “Commands completed successfully” message when it is done.</p></li>
+<li><p>When the restore completes, expand <strong>Databases</strong> in the Object Explorer, and then expand <strong>ContosoAutoDb-XXXXX</strong> (where XXXXX is the unique identifier assigned to you for this workshop) and <strong>Tables</strong>. You will see that the tables are all listed, and the SQL Server 2008 R2 database has been successfully restored into SQL MI.</p>
 <figure>
-<img src="media/pbi-map-fields.png" title="Map settings" alt="Screenshot displaying where to drag the fields onto the map settings." /><figcaption>Screenshot displaying where to drag the fields onto the map settings.</figcaption>
+<img src="media/ssms-sql-mi-object-explorer.png" title="SSMS Object Explorer" alt="The Object Explorer is displayed with Databases, ContosoAutoDb, and Tables expanded." /><figcaption>The Object Explorer is displayed with Databases, ContosoAutoDb, and Tables expanded.</figcaption>
+</figure>
+<blockquote>
+<p>NOTE: Your database name will differ from the above screen shot, in that it will contain the unique identifier assigned to you for this workshop, such as <code>ContosoAutoDb-01234</code>. The SQL Managed Instance is shared for all workshop participants, so you may also see databases for other participants.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-3-update-the-web-application-to-use-the-new-sql-mi-database">Task 3: Update the web application to use the new SQL MI database</h2>
+<p>With the <code>ContosoAutoDb</code> database now running on SQL MI in Azure, the next step is to make the required modifications to the ContosoAuto operations web application. The operations web app is currently running an <a href="https://docs.microsoft.com/azure/app-service/environment/intro">Azure App Service Environment</a>, which was provisioned in the same virtual network as the SQL Managed Instance.</p>
+<blockquote>
+<p>SQL Managed Instance has private IP address in its own VNet, so to connect an application you need to configure access to the VNet where Managed Instance is deployed. To learn more, read <a href="https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance-connect-app">Connect your application to Azure SQL Database Managed Instance</a>.</p>
+</blockquote>
+<p>In this task, you will make updates to the ContosoAuto operations web application to enable it to connect to and utilize the SQL MI database.</p>
+<ol type="1">
+<li><p>Using a web browser, navigate to the <a href="https://portal.azure.com">Azure portal</a>, select <strong>Resource groups</strong> from the left-hand menu, and then select the resource group named <strong>tech-immersion-XXXXX</strong> (where XXXXX is the unique identifier assigned to you for this workshop).</p>
+<figure>
+<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
 </figure></li>
-<li><p>Your map should look similar to the following:</p>
+<li><p>Select the <strong>Tech Immersion Web App Service</strong> ending with your unique identifier (e.g., techimmersionwebapp01234) from the list of resources.</p>
 <figure>
-<img src="media/pbi-map.png" title="Map" alt="The map is shown on the report." /><figcaption>The map is shown on the report.</figcaption>
+<img src="media/tech-immersion-rg-appservice.png" title="Tech Immersion resource group" alt="The App Service resource is selected from the list of resources in the tech-immersion resource group." /><figcaption>The App Service resource is selected from the list of resources in the tech-immersion resource group.</figcaption>
 </figure></li>
-<li><p>Select a blank area on the report to deselect the map. Now select the <strong>Treemap</strong> visualization.</p>
+<li><p>On the App Service blade, select <strong>Application settings</strong> under Settings on the left-hand side.</p>
 <figure>
-<img src="media/pbi-treemap-vis.png" title="Visualization" alt="The Treemap visualization is highlighted." /><figcaption>The Treemap visualization is highlighted.</figcaption>
+<img src="media/tech-immersion-app-service-app-settings.png" title="Application settings" alt="The Application settings item is selected under Settings." /><figcaption>The Application settings item is selected under Settings.</figcaption>
 </figure></li>
-<li><p>Drag the <strong>enginetemperature</strong> field to <strong>Values</strong>, then drag the <strong>transmission_gear_position</strong> field to <strong>Group</strong>. This will group the engine temperature values by the transmission gear position on the treemap so you can see which gears are associated with the hottest or coolest engine temperatures. The treemap sizes the groups according to the values, with the largest appearing on the upper-left and the lowest on the lower-right.</p>
+<li><p>On the Application settings blade, scroll down and locate the <strong>Connection strings</strong> section. Paste the connection string value below into the value for the <code>ContosoAutoDbContext</code> connection string. Also be sure to set the <code>Type</code> drop-down to <code>SQLServer</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb4-1" title="1">Server<span class="op">=</span>tcp<span class="ch">:tech</span><span class="op">-</span>immersion<span class="op">-</span>sqlmi<span class="op">-</span><span class="kw">shared</span><span class="fl">.521</span>f7783692d.<span class="kw">database</span>.windows.net,<span class="dv">1433</span>;Persist Security Info<span class="op">=</span><span class="kw">False</span>;<span class="kw">Database</span><span class="op">=</span>ContosoAutoDb;<span class="fu">User</span> <span class="kw">ID</span><span class="op">=</span>tiuser;<span class="kw">Password</span><span class="op">=</span><span class="kw">Password</span><span class="fl">.1234567890</span>;MultipleActiveResultSets<span class="op">=</span><span class="kw">False</span>;Encrypt<span class="op">=</span><span class="kw">True</span>;TrustServerCertificate<span class="op">=</span><span class="kw">False</span>;Connection <span class="kw">Timeout</span><span class="op">=</span><span class="dv">30</span>;</a></code></pre></div>
 <figure>
-<img src="media/pbi-treemap-fields.png" title="Treemap settings" alt="Screenshot displaying where to drag the fields onto the treemap settings." /><figcaption>Screenshot displaying where to drag the fields onto the treemap settings.</figcaption>
+<img src="media/app-service-app-settings-connection-strings.png" title="Connection strings" alt="The copied SQL MI connection string is pasted into the value for the ContosoAutoDbContext connection string." /><figcaption>The copied SQL MI connection string is pasted into the value for the ContosoAutoDbContext connection string.</figcaption>
 </figure></li>
-<li><p>Select the down arrow next to the <strong>enginetemperature</strong> field under <strong>Values</strong>. Select <strong>Average</strong> from the menu to aggregate the values by average instead of the sum.</p>
+<li><p>Repeat the previous step, this time pasting the same connection string into the <code>ContosoAutoDbReadOnlyContext</code> connection string.</p>
 <figure>
-<img src="media/pbi-treemap-average.png" title="Average engine temperature" alt="The Average menu option is highlighted for the enginetemperature value." /><figcaption>The Average menu option is highlighted for the enginetemperature value.</figcaption>
+<img src="media/app-service-app-settings-connection-strings-read-only.png" title="Connection strings" alt="Read-only connection string." /><figcaption>Read-only connection string.</figcaption>
 </figure></li>
-<li><p>Your treemap should look similar to the following:</p>
+<li><p>Select <strong>Save</strong> at the top of the Application settings blade.</p>
 <figure>
-<img src="media/pbi-treemap.png" title="Treemap" alt="The treemap is shown on the report." /><figcaption>The treemap is shown on the report.</figcaption>
+<img src="media/application-settings-save.png" title="Save" alt="The save button on the Application settings blade is highlighted." /><figcaption>The save button on the Application settings blade is highlighted.</figcaption>
+</figure>
+<blockquote>
+<p>NOTE: The astute reader may have noticed in the above steps that the Web App continues to query a database called <code>ContosoAutoDb</code> and not the database that was just restored. This is intended only to shorten the application configuration steps. Rest assured that the changes you made to the database connection string would enable your application to reach any of the databases loaded on to the SQL Server Managed Instance.</p>
+</blockquote></li>
+<li><p>Select <strong>Overview</strong> to the left of the Application settings blade to return to the overview blade of your App Service.</p>
+<figure>
+<img src="media/app-service-overview-menu-item.png" title="Overview menu item" alt="Overview is highlighted on the left-hand menu for App Service" /><figcaption>Overview is highlighted on the left-hand menu for App Service</figcaption>
 </figure></li>
-<li><p>Select a blank area on the report to deselect the treemap. Now select the <strong>Area chart</strong> visualization.</p>
+<li><p>On the overview blade, click the <strong>URL</strong> of your App service to launch the website. This will open the URL in a browser window.</p>
 <figure>
-<img src="media/pbi-areachart-vis.png" title="Area chart visualization" alt="The Area chart visualization is highlighted." /><figcaption>The Area chart visualization is highlighted.</figcaption>
+<img src="media/app-service-url.png" title="App service URL" alt="The App service URL is highlighted." /><figcaption>The App service URL is highlighted.</figcaption>
 </figure></li>
-<li><p>Drag the <strong>region</strong> field to <strong>Legend</strong>, the <strong>speed</strong> field to <strong>Values</strong>, and the <strong>timestamp</strong> field to <strong>Axis</strong>. This will display an area chart with different colors indicating the region and the speed at which drivers travel over time within that region.</p>
+<li><p>Verify that the web site and data is loaded correctly. The page should look similar to the following:</p>
 <figure>
-<img src="media/pbi-areachart-fields.png" title="Area chart settings" alt="Screenshot displaying where to drag the fields onto the area chart settings." /><figcaption>Screenshot displaying where to drag the fields onto the area chart settings.</figcaption>
+<img src="media/contosoauto-web-app.png" title="ContosoAuto Web" alt="Screenshot of the ContosoAuto Operations Web App." /><figcaption>Screenshot of the ContosoAuto Operations Web App.</figcaption>
 </figure></li>
-<li><p>Select the down arrow next to the <strong>speed</strong> field under <strong>Values</strong>. Select <strong>Average</strong> from the menu to aggregate the values by average instead of the sum.</p>
+</ol>
+<blockquote>
+<p>That is it. You were able to successfully connect your application to the new SQL MI database by simply updating the application’s connection string. No code changes or other updates are needed!</p>
+</blockquote>
+<h2 id="task-4-enable-dynamic-data-masking">Task 4: Enable Dynamic Data Masking</h2>
+<p><a href="https://docs.microsoft.com/azure/sql-database/sql-database-dynamic-data-masking-get-started">Dynamic Data Masking</a> (DDM) limits sensitive data exposure by masking it to non-privileged users. This feature helps prevent unauthorized access to sensitive data by enabling customers to designate how much of the sensitive data to reveal with minimal impact on the application layer. It’s a policy-based security feature that hides the sensitive data in the result set of a query over designated database fields, while the data in the database is not changed.</p>
+<blockquote>
+<p>For example, a service representative at a call center may identify callers by several digits of their credit card number, but those data items should not be fully exposed to the service representative. A masking rule can be defined that masks all but the last four digits of any credit card number in the result set of any query. As another example, an appropriate data mask can be defined to protect personally identifiable information (PII) data, so that a developer can query production environments for troubleshooting purposes without violating compliance regulations.</p>
+</blockquote>
+<p>In this task, you will enable DDM on the <code>CardNumber</code> field in the <code>CreditCard</code> table in the <code>ContosoAutoDb</code> database, to prevent queries against that table from returning the full credit card number.</p>
+<ol type="1">
+<li><p>Return to the SQL Server Management Studio (SSMS) window you opened previously.</p></li>
+<li><p>Expand <strong>Tables</strong> under the <strong>ContosoAutoDb-XXXXX</strong> (where XXXXX is the unique identifier assigned to you for this workshop) and locate the <code>Sales.CreditCard</code> table. Expand the table columns and observe that there is a column named <code>CardNumber</code>. Right-click the table, and choose <strong>Select Top 1000 Rows</strong> from the context menu.</p>
 <figure>
-<img src="media/pbi-areachart-average.png" title="Average speed" alt="The Average menu option is highlighted for the speed value." /><figcaption>The Average menu option is highlighted for the speed value.</figcaption>
+<img src="media/ssms-sql-mi-credit-card-table-select.png" title="Select Top 1000 Rows" alt="The Select Top 1000 Rows item is highlighted in the context menu for the Sales.CreditCard table." /><figcaption>The Select Top 1000 Rows item is highlighted in the context menu for the Sales.CreditCard table.</figcaption>
 </figure></li>
-<li><p>Your area chart should look similar to the following:</p>
+<li><p>In the query window that opens, review the Results, including the <code>CardNumber</code> field. Notice it is displayed in plain text, making the data available to anyone with access to query the database.</p>
 <figure>
-<img src="media/pbi-areachart.png" title="Area chart" alt="The area chart on the report." /><figcaption>The area chart on the report.</figcaption>
+<img src="media/ssms-sql-mi-credit-card-table-select-results.png" title="Results" alt="Plain text credit card numbers are highlighted in the query results." /><figcaption>Plain text credit card numbers are highlighted in the query results.</figcaption>
 </figure></li>
-<li><p>Select a blank area on the report to deselect the area chart. Now select the <strong>Multi-row card</strong> visualization.</p>
+<li><p>So we can test the mask being applied to the <code>CardNumber</code> field, you will first create a user in the database that will be used for testing the masked field. In SSMS, select <strong>New Query</strong> and paste the following SQL script into the new query window, replacing <code>XXXXX</code> with your unique ID (if the DDMUser already exists in your environment, the following script will show an error, but you are free to proceed to the next step):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
+<a class="sourceLine" id="cb5-2" title="2">GO</a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="kw">CREATE</span> <span class="fu">USER</span> DDMUser <span class="kw">WITHOUT</span> LOGIN;</a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> [Sales].[CreditCard] <span class="kw">TO</span> DDMUser;</a></code></pre></div>
 <figure>
-<img src="media/pbi-card-vis.png" title="Multi-row card visualization" alt="The multi-card visualization is highlighted." /><figcaption>The multi-card visualization is highlighted.</figcaption>
+<img src="media/ssms-sql-mi-ddm-create-user.png" title="Create User" alt="A Create User query is pasted into the new query window." /><figcaption>A Create User query is pasted into the new query window.</figcaption>
+</figure>
+<blockquote>
+<p>The SQL script above create a new user in the database named <code>DDMUser</code>, and grants that user <code>SELECT</code> rights on the <code>Sales.CreditCard</code> table.</p>
+</blockquote></li>
+<li><p>Select <strong>Execute</strong> from the SSMS toolbar to run the query. You will get a message that the commands completed successfully in the Messages pane.</p></li>
+<li><p>With the new user created, let’s run a quick query to verify the results. Select <strong>New Query</strong> again, and paste the following into the new query window. Replace <code>XXXXX</code> in the <code>USE</code> statement to include the unique identifier of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
+<a class="sourceLine" id="cb6-2" title="2">GO</a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw">EXECUTE</span> <span class="kw">AS</span> <span class="fu">USER</span> <span class="op">=</span> <span class="st">&#39;DDMUser&#39;</span>;</a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> [Sales].[CreditCard];</a>
+<a class="sourceLine" id="cb6-6" title="6">REVERT;</a></code></pre></div>
+<figure>
+<img src="media/ssms-sql-mi-ddm-select-unmasked.png" title="Select Unmasked" alt="The SQL query above is pasted into the new query window in SSMS." /><figcaption>The SQL query above is pasted into the new query window in SSMS.</figcaption>
 </figure></li>
-<li><p>Drag the <strong>aggressivedriving</strong> field, <strong>enginetempanomaly</strong>, and <strong>oilanomaly</strong> fields to <strong>Fields</strong>.</p>
+<li><p>Select <strong>Execute</strong> from the toolbar, and examine the Results pane. Notice the credit card number, as above, is visible in clear text.</p>
 <figure>
-<img src="media/pbi-card-fields.png" title="Multi-row card settings" alt="Screenshot displaying where to drag the fields onto the multi-row card settings." /><figcaption>Screenshot displaying where to drag the fields onto the multi-row card settings.</figcaption>
+<img src="media/ssms-sql-mi-ddm-results-unmasked.png" title="Query results" alt="The credit card number is unmasked in the query results." /><figcaption>The credit card number is unmasked in the query results.</figcaption>
 </figure></li>
-<li><p>Select the <strong>Format</strong> tab in the multi-row card settings, then expand <strong>Data labels</strong>. Set the <strong>Text size</strong> to 30. Expand <strong>Category labels</strong> and set the <strong>Text size</strong> to 12.</p>
+<li><p>You will now apply DDM on the <code>CardNumber</code> field to prevent it from being viewed in query results. Select <strong>New Query</strong> from the SSMS toolbar and paste the following query into the query window to apply a mask to the <code>CardNumber</code> field, replacing <code>XXXXX</code> with your unique ID. Select <strong>Execute</strong> to run the query.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
+<a class="sourceLine" id="cb7-2" title="2">GO</a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="kw">ALTER</span> <span class="kw">TABLE</span> [Sales].[CreditCard]</a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="kw">ALTER</span> <span class="kw">COLUMN</span> [CardNumber] <span class="dt">NVARCHAR</span>(<span class="dv">25</span>) MASKED <span class="kw">WITH</span> (<span class="kw">FUNCTION</span> <span class="op">=</span> <span class="st">&#39;partial(0,&quot;xxx-xxx-xxx-&quot;,4)&#39;</span>)</a></code></pre></div>
 <figure>
-<img src="media/pbi-card-format.png" title="Multi-row card format" alt="Screenshot of the format tab." /><figcaption>Screenshot of the format tab.</figcaption>
+<img src="media/ssms-sql-mi-ddm-add-mask.png" title="Add DDM Mask" alt="The SQL script above is pasted into the new query window. The Execute button is highlighted and a success message is displayed in the Messages pane." /><figcaption>The SQL script above is pasted into the new query window. The Execute button is highlighted and a success message is displayed in the Messages pane.</figcaption>
 </figure></li>
-<li><p>Your multi-row card should look similar to the following:</p>
+<li><p>Run the <code>SELECT</code> query you opened in step 7 above again, and observe the results, specifically inspect the output in the <code>CardNumber</code> field. For reference the query is below. You replaced <code>XXXXX</code> in the <code>USE</code> statement to include the unique identifier of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
+<a class="sourceLine" id="cb8-2" title="2">GO</a>
+<a class="sourceLine" id="cb8-3" title="3"></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="kw">EXECUTE</span> <span class="kw">AS</span> <span class="fu">USER</span> <span class="op">=</span> <span class="st">&#39;DDMUser&#39;</span>;</a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> [Sales].[CreditCard];</a>
+<a class="sourceLine" id="cb8-6" title="6">REVERT;</a></code></pre></div>
 <figure>
-<img src="media/pbi-card.png" title="Multi-row-card" alt="The multi-row card on the report." /><figcaption>The multi-row card on the report.</figcaption>
+<img src="media/ssms-sql-mi-ddm-results-masked.png" title="Query results" alt="The credit card number is masked in the query results." /><figcaption>The credit card number is masked in the query results.</figcaption>
+</figure>
+<blockquote>
+<p>The <code>CardNumber</code> is now displayed using the mask applied to it, so only the last four digits of the card number are visible. Dynamic Data Masking is a powerful feature that enables you to prevent unauthorized users from viewing sensitive or restricted information. It’s a policy-based security feature that hides the sensitive data in the result set of a query over designated database fields, while the data in the database is not changed.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-5-add-clustered-columnstore-index">Task 5: Add clustered columnstore index</h2>
+<p>ContosoAuto is looking to take advantage of some of the performance improvement features available in Azure SQL MI. In particular, they are interested in optimizing performance by using <a href="https://docs.microsoft.com/azure/sql-database/sql-database-in-memory">In-Memory technologies</a>.</p>
+<p>In this task, you will create a new table based on the existing <code>[Sales].[SalesOrderDetail]</code> table and apply a <a href="https://docs.microsoft.com/sql/relational-databases/indexes/columnstore-indexes-overview?view=azuresqldb-mi-current">ColumnStore index</a>.</p>
+<blockquote>
+<p>Columnstore indexes are the standard for storing and querying large data warehousing fact tables. This index uses column-based data storage and query processing to achieve gains up to <strong>10 times the query performance</strong> in your data warehouse over traditional row-oriented storage. You can also achieve gains up to <strong>10 times the data compression</strong> over the uncompressed data size.</p>
+</blockquote>
+<ol type="1">
+<li><p>In SSMS, ensure you are connected to the Azure SQL Database Managed Instance.</p></li>
+<li><p>Open a new query window by selecting <strong>New Query</strong> from the toolbar.</p>
+<figure>
+<img src="./media/ssms-toolbar-new-query.png" title="SSMS New Query" alt="The New Query icon is highlighted on the SSMS toolbar." /><figcaption>The New Query icon is highlighted on the SSMS toolbar.</figcaption>
 </figure></li>
-<li><p>Select <strong>Save</strong> on the upper-right of the page.</p>
+<li><p>Copy the script below, and paste it into the query window. Replace <code>XXXXX</code> in the <code>USE</code> statement to include the unique identifier of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
+<a class="sourceLine" id="cb9-2" title="2">GO</a>
+<a class="sourceLine" id="cb9-3" title="3"></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="kw">SELECT</span> <span class="op">*</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="kw">INTO</span> [Sales].[ColumnStore_SalesOrderDetail]</a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="kw">FROM</span> [Sales].[SalesOrderDetail]</a>
+<a class="sourceLine" id="cb9-7" title="7">GO</a></code></pre></div></li>
+<li><p>Select <strong>Execute</strong> on the toolbar to run the query, and create a new table named <code>[Sales].[ColumnStore_SalesOrderDetail]</code>, populated with data from the <code>[Sales].[SalesOrderDetail]</code> table.</p>
 <figure>
-<img src="media/pbi-save.png" title="Save" alt="The save button is highlighted." /><figcaption>The save button is highlighted.</figcaption>
+<img src="./media/ssms-toolbar-execute-query.png" title="Select Execute" alt="The Execute icon is highlighted on the SSMS toolbar." /><figcaption>The Execute icon is highlighted on the SSMS toolbar.</figcaption>
 </figure></li>
-<li><p>Enter a name, such as “Vehicle Anomalies”, then select <strong>Save</strong>.</p>
+<li><p>Select <strong>New Query</strong> in the toolbar again, and paste the following query into the new query window. The query contains multiple parts; one to get the size of the <code>ColumnStore_SalesOrderDetail</code> table, a second to create a clustered ColumnStore index on the <code>[Sales].[ColumnStore_SalesOrderDetail]</code> table, and then the size query is repeated to get the size after adding the clustered ColumnStore index. Replace <code>XXXXX</code> in the <code>USE</code> statement to include the unique identifier of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-01234).</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
+<a class="sourceLine" id="cb10-2" title="2">GO</a>
+<a class="sourceLine" id="cb10-3" title="3"></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="co">-- Get the Size of the [Sales].[ColumnStore_SalesOrderDetail] table</span></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="kw">SELECT</span></a>
+<a class="sourceLine" id="cb10-6" title="6">t.Name <span class="kw">AS</span> TableName,</a>
+<a class="sourceLine" id="cb10-7" title="7">p.<span class="kw">rows</span> <span class="kw">AS</span> RowCounts,</a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="fu">CAST</span>(<span class="fu">ROUND</span>((<span class="fu">SUM</span>(a.total_pages) <span class="op">/</span> <span class="fl">128.00</span>), <span class="dv">2</span>) <span class="kw">AS</span> <span class="dt">NUMERIC</span>(<span class="dv">36</span>, <span class="dv">2</span>)) <span class="kw">AS</span> Size_MB</a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="kw">FROM</span> sys.<span class="kw">tables</span> t</a>
+<a class="sourceLine" id="cb10-10" title="10"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.<span class="kw">indexes</span> i <span class="kw">ON</span> t.OBJECT_ID <span class="op">=</span> i.object_id</a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.<span class="kw">partitions</span> p <span class="kw">ON</span> i.object_id <span class="op">=</span> p.OBJECT_ID <span class="kw">AND</span> i.index_id <span class="op">=</span> p.index_id</a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.allocation_units a <span class="kw">ON</span> p.partition_id <span class="op">=</span> a.container_id</a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="kw">WHERE</span> t.Name <span class="op">=</span> <span class="st">&#39;ColumnStore_SalesOrderDetail&#39;</span></a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="kw">GROUP</span> <span class="kw">BY</span> t.Name, p.<span class="kw">Rows</span></a>
+<a class="sourceLine" id="cb10-15" title="15">GO</a>
+<a class="sourceLine" id="cb10-16" title="16"></a>
+<a class="sourceLine" id="cb10-17" title="17"><span class="co">-- Create a clustered columnstore index on the [Sales].[ColumnStore_SalesOrderDetail] table</span></a>
+<a class="sourceLine" id="cb10-18" title="18"><span class="kw">CREATE</span> CLUSTERED COLUMNSTORE <span class="kw">INDEX</span> [cci_SalesOrderDetail]</a>
+<a class="sourceLine" id="cb10-19" title="19"><span class="kw">ON</span> [Sales].[ColumnStore_SalesOrderDetail]</a>
+<a class="sourceLine" id="cb10-20" title="20">GO</a>
+<a class="sourceLine" id="cb10-21" title="21"></a>
+<a class="sourceLine" id="cb10-22" title="22"><span class="co">-- Get the Size of the [Sales].[ColumnStore_SalesOrderDetail] table</span></a>
+<a class="sourceLine" id="cb10-23" title="23"><span class="kw">SELECT</span></a>
+<a class="sourceLine" id="cb10-24" title="24">t.Name <span class="kw">AS</span> TableName,</a>
+<a class="sourceLine" id="cb10-25" title="25">p.<span class="kw">rows</span> <span class="kw">AS</span> RowCounts,</a>
+<a class="sourceLine" id="cb10-26" title="26"><span class="fu">CAST</span>(<span class="fu">ROUND</span>((<span class="fu">SUM</span>(a.total_pages) <span class="op">/</span> <span class="fl">128.00</span>), <span class="dv">2</span>) <span class="kw">AS</span> <span class="dt">NUMERIC</span>(<span class="dv">36</span>, <span class="dv">2</span>)) <span class="kw">AS</span> Size_MB</a>
+<a class="sourceLine" id="cb10-27" title="27"><span class="kw">FROM</span> sys.<span class="kw">tables</span> t</a>
+<a class="sourceLine" id="cb10-28" title="28"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.<span class="kw">indexes</span> i <span class="kw">ON</span> t.OBJECT_ID <span class="op">=</span> i.object_id</a>
+<a class="sourceLine" id="cb10-29" title="29"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.<span class="kw">partitions</span> p <span class="kw">ON</span> i.object_id <span class="op">=</span> p.OBJECT_ID <span class="kw">AND</span> i.index_id <span class="op">=</span> p.index_id</a>
+<a class="sourceLine" id="cb10-30" title="30"><span class="kw">INNER</span> <span class="kw">JOIN</span> sys.allocation_units a <span class="kw">ON</span> p.partition_id <span class="op">=</span> a.container_id</a>
+<a class="sourceLine" id="cb10-31" title="31"><span class="kw">WHERE</span> t.Name <span class="op">=</span> <span class="st">&#39;ColumnStore_SalesOrderDetail&#39;</span></a>
+<a class="sourceLine" id="cb10-32" title="32"><span class="kw">GROUP</span> <span class="kw">BY</span> t.Name, p.<span class="kw">Rows</span></a>
+<a class="sourceLine" id="cb10-33" title="33">GO</a></code></pre></div></li>
+<li><p>Select <strong>Execute</strong> on the toolbar to run the query.</p></li>
+<li><p>In the query results, observe the <code>Size_MB</code> value of the table before and after the creation of the clustered ColumnStore index. The first value is the size before the index was created, and the second value is the size after the ColumnStore index was created.</p>
 <figure>
-<img src="media/pbi-save-dialog.png" title="Save dialog" alt="Screenshot of the save dialog." /><figcaption>Screenshot of the save dialog.</figcaption>
+<img src="media/ssms-sql-mi-columnstore-size-reduction.png" title="ColumnStore_SalesOrderDetail size query results" alt="The SSMS results pane is displayed, with the size of the [Sales].[ColumnStore_SalesOrderDetail] table highlighted both before and after the creation of the clustered ColumnStore index." /><figcaption>The SSMS results pane is displayed, with the size of the [Sales].[ColumnStore_SalesOrderDetail] table highlighted both before and after the creation of the clustered ColumnStore index.</figcaption>
 </figure></li>
-<li><p>Now let’s add this report to a dashboard. Select <strong>Pin Live Page</strong> on the upper-right of the page.</p>
+<li><p>Create another new query window by selecting <strong>New Query</strong> from the toolbar, and then select <strong>Include Actual Execution Plan</strong> by selecting its button in the toolbar.</p>
 <figure>
-<img src="media/pbi-live.png" title="Pin Live Page" alt="The Pin Live Page button is highlighted." /><figcaption>The Pin Live Page button is highlighted.</figcaption>
+<img src="./media/ssms-toolbar-include-actual-execution-plan.png" title="Select the Include Actual Execution Plan" alt="The Include Actual Execution Plan icon is highlighted on the New Query the toolbar." /><figcaption>The Include Actual Execution Plan icon is highlighted on the New Query the toolbar.</figcaption>
 </figure></li>
-<li><p>Select <strong>New dashboard</strong>, then enter a name, such as “Vehicle Anomalies Dashboard”. Select <strong>Pin live</strong>. When prompted select the option to view the dashboard. Otherwise, you can find the dashboard under My Workspace on the left-hand menu.</p>
+<li><p>Paste the queries below into the new query window, replace <code>XXXXX</code> with your unique ID, and select <strong>Execute</strong> on the toolbar:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
+<a class="sourceLine" id="cb11-2" title="2">GO</a>
+<a class="sourceLine" id="cb11-3" title="3"></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="kw">SELECT</span> ProductId, LineTotal</a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="kw">FROM</span> [Sales].[ColumnStore_SalesOrderDetail]</a>
+<a class="sourceLine" id="cb11-6" title="6"></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="kw">SELECT</span> ProductId, LineTotal</a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="kw">FROM</span> [Sales].[SalesOrderDetail]</a></code></pre></div>
+<blockquote>
+<p>Running queries against both the <code>SalesOrderDetail</code> and <code>ColumnStore_SalesOrderDetail</code> will allow you to compare the query execution plans between tables with and without a columnstore index.</p>
+</blockquote></li>
+<li><p>In the Results pane, select the <strong>Execution Plan</strong> tab. Check the <em>Query cost (relative to the batch)</em> percentage value of the two queries and compare them.</p>
 <figure>
-<img src="media/pbi-live-dialog.png" title="Pin to dashboard dialog" alt="Screenshot of the pin to dashboard dialog." /><figcaption>Screenshot of the pin to dashboard dialog.</figcaption>
+<img src="./media/ssms-query-results-execution-plan-columnstore-index.png" title="Compare the two queries" alt="The Execution Plan tab is highlighted in the Results pane, 12% is highlighted for Query 1, and 88% is highlighted for Query 2." /><figcaption>The Execution Plan tab is highlighted in the Results pane, 12% is highlighted for Query 1, and 88% is highlighted for Query 2.</figcaption>
+</figure>
+<blockquote>
+<p>From the query cost, it is clear the query against the table with the columnstore index was more performant. Using a columnstore index, queries get an order of magnitude better performance boost with <em>BatchMode</em> processing, a unique value proposition in SQL Server. The basic idea of batch mode processing is to process multiple values, hence the term ‘batch’, together instead of one value at a time. Batch mode processing is perfectly suited for analytics where a large number of rows need to be processed, for example, to compute aggregates or apply filter predicates.</p>
+</blockquote></li>
+<li><p>Run the same queries again, but this time set statistics IO on in the query by adding the following to the top of the query window:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">SET</span> <span class="kw">STATISTICS</span> IO <span class="kw">ON</span></a>
+<a class="sourceLine" id="cb12-2" title="2">GO</a></code></pre></div></li>
+<li><p>Your final query should look like, with <code>XXXXX</code> replaced with your unique ID:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">USE</span> [ContosoAutoDb<span class="op">-</span>XXXXX];</a>
+<a class="sourceLine" id="cb13-2" title="2">GO</a>
+<a class="sourceLine" id="cb13-3" title="3"></a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="kw">SET</span> <span class="kw">STATISTICS</span> IO <span class="kw">ON</span></a>
+<a class="sourceLine" id="cb13-5" title="5">GO</a>
+<a class="sourceLine" id="cb13-6" title="6"></a>
+<a class="sourceLine" id="cb13-7" title="7"><span class="kw">SELECT</span> ProductId, LineTotal</a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="kw">FROM</span> [Sales].[ColumnStore_SalesOrderDetail]</a>
+<a class="sourceLine" id="cb13-9" title="9"></a>
+<a class="sourceLine" id="cb13-10" title="10"><span class="kw">SELECT</span> ProductId, LineTotal</a>
+<a class="sourceLine" id="cb13-11" title="11"><span class="kw">FROM</span> [Sales].[SalesOrderDetail]</a></code></pre></div></li>
+<li><p>Select <strong>Execute</strong> from the toolbar to run the query.</p>
+<blockquote>
+<p>Statistics IO reports on the amount of logical pages that are read in order to return the query results.</p>
+</blockquote></li>
+<li><p>Select the <strong>Messages</strong> tab of the Results pane, and compare two numbers, logical reads and lob logical reads. You should see a significant drop in total number of logical reads on the columns store table.</p>
+<figure>
+<img src="./media/ssms-query-results-messages-stastics-io.png" title="Compare the information" alt="Various information is highlighted on the Messages tab of the Results pane." /><figcaption>Various information is highlighted on the Messages tab of the Results pane.</figcaption>
 </figure></li>
-<li><p>The live dashboard will automatically refresh and update while data is being captured. You can hover over any point on a chart to view information about the item. Select one of the regions in the legend above the average speed chart. All other charts will filter by that region automatically. Click on a blank area of the chart to clear the filter.</p>
+</ol>
+<h2 id="task-6-use-online-secondary-for-read-only-queries">Task 6: Use online secondary for read-only queries</h2>
+<p>In this task, you will look at how you can use the automatically created online secondary for reporting, without feeling the impacts of a heavy transactional load on the primary database. Each database in the SQL MI Business Critical tier is automatically provisioned with several AlwaysON replicas to support the availability SLA.</p>
+<blockquote>
+<p>High availability in this architectural model is achieved by replication of compute (SQL Server Database Engine process) and storage (locally attached SSD) deployed in 4-node cluster, using technology similar to SQL Server <a href="https://docs.microsoft.com/sql/database-engine/availability-groups/windows/overview-of-always-on-availability-groups-sql-server">Always On Availability Groups</a>. You can read more in the <a href="https://docs.microsoft.com/azure/sql-database/sql-database-high-availability#premium-and-business-critical-service-tier-availability">SQL Database high availability</a> documentation.</p>
+</blockquote>
+<p><a href="https://docs.microsoft.com/azure/sql-database/sql-database-read-scale-out"><strong>Read Scale-Out</strong></a> allows you to load balance Azure SQL Database read-only workloads using the capacity of one read-only replica. This way the read-only workload will be isolated from the main read-write workload and will not affect its performance. To learn more, check out the <a href="https://docs.microsoft.com/azure/sql-database/sql-database-read-scale-out">SQL Database Read Scale-Out documentation</a>.</p>
 <figure>
-<img src="media/pbi-dashboard.png" title="Dashboard" alt="The live dashboard view." /><figcaption>The live dashboard view.</figcaption>
+<img src="media/sql-mi-read-scale-out.png" title="Read Scale-Out" alt="Business Critical service tier: collocated compute and storage." /><figcaption>Business Critical service tier: collocated compute and storage.</figcaption>
+</figure>
+<blockquote>
+<p>The feature is intended for the applications that include logically separated read-only workloads, such as analytics, and therefore could gain performance benefits using this additional capacity at no extra cost.</p>
+</blockquote>
+<p>When you enable Read Scale-Out for a database, the <code>ApplicationIntent</code> option in the connection string provided by the client dictates whether the connection is routed to the write replica or to a read-only replica. Specifically, if the <code>ApplicationIntent</code> value is <code>ReadWrite</code> (the default value), the connection will be directed to the database’s read-write replica. This is identical to existing behavior. If the <code>ApplicationIntent</code> value is <code>ReadOnly</code>, the connection is routed to a read-only replica.</p>
+<p>For example, the following connection string connects the client to a read-only replica of the <code>tech-immersion-sql-mi</code> database:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb14-1" title="1">Server<span class="op">=</span>tcp<span class="ch">:tech</span><span class="op">-</span>immersion<span class="op">-</span>sql<span class="op">-</span>mi<span class="fl">.3e134</span>c88d9f6.<span class="kw">database</span>.windows.net;<span class="kw">Database</span><span class="op">=</span>ContosoAutoDb;<span class="fu">User</span> <span class="kw">ID</span><span class="op">=</span>tiuser;<span class="kw">Password</span><span class="op">=</span><span class="kw">Password</span><span class="fl">.1234567890</span>;Trusted_Connection<span class="op">=</span><span class="kw">False</span>;Encrypt<span class="op">=</span><span class="kw">True</span>;ApplicationIntent<span class="op">=</span>ReadOnly;</a></code></pre></div>
+<blockquote>
+<p>Note the addition of <code>ApplicationIntent=ReadOnly;</code> to the end of the connection string.</p>
+</blockquote>
+<ol type="1">
+<li><p>Using a web browser, navigate to the <a href="https://portal.azure.com">Azure portal</a>, select <strong>Resource groups</strong> from the left-hand menu, and then select the resource group named <strong>tech-immersion-XXXXX</strong> (where XXXXX is the unique ID assigned to you for this workshop).</p>
+<figure>
+<img src="media/tech-immersion-rg.png" title="Resource groups" alt="The tech-immersion resource group is selected." /><figcaption>The tech-immersion resource group is selected.</figcaption>
+</figure></li>
+<li><p>In the tech-immersion resource group, select the <strong>techimmersionwebappXXXXX</strong> App Service from the list of resources (where XXXXX is the unique ID assigned to you for this workshop).</p>
+<figure>
+<img src="media/tech-immersion-rg-appservice.png" title="Tech Immersion resource group" alt="The App Service resource is selected from the list of resources in the tech-immersion resource group." /><figcaption>The App Service resource is selected from the list of resources in the tech-immersion resource group.</figcaption>
+</figure></li>
+<li><p>On the App Service overview blade, select the <strong>URL</strong> to open the web application in a browser window.</p>
+<figure>
+<img src="media/app-service-url.png" title="App service URL" alt="The App service URL is highlighted." /><figcaption>The App service URL is highlighted.</figcaption>
+</figure></li>
+<li><p>In the ContosoAuto web app, select <strong>Reports</strong> from the menu.</p>
+<figure>
+<img src="media/contosoauto-web-reports-read-write.png" title="ContosoAuto Web App" alt="READ_WRITE is highlighted on the Reports page." /><figcaption>READ_WRITE is highlighted on the Reports page.</figcaption>
+</figure>
+<blockquote>
+<p>Note the <code>READ_WRITE</code> string on the page. This is the output from reading the <code>Updateability</code> propertry associated with the <code>ApplicationIntent</code> option on the target database. This can be retrieved using the SQL query <code>SELECT DATABASEPROPERTYEX(DB_NAME(), "Updateability")</code>.</p>
+</blockquote></li>
+<li><p>Return to the App Service blade, and then select <strong>Application settings</strong> under Settings on the left-hand side.</p>
+<figure>
+<img src="media/tech-immersion-app-service-app-settings.png" title="Application settings" alt="The Application settings item is selected under Settings." /><figcaption>The Application settings item is selected under Settings.</figcaption>
+</figure></li>
+<li><p>On the Application settings blade, scroll down and locate the connection string named <code>ContosoAutoDbReadOnlyContext</code> within the <strong>Connection strings</strong> section.</p>
+<figure>
+<img src="media/tech-immersion-app-settings-conn-string-read-only.png" title="Connection strings" alt="The read-only connection string is highlighted." /><figcaption>The read-only connection string is highlighted.</figcaption>
+</figure></li>
+<li><p>Select the <strong>Value</strong> for the <code>ContosoAutoDbReadOnlyContext</code> and paste the following parameter to end of the connection string.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb15-1" title="1">ApplicationIntent<span class="op">=</span>ReadOnly;</a></code></pre></div></li>
+<li><p>Your <code>ContosoAutoDbReadOnlyContext</code> connection string should now look something like the following:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb16-1" title="1">Server<span class="op">=</span>tcp<span class="ch">:tech</span><span class="op">-</span>immersion<span class="op">-</span>sqlmi<span class="op">-</span><span class="kw">shared</span><span class="fl">.521</span>f7783692d.<span class="kw">database</span>.windows.net,<span class="dv">1433</span>;Persist Security Info<span class="op">=</span><span class="kw">False</span>;<span class="kw">Database</span><span class="op">=</span>ContosoAutoDb;<span class="fu">User</span> <span class="kw">ID</span><span class="op">=</span>tiuser;<span class="kw">Password</span><span class="op">=</span><span class="kw">Password</span><span class="fl">.1234567890</span>;MultipleActiveResultSets<span class="op">=</span><span class="kw">False</span>;Encrypt<span class="op">=</span><span class="kw">True</span>;TrustServerCertificate<span class="op">=</span><span class="kw">False</span>;Connection <span class="kw">Timeout</span><span class="op">=</span><span class="dv">30</span>;ApplicationIntent<span class="op">=</span>ReadOnly;</a></code></pre></div></li>
+<li><p>Select <strong>Save</strong> at the top of the Application settings blade.</p>
+<figure>
+<img src="media/application-settings-save.png" title="Save" alt="The save button on the Application settings blade is highlighted." /><figcaption>The save button on the Application settings blade is highlighted.</figcaption>
+</figure></li>
+<li><p>Return to the ContosoAuto operations website you opened previously, and refresh the <strong>Reports</strong> page. The page should now look similar to the following:</p>
+<figure>
+<img src="media/contosoauto-web-reports-read-only.png" title="ContosoAuto Web App" alt="READ_ONLY is highlighted on the Reports page." /><figcaption>READ_ONLY is highlighted on the Reports page.</figcaption>
+</figure>
+<blockquote>
+<p>Notice the <code>updability</code> option is now displaying as <code>READ_ONLY</code>. With a simple addition to your database connection string, you are able to send read-only queries to the online secondary of your SQL MI database, allowing you to load-balance read-only workloads using the capacity of one read-only replica. The SQL MI Business Critical cluster has built-in Read Scale-Out capability that provides free-of charge built-in read-only node that can be used to run read-only queries that should not affect performance of your primary workload.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-7-review-advanced-data-security-vulnerability-assessment">Task 7: Review Advanced Data Security Vulnerability Assessment</h2>
+<p><a href="https://docs.microsoft.com/azure/sql-database/sql-database-advanced-data-security">SQL Database Advance Data Security</a> (ADS) provides advanced SQL security capabilities, including functionality for discovering and classifying sensitive data, surfacing and mitigating potential database vulnerabilities, and detecting anomalous activities that could indicate a threat to your database. ADS is enabled at the managed instance level by selecting <strong>ON</strong> on the <strong>Advanced Data Security</strong> blade for your managed instance. This turns ADS on for all databases on the managed instance. ADS uses an Azure Blob Storage account to save the associated outputs (e.g., assessment and vulnerability reports). In the interest of time for this workshop, the steps to enable ADS have already been performed on the shared SQL MI.</p>
+<p>In this task, you will review an assessment report generated by <a href="https://docs.microsoft.com/azure/sql-database/sql-database-advanced-data-security">Advance Data Security</a> for the <code>ContosoAutoDb</code> database and take action to remediate one of the findings in your copy of the <code>ContosoAutoDb</code> database.</p>
+<blockquote>
+<p>Advanced Data Security is enabled at the server level, and for this workshop it has already been enabled on the SQL MI, so you will focus on just your user-specific database.</p>
+</blockquote>
+<ol type="1">
+<li><p>To review the Advanced Data Security assessment for your <code>ContosoAutoDb-XXXXX</code> database, navigate to the <strong>tech-immersion-shared-rg</strong> resource group.</p>
+<figure>
+<img src="media/shared-rg.png" title="Resource Groups" alt="The tech-immersion-shared-rs is highlighted under Resource groups." /><figcaption>The tech-immersion-shared-rs is highlighted under Resource groups.</figcaption>
+</figure></li>
+<li><p>In the shared resource group, select the <strong>SQL Managed Instance</strong> resource from the list.</p>
+<figure>
+<img src="media/shared-rg-sql-mi.png" title="SQL Managed Instance resource" alt="The SQL MI resource is highlighted in the list of resources in the shared resource group." /><figcaption>The SQL MI resource is highlighted in the list of resources in the shared resource group.</figcaption>
+</figure></li>
+<li><p>On the SQL MI blade, select <strong>Overview</strong> from the left-hand menu.</p>
+<figure>
+<img src="media/sql-mi-overview-menu.png" title="Overview" alt="The Overview menu item is highlighted." /><figcaption>The Overview menu item is highlighted.</figcaption>
+</figure></li>
+<li><p>On the SQL MI Overview blade, scroll down and locate the list of databases on the Managed Instance, and then select your copy of the <strong>ContosoAutoDb</strong> database, which will be named <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-0123), where XXXXX is the unique identifier assigned to you for this workshop.</p>
+<figure>
+<img src="media/sql-mi-database-list.png" title="Manged Instance databases" alt="ContosoAutoDb is highlighted in the list of databases on the SQL MI." /><figcaption>ContosoAutoDb is highlighted in the list of databases on the SQL MI.</figcaption>
+</figure>
+<blockquote>
+<p>You will see a list of all the databases on the SQL MI. Make sure you select the one which includes your assigned unique identifier from the list.</p>
+</blockquote></li>
+<li><p>On the <strong>ContosoAutoDb-XXXXX</strong> Managed database blade, select <strong>Advanced Data Security</strong> under Security in the left-hand menu and then select the <strong>Vulnerability Assessment</strong> tile.</p>
+<figure>
+<img src="media/sql-mi-contosoautodb-ads.png" title="Advanced Data Security" alt="Advanced Data Security is selected in the left-hand menu, and the Vulnerability tile is highlighted." /><figcaption>Advanced Data Security is selected in the left-hand menu, and the Vulnerability tile is highlighted.</figcaption>
+</figure>
+<blockquote>
+<p>The <a href="https://docs.microsoft.com/azure/sql-database/sql-vulnerability-assessment">SQL Vulnerability Assessment service</a> is a service that provides visibility into your security state, and includes actionable steps to resolve security issues, and enhance your database security.</p>
+</blockquote></li>
+<li><p>On the Vulnerability Assessment blade, select <strong>Scan</strong> on the toolbar.</p>
+<figure>
+<img src="media/vulnerability-assessment-scan.png" title="Scan" alt="Vulnerability assessment scan button." /><figcaption>Vulnerability assessment scan button.</figcaption>
+</figure></li>
+<li><p>When the scan completes, you will see a dashboard, displaying the number of failing checks, passing checks, and a breakdown of the risk summary by severity level.</p>
+<figure>
+<img src="media/sql-mi-vulnerability-assessment-dashboard.png" title="Vulnerability Assessment dashboard" alt="The Vulnerability Assessment dashboard is displayed." /><figcaption>The Vulnerability Assessment dashboard is displayed.</figcaption>
+</figure>
+<blockquote>
+<p>Scans are run on a schedule, so if you see a message that no vulnerabilities are found your database may not have been scanned yet. You will need to run a scan manually. To do this, select the <strong>Scan</strong> button on the toolbar, and follow any prompts to start a scan. This will take a minute or so to complete.</p>
+</blockquote></li>
+<li><p>In the scan results, take a few minutes to browse both the Failed and Passed checks, and review the types of checks that are performed. In the <strong>Failed</strong> the list, locate the security check for <strong>Transparent data encryption</strong>. This check has an ID of <strong>VA1219</strong>.</p>
+<figure>
+<img src="media/sql-mi-vulnerability-assessment-failed-va1219.png" title="Vulnerability assessment" alt="The VA1219 finding for Transparent data encryption is highlighted." /><figcaption>The VA1219 finding for Transparent data encryption is highlighted.</figcaption>
+</figure></li>
+<li><p>Select the <strong>VA1219</strong> finding to view the detailed description.</p>
+<figure>
+<img src="media/sql-mi-vulnerability-assessment-failed-va1219-details.png" title="Vulnerability Assessment" alt="The details of the VA1219 - Transparent data encryption should be enabled finding are displayed with the description, impact, and remediation fields highlighted." /><figcaption>The details of the VA1219 - Transparent data encryption should be enabled finding are displayed with the description, impact, and remediation fields highlighted.</figcaption>
+</figure>
+<blockquote>
+<p>The details for each finding provide more insight into the reason for the finding. Of note are the fields describing the finding, the impact of the recommeneded settings, and details on remediation for the finding.</p>
+</blockquote></li>
+<li><p>Let’s now act on the recommendation remediation steps for the finding, and enable <a href="https://docs.microsoft.com/azure/sql-database/transparent-data-encryption-azure-sql">Transparent Data Encryption</a> for the <code>ContosoAutoDb</code> database. To accomplish this, you will switch back to using SSMS for the next few steps.</p>
+<blockquote>
+<p>Transparent data encryption (TDE) needs to be manually enabled for Azure SQL Managed Instance. TDE helps protect Azure SQL Database, Azure SQL Managed Instance, and Azure Data Warehouse against the threat of malicious activity. It performs real-time encryption and decryption of the database, associated backups, and transaction log files at rest without requiring changes to the application.</p>
+</blockquote></li>
+<li><p>In SSMS, select <strong>New Query</strong> from the toolbar, paste the following SQL script into the new query window. Replace <code>&lt;XXXXX&gt;</code> in the <code>ALTER DATABASE</code> statement to include the unique identifier of your database which will be <code>ContosoAutoDb-XXXXX</code> (e.g., ContosoAutoDb-0123).</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">ALTER</span> <span class="kw">DATABASE</span> [ContosoAutoDb<span class="op">-</span>XXXXX] <span class="kw">SET</span> ENCRYPTION <span class="kw">ON</span></a></code></pre></div>
+<figure>
+<img src="media/ssms-sql-mi-enable-tde.png" title="New query" alt="A new query window is displayed, with the script above pasted into it." /><figcaption>A new query window is displayed, with the script above pasted into it.</figcaption>
+</figure>
+<blockquote>
+<p>You turn transparent data encryption on and off on the database level. To enable transparent data encryption on a database in Azure SQL Managed Instance use must use T-SQL.</p>
+</blockquote></li>
+<li><p>Select <strong>Execute</strong> from the SSMS toolbar. After a few seconds, you will see a message that the “Commands completed successfully.”</p>
+<figure>
+<img src="media/ssms-sql-mi-enable-tde-success.png" title="Execute" alt="The Excute button is highlighted on the SSMS toolbar, and the Commands completed successfully message is highlighted in the output window." /><figcaption>The Excute button is highlighted on the SSMS toolbar, and the Commands completed successfully message is highlighted in the output window.</figcaption>
+</figure></li>
+<li><p>You can verify the encryption state and view information the associated encryption keys by using the <a href="https://docs.microsoft.com/sql/relational-databases/system-dynamic-management-views/sys-dm-database-encryption-keys-transact-sql">sys.dm_database_encryption_keys view</a>. Select <strong>New Query</strong> on the SSMS toolbar again, and paste the following query into the new query window:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> sys.dm_database_encryption_keys</a></code></pre></div>
+<figure>
+<img src="media/ssms-sql-mi-database-encryption-keys.png" title="New query" alt="The query above is pasted into a new query window in SSMS." /><figcaption>The query above is pasted into a new query window in SSMS.</figcaption>
+</figure></li>
+<li><p>Select <strong>Execute</strong> from the SSMS toolbar. You will see two records in the Results window, which provide information about the encryption state and keys used for encryption.</p>
+<figure>
+<img src="media/ssms-sql-mi-database-encryption-keys-results.png" title="Results" alt="The Execute button on the SSMS toolbar is highlighted, and in the Results pane the two records about the encryption state and keys for the ContosoAutoDb database are highlighted." /><figcaption>The Execute button on the SSMS toolbar is highlighted, and in the Results pane the two records about the encryption state and keys for the ContosoAutoDb database are highlighted.</figcaption>
+</figure>
+<blockquote>
+<p>By default, service-managed transparent data encryption is used. A transparent data encryption certificate is automatically generated for the server that contains the database.</p>
+</blockquote></li>
+<li><p>Return to the Azure portal and the Vulnerability Assessment blade for your copy of the <code>ContosoAutoDb</code> managed database (e.g, ContosoAutoDb-0123). On the toolbar, select <strong>Scan</strong> to start a new assessment of the database.</p>
+<figure>
+<img src="media/sml-mi-vulnerability-assessment-scan.png" title="Scan" alt="The Scan button on the SQL MI Vulnerability Assessment dialog is highlighted." /><figcaption>The Scan button on the SQL MI Vulnerability Assessment dialog is highlighted.</figcaption>
+</figure></li>
+<li><p>When the scan completes, notice that the numbers for failing and passing checks has changed. The number of failing checks has been reduced by 1 and the number of passing checks has increased by 1.</p>
+<figure>
+<img src="media/sql-mi-vulnerability-assessment-checks-totals.png" title="Vulnerability Assessment" alt="The total number of failing and passing checks is highlighted." /><figcaption>The total number of failing and passing checks is highlighted.</figcaption>
+</figure></li>
+<li><p>On the <strong>Failed</strong> tab, enter <strong>VA1219</strong> into the search filter box, and observe that the previous failure is no longer in the Failed list.</p>
+<figure>
+<img src="media/sql-mi-vulnerability-assessment-failed-filter-va1219.png" title="Failed" alt="The Failed tab is highlighted and VA1219 is entered into the search filter. The list displays no results." /><figcaption>The Failed tab is highlighted and VA1219 is entered into the search filter. The list displays no results.</figcaption>
+</figure></li>
+<li><p>Now, select the <strong>Passed</strong> tab, and observe the <strong>VA1219</strong> check is listed with a status of PASS.</p>
+<figure>
+<img src="media/sql-mi-vulnerability-assessment-passed-va1219.png" title="Passed" alt="The Passed tab is highlighted and VA1219 is entered into the search filter. VA1219 with a status of PASS is highlighted in the results." /><figcaption>The Passed tab is highlighted and VA1219 is entered into the search filter. VA1219 with a status of PASS is highlighted in the results.</figcaption>
+</figure>
+<blockquote>
+<p>Using the SQL Vulnerability Assessment it is simple to identify and remediate potential database vulnerabilities, allowing you to proactively improve your database security.</p>
+</blockquote></li>
+</ol>
+<h2 id="task-8-sql-data-discovery-and-classification">Task 8: SQL Data Discovery and Classification</h2>
+<p>In this task, you will look at another <strong>Advanced Data Security</strong> feature available within the SQL MI database, <a href="https://docs.microsoft.com/sql/relational-databases/security/sql-data-discovery-and-classification?view=sql-server-2017">SQL Data Discovery and Classification</a>. Data Discovery &amp; Classification introduces a new tool built into SQL Server Management Studio (SSMS) for discovering, classifying, labeling &amp; reporting the sensitive data in your databases. It introduces a set of advanced services, forming a new SQL Information Protection paradigm aimed at protecting the data in your database, not just the database. Discovering and classifying your most sensitive data (business, financial, healthcare, etc.) can play a pivotal role in your organizational information protection stature.</p>
+<pre><code>&gt; This functionality is not currently available for SQL MI through the Azure portal, so you return to SSMS to use this capability.</code></pre>
+<ol type="1">
+<li><p>In SSMS, right-click the <code>ContosoAutoDb-XXXXX</code> database (e.g., ContosoAutoDb-0123) in the Object Explorer (where XXXXX is the unique identifier assigned to you for this workshop), and then select <strong>Tasks</strong> and <strong>Classify Data</strong> in the context menus.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-menu.png" title="Classify Data" alt="The Tasks &gt; Classify Data context menu items are highlighted for the ContosoAutoDb database in SSMS." /><figcaption>The Tasks &gt; Classify Data context menu items are highlighted for the ContosoAutoDb database in SSMS.</figcaption>
+</figure></li>
+<li><p>In the Data Classification - ContosoAutoDb window, select the info link with the message <em>39 columns with classification recommendations (click to view)</em>.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-recommendations-link.png" title="Recommendations" alt="The link to classification recommendations is displayed." /><figcaption>The link to classification recommendations is displayed.</figcaption>
+</figure></li>
+<li><p>In the list of classification recommendations, select the recommendation for the <strong>NationalIDNumber</strong> field, and then expand the <strong>Sensitivity Label</strong> drop down list. You can see the list of built-is sensitivity classification, including those related to compliance requirements around GDPR.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-recommendations-labels.png" title="Recommendations" alt="The NationalIDNumber field is highlighted within the recommenations list, and the Sensitivity Label drop down is expanded and highlighted." /><figcaption>The NationalIDNumber field is highlighted within the recommenations list, and the Sensitivity Label drop down is expanded and highlighted.</figcaption>
+</figure></li>
+<li><p>Select the check box at the top of the list to select all of the recommended classifications, and then select <strong>Accept selected recommendations</strong>.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-accept-recommendations.png" title="Recommendations" alt="All the recommended classifications are checked and the Accept selected recommendations button is highlighted." /><figcaption>All the recommended classifications are checked and the Accept selected recommendations button is highlighted.</figcaption>
+</figure></li>
+<li><p>Select <strong>Save</strong> on the toolbar of the Data Classification window.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-save.png" title="Save" alt="Save the updates to the classified columns list." /><figcaption>Save the updates to the classified columns list.</figcaption>
+</figure></li>
+<li><p>Select <strong>View Report</strong> on the Data Classification window to generate a report with a full summary of the database classification state.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-view-report.png" title="View report" alt="The View Report button is highlighted on the toolbar." /><figcaption>The View Report button is highlighted on the toolbar.</figcaption>
+</figure></li>
+<li><p>View the report.</p>
+<figure>
+<img src="media/ssms-sql-mi-classify-data-report.png" title="SQL Data Classification Report" alt="The SQL Data Classification Report is displayed." /><figcaption>The SQL Data Classification Report is displayed.</figcaption>
 </figure></li>
 </ol>
 <h2 id="wrap-up">Wrap-up</h2>
-<p>Thank you for participating in the Leveraging Cosmos DB for near real-time analytics experience! There are many aspects of Cosmos DB that make it suitable for ingesting and serving real-time data at a global scale, some of which we have covered here today. Of course, there are other services that work alongside Cosmos DB to complete the processing pipeline.</p>
-<p>To recap, you experienced:</p>
-<ul>
-<li>How to configure and send real-time data to Cosmos DB.</li>
-<li>Processing data as it is saved to Cosmos DB through the use of Azure functions, with the convenience of the Cosmos DB trigger to reduce code and automatically handle kicking off the processing logic as data arrives.</li>
-<li>Ingesting processed data with Event Hubs and querying and reshaping that data with Azure Stream Analytics, then sending it to Power BI for reporting.</li>
-<li>Rapidly creating a real-time dashboard in Power BI with interesting visualizations to view and explore vehicle anomaly data.</li>
-</ul>
+<p>In this experience you unlocked new capabilities for a SQL Server 2008 R2 database by performing a friction-free migration to Azure SQL Database Managed Instance. You learned how Azure SQL Database Managed Instance enables you to migrate on-premises databases quickly and easily into a fully-managed PaaS database running in Azure, with no application code changes. SQL MI provides a migration path for databases using features, such as Service broker, which previously prevented them from running in Azure SQL Database.</p>
+<p>After you migrated the database into SQL MI, you explored some of advanced SQL features available only in Azure, including Advanced Data Security Vulnerability Assessments and Data Classification and Discovery. In addition, you enabled Dynamic Data Masking and created a ColumnStore index on a table in the database, demonstrating how SQL MI allows you to utilize features unavailable in SQL Server 2008 R2. You also examined how to connect to an online secondary replica of your database, which provides a free read-only copy of your database. This feature takes advantage of one the high-availability features of the Azure SQL MI Business Critical service tier.</p>
+<p>This experience was meant to provided a brief introduction to Azure SQL Database Managed Instance. There are many more features of SQL MI that you can now explore, including <a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-threat-detection-overview">Advanced Threat Detection</a> and <a href="https://docs.microsoft.com/azure/sql-database/replication-with-sql-database-managed-instance">Transactional replication</a>. Threat detection for Azure SQL Database Managed Instance detects anomalous activities indicating unusual and potentially harmful attempts to access or exploit databases. Transactional replication allows you to replicate data into an Azure SQL MI database from a remote SQL Server database or another instance database. You an also use it to push changes made in an instance database in SQL MI to a remote SQL Server database, to a single database in Azure SQL Database, or to a pooled database in an Azure SQL Database elastic pool.</p>
 <h2 id="additional-resources-and-more-information">Additional resources and more information</h2>
+<p>Use the links below as a starting point to continue learning about the capabilities and features available with Azure SQL Database Managed Instance.</p>
 <ul>
-<li><a href="https://docs.microsoft.com/en-us/azure/cosmos-db/introduction">Introduction to Azure Cosmos DB</a></li>
-<li><a href="https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed">Overview of the Cosmos DB change feed</a></li>
-<li><a href="https://docs.microsoft.com/en-us/azure/cosmos-db/high-availability">High availability with Azure Cosmos DB</a></li>
-<li><a href="https://docs.microsoft.com/azure/cosmos-db/scaling-throughput">Scaling throughput in Azure Cosmos DB</a></li>
-<li><a href="https://docs.microsoft.com/azure/cosmos-db/partition-data">Partitioning and horizontal scaling</a> in Azure Cosmos DB, plus <a href="https://docs.microsoft.com/azure/cosmos-db/scaling-throughput">guide for scaling throughput</a></li>
-<li><a href="https://docs.microsoft.com/azure/event-hubs/event-hubs-about">About Event Hubs</a></li>
-<li><a href="https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-introduction">What is Azure Stream Analytics?</a></li>
-<li><a href="https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-window-functions">Intro to Stream Analytics windowing functions</a></li>
-<li><a href="https://docs.microsoft.com/en-us/azure/cosmos-db/change-feed-functions">Trigger Azure Functions from Azure Cosmos DB</a></li>
+<li><a href="https://azure.microsoft.com/services/sql-database/">Azure SQL Database</a>
+<ul>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-service-tiers-general-purpose-business-critical">Service tiers</a></li>
+</ul></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance-index">What is Azure SQL Database Managed Instance?</a></li>
+<li><a href="https://datamigration.microsoft.com/">Database Migration Guide</a>
+<ul>
+<li><a href="https://docs.microsoft.com/sql/dma/dma-overview?view=azuresqldb-mi-current">Database Migration Assistant</a></li>
+<li><a href="https://docs.microsoft.com/azure/dms/dms-overview">Azure Database Migration Service</a></li>
+</ul></li>
+<li><a href="https://datamigration.microsoft.com/scenario/sql-to-azuresqldbmi">Migrate SQL Server to an Azure SQL Database Managed Instance</a></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-paas">SQL Database Platform as a Service</a>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-business-continuity">Business continuity</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-high-availability">High availability</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-automated-backups">Automated backups</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-long-term-retention">Long-term back retention</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-auto-failover-group">Geo-replication</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-scale-resources">Scale resources</a></li>
+</ul></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-howto">How to use Azure SQL Database</a></li>
+<li><a href="https://azure.microsoft.com/en-us/updates/?product=sql-database">Azure updates for Azure SQL Database</a></li>
+<li><a href="https://azure.microsoft.com/en-us/pricing/details/sql-database/managed/">Azure SQL Database pricing</a></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-security-overview">Overview of Azure SQL Database security capabilities</a>
+<ul>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-advanced-data-security">Advanced data security</a></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-data-discovery-and-classification">Data discovery and classification</a></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-vulnerability-assessment">SQL Vulnerability Assessment service</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-threat-detection-overview">Threat detection</a></li>
+</ul></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-read-scale-out">SQL Database Read Scale-Out</a></li>
+<li><a href="https://docs.microsoft.com/azure/sql-database/sql-database-managed-instance-connect-app">Connect an application to Azure SQL Database Managed Instance</a></li>
 </ul>
