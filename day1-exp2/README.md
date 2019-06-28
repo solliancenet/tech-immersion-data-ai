@@ -1,9 +1,9 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-## Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters
+## Day 1, Experience 2 - Handling Big Data with SQL Server 2019 Big Data Clusters
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Day 1, Experience 1 - Handling Big Data with SQL Server 2019 Big Data Clusters](#Day-1-Experience-1---Handling-Big-Data-with-SQL-Server-2019-Big-Data-Clusters)
+  - [Day 1, Experience 2 - Handling Big Data with SQL Server 2019 Big Data Clusters](#Day-1-Experience-2---Handling-Big-Data-with-SQL-Server-2019-Big-Data-Clusters)
   - [Technology overview](#Technology-overview)
   - [Scenario overview](#Scenario-overview)
   - [Experience requirements](#Experience-requirements)
@@ -296,6 +296,10 @@ In this task, you will use Azure Data Studio to execute a notebook that will ena
     ![View data](media/task02-view-data.png 'View data')
 
 ## Task 3: Mounting an Azure Data Lake Gen2 Storage Account to SQL Server 2019 Big Data Cluster using HDFS Tiering
+
+![SQL and Spark easily access the data lake.](media/sql-data-lake.png 'Managed SQL Server, Spark, and data lake')
+
+SQL Server 2019 data pools helps you create a data lake by storing data in scalable, shared storage provided by Hadoop File System (HDFS). Store high volume data in this layer and access it easily using either SQL or Apache Spark. You can expand your HDFS storage by using tiering.
 
 With tiering, applications can seamlessly access data in a variety of external stores as though the data resides in the local HDFS. This allows you to interact with the files in Azure Data Lake Store Gen2 as if they were local files. You can either use an Azure Storage access key or an Azure Active Directory User Account to gain permission to the files. For this lab, we will use the access key.
 

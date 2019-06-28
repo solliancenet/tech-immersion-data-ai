@@ -39,6 +39,8 @@ To further boost performance, SQL Server 2019 provides more in-memory database o
 - In-Memory OLTP
 - Persistent Memory Support
 
+The Hybrid Buffer Pool allows the database engine to directly access data pages in database files stored on persistent memory (PMEM) devices. SQL Server will automatically detect if data files reside on an appropriately formatted PMEM device and perform memory mapping in user space. This mapping happens upon startup, when a new database is attached, restored, created, or when the hybrid buffer pool feature is enabled for a database.
+
 ![Always Encrypted with secure enclaves](media/always-encrypted-with-secure-enclaves-overview.png 'Always Encrypted with secure enclaves')
 
 SQL Server 2019 enables several layers of security including protection of computations in Always Encrypted with secure enclaves. Customers can track compliance with sophisticated tools such as Data Discovery & Classification labeling for GDPR and Vulnerability Assessment tool. Transparent Data Encryption (TDE) encryption scanning now offers more control with suspend and resume syntax so that you can pause the scan while the workload on the system is heavy, or during business-critical hours, and then resume the scan later.

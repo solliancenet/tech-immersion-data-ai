@@ -1,0 +1,9 @@
+C:\Dropbox (Personal)\Projects\Solliance\tech-immersion-data-ai\lab-files\data\2\TechImmersion.Common\bin\Debug\netstandard2.0\TechImmersion.Common.deps.json
+C:\Dropbox (Personal)\Projects\Solliance\tech-immersion-data-ai\lab-files\data\2\TechImmersion.Common\bin\Debug\netstandard2.0\TechImmersion.Common.dll
+C:\Dropbox (Personal)\Projects\Solliance\tech-immersion-data-ai\lab-files\data\2\TechImmersion.Common\bin\Debug\netstandard2.0\TechImmersion.Common.pdb
+C:\Dropbox (Personal)\Projects\Solliance\tech-immersion-data-ai\lab-files\data\2\TechImmersion.Common\obj\Debug\netstandard2.0\TechImmersion.Common.csprojAssemblyReference.cache
+C:\Dropbox (Personal)\Projects\Solliance\tech-immersion-data-ai\lab-files\data\2\TechImmersion.Common\obj\Debug\netstandard2.0\TechImmersion.Common.csproj.CoreCompileInputs.cache
+C:\Dropbox (Personal)\Projects\Solliance\tech-immersion-data-ai\lab-files\data\2\TechImmersion.Common\obj\Debug\netstandard2.0\TechImmersion.Common.AssemblyInfoInputs.cache
+C:\Dropbox (Personal)\Projects\Solliance\tech-immersion-data-ai\lab-files\data\2\TechImmersion.Common\obj\Debug\netstandard2.0\TechImmersion.Common.AssemblyInfo.cs
+C:\Dropbox (Personal)\Projects\Solliance\tech-immersion-data-ai\lab-files\data\2\TechImmersion.Common\obj\Debug\netstandard2.0\TechImmersion.Common.dll
+C:\Dropbox (Personal)\Projects\Solliance\tech-immersion-data-ai\lab-files\data\2\TechImmersion.Common\obj\Debug\netstandard2.0\TechImmersion.Common.pdb

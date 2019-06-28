@@ -1,0 +1,21 @@
+{
+  "generatedBy": "Microsoft.NET.Sdk.Functions-1.0.29",
+  "configurationSource": "attributes",
+  "bindings": [
+    {
+      "type": "cosmosDBTrigger",
+      "preferredLocations": "%Region2%",
+      "connectionStringSetting": "CosmosDbConnectionString",
+      "leaseCollectionName": "leases",
+      "createLeaseCollectionIfNotExists": true,
+      "collectionName": "telemetry",
+      "databaseName": "ContosoAuto",
+      "leaseDatabaseName": "ContosoAuto",
+      "startFromBeginning": false,
+      "name": "input"
+    }
+  ],
+  "disabled": false,
+  "scriptFile": "../bin/TechImmersion.CarEventProcessor.dll",
+  "entryPoint": "TechImmersion.CarEventProcessor.CarEventProcessorFunctions.CarEventProcessorRegion2"
+}
