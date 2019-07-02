@@ -206,10 +206,10 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
 
     > Depending upon the complexity of the logic in the UDF, the resulting query plan might also get bigger and more complex. As we can see, the operations inside the UDF are now no longer a black box, and hence the query optimizer is able to cost and optimize those operations. Also, since the UDF is no longer in the plan, iterative UDF invocation is replaced by a plan that completely avoids function call overhead.
 
-12. Either highlight and delete everything in the query window, or open a new query window. Paste the following query into the query window. This query makes use of the table variable deferred compilation feature, since the database compatibility level is set to `150`. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
+12. Either highlight and delete everything in the query window, or open a new query window. Paste the following query into the query window, replacing `XXXXX` in the `USE` statement with the unique identifier assigned to you for this workshop. This query makes use of the table variable deferred compilation feature, since the database compatibility level is set to `150`. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
 
     ```sql
-    USE sales
+    USE sales_XXXXX
     GO
 
     DECLARE @ItemClick TABLE (
@@ -249,7 +249,7 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
     Execute the following updated query, which removes the hint we used in the previous query to disable the table-deferred compilation feature:
 
     ```sql
-    USE sales
+    USE sales_XXXXX
     GO
 
     DECLARE @ItemClick TABLE (
@@ -304,23 +304,23 @@ To learn more, read [intelligent query processing](https://docs.microsoft.com/sq
 
 15. Either highlight and delete everything in the query window, or open a new query window. Paste the following query to execute the select query that contains the hash match once more. If you opened a new query window instead of reusing this one, make sure to click the **Include Actual Execution Plan** button to enable it. **Execute** the query.
 
-   ```sql
-   USE sales;
-   GO
+```sql
+USE sales_XXXXX;
+GO
 
-   SELECT
-     ws.[ws_order_number], ws.ws_quantity,
-     i.[i_current_price], i.[i_item_desc]
-   FROM    dbo.web_sales AS ws
-   INNER HASH JOIN dbo.[item] AS i
-     ON ws.[ws_item_sk] = i.[i_item_sk]
-   WHERE   i.[i_current_price] > 10
-     AND ws.[ws_quantity] > 40;
-   ```
+SELECT
+  ws.[ws_order_number], ws.ws_quantity,
+  i.[i_current_price], i.[i_item_desc]
+FROM    dbo.web_sales AS ws
+INNER HASH JOIN dbo.[item] AS i
+  ON ws.[ws_item_sk] = i.[i_item_sk]
+WHERE   i.[i_current_price] > 10
+  AND ws.[ws_quantity] > 40;
+```
 
 16. After the query executes, select the **Execution plan** tab. Hover over the Hash Match step of the execution plan. You may no longer see a warning about spilled data. If you do, the **number of pages Hash wrote** should have decreased. This happens as the STATISTICS table is updated with each run.
 
-    ![The Hash Match dialog shows spilled data warnings, but with fewer written pages.](media/ssms-memory-grant-feedback-pages-decreased.png "Query execution plan showing fewer pages.")
+    ![The Hash Match dialog shows spilled data warnings, but with fewer written pages.](media/ssms-memory-grant-feedback-pages-decreased.png 'Query execution plan showing fewer pages.')
 
 17. Execute the query 2-3 more times. Each time, select the **Execution plan** tab and hover over the Hash Match step of the execution plan. After a few executions, you should **no longer** see a warning about spilled data.
 
