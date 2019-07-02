@@ -642,13 +642,17 @@ In this step, you will encrypt the data stored in the email column inside the se
 
    > **NOTE**: Notice the `ALTER DATABASE SCOPED CONFIGURATION CLEAR PROCEDURE_CACHE` statement to clear the query plan cache for the database in the above script. After you have altered the table, you need to clear the plans for all batches and stored procedures that access the table, to refresh parameters encryption information.
 
-6. Open another new query window in SSMS, and right-click anywhere in the new query window, then select **Connection > Change Connection**.
+6. If you see a dialog appear after executing the above script, asking whether to enable parameterization for Always Encrypted, click **Enable**.
 
-7. In the Connect to Database Engine dialog, select **Options**, navigate to the **Always Encrypted** tab and make sure **Enable Always Encrypted** is not checked, and then select **Connect**.
+   ![The Enable button is highlighted on the dialog.](media/ssms-parameterization-always-encrypted.png 'Parameterization for Always Encrypted')
+
+7. Open another new query window in SSMS, and right-click anywhere in the new query window, then select **Connection > Change Connection**.
+
+8. In the Connect to Database Engine dialog, select **Options**, navigate to the **Always Encrypted** tab and make sure **Enable Always Encrypted** is not checked, and then select **Connect**.
 
    ![On the Always Encrypted tab of the Connect to Database Engine dialog, Enable Always Encrypted is unchecked.](media/ssms-connect-enable-always-encrypted-unchecked.png 'Connect to Database Engine')
 
-8. To verify the `c_email_address` column is now encrypted, paste in and execute the below statement in the query window with Always Encrypted disabled. The query window should return encrypted values in the SSN and Salary columns.
+9. To verify the `c_email_address` column is now encrypted, paste in and execute the below statement in the query window with Always Encrypted disabled. The query window should return encrypted values in the SSN and Salary columns.
 
    ```sql
    SELECT c_customer_sk, c_first_name, c_last_name, c_email_address FROM [dbo].[customer]
@@ -656,7 +660,7 @@ In this step, you will encrypt the data stored in the email column inside the se
 
    > TODO: Add screen shot of results
 
-9. Now, run the same query in the query window with the Always Encrypted enabled. The returned results should contain the data decrypted.
+10. Now, run the same query in the query window with the Always Encrypted enabled. The returned results should contain the data decrypted.
 
 > TODO: Add screen shot of results
 
