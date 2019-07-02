@@ -342,7 +342,7 @@ In this exercise, you will run the SQL Data Discovery & Classification tool agai
 
 1. To get started, expand databases in the SQL Server Management Studio (SSMS) Object Explorer, right-click the `sales_XXXXX` database (where XXXXX is the unique identifier assigned to you for this workshop), and then choose **Tasks > Data Discovery and Classification > Classify Data...**.
 
-   ![The sales database, Tasks menu, and Classify Data items are highlighted.](media/ssms-classify-data-link.png 'Data Classification')
+   ![The sales database, Tasks menu, and Classify Data items are highlighted.](media/ssms-ddc-classify-data-link.png 'Data Classification')
 
 2. When the tool runs, it will analyze all of the columns within all of the tables and recommend appropriate data classifications for each. What you should see is the Data Classification dashboard showing no currently classified columns, and a classification recommendations box at the top showing that there are 45 columns that the tool identified as containing sensitive (PII) or GDPR-related data. **Click** on this classification recommendations box.
 
