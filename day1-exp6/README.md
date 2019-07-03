@@ -108,6 +108,14 @@ In this task, you will configure and run the data generator to save simulated ve
 
     ![Screenshot of the console window.](media/telemetry-generator-console.png "Console window")
 
+11. If you see a Windows Defender dialog pop up after attempting to run the executable, select **More info**.
+
+    ![Select More Info on the Windows Defender dialog box.](media/windows-defender-more-info.png "Windows Defender")
+
+    Next, click **Run anyway**.
+
+    ![Click Run Anyway.](media/windows-defender-run-anyway.png "Windows Defender")
+
 11. A console window will open and you should see it start to send data after a few seconds. Once you see that it is sending data to Cosmos DB, _minimize_ the window and allow it to run in the background throughout this experience.
 
     ![Screenshot of the console window.](media/vs-console.png "Console window")
