@@ -34,8 +34,6 @@ Complete the steps below to deploy and configure SQL Server 2019 for the [Day 1,
 - SQL Server 2017 on Windows Server 2016
 - SQL Server 2008 R2 on Windows Server 2008 R2
 
-> TODO: Add steps for setting up SQL 2017 VM: Can pull from Data platform upgrade and migration MCW.
-
 ## Set up HGS VM
 
 A VM needs to be provisioned to run the Host Guardian Service (HGS), which is required for Always Encrypted with secure enclaves. The HGS computer is needed for enclave attestation.
@@ -210,20 +208,20 @@ Provision a Windows Server 2019 Datacenter. Once provisioned install and configu
 
 8. Return to your RDP session on the sql-2019 VM, and enter the following command in an elevated Windows PowerShell console. This command tells there SQL Server computer where to attest. Make sure you specify the IP address or the DNS name of your HGS computer in both address locations.
 
-```powershell
-# use http, and not https
-Set-HgsClientConfiguration -AttestationServerUrl http://10.0.0.8/Attestation -KeyProtectionServerUrl http://10.0.0.8/KeyProtection/
-```
+    ```powershell
+    # use http, and not https
+    Set-HgsClientConfiguration -AttestationServerUrl http://<public-ip-address-of-hgs-service-vm>/Attestation -KeyProtectionServerUrl http://<public-ip-address-of-hgs-service-vm>/KeyProtection/
+    ```
 
-1. You will see output from the command above providing details about the guarded host.
+9. You will see output from the command above providing details about the guarded host.
 
-  ![Guarded host](media/guarded-host-output.png "Guarded host")
+   ![Guarded host](media/guarded-host-output.png "Guarded host")
+
+10. The `AttestationServerUrl` value should be added to the list of values provided to lab attendees. They will need this to connect enable Always Encrypted with secure enclaves in SSMS.
 
 ### Configure SQL Server 2019
 
 The steps below open access to the sql-2019 VM for SQL Server (port 1433), and configure the user account that will be used by workshop attendees.
-
-> TODO: Add firewall rule on sql-2019 VM
 
 1. Open Windows Defender Firewall and Advanced Security, and add a new inbound rule to open port 1433 to TCP traffic for all connections, and name the rule **SqlServer**.
 
