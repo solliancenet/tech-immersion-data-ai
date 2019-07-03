@@ -77,7 +77,7 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
 9.  Select Add Source on the data flow design surface.
 
-    ![The Add Source drop target](media/07-adding-data-flow.png)
+    ![The Add Source drop target](media/08-add-source.png)
 
 10.  In the tool tip that appears, read the guide text and select **Next** until it is dismissed.
 

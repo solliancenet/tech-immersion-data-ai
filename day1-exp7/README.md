@@ -360,7 +360,7 @@ In this task, you will use the `psql` COPY utility to load raw clickstream event
 2. In the Command Prompt window, type in the following then press Enter to navigate to the lab files directory for this experience:
 
    ```bash
-   cd C:\lab-files\data\5
+   cd C:\lab-files\data\7
    ```
 
 3. For this next command, you will need to locate your PostgreSQL **coordinator name** that you copied from the Azure portal earlier. It should be in the form of `<your_postgres_name>-c.postgres.database.azure.com`. Use this value to replace `COORDINATOR_NAME` in the following command:

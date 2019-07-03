@@ -1,6 +1,6 @@
-# Modern Data Warehouse setup
+# Azure Data Factory and Modern Data Warehouse setup
 
-Complete the steps below to prepare the environment for the [Day 1, Experience 4](../../../day1-exp4/README.md) lab.
+Complete the steps below to prepare the environment for the [Day 1, Experience 5](../../../day1-exp5/README.md) and [Day 1, Experience 6](../../../day1-exp6/README.md) labs.
 
 ## Pre-requisites
 
@@ -62,6 +62,8 @@ The following step should be taken for the Blob Storage account:
 1. Create a container in the storage account named `day1-exp3-data`.
 2. Upload the provided `Cars.csv` and `VehicleInfo.csv` files to the `day1-exp3-data` container.
 3. Create a container in the storage account named `dwtemp`.
+4. Create a container in the storage account named `data`.
+5. Upload the provided `trip_data_1.csv` and `trip_fare_1.csv` files to the `data` container.
 
 ## Azure SQL Data Warehouse
 
@@ -99,24 +101,24 @@ The following Access policies should be added to Key Vault:
 
 The following secrets must be added to Key Vault:
 
-| Name | Value |
-| ---- | ----- |
-| ADLS-Gen2-Account-Name | `adlsstrgXXXXX` |
-| Azure-Tenant-ID | `f94768c8-8714-4abe-8e2d-37a64b18216a` |
-| ContosoAuto-SP-Client-ID | `ea2ca9d8-6691-4e6e-b5ee-2d246fd3f0c7` |
-| ContosoAuto-SP-Client-Key | `eSQ8LALrZqo74YcxXhHPRML2Fz37aHOmxI/Z89TCk+o=` |
-| Cosmos-DB-Key | The Primary Key for the user's Cosmos DB instance |
-| Cosmos-DB-Uri | The URI for the user's Cosmos DB instance |
-| Sql-Dw-Password | `Password.1!!`  |
-| Sql-Dw-Server-Name | The server name of the user's SQL DW |
-| Storage-Account-Key | The primary key for the user's Blob Storage account |
-| Storage-Account-Name | The account name of the user's Blob Storage account |
+| Name                      | Value                                               |
+| ------------------------- | --------------------------------------------------- |
+| ADLS-Gen2-Account-Name    | `adlsstrgXXXXX`                                     |
+| Azure-Tenant-ID           | `f94768c8-8714-4abe-8e2d-37a64b18216a`              |
+| ContosoAuto-SP-Client-ID  | `ea2ca9d8-6691-4e6e-b5ee-2d246fd3f0c7`              |
+| ContosoAuto-SP-Client-Key | `eSQ8LALrZqo74YcxXhHPRML2Fz37aHOmxI/Z89TCk+o=`      |
+| Cosmos-DB-Key             | The Primary Key for the user's Cosmos DB instance   |
+| Cosmos-DB-Uri             | The URI for the user's Cosmos DB instance           |
+| Sql-Dw-Password           | `Password.1!!`                                      |
+| Sql-Dw-Server-Name        | The server name of the user's SQL DW                |
+| Storage-Account-Key       | The primary key for the user's Blob Storage account |
+| Storage-Account-Name      | The account name of the user's Blob Storage account |
 
 ## Azure Databricks workspace configuration
 
 For each attendee's Databricks workspace, the following configuration should be set:
 
-1. Run the `Cluster Setup.dbc` notebook (found in environment-setup/data/4) to create a `Standard_DS3_v2` cluster
+1. Run the `Cluster Setup.dbc` notebook (found in environment-setup/data/6) to create a `Standard_DS3_v2` cluster
    - Running Databricks version `5.2.x-scala2.11`
    - Using Python Version 3
    - Cluster should have the Azure Spark Cosmos DB Spark connector library installed (Maven Coordinates: `com.microsoft.azure:azure-cosmosdb-spark_2.4.0_2.11:1.3.5`)
