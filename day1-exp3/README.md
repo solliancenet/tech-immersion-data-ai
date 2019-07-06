@@ -194,7 +194,7 @@ To migrate the `ContosoAutoDb` database from SQL 2008 R2 to SQL MI you will use 
 
 ![Diagram of the native RESTORE from URL capability.](media/sql-mi-native-restore.png "Native RESTORE")
 
-1. Open **SQL Server Management Studio 17** (SSMS) from the Microsoft SQL Server Tools 17 folder in the Windows Start menu and connect to your SQL MI database. On the connection dialog enter the following:
+1. Open **Microsoft SQL Server Management Studio 18** (SSMS) from the Microsoft SQL Server Tools 18 folder in the Windows Start menu and connect to your SQL MI database. On the connection dialog enter the following:
 
    - **Server name**: Enter the name of the shared SQL MI server, **`tech-immersion-sqlmi-shared.521f7783692d.database.windows.net`**.
    - **Authentication**: Select **SQL Server Authentication**.
@@ -206,8 +206,7 @@ To migrate the `ContosoAutoDb` database from SQL 2008 R2 to SQL MI you will use 
 
 2. Select **Connect**.
 
-3. To perform the `RESTORE` process, credentials for a pre-configured storage account and SAS token have already been added to the Managed Instance using the [create a credential](https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017) method. This process essentially creates a connection from your SQL MI database to the Blob storage account, allowing you to access files stored in the target container, `database-backup`. Because this is a shared SQL MI, only one credential is needed for all attendees. If you are curious, you would create it with a SQL statement similar to the below. 
-**NOTE: You should NOT run the following SQL, it is just for illustration.**
+3. To perform the `RESTORE` process, credentials for a pre-configured storage account and SAS token have already been added to the Managed Instance using the [create a credential](https://docs.microsoft.com/sql/t-sql/statements/create-credential-transact-sql?view=sql-server-2017) method. This process essentially creates a connection from your SQL MI database to the Blob storage account, allowing you to access files stored in the target container, `database-backup`. Because this is a shared SQL MI, only one credential is needed for all attendees. If you are curious, you would create it with a SQL statement similar to the below. **NOTE: You should NOT run the following SQL, it is just for illustration.**
 
    ```sql
    CREATE CREDENTIAL [https://techimmersion.blob.core.windows.net/labfiles/data/3]
@@ -253,15 +252,15 @@ In this task, you will make updates to the ContosoAuto operations web applicatio
 
    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
 
-2. Select the **Tech Immersion Web App Service** ending with your unique identifier (e.g., techimmersionwebapp01234) from the list of resources.
+2. Select the **Tech Immersion Web App Service** ending with your unique identifier (e.g., techimmersionwebapp1XXXXX) from the list of resources.
 
    ![The App Service resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-appservice.png "Tech Immersion resource group")
 
-3. On the App Service blade, select **Application settings** under Settings on the left-hand side.
+3. On the App Service blade, select **Configuration** under Settings on the left-hand side.
 
-   ![The Application settings item is selected under Settings.](media/tech-immersion-app-service-app-settings.png "Application settings")
+   ![The Configuration item is selected under Settings.](media/tech-immersion-app-service-app-settings.png "Configuration")
 
-4. On the Application settings blade, scroll down and locate the **Connection strings** section. Paste the connection string value below into the value for the `ContosoAutoDbContext` connection string. Also be sure to set the `Type` drop-down to `SQLServer`.
+4. On the Application settings tab, locate the **Connection strings** section. Select the pencil (Edit) icon to the right of the `ContosoAutoDbContext` connection string, and in the dialog that appears, paste the connection string value below into the **Value** field. Also be sure to set the `Type` drop-down to `SQLServer`.
 
     ```sql
     Server=tcp:tech-immersion-sqlmi-shared.521f7783692d.database.windows.net,1433;Persist Security Info=False;Database=ContosoAutoDb;User ID=tiuser;Password=Password.1234567890;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
@@ -269,25 +268,27 @@ In this task, you will make updates to the ContosoAuto operations web applicatio
 
    ![The copied SQL MI connection string is pasted into the value for the ContosoAutoDbContext connection string.](media/app-service-app-settings-connection-strings.png "Connection strings")
 
-5. Repeat the previous step, this time pasting the same connection string into the `ContosoAutoDbReadOnlyContext` connection string.
+5. Select **OK**.
+
+6. Repeat the previous two steps, this time pasting the same connection string into the `ContosoAutoDbReadOnlyContext` connection string.
 
    ![Read-only connection string.](media/app-service-app-settings-connection-strings-read-only.png "Connection strings")
 
-6. Select **Save** at the top of the Application settings blade.
+7. Select **Save** at the top of the Application settings blade.
 
    ![The save button on the Application settings blade is highlighted.](media/application-settings-save.png "Save")
 
    > NOTE: The astute reader may have noticed in the above steps that the Web App continues to query a database called `ContosoAutoDb` and not the database that was just restored. This is intended only to shorten the application configuration steps. Rest assured that the changes you made to the database connection string would enable your application to reach any of the databases loaded on to the SQL Server Managed Instance.
 
-7. Select **Overview** to the left of the Application settings blade to return to the overview blade of your App Service.
+8. Select **Overview** to the left of the Application settings blade to return to the overview blade of your App Service.
 
     ![Overview is highlighted on the left-hand menu for App Service](media/app-service-overview-menu-item.png "Overview menu item")
 
-8. On the overview blade, click the **URL** of your App service to launch the website. This will open the URL in a browser window.
+9. On the overview blade, click the **URL** of your App service to launch the website. This will open the URL in a browser window.
 
     ![The App service URL is highlighted.](media/app-service-url.png "App service URL")
 
-9. Verify that the web site and data is loaded correctly. The page should look similar to the following:
+10. Verify that the web site and data is loaded correctly. The page should look similar to the following:
 
     ![Screenshot of the ContosoAuto Operations Web App.](media/contosoauto-web-app.png "ContosoAuto Web")
 
@@ -527,7 +528,7 @@ Server=tcp:tech-immersion-sql-mi.3e134c88d9f6.database.windows.net;Database=Cont
 
    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png "Resource groups")
 
-2. In the tech-immersion resource group, select the **techimmersionwebappXXXXX** App Service from the list of resources (where XXXXX is the unique ID assigned to you for this workshop).
+2. In the tech-immersion resource group, select the **techimmersionwebapp1XXXXX** App Service from the list of resources (where XXXXX is the unique ID assigned to you for this workshop).
 
    ![The App Service resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-appservice.png "Tech Immersion resource group")
 
@@ -541,15 +542,15 @@ Server=tcp:tech-immersion-sql-mi.3e134c88d9f6.database.windows.net;Database=Cont
 
    > Note the `READ_WRITE` string on the page. This is the output from reading the `Updateability` propertry associated with the `ApplicationIntent` option on the target database. This can be retrieved using the SQL query `SELECT DATABASEPROPERTYEX(DB_NAME(), "Updateability")`.
 
-5. Return to the App Service blade, and then select **Application settings** under Settings on the left-hand side.
+5. Return to the App Service blade, and then select **Configuration** under Settings on the left-hand side.
 
-   ![The Application settings item is selected under Settings.](media/tech-immersion-app-service-app-settings.png "Application settings")
+   ![The Configuration item is selected under Settings.](media/tech-immersion-app-service-app-settings.png "Configuration")
 
-6. On the Application settings blade, scroll down and locate the connection string named `ContosoAutoDbReadOnlyContext` within the **Connection strings** section.
+6. On the Application settings tab, scroll down and locate the connection string named `ContosoAutoDbReadOnlyContext` within the **Connection strings** section.
 
    ![The read-only connection string is highlighted.](media/tech-immersion-app-settings-conn-string-read-only.png "Connection strings")
 
-7. Select the **Value** for the `ContosoAutoDbReadOnlyContext` and paste the following parameter to end of the connection string.
+7. Select the pencil (Edit) icon to the right of the `ContosoAutoDbReadOnlyContext` setting, and in the Add/Edit connection string dialog paste the following parameter to end of the connection string.
 
    ```sql
    ApplicationIntent=ReadOnly;
@@ -561,11 +562,13 @@ Server=tcp:tech-immersion-sql-mi.3e134c88d9f6.database.windows.net;Database=Cont
    Server=tcp:tech-immersion-sqlmi-shared.521f7783692d.database.windows.net,1433;Persist Security Info=False;Database=ContosoAutoDb;User ID=tiuser;Password=Password.1234567890;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;ApplicationIntent=ReadOnly;
    ```
 
-9. Select **Save** at the top of the Application settings blade.
+9. Select **OK** in the Add/Edit connection string dialog.
 
-   ![The save button on the Application settings blade is highlighted.](media/application-settings-save.png "Save")
+10. Select **Save** at the top of the Application settings blade.
 
-10. Return to the ContosoAuto operations website you opened previously, and refresh the **Reports** page. The page should now look similar to the following:
+    ![The save button on the Application settings blade is highlighted.](media/application-settings-save.png "Save")
+
+11. Return to the ContosoAuto operations website you opened previously, and refresh the **Reports** page. The page should now look similar to the following:
 
     ![READ_ONLY is highlighted on the Reports page.](media/contosoauto-web-reports-read-only.png "ContosoAuto Web App")
 
@@ -579,9 +582,9 @@ In this task, you will review an assessment report generated by [Advance Data Se
 
 > Advanced Data Security is enabled at the server level, and for this workshop it has already been enabled on the SQL MI, so you will focus on just your user-specific database.
 
-1. To review the Advanced Data Security assessment for your `ContosoAutoDb-XXXXX` database, navigate to the **tech-immersion-shared-rg** resource group.
+1. To review the Advanced Data Security assessment for your `ContosoAutoDb-XXXXX` database, navigate to the **tech-immersion-day1-shared-rg** resource group.
 
-    ![The tech-immersion-shared-rs is highlighted under Resource groups.](media/shared-rg.png "Resource Groups")
+    ![The tech-immersion-day1-shared-rg is highlighted under Resource groups.](media/shared-rg.png "Resource Groups")
 
 2. In the shared resource group, select the **SQL Managed Instance** resource from the list.
 
@@ -683,7 +686,7 @@ In this task, you will look at another **Advanced Data Security** feature availa
 
    ![The Tasks > Classify Data context menu items are highlighted for the ContosoAutoDb database in SSMS.](media/ssms-sql-mi-classify-data-menu.png "Classify Data")
 
-2. In the Data Classification - ContosoAutoDb window, select the info link with the message _39 columns with classification recommendations (click to view)_.
+2. In the Data Classification - ContosoAutoDb window, select the info link with the message _37 columns with classification recommendations (click to view)_.
 
    ![The link to classification recommendations is displayed.](media/ssms-sql-mi-classify-data-recommendations-link.png "Recommendations")
 
