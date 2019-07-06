@@ -250,7 +250,8 @@ namespace TransactionGenerator
             var connectionPolicy = new ConnectionPolicy
             {
                 ConnectionMode = ConnectionMode.Direct,
-                ConnectionProtocol = Protocol.Tcp
+                ConnectionProtocol = Protocol.Tcp,
+                UseMultipleWriteLocations = true
             };
 
             var numberOfMillisecondsToLead = arguments.MillisecondsToLead;

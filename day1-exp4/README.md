@@ -265,7 +265,7 @@ In this task, you will create and configure a new event hub within the provided 
 
 Azure Stream Analytics is an event-processing engine that allows you to examine high volumes of data streaming from devices. Incoming data can be from devices, sensors, web sites, social media feeds, applications, and more. It also supports extracting information from data streams, identifying patterns, and relationships. You can then use these patterns to trigger other actions downstream, such as create alerts, feed information to a reporting tool, or store it for later use.
 
-In this task, you will configure Stream Analytics to use the event hub you created as a source, query and analyze that data, then send it to Power BI for reporting.
+In this task, you will configure Stream Analytics to use the event hub you created as a source, query and analyze that data, then send it to Power BI for reporting and aggregated data to Cosmos DB.
 
 1.  Navigate to the [Azure portal](https://portal.azure.com).
 
@@ -796,9 +796,11 @@ In this task, you will view the anomaly data within Cosmos DB.
 
    ![The items menu item and Edit Filter button are both highlighted.](media/cosmos-db-edit-filter-button.png 'Data Explorer')
 
-7. In the filter text box, enter the following, then select **Apply Filter**: `where c.collectionType = 'Anomaly'`
+7. In the filter text box, enter the following, then select **Apply Filter**: `where c.collectionType = 'VehicleAverage'`
 
    ![The filter is shown.](media/cosmos-db-apply-filter.png 'Filter')
+
+8. If the query above returns no results, try filtering by `c.collectiontype` (all lower case) instead. Sometimes Stream Analytics converts all property names to lower case. So the new filter would be `where c.collectiontype = 'VehicleAverage'`.
 
 8. Select a document from the list. Notice that it contains a `collectionType` value of "VehicleAverage", and the aggregate data stored in `averageEngineTemperature` and `averageSpeed`. The `snapshot` value changes in two-minute intervals between these documents. Right now, we're setting `vin` to "ALL" since it is our partition key and these aggregates are for all vehicles, but we could easily store these aggregates by vehicle, setting this value to each vehicle's VIN if we needed that level of granularity.
 

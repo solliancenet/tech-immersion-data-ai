@@ -286,9 +286,7 @@ SQL Server 2019 storage pools help you create a data lake by storing data in sca
 
 HDFS also provides data persistency, as HDFS data is spread across all the storage nodes in the SQL big data cluster. However, you can add external HDFS data sources to the HDFS cluster through tiering. With tiering, applications can seamlessly access data in a variety of external stores as though the data resides in the local HDFS. This allows you to interact with the files in Azure Data Lake Storage Gen2 or Amazon S3 as if they were local files. Both options allow you to mount the data store using storage keys. However, with Azure Data Lake Storage Gen 2, you can either use an Azure Storage access key or an Azure Active Directory User Account to gain permission to the files. For this lab, we will use the access key.
 
-1. In Windows, open PowerShell.
-
-   ![Search for PowerShell .](media/powershell.png 'SQL Server Management Studio - Connect')
+1. In Windows, open the Windows Command Prompt.
 
 2. Connect to your Microsoft SQL Server 2019 Big Data Cluster:
 
@@ -300,54 +298,53 @@ HDFS also provides data persistency, as HDFS data is spread across all the stora
    - The user name is admin
    - The password is MySQLBigData2019
 
-3. Create an empty text file named filename.creds in your temp folder on the c:\ drive. Add this line as the contents:
+3. Execute the following in the command prompt to set a new environment variable with the ADLS Gen2 account name and access key credentials:
 
    ```text
-   fs.azure.abfs.account.name=ikedatabricks.dfs.core.windows.net
-   fs.azure.account.key.ikedatabricks.dfs.core.windows.net=HUYPk/VUjdYzkCvrKXTgFBObt5VQcp5DCY7C9KiSHX42lv65mjmBFmKFVTLy7Z7suQ0WV44mncuUOvnE8NkxGg==
+   set MOUNT_CREDENTIALS=fs.azure.abfs.account.name=ikedatabricks.dfs.core.windows.net,fs.azure.account.key.ikedatabricks.dfs.core.windows.net=HUYPk/VUjdYzkCvrKXTgFBObt5VQcp5DCY7C9KiSHX42lv65mjmBFmKFVTLy7Z7suQ0WV44mncuUOvnE8NkxGg==
    ```
 
-4. In PowerShell, type the following command to mount the drive
+4. Execute the following in the command prompt to mount the drive:
 
    ```powershell
-   mssqlctl cluster storage-pool mount create --remote-uri abfs://databricksfiles@ikedatabricks.dfs.core.windows.net/ --mount-path /mounts/dbfiles --credential-file c:\temp\filename.creds
+   mssqlctl bdc storage-pool mount create --remote-uri abfs://databricksfiles@ikedatabricks.dfs.core.windows.net/ --mount-path /mounts/dbfiles
    ```
 
 5. Once the storage account has been mounted, you can check the status:
 
    ```powershell
-   mssqlctl cluster storage-pool mount status
+   mssqlctl bdc storage-pool mount status
    ```
 
 6. Now you can use Azure Data Studio and view the files from ADLS Gen2 under your HDFS folder in your Servers pane. Look under /HDFS/mounts/dbfiles/
 
-   ![Azure Data Studio server pane for new dbfiles folder](media/data-studio-mounts.png)
+   ![Azure Data Studio server pane for new dbfiles folder](media/data-studio-mounts.png 'Azure Data Studio mounts')
 
-7. Now that the drive is mounted, create an external file format for CSV. Open a new query window and paste the following command:
+7. Now that the drive is mounted, create an external file format for CSV. Open a new query window and paste the following command. Replace **sales_YOUR_UNIQUE_IDENTIFIER** with the name of your unique sales database. The `YOUR_UNIQUE_IDENTIFIER` portion of the name is the unique identifier assigned to you for this lab.
 
-   ```sql
-     USE Sales;
-     GO
-     CREATE EXTERNAL FILE FORMAT csv_file
-     WITH (
-         FORMAT_TYPE = DELIMITEDTEXT,
-         FORMAT_OPTIONS(
-             FIELD_TERMINATOR = ',',
-             STRING_DELIMITER = '"',
-             FIRST_ROW = 2,
-             USE_TYPE_DEFAULT = TRUE)
-     );
-   ```
+    ```sql
+    USE sales_YOUR_UNIQUE_IDENTIFIER;
+    GO
+    CREATE EXTERNAL FILE FORMAT csv_file
+    WITH (
+        FORMAT_TYPE = DELIMITEDTEXT,
+        FORMAT_OPTIONS(
+            FIELD_TERMINATOR = ',',
+            STRING_DELIMITER = '"',
+            FIRST_ROW = 2,
+            USE_TYPE_DEFAULT = TRUE)
+    );
+    ```
 
 8. Now create an external connection to your HDFS cluster:
 
-   ```sql
-     IF NOT EXISTS(SELECT * FROM sys.external_data_sources WHERE name = 'SqlStoragePool')
-     BEGIN
-       CREATE EXTERNAL DATA SOURCE SqlStoragePool
-       WITH (LOCATION = 'sqlhdfs://controller-svc:8080/default');
-     END
-   ```
+    ```sql
+    IF NOT EXISTS(SELECT * FROM sys.external_data_sources WHERE name = 'SqlStoragePool')
+    BEGIN
+    CREATE EXTERNAL DATA SOURCE SqlStoragePool
+    WITH (LOCATION = 'sqlhdfs://controller-svc:8080/default');
+    END
+    ```
 
 9. Now let's create two tables to two different files that exist in the storage account:
 
@@ -380,7 +377,7 @@ HDFS also provides data persistency, as HDFS data is spread across all the stora
     );
     ```
 
-11. Once the tables are created, you can interact with them like normal tables. For instance, you can run a query that joins the two tables like this:
+10. Once the tables are created, you can interact with them like normal tables. For instance, you can run a query that joins the two tables like this:
 
     ```sql
     SELECT *
