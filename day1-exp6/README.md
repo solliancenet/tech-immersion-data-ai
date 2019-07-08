@@ -222,7 +222,7 @@ In this task, you will using Databricks to perform data preparation, aggregation
 
 ## Task 5: Persisting data to Databricks Delta tables
 
-In this task, you will see how Databricks Delta provides capabilities previous unavailable for updating records in an Hive table by using the UPSERT method to update existing records and insert new records.
+In this task, you will see how Databricks Delta provides capabilities previous unavailable for updating records in an Hive table by using the `UPSERT` method to update existing records and insert new records.
 
 1. In your Databricks workspace, select **Workspace** from the left-hand menu, then select **Shared**.
 
