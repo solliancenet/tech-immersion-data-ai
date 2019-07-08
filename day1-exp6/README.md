@@ -102,11 +102,15 @@ In this task, you will configure and run the data generator to save simulated ve
 
 9. Save the `appsettings.json` file.
 
-10. In your open Windows Explorer window, locate and double-click the `TransactionGenerator.exe` file (located in the same `C:\lab-files\data\6\TelemetryGenerator` folder as `appsettings.json`) to launch the console application.
+10. Open a new File Explorer window by selecting the File Explorer icon on the Windows Start Bar.
+
+    ![The File Explorer icon is highlighted on the Windows Start Bar.](media/windows-start-bar-file-explorer.png "Windows Start Bar")
+
+11. In the File Explorer window, navigate to the `C:\lab-files\data\6\TelemetryGenerator` folder, and then locate and double-click the `TransactionGenerator.exe` file to launch the console application.
 
     ![Screenshot of the console window.](media/telemetry-generator-console.png 'Console window')
 
-11. If you see a Windows Defender dialog pop up after attempting to run the executable, select **More info**.
+12. If you see a Windows Defender dialog pop up after attempting to run the executable, select **More info**.
 
     ![Select More Info on the Windows Defender dialog box.](media/windows-defender-more-info.png 'Windows Defender')
 
@@ -114,7 +118,7 @@ In this task, you will configure and run the data generator to save simulated ve
 
     ![Click Run Anyway.](media/windows-defender-run-anyway.png 'Windows Defender')
 
-12. A console window will open and you should see it start to send data after a few seconds. Once you see that it is sending data to Cosmos DB, _minimize_ the window and allow it to run in the background throughout this experience.
+13. A console window will open and you should see it start to send data after a few seconds. Once you see that it is sending data to Cosmos DB, _minimize_ the window and allow it to run in the background throughout this experience.
 
     ![Screenshot of the console window.](media/vs-console.png 'Console window')
 
@@ -176,9 +180,9 @@ In this task, you will quickly set up your ADLS Gen2 filesystem using a Databric
 
     > The `CopyData` pipeline consists of three copy activities. Two of the activities connect to your Azure SQL Database instance to retrieve vehicle data from tables there. The third connects to Cosmos DB to retrieve batch vehicle telemetry data. Each of the copy activities writes data into files in ADLS Gen2.
 
-15. On the pipeline toolbar, select **Trigger** to run the `CopyData` pipeline, and then select **Finish** on the Pipeline Run dialog. You will receive a notification that they `CopyData` pipeline is running.
+15. On the pipeline toolbar, select **Add Trigger** and then **Trigger Now** to run the `CopyData` pipeline, and then select **Finish** on the Pipeline Run dialog. You will receive a notification that they `CopyData` pipeline is running.
 
-    ![Trigger is highlighted in the Data Factory pipeline toolbar.](media/data-factory-pipeline-toolbar.png 'Data Factory pipeline toolbar')
+    ![Trigger is highlighted in the Data Factory pipeline toolbar.](media/data-factory-pipeline-toolbar.png "Data Factory pipeline toolbar")
 
 16. To observe the pipeline run, select the **Monitor** icon from the left-hand menu, which will bring up a list of active and recent pipeline runs.
 

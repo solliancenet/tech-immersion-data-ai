@@ -44,8 +44,8 @@ Each ADF instance should have the following activities and configuration:
 
 > The files `VehicleInfo.csv` and `Cars.csv` can be placed in the user's storage account, or can be placed into a shared storage account. ADF will need to be configured to connect to the `day1-exp3-data` container in the target storage account using a key or SAS token.
 
-- There is an ARM template at `environment-setup/data/4/adf-arm-template.zip` that can be used to set up the ADF pipeline.
-- You can also view the pipeline JSON in the `environment-setup/data/4/pipeline.json` file.
+- There is an ARM template at `environment-setup/data/6/adf-arm-template.zip` that can be used to set up the ADF pipeline.
+- You can also view the pipeline JSON in the `environment-setup/data/6/pipeline.json` file.
 
 ## Cosmos DB configuration
 
@@ -132,4 +132,4 @@ For each attendee's Databricks workspace, the following configuration should be 
      - Can be copied from the Overview blade of the user's Key Vault.
    - Resource ID: This will be the resource ID assigned to the user-specific Azure Key Vault instances.
      - Can be copied from the **Properties** blade of the user's Key Vault.
-3. Add the `Tech-Immersion.dbc` notebook (found in lab-files/data/4) to the Shared workspace folder.
+3. Add the `Tech-Immersion.dbc` notebook (found in lab-files/data/6) to the Shared workspace folder.
