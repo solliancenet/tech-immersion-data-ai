@@ -113,9 +113,9 @@ In this experience you will learn how Contoso Auto can use MLOps to formalize th
 
    a. Connection name: `quick-starts-sc` (_note: provide exact name as shown_)
 
-   b. Service principal client ID (from the lab environment details page: Service Principal Details->Application/Client Id)
+   b. Service principal client ID (from the lab environment details page: `Service Principal Details->Application/Client Id`)
 
-   c. Service principal key (from the lab environment details page: Service Principal Details->Application Secret Key)
+   c. Service principal key (from the lab environment details page: `Service Principal Details->Application Secret Key`)
 
    ![Add an Azure Resource Manager service connection](media/09_2.png)
 
