@@ -97,7 +97,7 @@ In this experience you will learn how Contoso Auto can use MLOps to formalize th
 
    ![Open Azure Resource Manager](media/08.png)
 
-3. Provide the following information in the `Add an Azure Resource Manager service connection` dialog box and then select **Ok**:
+3. If you are using your own Azure subcription provide the following information in the `Add an Azure Resource Manager service connection` dialog box and then select **Ok**:
 
    a. Connection name: `quick-starts-sc` (_note: provide exact name as shown_)
 
@@ -106,6 +106,19 @@ In this experience you will learn how Contoso Auto can use MLOps to formalize th
    c. Resource Group: This value should match the value you provided in the `azure-pipelines.yml` file
 
    ![Add an Azure Resource Manager service connection](media/09.png)
+   
+   Skip the step below and continue to **Exercise 2**
+   
+4. If an environment is provided to you, select **use full version of the service connection dialog**, and provide the following information and then select **OK**:
+
+   a. Connection name: `quick-starts-sc` (_note: provide exact name as shown_)
+
+   b. Service principal client ID (from the lab environment details page: Service Principal Details->Application/Client Id)
+
+   c. Service principal key (from the lab environment details page: Service Principal Details->Application Secret Key)
+
+   ![Add an Azure Resource Manager service connection](media/09_2.png)
+
 
 # Exercise 2: Setup and Run the Build Pipeline
 
