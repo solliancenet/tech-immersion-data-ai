@@ -1,17 +1,16 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-## Day 2, Experience 4 - Creating repeatable processes with Azure Machine Learning pipelines
+## AI, Experience 4 - Creating repeatable processes with Azure Machine Learning pipelines
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
-  - [Day 2, Experience 4 - Creating repeatable processes with Azure Machine Learning pipelines](#day-2-experience-4---creating-repeatable-processes-with-azure-machine-learning-pipelines)
-- [Technology overview](#technology-overview)
-  - [What are machine learning pipelines?](#what-are-machine-learning-pipelines)
-  - [Scenario Overview](#scenario-overview)
-  - [Task 1: Create the Azure Notebooks project](#task-1-create-the-azure-notebooks-project)
-  - [Task 2: Upload the starter notebook](#task-2-upload-the-starter-notebook)
-  - [Wrap-up](#wrap-up)
-  - [Additional resources and more information](#additional-resources-and-more-information)
-
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
+  - [AI, Experience 4 - Creating repeatable processes with Azure Machine Learning pipelines](#AI-Experience-4---Creating-repeatable-processes-with-Azure-Machine-Learning-pipelines)
+- [Technology overview](#Technology-overview)
+  - [What are machine learning pipelines?](#What-are-machine-learning-pipelines)
+  - [Scenario Overview](#Scenario-Overview)
+  - [Task 1: Create the Azure Notebooks project](#Task-1-Create-the-Azure-Notebooks-project)
+  - [Task 2: Upload the starter notebook](#Task-2-Upload-the-starter-notebook)
+  - [Wrap-up](#Wrap-up)
+  - [Additional resources and more information](#Additional-resources-and-more-information)
 
 # Technology overview
 
@@ -26,6 +25,7 @@ The following diagram shows an example pipeline:
 ![azure machine learning pipelines](./media/pipelines.png)
 
 ## Scenario Overview
+
 In this experience, you will learn how Contoso Auto can benefit from creating re-usable machine learning pipelines with Azure Machine Learning.
 
 The goal is to build a pipeline that demonstrates the basic data science workflow of data preparation, model training, and predictions. Azure Machine Learning allows you to define distinct steps and make it possible to re-use these pipelines as well as to rerun only the steps you need as you tweak and test your workflow.
@@ -46,7 +46,7 @@ The pipelines will be run on the Azure Machine Learning compute.
 
 ## Task 1: Create the Azure Notebooks project
 
-To complete this task, you will use an Azure Notebook and Azure Machine Learning. 
+To complete this task, you will use an Azure Notebook and Azure Machine Learning.
 
 If you have not already created the `connected-car` project in Azure Notebooks follow these steps. If you already have this project in your environment, continue with the **Task 2**.
 
@@ -54,39 +54,39 @@ If you have not already created the `connected-car` project in Azure Notebooks f
 
 2. Select **Sign In** and then use your Microsoft Account to complete the sign in process.
 
-    ![The Sign In button](media/01.png 'Sign In')
+   ![The Sign In button](media/01.png 'Sign In')
 
 3. Dismiss the dialog to create the user ID (you will not need this). Within the Microsoft Azure Notebooks portal, select **My Projects** from the menu at the top.
 
-    ![The My Projects button](media/02.png 'My Projects')
+   ![The My Projects button](media/02.png 'My Projects')
 
 4. Then select **New Project**.
 
-    ![The New Project button](media/03.png 'New Project')
+   ![The New Project button](media/03.png 'New Project')
 
 5. On the Create New Project dialog, provide a Project Name (this should be a user friendly description) and Project ID (this will form a part of the URL used to access this project in the browser) and uncheck Public. Select **Create**.
 
-    ![The Create New Project dialog](media/04.png 'Create New Project')
+   ![The Create New Project dialog](media/04.png 'Create New Project')
 
 ## Task 2: Upload the starter notebook
 
-1. Navigate to your `connected-car` project in your Azure Notebook environment. 
+1. Navigate to your `connected-car` project in your Azure Notebook environment.
 
 2. Select the **Upload** menu and then choose **From URL**.
 
-    ![The Upload menu](media/05.png 'Upload')
+   ![The Upload menu](media/05.png 'Upload')
 
-7. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
+3. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
 
-    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4/pipelines-AML.ipynb
-   
-    Then select **Done** to upload and dismiss the dialog.
+   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4/pipelines-AML.ipynb
 
-    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
+   Then select **Done** to upload and dismiss the dialog.
 
-8. In the listing, select the Notebook you just uploaded (pipelines-AML.ipynb) to open it.
+   ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
-9. Follow the instructions within the notebook to complete the experience.
+4. In the listing, select the Notebook you just uploaded (pipelines-AML.ipynb) to open it.
+
+5. Follow the instructions within the notebook to complete the experience.
 
 ## Wrap-up
 

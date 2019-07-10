@@ -1,21 +1,19 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
+## AI, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator
 
-
-## Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator
-
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
-  - [Day 2, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator](#day-2-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator)
-  - [Technology overview](#technology-overview)
-  - [Scenario overview](#scenario-overview)
-  - [Task 1: Sign in to LUIS to retrieve the Authoring Key](#task-1-sign-in-to-luis-to-retrieve-the-authoring-key)
-  - [Task 2: Register a new Azure App](#task-2-register-a-new-azure-app)
-  - [Task 3: Deployment](#task-3-deployment)
-  - [Task 4: Load and explore the automotive Virtual Assistant starter solution](#task-4-load-and-explore-the-automotive-virtual-assistant-starter-solution)
-  - [Task 5: Open the generated bot file in the Bot Framework Emulator](#task-5-open-the-generated-bot-file-in-the-bot-framework-emulator)
-  - [Task 6: Open LUIS to view the generated apps](#task-6-open-luis-to-view-the-generated-apps)
-  - [Wrap-up](#wrap-up)
-  - [Additional resources and more information](#additional-resources-and-more-information)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
+  - [AI, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant Solution Accelerator](#AI-Experience-1---Quickly-build-comprehensive-Bot-solutions-with-the-Virtual-Assistant-Solution-Accelerator)
+  - [Technology overview](#Technology-overview)
+  - [Scenario overview](#Scenario-overview)
+  - [Task 1: Sign in to LUIS to retrieve the Authoring Key](#Task-1-Sign-in-to-LUIS-to-retrieve-the-Authoring-Key)
+  - [Task 2: Register a new Azure App](#Task-2-Register-a-new-Azure-App)
+  - [Task 3: Deployment](#Task-3-Deployment)
+  - [Task 4: Load and explore the automotive Virtual Assistant starter solution](#Task-4-Load-and-explore-the-automotive-Virtual-Assistant-starter-solution)
+  - [Task 5: Open the generated bot file in the Bot Framework Emulator](#Task-5-Open-the-generated-bot-file-in-the-Bot-Framework-Emulator)
+  - [Task 6: Open LUIS to view the generated apps](#Task-6-Open-LUIS-to-view-the-generated-apps)
+  - [Wrap-up](#Wrap-up)
+  - [Additional resources and more information](#Additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -95,37 +93,37 @@ In this task, you will deploy all of these Azure dependencies as well as configu
 
    ![The search box has "cmd" entered into it and the desktop app is highlighted in the results.](media/launch-cmd.png 'Launch Command Prompt')
 
-2.  The first thing you need to do is to log in to the Azure CLI with your provided account credentials. To do that, copy and paste the command below into the command prompt, then hit `Enter`. This will open a web browser window where you will sign in with the provided Azure Active Directory credentials for this experience.
+2. The first thing you need to do is to log in to the Azure CLI with your provided account credentials. To do that, copy and paste the command below into the command prompt, then hit `Enter`. This will open a web browser window where you will sign in with the provided Azure Active Directory credentials for this experience.
 
-    `az login`
+   `az login`
 
-3.  After logging in, you may be shown that you have more than one Azure subscription associated with your account.
+3. After logging in, you may be shown that you have more than one Azure subscription associated with your account.
 
-    ![The az login command is shown.](media/cmd-az-login.png "Command Prompt")
+   ![The az login command is shown.](media/cmd-az-login.png 'Command Prompt')
 
-4.  Copy and paste the command below into the command prompt **Replacing YOUR_SUBSCRIPTION_ID** with the Azure Subscription ID provided to your for this experience, then hit `Enter`:
+4. Copy and paste the command below into the command prompt **Replacing YOUR_SUBSCRIPTION_ID** with the Azure Subscription ID provided to your for this experience, then hit `Enter`:
 
-    `az account set --subscription YOUR_SUBSCRIPTION_ID`
+   `az account set --subscription YOUR_SUBSCRIPTION_ID`
 
-    ![Screenshot of the command to set the account.](media/cmd-az-account.png "Command Prompt")
+   ![Screenshot of the command to set the account.](media/cmd-az-account.png 'Command Prompt')
 
-5.  Copy and paste the command below into the command prompt, then hit `Enter`. This will change directories to the Virtual Assistant automotive bot project folder:
+5. Copy and paste the command below into the command prompt, then hit `Enter`. This will change directories to the Virtual Assistant automotive bot project folder:
 
-    `cd C:\lab-files\ai\1\skills\automotiveskill\automotiveskill`
+   `cd C:\lab-files\ai\1\skills\automotiveskill\automotiveskill`
 
-6.  This next command requires two of your custom values you saved in the previous task when you registered your Azure App. **Copy** the command below and paste it into Notepad or other text editor. Replace `YOUR-APP-ID` with the Azure App's Application Id value, and replace `YOUR-APP-SECRET` with the App secret you copied. Make certain that your app secret value is surrounded by double quotes (").
+6. This next command requires two of your custom values you saved in the previous task when you registered your Azure App. **Copy** the command below and paste it into Notepad or other text editor. Replace `YOUR-APP-ID` with the Azure App's Application Id value, and replace `YOUR-APP-SECRET` with the App secret you copied. Make certain that your app secret value is surrounded by double quotes (").
 
-    `PowerShell.exe -ExecutionPolicy Bypass -File DeploymentScripts\deploy_bot.ps1 --appId YOUR-APP-ID --% --appSecret "YOUR-APP-SECRET"`
+   `PowerShell.exe -ExecutionPolicy Bypass -File DeploymentScripts\deploy_bot.ps1 --appId YOUR-APP-ID --% --appSecret "YOUR-APP-SECRET"`
 
-7.  Copy and paste your _edited_ command into the command prompt, then hit `Enter`. Supply the following values when prompted:
+7. Copy and paste your _edited_ command into the command prompt, then hit `Enter`. Supply the following values when prompted:
 
-    - **name:** Enter your unique **Azure Resource Group name** provided to you for this lab. Example: `tech-immersion-YOUR_UNIQUE_IDENTIFIER`. It should exactly match your Azure Resource Group name, be all lower case, contain no spaces and no special characters except for dashes (-) and underscores (\_).
-    - **location:** Enter `westus`.
-    - **luisAuthoringKey:** Paste the LUIS Authoring Key you copied at the end of Task 1 above.
+   - **name:** Enter your unique **Azure Resource Group name** provided to you for this lab. Example: `tech-immersion-YOUR_UNIQUE_IDENTIFIER`. It should exactly match your Azure Resource Group name, be all lower case, contain no spaces and no special characters except for dashes (-) and underscores (\_).
+   - **location:** Enter `westus`.
+   - **luisAuthoringKey:** Paste the LUIS Authoring Key you copied at the end of Task 1 above.
 
-    ![The bot creation script and parameters are highlighted.](media/cmd-bot-script.png 'Command Prompt')
+   ![The bot creation script and parameters are highlighted.](media/cmd-bot-script.png 'Command Prompt')
 
-8.  This script will take around 10 minutes to run. **Important:** Keep the window open. There is a value you will need to copy once it is complete. For now, please move on to the next task.
+8. This script will take around 10 minutes to run. **Important:** Keep the window open. There is a value you will need to copy once it is complete. For now, please move on to the next task.
 
 ## Task 4: Load and explore the automotive Virtual Assistant starter solution
 
@@ -153,7 +151,7 @@ For now, let's explore how this bot is created and how LUIS is trained with the 
 
 1.  Open Windows Explorer and navigate to `C:\lab-files\ai\1`. Double-click on **VirtualAssistant.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab.
 
-    ![The VirtualAssistant.sln file is highlighted in Windows Explorer.](media/windows-explorer-solution.png "Windows Explorer")
+    ![The VirtualAssistant.sln file is highlighted in Windows Explorer.](media/windows-explorer-solution.png 'Windows Explorer')
 
     The Visual Studio solution contains the following:
 
@@ -167,11 +165,11 @@ For now, let's explore how this bot is created and how LUIS is trained with the 
     - **Microsoft.Bot.Solutions** project produces a common library that all skill projects use as a basis for creating new skills, and various activities such as authentication, creating bot dialogs, showing user prompts, sending telemetry, and running tests.
     - **VirtualAssistant** project is used to develop and deploy the Virtual Assistant bot. It is configured with the Calendar, Email, ToDO, and Points of Interest skills by default. It is possible to integrate the Automotive skill as well, but that skill was meant to be standalone.
 
-    ![The solution projects are displayed within the Solution Explorer.](media/vs-solution-explorer.png "Solution Explorer")
+    ![The solution projects are displayed within the Solution Explorer.](media/vs-solution-explorer.png 'Solution Explorer')
 
 2.  You will see the projects listed within the Solution Explorer in Visual Studio. Scroll to the bottom of the projects list and expand the **VirtualAssistant** project. Next, expand **CognitiveModels**, then expand **LUIS**. Underneath the LUIS subfolder are additional subfolders for each language. Expand **en**. Next, double-click on **general.lu**.
 
-    ![Screenshot of the Solution Explorer.](media/vs-general-lu.png "Solution Explorer")
+    ![Screenshot of the Solution Explorer.](media/vs-general-lu.png 'Solution Explorer')
 
     Here is just a small snippet of the **general.lu** file:
 
@@ -201,7 +199,7 @@ For now, let's explore how this bot is created and how LUIS is trained with the 
 
 3.  Scroll up the list of projects in the Solution Explorer, then expand the **AutomotiveSkill** project located under the `Skills\AutomotiveSkill` solution folder. Next, expand the `CognitiveModels\LUIS\en` folders, then double-click on **settings_dispatch.lu**.
 
-    ![Screenshot of the Solution Explorer.](media/vs-settings-dispatch-lu.png "Solution Explorer")
+    ![Screenshot of the Solution Explorer.](media/vs-settings-dispatch-lu.png 'Solution Explorer')
 
 4.  This .lu file contains LUIS intents and entities specific to the Automotive skill. If you scroll through the list, you will see the `VEHICLE_SETTINGS_CHANGE` and `VEHICLE_SETTINGS_DECLARATIVE` intents that were illustrated above in the example user utterances table.
 
@@ -247,7 +245,7 @@ For now, let's explore how this bot is created and how LUIS is trained with the 
 
 5.  Now expand the `DeploymentScripts` folder located within the **AutomotiveSkill** project.
 
-    ![Screenshot of the Solution Explorer.](media/vs-deployment-scripts.png "Solution Explorer")
+    ![Screenshot of the Solution Explorer.](media/vs-deployment-scripts.png 'Solution Explorer')
 
     This folder contains the `deploy_bot.ps1` deployment script you executed in the previous task. It also contains scripts used to generate deployment scripts to publish your bot to Azure, and a script to update your published models if you add or update any of the .lu files. The `en` folder contains the generated JSON LUIS files (.luis). You may not see these yet, depending on whether the script is finished running.
 
@@ -255,11 +253,11 @@ For now, let's explore how this bot is created and how LUIS is trained with the 
 
 6.  Next, expand the `Dialogs` folder located within the **AutomotiveSkill** project.
 
-    ![Screenshot of the Solution Explorer.](media/vs-dialogs.png "Solution Explorer")
+    ![Screenshot of the Solution Explorer.](media/vs-dialogs.png 'Solution Explorer')
 
     When you create bots using the Bot Framework, you can use dialogs to model a conversation and manage [conversation flow](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-design-conversation-flow?view=azure-bot-service-3.0). A conversation can involve multiple dialogs. In the case of the Automotive skill, the conversation may start within the `Main` dialog, then use the `AutomotiveSkillDialog` to handle and display inputs and prompts relating to actions the user would like to take. When the user decides to change a vehicle setting, the `VehicleSettingsDialog` will be used. You may feel free to explore these dialogs to understand how the conversation flow is managed.
 
-    Available vehicle settings are defined in a supporting metadata file located here  `automotiveskill\Dialogs\VehicleSettings\Resources\available_settings.json`.
+    Available vehicle settings are defined in a supporting metadata file located here `automotiveskill\Dialogs\VehicleSettings\Resources\available_settings.json`.
 
     To add an new setting along with appropriate setting values, it's easily expressed in JSON. The example below shows a new Volume control setting with the ability to Set, Increase, Decrease and Mute the volume.
 
@@ -339,8 +337,8 @@ To address this problem, we have created a **.bot file** to act as the place to 
 
 The advantages of using .bot file are:
 
-- [Bot Builder V4 SDK](microsoft/botbuilder) will be available in 4 platforms x languages – C#, JS, Python, Java. Each platform have their recommended way of keeping track of keys + env settings (appsettings.json, web.config, .env ...).  
-- Elegant tooling solutions around services creation and management is harder without a well defined schema (.bot file).  
+- [Bot Builder V4 SDK](microsoft/botbuilder) will be available in 4 platforms x languages – C#, JS, Python, Java. Each platform have their recommended way of keeping track of keys + env settings (appsettings.json, web.config, .env ...).
+- Elegant tooling solutions around services creation and management is harder without a well defined schema (.bot file).
 - Bot Framework Emulator and CLI tools rely on and work great with tracking connected services in a consistent format (in a .bot file)
 
 In this task, you will open the generated .bot file in the Bot Framework Emulator and start testing out your bot! First, we need to make sure the script is finished running. This must be completed before continuing with this experience.
@@ -349,11 +347,11 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
     > You **must** copy this secret now because it will not be displayed again!
 
-    ![The bot file secret is highlighted.](media/cmd-script-finished.png "Command Prompt")
+    ![The bot file secret is highlighted.](media/cmd-script-finished.png 'Command Prompt')
 
 2.  Now we are ready to test the bot. Before testing, you must update the **appsettings.json** file in the **AutomotiveSkills** project. To do this, switch back to the solution in Visual Studio and expand the **AutomotiveSkill** project in the Solution Explorer. **Double-click** on the **appsettings.json** file to open it.
 
-3. Confirm that your bot creation script has finished executing before proceeding. Update your `appsettings.json` file with the newly created .bot file name and .bot file secret. The .bot file is located in the root directory of the **AutomotiveSkill** project. Most likely, the script that you ran already added the bot file name for you. Example: `tech-immersion-YOUR_UNIQUE_ID.bot`.
+3.  Confirm that your bot creation script has finished executing before proceeding. Update your `appsettings.json` file with the newly created .bot file name and .bot file secret. The .bot file is located in the root directory of the **AutomotiveSkill** project. Most likely, the script that you ran already added the bot file name for you. Example: `tech-immersion-YOUR_UNIQUE_ID.bot`.
 
     ```
       {
@@ -374,11 +372,11 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
     }
     ```
 
-    ![Screenshot of a completed appsettings.json file.](media/vs-appsettings.png "appsettings.json")
+    ![Screenshot of a completed appsettings.json file.](media/vs-appsettings.png 'appsettings.json')
 
 4.  The last file change you need to make is to update the `development` endpoint setting within the .bot file located in the **AutomotiveSkill** root folder. There is a bug that currently exists which adds the `appId` and `appPassword` values of your Azure App to the `development` endpoint, which is meant to be run locally. If those values are present, the Bot Framework Emulator is not able to send messages to your bot when running it locally. To edit this file, **double-click** on the generated .bot file that is located in the root directory of the **AutomotiveSkill** project in the Visual Studio Solution Explorer.
 
-    ![The bot file is highlighted within the Solution Explorer.](media/vs-bot-file.png "Bot file")
+    ![The bot file is highlighted within the Solution Explorer.](media/vs-bot-file.png 'Bot file')
 
     Find the JSON code block with the `type` set to **endpoint** and the `name` set to **development** and clear out the `appId` and `appPassword` values. The edited result should look like the following:
 
@@ -395,11 +393,11 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
 5.  Next, you must **Debug** the **AutomotiveSkills** project. To do this, **right-click** the **AutomotiveSkills** project in the Solution Explorer, then select **Debug** in the context menu, then **Start new instance**.
 
-    ![The AutomotiveSkill project is highlighted, as well as the Debug and Start new instance sub-menu items.](media/vs-debug.png "Debug")
+    ![The AutomotiveSkill project is highlighted, as well as the Debug and Start new instance sub-menu items.](media/vs-debug.png 'Debug')
 
 6.  After a few moments, a new web browser window will open, displaying web page with the message, "Your Enterprise Bot is ready!". **Leave this window open** and continue to the next task.
 
-    ![The Enterprise Bot Template web page is displayed.](media/web-browser.png "Web browser")
+    ![The Enterprise Bot Template web page is displayed.](media/web-browser.png 'Web browser')
 
 7.  Oftentimes, the Bot Framework Emulator automatically launches after the bot file is created. If not, open it by clicking on the search box next to the Start Menu on the bottom-left corner of your Windows desktop. Type **Bot Framework Emulator**, then select the Bot Framework Emulator desktop app in the search results.
 
@@ -407,19 +405,19 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
 8.  Within the Bot Framework Emulator window, click on **Open Bot**.
 
-    ![Th Open Bot button is highlighted on the Bot Framework Emulator home screen.](media/bot-framework-emulator.png "Bot Framework Emulator")
+    ![Th Open Bot button is highlighted on the Bot Framework Emulator home screen.](media/bot-framework-emulator.png 'Bot Framework Emulator')
 
 9.  In the "Open a bot" dialog, click the **Browse** button to find the generated bot file.
 
-    ![The Browse button is highlighted.](media/bot-framework-emulator-open-dialog.png "Open a bot")
+    ![The Browse button is highlighted.](media/bot-framework-emulator-open-dialog.png 'Open a bot')
 
 10. Within the Open file browser, navigate to `C:\lab-files\ai\1\skills\automotiveskill\automotiveskill`, select your generated bot file, then click **Open**.
 
-    ![The file browser is displayed.](media/bot-framework-emulator-browse.png "Browse")
+    ![The file browser is displayed.](media/bot-framework-emulator-browse.png 'Browse')
 
 11. You should see a dialog prompting you for your bot file secret. **Paste** the bot file secret you copied in Step 1 above, then click **Submit**.
 
-    ![The bot file secret dialog is displayed.](media/bot-framework-emulator-secret.png "Bot file secret")
+    ![The bot file secret dialog is displayed.](media/bot-framework-emulator-secret.png 'Bot file secret')
 
     > If after loading the bot file you see a blank screen for more than a few seconds, shut down and re-open the Bot Emulator.
 
@@ -430,11 +428,11 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
     3. **Welcome message:** The bot is configured to show a welcome message when the user first connects to it. This is controlled by the dialogs within the project that you explored. This area is where your chat history is displayed as well.
     4. **Send message box:** Use this textbox to type in and send all of your messages to the bot.
 
-    ![The Live Chat window is displayed with each of the described features highlighted.](media/bot-framework-emulator-live-chat.png "Live Chat")
+    ![The Live Chat window is displayed with each of the described features highlighted.](media/bot-framework-emulator-live-chat.png 'Live Chat')
 
 13. Type `help` and hit Enter. The bot will respond with a message and a list of suggested actions. Notice that the Log pane to the right lists both user input and bot response activities. You can click on any of the hyperlinks within the Log to view the activity details in the Inspector above. If you click on an item in the chat window, such as the `help` message you typed, you can inspect the data that was sent to the bot as well as the response. For now, click on the `put the air on my feet`, or type it in if you don't see it as a suggested action.
 
-    ![The Live Chat window is displayed with various outputs.](media/bot-framework-emulator-help.png "Live Chat")
+    ![The Live Chat window is displayed with various outputs.](media/bot-framework-emulator-help.png 'Live Chat')
 
 14. The bot sent the `put the air on my feet` text to LUIS so that it could derive your intent and desired action. If you click on the LUIS trace message in the chat window, you should see the following in the Inspector pane:
 
@@ -484,15 +482,15 @@ In this task, you will open the generated .bot file in the Bot Framework Emulato
 
     The result is that the bot must clarify the user's intent by prompting for more information. To do this, the bot asks which of the two matching settings would you like to select? Since you did not explicitly say to turn the air on in the back of the car or the front of the car, you need to tell it which option you like. The bot displays a [card](https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-add-rich-card-attachments?view=azure-bot-service-3.0) for you to choose from. You may either click on one of the options, or type it in.
 
-    ![The Live Chat shows the bot's prompt to choose which air control mode to use.](media/bot-framework-emulator-option.png "Live Chat")
+    ![The Live Chat shows the bot's prompt to choose which air control mode to use.](media/bot-framework-emulator-option.png 'Live Chat')
 
 15. If you selected or typed in the `Front Combined Air Delivery Mode Control` option, you should see a response from the bot that says: `Setting Front Combined Air Delivery Mode Control to Floor`. The amazing thing that happened is that your original somewhat vague request to "put the air on my feet" ultimately resulted in the bot telling the vehicle to turn on the air in the front of the car to the floor setting, knowing that your feet are most likely located on the floor :)
 
-    ![The bot's response to your selected action.](media/bot-framework-emulator-air-feet.png "Live Chat")
+    ![The bot's response to your selected action.](media/bot-framework-emulator-air-feet.png 'Live Chat')
 
 16. Now type a command that the bot would not understand, such as "make me a coffee". The bot will respond with, "Sorry, I don't know what setting you're talking about."
 
-    ![The bot responded with it does not know what setting you are talking about.](media/bot-framework-emulator-do-not-know.png "Live Chat")
+    ![The bot responded with it does not know what setting you are talking about.](media/bot-framework-emulator-do-not-know.png 'Live Chat')
 
     So how did this happen? Remember, the Dialogs within the bot's code controls the conversation flow. It first gets help from LUIS to decide what the user is trying to do. In this case the `ProcessSetting` method within the `VehicleSettingsDialog.cs` file is called and the LUIS result is evaluated to get the top (highest rated) intent.
 
@@ -559,45 +557,45 @@ If you recall, the bot deployment script created Azure services, generated a .bo
 
 1.  Navigate to the LUIS portal ([www.luis.ai](https://www.luis.ai/)) and sign in if needed. You should see four new apps listed underneath **My Apps**, each of which start with the name of your bot. You can see by the `Endpoint hits` value which LUIS app gets used the most.
 
-    ![My Apps is displayed with a list of generated LUIS apps.](media/luis-apps.png "My Apps")
+    ![My Apps is displayed with a list of generated LUIS apps.](media/luis-apps.png 'My Apps')
 
 2.  Open the app that ends with **General**. Select **Intents** under App Assets on the left-hand menu. Notice that each named intent has a number of labeled utterances. Remember, utterances are used to train LUIS on different ways a user may express their intent. Generally speaking, the more utterances you have, the more variety of ways LUIS can understand how people may type or speak a phrase.
 
-    ![The list of General intents.](media/luis-general-intents.png "Intents")
+    ![The list of General intents.](media/luis-general-intents.png 'Intents')
 
 3.  Select the **Cancel** intent.
 
 4.  You may use the navigation controls on the bottom of the list to look through the utterances for this intent. If you click on a word, you will see an option to assign an entity to that word. We'll take a look at an utterance with an entity in a bit to see what that looks like.
 
-    ![Screenshot of the Cancel intent.](media/luis-cancel-intent.png "Cancel intent")
+    ![Screenshot of the Cancel intent.](media/luis-cancel-intent.png 'Cancel intent')
 
-5.  Select **My apps** in the top menu. Now open the app that ends with **_settings**.
+5.  Select **My apps** in the top menu. Now open the app that ends with **\_settings**.
 
-    ![My Apps is displayed with the settings app highlighted.](media/luis-apps-settings.png "My Apps")
+    ![My Apps is displayed with the settings app highlighted.](media/luis-apps-settings.png 'My Apps')
 
 6.  As you can see, this app's intents have a much larger number of labeled utterances. Select **VEHICLE_SETTINGS_DECLARATIVE**.
 
-    ![The settings app's intents are listed.](media/luis-settings-intents.png "Intents")
+    ![The settings app's intents are listed.](media/luis-settings-intents.png 'Intents')
 
 7.  As you can see, these utterances are a bit more descriptive and contain one or more `SETTING` and/or `VALUE` entities. When you hover over an entity, you can see a sample value. Feel free to explore the other entities.
 
-    ![The declarative intent is shown.](media/luis-declarative-intent.png "Declarative intent")
+    ![The declarative intent is shown.](media/luis-declarative-intent.png 'Declarative intent')
 
 8.  Select **Entities** on the left-hand menu. The list of entities shows the number of times each is used within an utterance. If you click on an entity, you can browse through the list of utterances in which it is used.
 
-    ![The list of entities is displayed.](media/luis-entities.png "Entities")
+    ![The list of entities is displayed.](media/luis-entities.png 'Entities')
 
 9.  Select **Dashboard** on the top menu to view statistics about this app. The top of the dashboard displays app state information, like the status and number of labeled utterances.
 
-    ![The top of the dashboard is displayed and the Dashboard menu item is highlighted.](media/luis-dashboard.png "Dashboard")
+    ![The top of the dashboard is displayed and the Dashboard menu item is highlighted.](media/luis-dashboard.png 'Dashboard')
 
 10. When you scroll further down, you will see the **Endpoint State** section, which gives you a sense of how much the endpoint is being used and when.
 
-    ![The Endpoint State section of the Dashboard is shown.](media/luis-endpoint-state.png "Dashboard: Endpoint State")
+    ![The Endpoint State section of the Dashboard is shown.](media/luis-endpoint-state.png 'Dashboard: Endpoint State')
 
 11. The bottom of the dashboard shows detailed model view charts with the intent and entity breakdowns by utterance. This can give you an idea of which intents and entities are used in the most utterances. Hover over any section of the chart to view its label.
 
-    ![The Detailed Model View of the Dashboard id shown.](media/luis-detailed-model-view.png "Dashboard: Detailed Model View")
+    ![The Detailed Model View of the Dashboard id shown.](media/luis-detailed-model-view.png 'Dashboard: Detailed Model View')
 
 ## Wrap-up
 

@@ -1,6 +1,6 @@
 # Creating repeatable processes with Azure Machine Learning pipelines
 
-Complete the steps below to prepare the environment for the [Day 2, Experience 4](../../../day2-exp4/README.md) lab.
+Complete the steps below to prepare the environment for the [AI, Experience 4](../../../ai-exp4/README.md) lab.
 
 ## Pre-requisites
 

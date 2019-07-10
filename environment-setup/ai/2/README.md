@@ -1,6 +1,6 @@
 # Knowledge Mining with Cognitive Services setup
 
-Complete the steps below to prepare the environment for the [Day 2, Experience 2](../../../day2-exp2/README.md) lab.
+Complete the steps below to prepare the environment for the [AI, Experience 2](../../../ai-exp2/README.md) lab.
 
 ## Pre-requisites
 
@@ -31,9 +31,10 @@ Each attendee will have a resource group containing the following resources:
   - Consumption Plan
   - Name: ti-function-day2
 - Azure Blob storage account
+
   - Name: techimmersionstorageXXXXX
   - Must be in the same region as the Form Recognizer service.
-  
+
 ## Lab computer pre-requisites
 
 The computer or VM used for this experience requires the following:

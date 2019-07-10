@@ -1,6 +1,6 @@
 # SQL Server 2019 big data cluster setup
 
-Complete the steps below to deploy and configure SQL Server 2019 for the [Day 1, Experience 1 - Developer edition](../../../day1-exp1/developer.md) lab.
+Complete the steps below to deploy and configure SQL Server 2019 for the [Data, Experience 1 - Developer edition](../../../data-exp1/developer.md) lab.
 
 **For the DBA edition environment setup instructions**, go [here](dba/README.md).
 
@@ -145,7 +145,7 @@ After completing all of the above steps, complete the following to connect to th
 
 1.  On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **SQL Server Management Studio**, then select the SQL Server Management Studio desktop app in the search results.
 
-    ![The search box has "SQL Server Management Studio" entered into it and the desktop app is highlighted in the results.](../../../day1-exp1/media/launch-ssms.png 'Launch SQL Server Management Studio')
+    ![The search box has "SQL Server Management Studio" entered into it and the desktop app is highlighted in the results.](../../../data-exp1/media/launch-ssms.png 'Launch SQL Server Management Studio')
 
 2.  Within the Connection dialog that appears, configure the following:
 
@@ -154,7 +154,7 @@ After completing all of the above steps, complete the following to connect to th
     - **Password:** Enter the password provided to you for this lab.
     - **Remember password:** Checked.
 
-    ![The Connect form is filled out with the previously mentioned settings entered into the appropriate fields.](../../../day1-exp1/media/ssms-connection.png 'SQL Server Management Studio - Connect')
+    ![The Connect form is filled out with the previously mentioned settings entered into the appropriate fields.](../../../data-exp1/media/ssms-connection.png 'SQL Server Management Studio - Connect')
 
 3.  Click **Connect**.
 
@@ -168,11 +168,11 @@ TODO: Add steps to perform this function.
 
 1.  On the bottom-left corner of your Windows desktop, locate the search box next to the Start Menu. Type **Azure Data Studio**, then select the Azure Data Studio desktop app in the search results.
 
-    ![The search box has "Azure Data Studio" entered into it and the desktop app is highlighted in the results.](../../../day1-exp1/media/launch-azure-data-studio.png 'Launch Azure Data Studio')
+    ![The search box has "Azure Data Studio" entered into it and the desktop app is highlighted in the results.](../../../data-exp1/media/launch-azure-data-studio.png 'Launch Azure Data Studio')
 
 2.  Within Azure Data Studio, select **Servers** from the top of the left-hand menu, then select **New Connection** from the top toolbar to the right of the menu.
 
-    ![The Servers menu icon is selected, as well as the new connection icon.](../../../day1-exp1/media/ads-new-connection-link.png 'Azure Data Studio')
+    ![The Servers menu icon is selected, as well as the new connection icon.](../../../data-exp1/media/ads-new-connection-link.png 'Azure Data Studio')
 
 3.  Within the Connection dialog, configure the following:
 
@@ -183,7 +183,7 @@ TODO: Add steps to perform this function.
     - **Remember password:** Checked.
     - Leave all other options at their default values.
 
-    ![The Connection form is filled out with the previously mentioned settings entered into the appropriate fields.](../../../day1-exp1/media/ads-new-connection.png 'Azure Data Studio - New Connection')
+    ![The Connection form is filled out with the previously mentioned settings entered into the appropriate fields.](../../../data-exp1/media/ads-new-connection.png 'Azure Data Studio - New Connection')
 
 4.  Click **Connect**.
 
@@ -193,15 +193,15 @@ Upload required lab files to HDFS within the provisioned big data cluster.
 
 1.  Within Azure Data Studio, scroll down below the list of SQL Server 2019 databases to find the **Data Services** folder. Expand that folder, then expand the **HDFS** sub-folder. **Right-click on HDFS**, then select **New directory** on the context menu.
 
-    ![The HDFS folder and New directory menu items are highlighted.](../../../day1-exp1/media/ads-new-directory-link.png 'New directory')
+    ![The HDFS folder and New directory menu items are highlighted.](../../../data-exp1/media/ads-new-directory-link.png 'New directory')
 
 2.  In the new dialog that appears, type "data", then press Enter on your keyboard.
 
-    ![The new directory dialog is displayed with data typed in as the new directory name.](../../../day1-exp1/media/ads-new-directory.png 'New directory dialog')
+    ![The new directory dialog is displayed with data typed in as the new directory name.](../../../data-exp1/media/ads-new-directory.png 'New directory dialog')
 
 3.  **Right-click** on your newly created **data** folder, then select **Upload files**.
 
-    ![The data folder and Upload files menu item are highlighted.](../../../day1-exp1/media/ads-upload-files-link.png 'Upload files')
+    ![The data folder and Upload files menu item are highlighted.](../../../data-exp1/media/ads-upload-files-link.png 'Upload files')
 
 4.  Upload each of the following files:
 
@@ -215,7 +215,7 @@ This needs to be done from each user's jump box. It is required for the Python l
 
 1.  Within Azure Data Studio, right-click on the connection (1) then select **Manage** (2). Select the **SQL Server Big Data Cluster** tab (3). Select **New Notebook** (4).
 
-    ![New Notebook.](../../../day1-exp1/media/ads-new-notebook.png 'New Notebook')
+    ![New Notebook.](../../../data-exp1/media/ads-new-notebook.png 'New Notebook')
 
 2.  When prompted, select the option to install the required Python libraries to the default location.
 

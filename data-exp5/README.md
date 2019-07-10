@@ -1,9 +1,9 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-## Day 1, Experience 5 - Simplifying data flows with Azure Data Factory
+## Data, Experience 5 - Simplifying data flows with Azure Data Factory
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Day 1, Experience 5 - Simplifying data flows with Azure Data Factory](#Day-1-Experience-5---Simplifying-data-flows-with-Azure-Data-Factory)
+  - [Data, Experience 5 - Simplifying data flows with Azure Data Factory](#Data-Experience-5---Simplifying-data-flows-with-Azure-Data-Factory)
   - [Technology overview](#Technology-overview)
   - [Scenario overview](#Scenario-overview)
   - [Exercise 1: Using ADF Mapping Data Flows to visually configure data transformation pipelines](#Exercise-1-Using-ADF-Mapping-Data-Flows-to-visually-configure-data-transformation-pipelines)

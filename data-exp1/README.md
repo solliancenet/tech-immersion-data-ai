@@ -1,9 +1,9 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-## Day 1, Experience 1 - Business Critical Performance and Security with SQL Server 2019
+## Data, Experience 1 - Business Critical Performance and Security with SQL Server 2019
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Day 1, Experience 1 - Business Critical Performance and Security with SQL Server 2019](#Day-1-Experience-1---Business-Critical-Performance-and-Security-with-SQL-Server-2019)
+  - [Data, Experience 1 - Business Critical Performance and Security with SQL Server 2019](#Data-Experience-1---Business-Critical-Performance-and-Security-with-SQL-Server-2019)
   - [Technology overview](#Technology-overview)
   - [Scenario overview](#Scenario-overview)
   - [Experience requirements](#Experience-requirements)
@@ -622,13 +622,13 @@ In this step, you will encrypt the data stored in the email column inside the se
 
 3. In the Connect to Database Engine dialog, select **Options**, navigate to the **Always Encrypted** tab, then check the **Enable Always Encrypted** box and enter the `AttestationServerUrl` from the value sheet you were provided for this lab into the Enclave Attestation URL box. For example, `http://168.61.49.245/Attestation`.
 
-   ![On the Always Encrypted tab of the Connect to Database Engine dialog, Enable Always Encrypted is checked, and the URL above is entered into the Enclave Attestation URL field.](media/ssms-connect-enable-always-encrypted-checked.png "Connect to Database Engine")
+   ![On the Always Encrypted tab of the Connect to Database Engine dialog, Enable Always Encrypted is checked, and the URL above is entered into the Enclave Attestation URL field.](media/ssms-connect-enable-always-encrypted-checked.png 'Connect to Database Engine')
 
 4. Select **Connect**.
 
 5. Now, on the SSMS toolbar, change the database back to your **sales_XXXXX** database by selecting the drop down arrow next to **master** and selecting the **sales_XXXXX** database ((where XXXX is the unique identifier assigned to you for this lab).
 
-   ![The sales_XXXXX database is highlighted in the database selected drop down on the SSMS toolbar.](media/ssms-change-database.png "Change database")
+   ![The sales_XXXXX database is highlighted in the database selected drop down on the SSMS toolbar.](media/ssms-change-database.png 'Change database')
 
 6. In the query window, copy and paste the following query to encrypt the `c_email_address` column in the `dbo.customer` table.
 
@@ -651,17 +651,17 @@ In this step, you will encrypt the data stored in the email column inside the se
 
 7. If you see a dialog appear after executing the above script, asking whether to enable parameterization for Always Encrypted, click **Enable**.
 
-   ![The Enable button is highlighted on the dialog.](media/ssms-parameterization-always-encrypted.png "Parameterization for Always Encrypted")
+   ![The Enable button is highlighted on the dialog.](media/ssms-parameterization-always-encrypted.png 'Parameterization for Always Encrypted')
 
 8. Open another new query window in SSMS, and right-click anywhere in the new query window, then select **Connection > Change Connection**.
 
 9. In the Connect to Database Engine dialog, select **Options**, navigate to the **Always Encrypted** tab and make sure **Enable Always Encrypted** is not checked, and then select **Connect**.
 
-   ![On the Always Encrypted tab of the Connect to Database Engine dialog, Enable Always Encrypted is unchecked.](media/ssms-connect-enable-always-encrypted-unchecked.png "Connect to Database Engine")
+   ![On the Always Encrypted tab of the Connect to Database Engine dialog, Enable Always Encrypted is unchecked.](media/ssms-connect-enable-always-encrypted-unchecked.png 'Connect to Database Engine')
 
 10. As you did previously, on the SSMS toolbar, change the database back to your **sales_XXXXX** database by selecting the drop down arrow next to **master** and selecting the **sales_XXXXX** database ((where XXXX is the unique identifier assigned to you for this lab).
 
-    ![The sales_XXXXX database is highlighted in the database selected drop down on the SSMS toolbar.](media/ssms-change-database.png "Change database")
+    ![The sales_XXXXX database is highlighted in the database selected drop down on the SSMS toolbar.](media/ssms-change-database.png 'Change database')
 
 11. To verify the `c_email_address` column is now encrypted, paste in and execute the below statement in the query window with Always Encrypted disabled. The query window should return encrypted values in the SSN and Salary columns.
 
@@ -669,11 +669,11 @@ In this step, you will encrypt the data stored in the email column inside the se
     SELECT c_customer_sk, c_first_name, c_last_name, c_email_address FROM [dbo].[customer]
     ```
 
-    ![Encrypted email address is highlighted in the query results.](media/always-encrypted-without-secure-enclave-results.png "Always Encrypted with secure enclaves")
+    ![Encrypted email address is highlighted in the query results.](media/always-encrypted-without-secure-enclave-results.png 'Always Encrypted with secure enclaves')
 
 12. Now, run the same query in the query window with the Always Encrypted enabled. The returned results should contain the data decrypted.
 
-    ![Decrypted email address is highlighted in the query results.](media/always-encrypted-with-secure-enclave-results.png "Always Encrypted with secure enclaves")
+    ![Decrypted email address is highlighted in the query results.](media/always-encrypted-with-secure-enclave-results.png 'Always Encrypted with secure enclaves')
 
     > Using a secure enclave, you are now able to run queries against columns using Always Encrypted, and view decrypted results in SSMS.
 
@@ -700,7 +700,7 @@ Now, you can run rich queries against the encrypted columns. Some query processi
    WHERE c_email_address LIKE @EmailPattern;
    ```
 
-   ![Decrypted email address is highlighted in the query results.](media/always-encrypted-rich-results-success.png "Always Encrypted with secure enclaves")
+   ![Decrypted email address is highlighted in the query results.](media/always-encrypted-rich-results-success.png 'Always Encrypted with secure enclaves')
 
    > In the results, notices that all email address have a domain of `@gmx`.
 
@@ -711,7 +711,7 @@ Now, you can run rich queries against the encrypted columns. Some query processi
    Encryption scheme mismatch for columns/variables '@EmailPattern'. The encryption scheme for the columns/variables is (encryption_type = 'PLAINTEXT') and the expression near line '4' expects it to be Randomized, , a BIN2 collation for string data types, and an enclave-enabled column encryption key, or PLAINTEXT.
    ```
 
-   ![The error message above is displayed in the Messages pane.](media/always-encrypted-rich-results-error.png "Always Encrypted with secure enclaves")
+   ![The error message above is displayed in the Messages pane.](media/always-encrypted-rich-results-error.png 'Always Encrypted with secure enclaves')
 
 ## Wrap-up
 

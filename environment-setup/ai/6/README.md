@@ -1,6 +1,6 @@
 # MLOps with Azure Machine Learning and Azure DevOps
 
-Complete the steps below to prepare the environment for the [Day 2, Experience 6](../../../day2-exp6/README.md) lab.
+Complete the steps below to prepare the environment for the [AI, Experience 6](../../../ai-exp6/README.md) lab.
 
 ## Pre-requisites
 

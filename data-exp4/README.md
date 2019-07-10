@@ -1,9 +1,9 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-## Day 1, Experience 4 - Leveraging Cosmos DB for near real-time analytics
+## Data, Experience 4 - Leveraging Cosmos DB for near real-time analytics
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Day 1, Experience 4 - Leveraging Cosmos DB for near real-time analytics](#Day-1-Experience-4---Leveraging-Cosmos-DB-for-near-real-time-analytics)
+  - [Data, Experience 4 - Leveraging Cosmos DB for near real-time analytics](#Data-Experience-4---Leveraging-Cosmos-DB-for-near-real-time-analytics)
   - [Technology overview](#Technology-overview)
     - [Azure Cosmos DB](#Azure-Cosmos-DB)
     - [Azure Functions](#Azure-Functions)

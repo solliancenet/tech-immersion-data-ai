@@ -1,9 +1,9 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-## Day 1, Experience 2 - Handling Big Data with SQL Server 2019 Big Data Clusters
+## Data, Experience 2 - Handling Big Data with SQL Server 2019 Big Data Clusters
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Day 1, Experience 2 - Handling Big Data with SQL Server 2019 Big Data Clusters](#Day-1-Experience-2---Handling-Big-Data-with-SQL-Server-2019-Big-Data-Clusters)
+  - [Data, Experience 2 - Handling Big Data with SQL Server 2019 Big Data Clusters](#Data-Experience-2---Handling-Big-Data-with-SQL-Server-2019-Big-Data-Clusters)
   - [Technology overview](#Technology-overview)
   - [Scenario overview](#Scenario-overview)
   - [Experience requirements](#Experience-requirements)
@@ -322,29 +322,29 @@ HDFS also provides data persistency, as HDFS data is spread across all the stora
 
 7. Now that the drive is mounted, create an external file format for CSV. Open a new query window and paste the following command. Replace **sales_YOUR_UNIQUE_IDENTIFIER** with the name of your unique sales database. The `YOUR_UNIQUE_IDENTIFIER` portion of the name is the unique identifier assigned to you for this lab.
 
-    ```sql
-    USE sales_YOUR_UNIQUE_IDENTIFIER;
-    GO
-    CREATE EXTERNAL FILE FORMAT csv_file
-    WITH (
-        FORMAT_TYPE = DELIMITEDTEXT,
-        FORMAT_OPTIONS(
-            FIELD_TERMINATOR = ',',
-            STRING_DELIMITER = '"',
-            FIRST_ROW = 2,
-            USE_TYPE_DEFAULT = TRUE)
-    );
-    ```
+   ```sql
+   USE sales_YOUR_UNIQUE_IDENTIFIER;
+   GO
+   CREATE EXTERNAL FILE FORMAT csv_file
+   WITH (
+       FORMAT_TYPE = DELIMITEDTEXT,
+       FORMAT_OPTIONS(
+           FIELD_TERMINATOR = ',',
+           STRING_DELIMITER = '"',
+           FIRST_ROW = 2,
+           USE_TYPE_DEFAULT = TRUE)
+   );
+   ```
 
 8. Now create an external connection to your HDFS cluster:
 
-    ```sql
-    IF NOT EXISTS(SELECT * FROM sys.external_data_sources WHERE name = 'SqlStoragePool')
-    BEGIN
-    CREATE EXTERNAL DATA SOURCE SqlStoragePool
-    WITH (LOCATION = 'sqlhdfs://controller-svc:8080/default');
-    END
-    ```
+   ```sql
+   IF NOT EXISTS(SELECT * FROM sys.external_data_sources WHERE name = 'SqlStoragePool')
+   BEGIN
+   CREATE EXTERNAL DATA SOURCE SqlStoragePool
+   WITH (LOCATION = 'sqlhdfs://controller-svc:8080/default');
+   END
+   ```
 
 9. Now let's create two tables to two different files that exist in the storage account:
 

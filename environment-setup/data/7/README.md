@@ -1,6 +1,6 @@
 # Open source databases at scale setup
 
-Complete the steps below to prepare the environment for the [Day 1, Experience 5](../../../day1-exp5/README.md) lab.
+Complete the steps below to prepare the environment for the [Data, Experience 5](../../../data-exp5/README.md) lab.
 
 ## Pre-requisites
 

@@ -1,133 +1,133 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "factoryName": {
-            "type": "string",
-            "metadata": "Data Factory Name",
-            "defaultValue": "tech-immersion-data-factory"
-        },
-        "SqlServer2019_connectionString": {
-            "type": "secureString",
-            "metadata": "Secure string for 'connectionString' of 'SqlServer2019'"
-        },
-        "SqlServer2019SalesDb_connectionString": {
-            "type": "secureString",
-            "metadata": "Secure string for 'connectionString' of 'SqlServer2019SalesDb'"
-        },
-        "CosmosDb_connectionString": {
-            "type": "secureString",
-            "metadata": "Secure string for 'connectionString' of 'CosmosDb'"
-        },
-        "ADLSGen2_accountKey": {
-            "type": "secureString",
-            "metadata": "Secure string for 'accountKey' of 'ADLSGen2'"
-        },
-        "AzureDatabricks_accessToken": {
-            "type": "secureString",
-            "metadata": "Secure string for 'accessToken' of 'AzureDatabricks'"
-        },
-        "AzureBlobStorage_connectionString": {
-            "type": "secureString",
-            "metadata": "Secure string for 'connectionString' of 'AzureBlobStorage'"
-        },
-        "AdlsGen2VehicleTelemetry_properties_typeProperties_fileName": {
-            "type": "string",
-            "defaultValue": "VehicleTelemetry.json"
-        },
-        "AdlsGen2VehicleTelemetry_properties_typeProperties_folderPath": {
-            "type": "string",
-            "defaultValue": "contosoauto"
-        },
-        "AdlsGen2Vehicles_properties_typeProperties_fileName": {
-            "type": "string",
-            "defaultValue": "@concat(dataset().FileName,'.csv')"
-        },
-        "AdlsGen2Vehicles_properties_typeProperties_folderPath": {
-            "type": "string",
-            "defaultValue": "contosoauto"
-        },
-        "AzureBlob_properties_typeProperties_fileName": {
-            "type": "string",
-            "defaultValue": "@concat(dataset().FileName, '.csv')"
-        },
-        "AzureBlob_properties_typeProperties_folderPath": {
-            "type": "string",
-            "defaultValue": "day1-exp3-data"
-        },
-        "ADLSGen2_properties_typeProperties_url": {
-            "type": "string",
-            "defaultValue": "https://techimmersionadlsgen2.dfs.core.windows.net"
-        },
-        "containerUri": {
-            "type": "string",
-            "metadata": "URI to storage account containing linked ARM templates"
-        },
-        "containerSasToken": {
-            "type": "string",
-            "metadata": "Sas Token to storage account containing linked ARM templates"
-        }
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "factoryName": {
+      "type": "string",
+      "metadata": "Data Factory Name",
+      "defaultValue": "tech-immersion-data-factory"
     },
-    "variables": {
-        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    "SqlServer2019_connectionString": {
+      "type": "secureString",
+      "metadata": "Secure string for 'connectionString' of 'SqlServer2019'"
     },
-    "resources": [
-        {
-            "name": "ArmTemplate_0",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2018-02-01",
-            "properties": {
-                "mode": "incremental",
-                "templateLink": {
-                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "factoryName": {
-                        "value": "[parameters('factoryName')]"
-                    },
-                    "SqlServer2019_connectionString": {
-                        "value": "[parameters('SqlServer2019_connectionString')]"
-                    },
-                    "SqlServer2019SalesDb_connectionString": {
-                        "value": "[parameters('SqlServer2019SalesDb_connectionString')]"
-                    },
-                    "CosmosDb_connectionString": {
-                        "value": "[parameters('CosmosDb_connectionString')]"
-                    },
-                    "ADLSGen2_accountKey": {
-                        "value": "[parameters('ADLSGen2_accountKey')]"
-                    },
-                    "AzureDatabricks_accessToken": {
-                        "value": "[parameters('AzureDatabricks_accessToken')]"
-                    },
-                    "AzureBlobStorage_connectionString": {
-                        "value": "[parameters('AzureBlobStorage_connectionString')]"
-                    },
-                    "ADLSGen2_properties_typeProperties_url": {
-                        "value": "[parameters('ADLSGen2_properties_typeProperties_url')]"
-                    },
-                    "AdlsGen2VehicleTelemetry_properties_typeProperties_fileName": {
-                        "value": "[parameters('AdlsGen2VehicleTelemetry_properties_typeProperties_fileName')]"
-                    },
-                    "AdlsGen2VehicleTelemetry_properties_typeProperties_folderPath": {
-                        "value": "[parameters('AdlsGen2VehicleTelemetry_properties_typeProperties_folderPath')]"
-                    },
-                    "AdlsGen2Vehicles_properties_typeProperties_fileName": {
-                        "value": "[parameters('AdlsGen2Vehicles_properties_typeProperties_fileName')]"
-                    },
-                    "AdlsGen2Vehicles_properties_typeProperties_folderPath": {
-                        "value": "[parameters('AdlsGen2Vehicles_properties_typeProperties_folderPath')]"
-                    },
-                    "AzureBlob_properties_typeProperties_fileName": {
-                        "value": "[parameters('AzureBlob_properties_typeProperties_fileName')]"
-                    },
-                    "AzureBlob_properties_typeProperties_folderPath": {
-                        "value": "[parameters('AzureBlob_properties_typeProperties_folderPath')]"
-                    }
-                }
-            },
-            "dependsOn": []
+    "SqlServer2019SalesDb_connectionString": {
+      "type": "secureString",
+      "metadata": "Secure string for 'connectionString' of 'SqlServer2019SalesDb'"
+    },
+    "CosmosDb_connectionString": {
+      "type": "secureString",
+      "metadata": "Secure string for 'connectionString' of 'CosmosDb'"
+    },
+    "ADLSGen2_accountKey": {
+      "type": "secureString",
+      "metadata": "Secure string for 'accountKey' of 'ADLSGen2'"
+    },
+    "AzureDatabricks_accessToken": {
+      "type": "secureString",
+      "metadata": "Secure string for 'accessToken' of 'AzureDatabricks'"
+    },
+    "AzureBlobStorage_connectionString": {
+      "type": "secureString",
+      "metadata": "Secure string for 'connectionString' of 'AzureBlobStorage'"
+    },
+    "AdlsGen2VehicleTelemetry_properties_typeProperties_fileName": {
+      "type": "string",
+      "defaultValue": "VehicleTelemetry.json"
+    },
+    "AdlsGen2VehicleTelemetry_properties_typeProperties_folderPath": {
+      "type": "string",
+      "defaultValue": "contosoauto"
+    },
+    "AdlsGen2Vehicles_properties_typeProperties_fileName": {
+      "type": "string",
+      "defaultValue": "@concat(dataset().FileName,'.csv')"
+    },
+    "AdlsGen2Vehicles_properties_typeProperties_folderPath": {
+      "type": "string",
+      "defaultValue": "contosoauto"
+    },
+    "AzureBlob_properties_typeProperties_fileName": {
+      "type": "string",
+      "defaultValue": "@concat(dataset().FileName, '.csv')"
+    },
+    "AzureBlob_properties_typeProperties_folderPath": {
+      "type": "string",
+      "defaultValue": "data-exp3-data"
+    },
+    "ADLSGen2_properties_typeProperties_url": {
+      "type": "string",
+      "defaultValue": "https://techimmersionadlsgen2.dfs.core.windows.net"
+    },
+    "containerUri": {
+      "type": "string",
+      "metadata": "URI to storage account containing linked ARM templates"
+    },
+    "containerSasToken": {
+      "type": "string",
+      "metadata": "Sas Token to storage account containing linked ARM templates"
+    }
+  },
+  "variables": {
+    "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+  },
+  "resources": [
+    {
+      "name": "ArmTemplate_0",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-02-01",
+      "properties": {
+        "mode": "incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "factoryName": {
+            "value": "[parameters('factoryName')]"
+          },
+          "SqlServer2019_connectionString": {
+            "value": "[parameters('SqlServer2019_connectionString')]"
+          },
+          "SqlServer2019SalesDb_connectionString": {
+            "value": "[parameters('SqlServer2019SalesDb_connectionString')]"
+          },
+          "CosmosDb_connectionString": {
+            "value": "[parameters('CosmosDb_connectionString')]"
+          },
+          "ADLSGen2_accountKey": {
+            "value": "[parameters('ADLSGen2_accountKey')]"
+          },
+          "AzureDatabricks_accessToken": {
+            "value": "[parameters('AzureDatabricks_accessToken')]"
+          },
+          "AzureBlobStorage_connectionString": {
+            "value": "[parameters('AzureBlobStorage_connectionString')]"
+          },
+          "ADLSGen2_properties_typeProperties_url": {
+            "value": "[parameters('ADLSGen2_properties_typeProperties_url')]"
+          },
+          "AdlsGen2VehicleTelemetry_properties_typeProperties_fileName": {
+            "value": "[parameters('AdlsGen2VehicleTelemetry_properties_typeProperties_fileName')]"
+          },
+          "AdlsGen2VehicleTelemetry_properties_typeProperties_folderPath": {
+            "value": "[parameters('AdlsGen2VehicleTelemetry_properties_typeProperties_folderPath')]"
+          },
+          "AdlsGen2Vehicles_properties_typeProperties_fileName": {
+            "value": "[parameters('AdlsGen2Vehicles_properties_typeProperties_fileName')]"
+          },
+          "AdlsGen2Vehicles_properties_typeProperties_folderPath": {
+            "value": "[parameters('AdlsGen2Vehicles_properties_typeProperties_folderPath')]"
+          },
+          "AzureBlob_properties_typeProperties_fileName": {
+            "value": "[parameters('AzureBlob_properties_typeProperties_fileName')]"
+          },
+          "AzureBlob_properties_typeProperties_folderPath": {
+            "value": "[parameters('AzureBlob_properties_typeProperties_folderPath')]"
+          }
         }
-    ]
+      },
+      "dependsOn": []
+    }
+  ]
 }

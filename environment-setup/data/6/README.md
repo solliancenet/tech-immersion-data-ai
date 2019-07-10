@@ -1,6 +1,6 @@
 # Azure Data Factory and Modern Data Warehouse setup
 
-Complete the steps below to prepare the environment for the [Day 1, Experience 5](../../../day1-exp5/README.md) and [Day 1, Experience 6](../../../day1-exp6/README.md) labs.
+Complete the steps below to prepare the environment for the [Data, Experience 5](../../../data-exp5/README.md) and [Data, Experience 6](../../../data-exp6/README.md) labs.
 
 ## Pre-requisites
 
@@ -31,7 +31,7 @@ Each ADF instance should have the following activities and configuration:
   - CopyData
     - Activities:
       - CopyVehicleInfoFromStorage
-        - Retrieves the `VehicleInfo.csv` file from blob storage container `day1-exp3-data`
+        - Retrieves the `VehicleInfo.csv` file from blob storage container `data-exp3-data`
         - Writes data to ADLS Gen2 account filesystem `contosoauto/VehicleInfo.csv`
       - CopyTelemetryDataFromCosmos
         - Needs Key to connect to Cosmos DB in Linked Service
@@ -39,10 +39,10 @@ Each ADF instance should have the following activities and configuration:
           - File format: JSON
           - File pattern: Set of objects
       - CopyCarDataFromStorage
-        - Retrieves the `Cars.csv` file from blob storage container `day1-exp3-data`
+        - Retrieves the `Cars.csv` file from blob storage container `data-exp3-data`
         - Writes data to ADLS Gen2 account filesystem `contosoauto/Cars.csv`
 
-> The files `VehicleInfo.csv` and `Cars.csv` can be placed in the user's storage account, or can be placed into a shared storage account. ADF will need to be configured to connect to the `day1-exp3-data` container in the target storage account using a key or SAS token.
+> The files `VehicleInfo.csv` and `Cars.csv` can be placed in the user's storage account, or can be placed into a shared storage account. ADF will need to be configured to connect to the `data-exp3-data` container in the target storage account using a key or SAS token.
 
 - There is an ARM template at `environment-setup/data/6/adf-arm-template.zip` that can be used to set up the ADF pipeline.
 - You can also view the pipeline JSON in the `environment-setup/data/6/pipeline.json` file.
@@ -59,8 +59,8 @@ There is no additional configuration needed for Cosmos DB.
 
 The following step should be taken for the Blob Storage account:
 
-1. Create a container in the storage account named `day1-exp3-data`.
-2. Upload the provided `Cars.csv` and `VehicleInfo.csv` files to the `day1-exp3-data` container.
+1. Create a container in the storage account named `data-exp3-data`.
+2. Upload the provided `Cars.csv` and `VehicleInfo.csv` files to the `data-exp3-data` container.
 3. Create a container in the storage account named `dwtemp`.
 4. Create a container in the storage account named `data`.
 5. Upload the provided `trip_data_1.csv` and `trip_fare_1.csv` files to the `data` container.

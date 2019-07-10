@@ -1,21 +1,21 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-## Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search
+## AI, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
-  - [Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search](#day-2-experience-2---yield-quick-insights-from-unstructured-data-with-knowledge-mining-and-cognitive-search)
-  - [Technology overview](#technology-overview)
-  - [Scenario overview](#scenario-overview)
-  - [Task 1: Populate Cosmos DB with tweets from a generator](#task-1-populate-cosmos-db-with-tweets-from-a-generator)
-  - [Task 2: Create a basic Cognitive Search pipeline using the Azure portal](#task-2-create-a-basic-cognitive-search-pipeline-using-the-azure-portal)
-  - [Task 3: Enhance the Cognitive Search pipeline](#task-3-enhance-the-cognitive-search-pipeline)
-  - [Task 4: Publish Function App for custom skills](#task-4-publish-function-app-for-custom-skills)
-  - [Task 5: Integrate Text Translate custom skill into pipeline](#task-5-integrate-text-translate-custom-skill-into-pipeline)
-  - [Task 6: Run indexer and query translation data](#task-6-run-indexer-and-query-translation-data)
-  - [Task 7: Create Forms Recognizer Pipeline](#task-7-create-forms-recognizer-pipeline)
-  - [Task 8: Create an Anomaly Detection pipeline](#task-8-create-an-anomaly-detection-pipeline)
-  - [Wrap-up](#wrap-up)
-  - [Additional resources and more information](#additional-resources-and-more-information)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
+  - [AI, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search](#AI-Experience-2---Yield-quick-insights-from-unstructured-data-with-Knowledge-Mining-and-Cognitive-Search)
+  - [Technology overview](#Technology-overview)
+  - [Scenario overview](#Scenario-overview)
+  - [Task 1: Populate Cosmos DB with tweets from a generator](#Task-1-Populate-Cosmos-DB-with-tweets-from-a-generator)
+  - [Task 2: Create a basic Cognitive Search pipeline using the Azure portal](#Task-2-Create-a-basic-Cognitive-Search-pipeline-using-the-Azure-portal)
+  - [Task 3: Enhance the Cognitive Search pipeline](#Task-3-Enhance-the-Cognitive-Search-pipeline)
+  - [Task 4: Publish Function App for custom skills](#Task-4-Publish-Function-App-for-custom-skills)
+  - [Task 5: Integrate Text Translate custom skill into pipeline](#Task-5-Integrate-Text-Translate-custom-skill-into-pipeline)
+  - [Task 6: Run indexer and query translation data](#Task-6-Run-indexer-and-query-translation-data)
+  - [Task 7: Create Forms Recognizer Pipeline](#Task-7-Create-Forms-Recognizer-Pipeline)
+  - [Task 8: Create an Anomaly Detection pipeline](#Task-8-Create-an-Anomaly-Detection-pipeline)
+  - [Wrap-up](#Wrap-up)
+  - [Additional resources and more information](#Additional-resources-and-more-information)
 
 ## Technology overview
 

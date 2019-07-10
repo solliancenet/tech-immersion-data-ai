@@ -1,9 +1,9 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-## Day 1, Experience 7 - Open source databases at scale
+## Data, Experience 7 - Open source databases at scale
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Day 1, Experience 7 - Open source databases at scale](#Day-1-Experience-7---Open-source-databases-at-scale)
+  - [Data, Experience 7 - Open source databases at scale](#Data-Experience-7---Open-source-databases-at-scale)
   - [Technology overview](#Technology-overview)
     - [Azure Database for PostgreSQL Hyperscale (Citus)](#Azure-Database-for-PostgreSQL-Hyperscale-Citus)
   - [Scenario overview](#Scenario-overview)

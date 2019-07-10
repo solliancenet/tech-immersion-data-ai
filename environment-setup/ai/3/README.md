@@ -1,6 +1,6 @@
 # Automated Machine Learning setup
 
-Complete the steps below to prepare the environment for the [Day 2, Experience 3](../../../day2-exp3/README.md) lab.
+Complete the steps below to prepare the environment for the [AI, Experience 3](../../../ai-exp3/README.md) lab.
 
 ## Pre-requisites
 
