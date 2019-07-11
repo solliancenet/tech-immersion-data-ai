@@ -667,6 +667,8 @@ In addition to predefined Cognitive skills, you can also integrate custom skills
 
     ![Select Existing is highlighted and selected on the Pick a publish target dialog. The publish button is highlighted.](media/visual-studio-function-publish-target.png "Pick a publish target")
 
+    > If you are prompted to sign in, use the Azure credentials provided to you for this experience.
+
 21. On the **App service** dialog, select your Subscription and locate the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) in the list. Select the Function App named **ti-function-day2-XXXXX** from the list of resources (where XXXXX is the unique identifier assigned to you for this workshop).
 
     ![The tech-immersion-functions Function App is highlighted in the search results.](media/visual-studio-function-publish-app-service.png "App service")
@@ -777,7 +779,7 @@ In this task, you will run your Search Indexer and then query data in the index.
 5. Now, let's try a slightly more advanced search. We want to look for only records that mention a "corvette", and we only want to retrieve the `text`, `userLocation`, and `sentiment` fields in our results. Paste the following into the Query string box, and select **Search**:
 
    ```http
-   search=corvette&$select=text,userLocation,sentiment&$count=true
+   search=corvette&$select=text,user/location,sentiment&$count=true
    ```
 
    ![Query for records containing corvette, and returning only the text, userLocation, and sentiment.](media/azure-search-query-corvette.png "Search query")
@@ -787,7 +789,7 @@ In this task, you will run your Search Indexer and then query data in the index.
 6. You can take that query even further by adding in the `$filter` parameter. Use the `$filter` parameter when you want to specify precise criteria rather than free text search. This example searches for sentiment less than 0.25, so we can target tweets with negative sentiment in the search results.
 
    ```http
-   search=corvette&$select=text,userLocation,sentiment&$filter=sentiment lt 0.25&$count=true
+   search=corvette&$select=text,user/location,sentiment&$filter=sentiment lt 0.25&$count=true
    ```
 
    ![Using the $filter parameter to further refine search results.](media/azure-search-query-filter.png "Filtered search query")
