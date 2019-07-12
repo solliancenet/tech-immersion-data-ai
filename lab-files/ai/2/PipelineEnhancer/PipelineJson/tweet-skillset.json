@@ -26,7 +26,7 @@
         },
         {
           "name": "languageCode",
-          "source": "/document/language",
+          "source": "/document/Language",
           "sourceContext": null,
           "inputs": []
         }
@@ -34,15 +34,15 @@
       "outputs": [
         {
           "name": "persons",
-          "targetName": "people"
+          "targetName": "People"
         },
         {
           "name": "organizations",
-          "targetName": "organizations"
+          "targetName": "Organizations"
         },
         {
           "name": "locations",
-          "targetName": "locations"
+          "targetName": "Locations"
         },
         {
           "name": "entities",
@@ -65,7 +65,7 @@
         },
         {
           "name": "languageCode",
-          "source": "/document/language",
+          "source": "/document/Language",
           "sourceContext": null,
           "inputs": []
         }
@@ -73,7 +73,7 @@
       "outputs": [
         {
           "name": "keyPhrases",
-          "targetName": "keyphrases"
+          "targetName": "Keyphrases"
         }
       ]
     },
@@ -92,7 +92,7 @@
       "outputs": [
         {
           "name": "languageCode",
-          "targetName": "language"
+          "targetName": "Language"
         }
       ]
     }

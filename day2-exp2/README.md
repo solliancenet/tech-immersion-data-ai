@@ -2,20 +2,20 @@
 
 ## Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%E2%80%93-product-review-guide-and-lab-instructions)
-  - [Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search](#day-2-experience-2---yield-quick-insights-from-unstructured-data-with-knowledge-mining-and-cognitive-search)
-  - [Technology overview](#technology-overview)
-  - [Scenario overview](#scenario-overview)
-  - [Task 1: Populate Cosmos DB with tweets from a generator](#task-1-populate-cosmos-db-with-tweets-from-a-generator)
-  - [Task 2: Create a basic Cognitive Search pipeline using the Azure portal](#task-2-create-a-basic-cognitive-search-pipeline-using-the-azure-portal)
-  - [Task 3: Enhance the Cognitive Search pipeline](#task-3-enhance-the-cognitive-search-pipeline)
-  - [Task 4: Publish Function App for custom skills](#task-4-publish-function-app-for-custom-skills)
-  - [Task 5: Integrate Text Translate custom skill into pipeline](#task-5-integrate-text-translate-custom-skill-into-pipeline)
-  - [Task 6: Run indexer and query translation data](#task-6-run-indexer-and-query-translation-data)
-  - [Task 7: Create Forms Recognizer Pipeline](#task-7-create-forms-recognizer-pipeline)
-  - [Task 8: Create an Anomaly Detection pipeline](#task-8-create-an-anomaly-detection-pipeline)
-  - [Wrap-up](#wrap-up)
-  - [Additional resources and more information](#additional-resources-and-more-information)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
+  - [Day 2, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search](#Day-2-Experience-2---Yield-quick-insights-from-unstructured-data-with-Knowledge-Mining-and-Cognitive-Search)
+  - [Technology overview](#Technology-overview)
+  - [Scenario overview](#Scenario-overview)
+  - [Task 1: Populate Cosmos DB with tweets from a generator](#Task-1-Populate-Cosmos-DB-with-tweets-from-a-generator)
+  - [Task 2: Create a basic Cognitive Search pipeline using the Azure portal](#Task-2-Create-a-basic-Cognitive-Search-pipeline-using-the-Azure-portal)
+  - [Task 3: Enhance the Cognitive Search pipeline](#Task-3-Enhance-the-Cognitive-Search-pipeline)
+  - [Task 4: Publish Function App for custom skills](#Task-4-Publish-Function-App-for-custom-skills)
+  - [Task 5: Integrate Text Translate custom skill into pipeline](#Task-5-Integrate-Text-Translate-custom-skill-into-pipeline)
+  - [Task 6: Run indexer and query translation data](#Task-6-Run-indexer-and-query-translation-data)
+  - [Task 7: Create Forms Recognizer Pipeline](#Task-7-Create-Forms-Recognizer-Pipeline)
+  - [Task 8: Create an Anomaly Detection pipeline](#Task-8-Create-an-Anomaly-Detection-pipeline)
+  - [Wrap-up](#Wrap-up)
+  - [Additional resources and more information](#Additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -159,7 +159,7 @@ With data now streaming into your Cosmos DB `tweets` container, you are ready to
     - **Suggester name**: Leave this blank.
     - **Search mode**: Leave this blank.
     - Before setting the check boxes for each field, expand **users** and **entities**, and any sub-properties within each.
-      - Check the **Retrievable** and **Searchable** boxes at the top, to check all fields under each category, as shown in the image below.
+      - Check the **Retrievable**, **Filterable** and **Searchable** boxes at the top, to check all fields under each category, as shown in the image below.
 
     ![The Customize target index tab is displayed, with the settings specified above entered into the form.](media/cosmos-db-add-azure-search-customize-target-index.png "Customize target index")
 
@@ -296,7 +296,7 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
       "IndexName": "tweet-index",
       "IndexerName": "tweet-indexer",
       "SkillsetName": "tweet-skillset",
-      "ApiVersion": "2019-05-06"
+      "ApiVersion": "2019-05-06-Preview"
     }
    ```
 
@@ -446,7 +446,7 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
     "DefaultHostKey": "h3CqiI4JFKMGaN2BHwtYwxmgfwtqW0kaWbpaEQkyAcR3Lle5fKs9rg=="
     ```
 
-36. Save `appsettings.json`. The file should now look like the following.
+36. Save `appsettings.json`. The file should now resemble the following.
 
     ![Search service values entered into the appsettings.json file.](media/pipeline-enhancer-app-settings-search-service.png "App settings")
 
@@ -774,10 +774,10 @@ In this task, you will run your Search Indexer and then query data in the index.
 
    ![Query for records containing "cold" and "battery"](media/azure-search-query-cold-battery.png "Search query")
 
-5. Now, let's try a slightly more advanced search. We want to look for only records that mention a "corvette", and we only want to retrieve the `text`, `userLocation`, and `sentiment` fields in our results. Paste the following into the Query string box, and select **Search**:
+5. Now, let's try a slightly more advanced search. We want to look for only records that mention a "corvette", and we only want to retrieve the `text`, `user.location`, and `sentiment` fields in our results. Paste the following into the Query string box, and select **Search**:
 
    ```http
-   search=corvette&$select=text,userLocation,sentiment&$count=true
+   search=corvette&$select=text,user/location,sentiment&$count=true
    ```
 
    ![Query for records containing corvette, and returning only the text, userLocation, and sentiment.](media/azure-search-query-corvette.png "Search query")
@@ -787,7 +787,7 @@ In this task, you will run your Search Indexer and then query data in the index.
 6. You can take that query even further by adding in the `$filter` parameter. Use the `$filter` parameter when you want to specify precise criteria rather than free text search. This example searches for sentiment less than 0.25, so we can target tweets with negative sentiment in the search results.
 
    ```http
-   search=corvette&$select=text,userLocation,sentiment&$filter=sentiment lt 0.25&$count=true
+   search=corvette&$select=text,user/location,sentiment&$filter=sentiment lt 0.25&$count=true
    ```
 
    ![Using the $filter parameter to further refine search results.](media/azure-search-query-filter.png "Filtered search query")
@@ -795,7 +795,7 @@ In this task, you will run your Search Indexer and then query data in the index.
 7. The final query we will run adds the `$orderBy` parameter, which allow you to specify the sort order of your results. In this case, let's search for records where the sentiment is the highest, filtering for records where the sentiment is greater than 0.9, and ordering the results in descending order.
 
    ```http
-   search=*&$select=text,userLocation,sentiment&$filter=sentiment gt 0.9&$count=true&$orderby=sentiment desc
+   search=*&$select=text,user/location,sentiment&$filter=sentiment gt 0.9&$count=true&$orderby=sentiment desc
    ```
 
    ![Using the orderBy filter in a search query](media/azure-search-query-orderby.png "Ordered search query")
