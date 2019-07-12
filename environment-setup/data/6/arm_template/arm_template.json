@@ -53,7 +53,7 @@
         },
         "AzureBlob_properties_typeProperties_folderPath": {
             "type": "string",
-            "defaultValue": "day1-exp3-data"
+            "defaultValue": "data-exp3-data"
         },
         "ADLSGen2_properties_typeProperties_url": {
             "type": "string",
@@ -84,7 +84,7 @@
                         "userProperties": [
                             {
                                 "name": "Source",
-                                "value": "day1-exp3-data/@{concat('VehicleInfo', '.csv')}"
+                                "value": "data-exp3-data/@{concat('VehicleInfo', '.csv')}"
                             },
                             {
                                 "name": "Destination",
@@ -181,7 +181,7 @@
                         "userProperties": [
                             {
                                 "name": "Source",
-                                "value": "day1-exp3-data/@{concat('Cars', '.csv')}"
+                                "value": "data-exp3-data/@{concat('Cars', '.csv')}"
                             },
                             {
                                 "name": "Destination",

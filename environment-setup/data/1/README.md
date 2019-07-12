@@ -1,8 +1,8 @@
-# Setup steps for the DBA version of Experience 1
+# Setup steps for Experience 1
 
-Complete the steps below to deploy and configure SQL Server 2019 for the [Day 1, DBA Experience](../../../../day1-exp1/dba.md) workshop.
+Complete the steps below to deploy and configure SQL Server 2019 for the [Data, DBA Experience](../../../../data-exp1/dba.md) workshop.
 
-- [Setup steps for the DBA version of Experience 1](#Setup-steps-for-the-DBA-version-of-Experience-1)
+- [Setup steps for Experience 1](#Setup-steps-for-Experience-1)
   - [Lab VM requirements](#Lab-VM-requirements)
   - [Experience requirements](#Experience-requirements)
   - [Set up HGS VM](#Set-up-HGS-VM)
@@ -88,11 +88,11 @@ A VM needs to be provisioned to run the Host Guardian Service (HGS), which is re
 
 10. On the **Share** dialog, ensure the **demouser** account has **Read/Write** listed under Permissions level, and then select **Share**.
 
-    ![Share hostkeys folder.](media/hostkeys-share.png "Share")
+    ![Share hostkeys folder.](media/hostkeys-share.png 'Share')
 
 11. Note the network path of the shared folder, as it will be needed when configuring the SQL Server 2019 VM as a guarded host.
 
-    ![The shared folder path is highlighted on the network shares dialog.](media/hostkeys-share-path.png "Shared folder path")
+    ![The shared folder path is highlighted on the network shares dialog.](media/hostkeys-share-path.png 'Shared folder path')
 
 ## Set up SQL Server 2019 VM
 
@@ -104,7 +104,7 @@ Provision a Windows Server 2019 Datacenter. Once provisioned install and configu
 
 1. Create a new Windows Server 2019 Datacenter VM.
 
-   ![Windows Server 2019 Datacenter](media/windows-server-2019.png "Windows Server 2019")
+   ![Windows Server 2019 Datacenter](media/windows-server-2019.png 'Windows Server 2019')
 
 2. On the Create a virtual machine **Basics** tab, enter the following:
 
@@ -117,7 +117,7 @@ Provision a Windows Server 2019 Datacenter. Once provisioned install and configu
    - **Password**: Password.1!!
    - Allow selected inbound ports: 3389 (RDP)
 
-   ![Windows Server 2019 Datacenter Basics blade](media/sql-server-2019-basics.png "Windows Server 2019 Datacenter Basics blade")
+   ![Windows Server 2019 Datacenter Basics blade](media/sql-server-2019-basics.png 'Windows Server 2019 Datacenter Basics blade')
 
 3. Select **Review + create**.
 
@@ -127,12 +127,12 @@ Provision a Windows Server 2019 Datacenter. Once provisioned install and configu
 
 6. On the **Add inbound security rule blade**, select **Basic** and then enter the following:
 
-    - **Service**: Select MS SQL.
-    - **Port ranges**: Value will be set to 1433.
-    - **Priority**: Accept the default priority value.
-    - **Name**: Enter SqlServer.
+   - **Service**: Select MS SQL.
+   - **Port ranges**: Value will be set to 1433.
+   - **Priority**: Accept the default priority value.
+   - **Name**: Enter SqlServer.
 
-    ![On the Add inbound security rule dialog, MS SQL is selected for Service, port 1433 is selected, and the SqlServer is entered as the name.](media/sql-2019-inbound-1433.png "Add MS SQL inbound security rule")
+   ![On the Add inbound security rule dialog, MS SQL is selected for Service, port 1433 is selected, and the SqlServer is entered as the name.](media/sql-2019-inbound-1433.png 'Add MS SQL inbound security rule')
 
 7. Select **Add**.
 
@@ -147,23 +147,23 @@ Provision a Windows Server 2019 Datacenter. Once provisioned install and configu
 
 3. Run the downloaded installer, choosing a Basic installation
 
-   ![Basic is highlighted on the SQL Server 2019 install dialog.](media/install-sql-server-2019.png "SQL Server Install")
+   ![Basic is highlighted on the SQL Server 2019 install dialog.](media/install-sql-server-2019.png 'SQL Server Install')
 
 4. When the installation completes, select **Install SSMS** in the dialog.
 
-   ![Install SSMS](media/sql-2019-install-ssms.png "Install SSMS")
+   ![Install SSMS](media/sql-2019-install-ssms.png 'Install SSMS')
 
 5. In the browser windows that appears, select the **Download SQL Server Management Studio 18.x** link to start the download.
 
-   ![Download SSMS](media/download-ssms.png "Download SSMS")
+   ![Download SSMS](media/download-ssms.png 'Download SSMS')
 
 6. Run the downloaded file to install SSMS, and select **Install** to begin the installation.
 
-   ![Install SSMS](media/ssms-begin-install.png "Install SSMS")
+   ![Install SSMS](media/ssms-begin-install.png 'Install SSMS')
 
 7. Select **Restart** on the SSMS installation dialog to complete the installation.
 
-   ![Install SSMS](media/ssms-install-restart.png "Install SSMS")
+   ![Install SSMS](media/ssms-install-restart.png 'Install SSMS')
 
 8. Log back into the sql-2019 VM when the restart completes for the next task.
 
@@ -177,7 +177,7 @@ Provision a Windows Server 2019 Datacenter. Once provisioned install and configu
 
 2. When prompted, enter **Y** and press Enter to restart the computer.
 
-   ![Restart computer](media/powershell-host-guardian-restart.png "Restart")
+   ![Restart computer](media/powershell-host-guardian-restart.png 'Restart')
 
 3. After the VM restarts, sign in again, open an elevated PowerShell prompt, and enter the following commands to remove the VBS requirement for platform security features, and then restart the computer.
 
@@ -208,14 +208,14 @@ Provision a Windows Server 2019 Datacenter. Once provisioned install and configu
 
 8. Return to your RDP session on the sql-2019 VM, and enter the following command in an elevated Windows PowerShell console. This command tells there SQL Server computer where to attest. Make sure you specify the IP address or the DNS name of your HGS computer in both address locations.
 
-    ```powershell
-    # use http, and not https
-    Set-HgsClientConfiguration -AttestationServerUrl http://<public-ip-address-of-hgs-service-vm>/Attestation -KeyProtectionServerUrl http://<public-ip-address-of-hgs-service-vm>/KeyProtection/
-    ```
+   ```powershell
+   # use http, and not https
+   Set-HgsClientConfiguration -AttestationServerUrl http://<public-ip-address-of-hgs-service-vm>/Attestation -KeyProtectionServerUrl http://<public-ip-address-of-hgs-service-vm>/KeyProtection/
+   ```
 
 9. You will see output from the command above providing details about the guarded host.
 
-   ![Guarded host](media/guarded-host-output.png "Guarded host")
+   ![Guarded host](media/guarded-host-output.png 'Guarded host')
 
 10. The `AttestationServerUrl` value should be added to the list of values provided to lab attendees. They will need this to connect enable Always Encrypted with secure enclaves in SSMS.
 
@@ -229,11 +229,11 @@ The steps below open access to the sql-2019 VM for SQL Server (port 1433), and c
 
 3. In SQL Server Configuration Manager, expand SQL Server Network Configuration, and select Protocols for MSSQLSERVER.
 
-   ![Protocols for MSSQLSERVER](media/sql-2019-protocols.png "Protocols")
+   ![Protocols for MSSQLSERVER](media/sql-2019-protocols.png 'Protocols')
 
 4. Double-click TCP/IP, and in the properties dialog select **Yes** for Enabled, and then select **OK**.
 
-   ![Enable TCP/IP](media/sql-2019-enable-tcp.png "TCP/IP properties")
+   ![Enable TCP/IP](media/sql-2019-enable-tcp.png 'TCP/IP properties')
 
    > **NOTE**: You will see a prompt that the change will not take effect until the service is restarted. Select OK. You will restart the service below.
 
@@ -241,7 +241,7 @@ The steps below open access to the sql-2019 VM for SQL Server (port 1433), and c
 
 6. Open SQL Server Management Studio 18 (SSMS), and connect to the sql-2019 instance using Windows authentication.
 
-   ![Connect to SQL Server](media/sql-connect.png "Connect to Server")
+   ![Connect to SQL Server](media/sql-connect.png 'Connect to Server')
 
 7. Once logged in, select the **Open file** icon on the toolbar, and open `C:\sqlscripts\sql-2019-server-config.sql`.
 
@@ -273,9 +273,9 @@ In this step, you will enable the functionality of Always Encrypted using enclav
 
 5. The query should return the following result:
 
-   |name|value|value_in_use|
-   |----|-----|------------|
-   |column encryption enclave type|1|1|
+   | name                           | value | value_in_use |
+   | ------------------------------ | ----- | ------------ |
+   | column encryption enclave type | 1     | 1            |
 
 6. Finally, enable rich computations on encrypted columns, by running the following query:
 
@@ -287,7 +287,7 @@ In this step, you will enable the functionality of Always Encrypted using enclav
 
 ### Install a sales database per user
 
-On the SQL Server 2019 VM, a copy of the `sales` database needs to be created, *per attendee*, using the naming convention `sales_XXXXX`, where XXXXX is the unique identifier assigned to each account. Workshop users will only connect to the SQL Server 2019 instance via SSMS, so this step needs to be done for them, before the workshop.
+On the SQL Server 2019 VM, a copy of the `sales` database needs to be created, _per attendee_, using the naming convention `sales_XXXXX`, where XXXXX is the unique identifier assigned to each account. Workshop users will only connect to the SQL Server 2019 instance via SSMS, so this step needs to be done for them, before the workshop.
 
 1. Download the `tpcxbb_1gb.bak` file from [here](https://databricksdemostore.blob.core.windows.net/data/contoso-auto/tpcxbb_1gb.bak).
 
@@ -301,7 +301,7 @@ Workshop users will only connect to the SQL Server 2019 instance via SSMS, so th
 
 1. Open SSMS on the sql-2019 VM, and for each attendee **sales_XXXXX** database, run the `C:\sqlscripts\sql-2019-server-config.sql` script file to set up the required login account.
 
-    > **IMPORTANT**: In the script file, replace XXXXX in the `USE` statement with the unique identifier assigned to the user.
+   > **IMPORTANT**: In the script file, replace XXXXX in the `USE` statement with the unique identifier assigned to the user.
 
 ## Set up SQL Server 2008 R2 VM
 
@@ -315,26 +315,26 @@ In this task, you will provision another virtual machine (VM) in Azure to host a
 
 2. On the **SQL Server 2008 R2 SP3 on Windows Server 2008 R2** blade, select **SQL Server R2 SP3 Standard on Windows Server 2008 R2** for the software plan and then select **Create**.
 
-    ![The SQL Server 2008 R2 SP3 on Windows Server 2008 R2 blade is displayed with the standard edition selected for the software plan. The Create button highlighted.](media/create-resource-sql-server-2008-r2.png "Create SQL Server 2008 R2 Resource")
+   ![The SQL Server 2008 R2 SP3 on Windows Server 2008 R2 blade is displayed with the standard edition selected for the software plan. The Create button highlighted.](media/create-resource-sql-server-2008-r2.png 'Create SQL Server 2008 R2 Resource')
 
 3. On the Create a virtual machine **Basics** tab, set the following configuration:
 
-    - Instance Details:
+   - Instance Details:
 
-        - **Virtual machine name**: Enter sql-2008.
-        - **Availability options**: Select no infrastructure redundancy required.
-        - **Image**: Leave SQL Server 2008 R2 SP3 Standard on Windows Server 2008 R2 selected.
-        - **Size**: Select Standard D2s v3 from the list and then select **Accept**.
+     - **Virtual machine name**: Enter sql-2008.
+     - **Availability options**: Select no infrastructure redundancy required.
+     - **Image**: Leave SQL Server 2008 R2 SP3 Standard on Windows Server 2008 R2 selected.
+     - **Size**: Select Standard D2s v3 from the list and then select **Accept**.
 
-    - Administrator Account:
+   - Administrator Account:
 
-        - **Username**: Enter **demouser**
-        - **Password**: Enter **Password.1!!**
+     - **Username**: Enter **demouser**
+     - **Password**: Enter **Password.1!!**
 
-    - Inbound Port Rules:
+   - Inbound Port Rules:
 
-        - **Public inbound ports**: Choose Allow selected ports.
-        - **Select inbound ports**: Select RDP (3389) in the list.
+     - **Public inbound ports**: Choose Allow selected ports.
+     - **Select inbound ports**: Select RDP (3389) in the list.
 
 4. Select **Review + create** to validate the configuration.
 
@@ -344,12 +344,12 @@ In this task, you will provision another virtual machine (VM) in Azure to host a
 
 7. On the **Add inbound security rule blade**, select **Basic** and then enter the following:
 
-    - **Service**: Select MS SQL.
-    - **Port ranges**: Value will be set to 1433.
-    - **Priority**: Accept the default priority value.
-    - **Name**: Enter SqlServer.
+   - **Service**: Select MS SQL.
+   - **Port ranges**: Value will be set to 1433.
+   - **Priority**: Accept the default priority value.
+   - **Name**: Enter SqlServer.
 
-    ![On the Add inbound security rule dialog, MS SQL is selected for Service, port 1433 is selected, and the SqlServer is entered as the name.](media/sql-2019-inbound-1433.png "Add MS SQL inbound security rule")
+   ![On the Add inbound security rule dialog, MS SQL is selected for Service, port 1433 is selected, and the SqlServer is entered as the name.](media/sql-2019-inbound-1433.png 'Add MS SQL inbound security rule')
 
 8. Select **Add**.
 
@@ -361,52 +361,52 @@ In this task, you will open an RDP connection to the sql-2008 VM, disable Intern
 
 1. Open an RDP connection the sql-2008 VM, using the following credentials:
 
-    - **User name**: demouser
-    - **Password**: Password.1!!
+   - **User name**: demouser
+   - **Password**: Password.1!!
 
 2. Once logged in, launch the **Server Manager**. This should start automatically, but you can access it via the Start menu if it does not.
 
 3. On the **Server Manager** view, select **Configure IE ESC** under Security Information.
 
-    ![Screenshot of the Server Manager. In the left pane, Local Server is selected. In the right, Properties (For LabVM) pane, the IE Enhanced Security Configuration, which is set to On, is highlighted.](./media/windows-server-2008-manager-ie-enhanced-security-configuration.png "Server Manager")
+   ![Screenshot of the Server Manager. In the left pane, Local Server is selected. In the right, Properties (For LabVM) pane, the IE Enhanced Security Configuration, which is set to On, is highlighted.](./media/windows-server-2008-manager-ie-enhanced-security-configuration.png 'Server Manager')
 
 4. In the Internet Explorer Enhanced Security Configuration dialog, select **Off** under both Administrators and Users, and then select **OK**.
 
-    ![Screenshot of the Internet Explorer Enhanced Security Configuration dialog box, with Administrators set to Off.](./media/2008-internet-explorer-enhanced-security-configuration-dialog.png "Internet Explorer Enhanced Security Configuration dialog box")
+   ![Screenshot of the Internet Explorer Enhanced Security Configuration dialog box, with Administrators set to Off.](./media/2008-internet-explorer-enhanced-security-configuration-dialog.png 'Internet Explorer Enhanced Security Configuration dialog box')
 
 5. Back in the Server Manager, expand **Configuration** and **Windows Firewall with Advanced Security**.
 
-    ![In Server Manager, Configuration and Windows Firewall with Advanced Security are expanded, Inbound Rules is selected and highlighted.](media/windows-firewall-inbound-rules.png "Windows Firewall")
+   ![In Server Manager, Configuration and Windows Firewall with Advanced Security are expanded, Inbound Rules is selected and highlighted.](media/windows-firewall-inbound-rules.png 'Windows Firewall')
 
 6. Right-click on **Inbound Rules** and then select **New Rule** from the context menu.
 
-   ![Inbound Rules is selected and New Rule is highlighted in the context menu.](media/windows-firewall-with-advanced-security-new-inbound-rule.png "New Rule")
+   ![Inbound Rules is selected and New Rule is highlighted in the context menu.](media/windows-firewall-with-advanced-security-new-inbound-rule.png 'New Rule')
 
 7. In the New Inbound Rule Wizard, under Rule Type, select **Port**, then select **Next**.
 
-   ![Rule Type is selected and highlighted on the left side of the New Inbound Rule Wizard, and Port is selected and highlighted on the right.](media/windows-2008-new-inbound-rule-wizard-rule-type.png "Select Port")
+   ![Rule Type is selected and highlighted on the left side of the New Inbound Rule Wizard, and Port is selected and highlighted on the right.](media/windows-2008-new-inbound-rule-wizard-rule-type.png 'Select Port')
 
 8. In the Protocol and Ports dialog, use the default **TCP**, and enter **1433** in the Specific local ports text box, and then select **Next**.
 
-   ![Protocol and Ports is selected on the left side of the New Inbound Rule Wizard, and 1433 is in the Specific local ports box, which is selected on the right.](media/windows-2008-new-inbound-rule-wizard-protocol-and-ports.png "Select a specific local port")
+   ![Protocol and Ports is selected on the left side of the New Inbound Rule Wizard, and 1433 is in the Specific local ports box, which is selected on the right.](media/windows-2008-new-inbound-rule-wizard-protocol-and-ports.png 'Select a specific local port')
 
 9. In the Action dialog, select **Allow the connection**, and then select **Next**.
 
-   ![Action is selected on the left side of the New Inbound Rule Wizard, and Allow the connection is selected on the right.](media/windows-2008-new-inbound-rule-wizard-action.png "Specify the action")
+   ![Action is selected on the left side of the New Inbound Rule Wizard, and Allow the connection is selected on the right.](media/windows-2008-new-inbound-rule-wizard-action.png 'Specify the action')
 
 10. In the Profile step, check **Domain**, **Private**, and **Public**, then select **Next**.
 
-    ![Profile is selected on the left side of the New Inbound Rule Wizard, and Domain, Private, and Public are selected on the right.](media/windows-2008-new-inbound-rule-wizard-profile.png "Select Domain, Private, and Public")
+    ![Profile is selected on the left side of the New Inbound Rule Wizard, and Domain, Private, and Public are selected on the right.](media/windows-2008-new-inbound-rule-wizard-profile.png 'Select Domain, Private, and Public')
 
 11. On the Name screen, enter **SqlServer** for the name, and select **Finish**.
 
-    ![Profile is selected on the left side of the New Inbound Rule Wizard, and sqlserver is in the Name box on the right.](media/windows-2008-new-inbound-rule-wizard-name.png "Specify the name")
+    ![Profile is selected on the left side of the New Inbound Rule Wizard, and sqlserver is in the Name box on the right.](media/windows-2008-new-inbound-rule-wizard-name.png 'Specify the name')
 
 12. Close the Server Manager.
 
 13. Next, you will install DMA by navigating to <https://www.microsoft.com/en-us/download/details.aspx?id=53595> in a web browser on the sql-2008 VM, and then selecting the **Download** button.
 
-    ![The Download button is highlighted on the Data Migration Assistant download page.](media/dma-download.png "Download Data Migration Assistant")
+    ![The Download button is highlighted on the Data Migration Assistant download page.](media/dma-download.png 'Download Data Migration Assistant')
 
 14. Run the downloaded installer.
 
@@ -416,7 +416,7 @@ In this task, you will open an RDP connection to the sql-2008 VM, disable Intern
 
 17. On the final screen, select **Finish** to close the installer.
 
-    ![The Finish button is selected on the Microsoft Data Migration Assistant Setup dialog.](./media/data-migration-assistant-setup-finish.png "Run the Microsoft Data Migration Assistant")
+    ![The Finish button is selected on the Microsoft Data Migration Assistant Setup dialog.](./media/data-migration-assistant-setup-finish.png 'Run the Microsoft Data Migration Assistant')
 
 ### Restore ContosoAutoDb database
 

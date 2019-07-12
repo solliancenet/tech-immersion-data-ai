@@ -1,6 +1,6 @@
 # Azure SQL Managed Instance setup
 
-Complete the steps below to prepare the environment for the [Day 1, Experience 3](../../../day1-exp3/README.md) lab.
+Complete the steps below to prepare the environment for the [Data, Experience 3](../../../data-exp3/README.md) lab.
 
 ## Pre-requisites
 
@@ -88,8 +88,8 @@ The following step should be taken for the Blob Storage account:
 1. Create a container in the storage account named `database-backup`.
 2. Upload the provided `ContosoAutoDb.bak` file to the `database-backup` container.
 3. Create a SAS token providing read access to the Storage account.
-4. Update `Day 1 Experience 3, Task 2, Step 6` with the proper storage account uri, ending with `/database-backup` and SAS key. The SAS key should begin with `sv=`, so the leading "?" should be removed from the generated key.
-5. Update `Day 1 Experience 3, Task 2` Steps `8` and `9` with the proper storage account URI, ending with `/database-backup/ContosoAutoDb.bak`.
+4. Update `Data Experience 3, Task 2, Step 6` with the proper storage account uri, ending with `/database-backup` and SAS key. The SAS key should begin with `sv=`, so the leading "?" should be removed from the generated key.
+5. Update `Data Experience 3, Task 2` Steps `8` and `9` with the proper storage account URI, ending with `/database-backup/ContosoAutoDb.bak`.
 
 ### App Service configuration
 

@@ -15,7 +15,7 @@
                 "userProperties": [
                     {
                         "name": "Source",
-                        "value": "day1-exp3-data/@{concat('VehicleInfo', '.csv')}"
+                        "value": "data-exp3-data/@{concat('VehicleInfo', '.csv')}"
                     },
                     {
                         "name": "Destination",
@@ -108,7 +108,7 @@
                 "userProperties": [
                     {
                         "name": "Source",
-                        "value": "day1-exp3-data/@{concat('Cars', '.csv')}"
+                        "value": "data-exp3-data/@{concat('Cars', '.csv')}"
                     },
                     {
                         "name": "Destination",

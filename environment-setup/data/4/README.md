@@ -1,6 +1,6 @@
 # Cosmos DB real-time analytics setup
 
-Complete the steps below to prepare the environment for the [Day 1, Experience 2](../../../day1-exp2/README.md) lab.
+Complete the steps below to prepare the environment for the [Data, Experience 2](../../../data-exp2/README.md) lab.
 
 ## Pre-requisites
 
