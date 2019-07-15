@@ -49,7 +49,13 @@ Each ADF instance should have the following activities and configuration:
 
 ## Cosmos DB configuration
 
-There is no additional configuration needed for Cosmos DB.
+Create a new database and container (SQL API) with the following parameters:
+
+- **Database id**: ContosoAuto
+- **Provision database throughput**: Unchecked
+- **Container id**: telemetry
+- **Partition key**: /vin
+- **Throughput**: 15000
 
 ## Azure Data Lake Storage Gen 2
 
