@@ -160,37 +160,35 @@ In this task, you will quickly set up your ADLS Gen2 filesystem using a Databric
 
 9. In the **1-Environment-Setup** notebook, follow the instructions contained in the notebook, and then return here to complete the remaining steps of this task.
 
-10. **Please note:** If you have already completed Experience 5 (Simplifying data flows with Azure Data Factory), then you may skip the remaining steps in this task and continue to Task 3, since you have already copied the files needed for this experience.
-
-11. In the Azure portal, navigate to the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) as you did in step 1 above, and then select **tech-immersion-data-factory** from the list of resources.
+10. In the Azure portal, navigate to the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) as you did in step 1 above, and then select **tech-immersion-data-factory** from the list of resources.
 
     ![The Data Factory resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-data-factory.png 'Tech Immersion resource group')
 
-12. On the Data Factory blade, select the **Author & Monitor** tile to launch the Azure Data Factory management page.
+11. On the Data Factory blade, select the **Author & Monitor** tile to launch the Azure Data Factory management page.
 
     ![The Author & Monitor tile is highlighted on the Data Factory overview blade.](media/data-factory-author-and-monitor.png 'Author & Monitor')
 
-13. On the Azure Data Factory page, select the **Author** (pencil) icon from the left-hand menu.
+12. On the Azure Data Factory page, select the **Author** (pencil) icon from the left-hand menu.
 
     ![The Author icon is highlighted on the left-hand menu of the Azure Data Factory page.](media/data-factory-home-author.png 'Data Factory Author icon')
 
-14. On the ADF Author page, select **Pipelines** to expand the list, and then select the **CopyData** pipeline from the list.
+13. On the ADF Author page, select **Pipelines** to expand the list, and then select the **CopyData** pipeline from the list.
 
     ![Azure Data Factory pipelines](media/data-factory-pipelines-copydata.png 'ADF pipelines')
 
     > The `CopyData` pipeline consists of three copy activities. Two of the activities connect to your Azure SQL Database instance to retrieve vehicle data from tables there. The third connects to Cosmos DB to retrieve batch vehicle telemetry data. Each of the copy activities writes data into files in ADLS Gen2.
 
-15. On the pipeline toolbar, select **Add Trigger** and then **Trigger Now** to run the `CopyData` pipeline, and then select **Finish** on the Pipeline Run dialog. You will receive a notification that they `CopyData` pipeline is running.
+14. On the pipeline toolbar, select **Add Trigger** and then **Trigger Now** to run the `CopyData` pipeline, and then select **Finish** on the Pipeline Run dialog. You will receive a notification that they `CopyData` pipeline is running.
 
     ![Trigger is highlighted in the Data Factory pipeline toolbar.](media/data-factory-pipeline-toolbar.png 'Data Factory pipeline toolbar')
 
-16. To observe the pipeline run, select the **Monitor** icon from the left-hand menu, which will bring up a list of active and recent pipeline runs.
+15. To observe the pipeline run, select the **Monitor** icon from the left-hand menu, which will bring up a list of active and recent pipeline runs.
 
     ![Azure Data Factory pipeline runs](media/data-factory-monitor-pipeline-runs.png 'Azure Data Factory Monitor')
 
     > On the pipeline runs monitor page, you can see all active and recent pipeline runs. The **Status** field provide and indication of the state of the pipeline run, from In Progress to Failed or Canceled. You also have the option to filter by Status and set custom date ranges to get a specific status and time period.
 
-17. Select the **Activity Runs** icon under Actions for the currently running pipeline to view the status of the individual activities which make up the pipeline.
+16. Select the **Activity Runs** icon under Actions for the currently running pipeline to view the status of the individual activities which make up the pipeline.
 
     ![Data Factory activity runs](media/data-factory-monitor-activity-runs.png 'Data Factory activity runs')
 
