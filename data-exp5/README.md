@@ -212,7 +212,7 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
 2.  Select **Finish** on the tooltip that appears.
 
-3.  With sink1 selected, on the property panel, select **+ New next** to _ Sink dataset_.
+3.  With sink1 selected, on the property panel, select **+ New next** to _Sink dataset_.
 
 4.  On New Dataset, select **Azure Blob Storage** and select **Continue**.
 
