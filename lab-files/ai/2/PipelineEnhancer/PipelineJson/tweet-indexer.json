@@ -17,29 +17,29 @@
   "fieldMappings": [],
   "outputFieldMappings": [
     {
-      "sourceFieldName": "/document/text/people",
-      "targetFieldName": "people",
-      "mappingFunction": null
+        "sourceFieldName": "/document/text/People",
+        "targetFieldName": "People",
+        "mappingFunction": null
     },
     {
-      "sourceFieldName": "/document/text/organizations",
-      "targetFieldName": "organizations",
-      "mappingFunction": null
+        "sourceFieldName": "/document/text/Organizations",
+        "targetFieldName": "Organizations",
+        "mappingFunction": null
     },
     {
-      "sourceFieldName": "/document/text/locations",
-      "targetFieldName": "locations",
-      "mappingFunction": null
+        "sourceFieldName": "/document/text/Locations",
+        "targetFieldName": "Locations",
+        "mappingFunction": null
     },
     {
-      "sourceFieldName": "/document/text/keyphrases",
-      "targetFieldName": "keyphrases",
-      "mappingFunction": null
+        "sourceFieldName": "/document/text/Keyphrases",
+        "targetFieldName": "Keyphrases",
+        "mappingFunction": null
     },
     {
-      "sourceFieldName": "/document/language",
-      "targetFieldName": "language",
-      "mappingFunction": null
+        "sourceFieldName": "/document/Language",
+        "targetFieldName": "Language",
+        "mappingFunction": null
     }
-  ]
+]
 }

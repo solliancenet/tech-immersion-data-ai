@@ -159,7 +159,7 @@ With data now streaming into your Cosmos DB `tweets` container, you are ready to
     - **Suggester name**: Leave this blank.
     - **Search mode**: Leave this blank.
     - Before setting the check boxes for each field, expand **users** and **entities**, and any sub-properties within each.
-      - Check the **Retrievable** and **Searchable** boxes at the top, to check all fields under each category, as shown in the image below.
+      - Check the **Retrievable**, **Filterable** and **Searchable** boxes at the top, to check all fields under each category, as shown in the image below.
 
     ![The Customize target index tab is displayed, with the settings specified above entered into the form.](media/cosmos-db-add-azure-search-customize-target-index.png "Customize target index")
 
@@ -210,20 +210,20 @@ With data now streaming into your Cosmos DB `tweets` container, you are ready to
       "text": "@ContosoAuto Mi 2019 #Toyota #Tundra es el mejor auto de todos!",
       "id": "dc26f05e-1c09-4da7-b705-65a9c20d8865",
       "rid": "ZTR0eEFKdXRIZklIQUFBQUFBQUFBQT090",
-      "people": [],
-      "organizations": [
+      "People": [],
+      "Organizations": [
         "Toyota"
       ],
-      "locations": [
+      "Locations": [
         "Tundra"
       ],
-      "keyphrases": [
+      "Keyphrases": [
         "Tundra",
         "Toyota",
         "mejor auto",
         "ContosoAuto"
       ],
-      "language": "es",
+      "Language": "es",
       "user": {
         "id": 962792147,
         "id_str": "991150723",
@@ -296,7 +296,7 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
       "IndexName": "tweet-index",
       "IndexerName": "tweet-indexer",
       "SkillsetName": "tweet-skillset",
-      "ApiVersion": "2019-05-06"
+      "ApiVersion": "2019-05-06-Preview"
     }
    ```
 
@@ -446,7 +446,7 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
     "DefaultHostKey": "h3CqiI4JFKMGaN2BHwtYwxmgfwtqW0kaWbpaEQkyAcR3Lle5fKs9rg=="
     ```
 
-36. Save `appsettings.json`. The file should now look like the following.
+36. Save `appsettings.json`. The file should now resemble the following.
 
     ![Search service values entered into the appsettings.json file.](media/pipeline-enhancer-app-settings-search-service.png "App settings")
 
@@ -516,21 +516,21 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
       "id": "dc26f05e-1c09-4da7-b705-65a9c20d8865",
       "text": "@ContosoAuto Mi 2019 #Toyota #Tundra es el mejor auto de todos!",
       "rid": "ZTR0eEFKdXRIZklIQUFBQUFBQUFBQT090",
-      "people": [],
-      "organizations": [
+      "People": [],
+      "Organizations": [
         "Toyota"
       ],
-      "locations": [
+      "Locations": [
         "Mi"
       ],
-      "keyphrases": [
+      "Keyphrases": [
         "Tundra es",
         "Toyota",
         "mejor",
         "ContosoAuto Mi",
         "todos"
       ],
-      "language": "es",
+      "Language": "es",
       "sentiment": 0.5,
       "user": {
         "id": 962792147,
@@ -706,8 +706,8 @@ With the Function App now in place to support your Text Translator custom skill,
          "source": "/document/text"
        },
        {
-         "name": "language",
-         "source": "/document/language"
+         "name": "Language",
+         "source": "/document/Language"
        }
      ],
      "outputs": [
@@ -754,29 +754,62 @@ In this task, you will run your Search Indexer and then query data in the index.
      "@search.score": 0.94444835,
      "text": "@ContosoAuto Mi 2019 #Ford #Mustang es el mejor auto de todos!",
      "rid": "YmpnZEFKMUhibTN2QkFBQUFBQUFBQT090",
-     "userLocation": "Boston, MA",
-     "userName": "Brian Navedo",
-     "people": [],
-     "organizations": ["Ford"],
-     "locations": [],
-     "keyphrases": ["Mustang", "Ford", "the best"],
-     "language": "es",
+     "People": [],
+     "Prganizations": ["Ford"],
+     "Locations": [],
+     "Keyphrases": ["Mustang", "Ford", "the best"],
+     "Language": "es",
      "sentiment": 0.986368536949158,
+      "user": {
+        "id": 962792147,
+        "id_str": "991150723",
+        "name": "Max Luikart",
+        "screen_name": "MaxLuikart",
+        "location": "San Diego, CA",
+        "url": "",
+        "description": ""
+      },
+      "entities": {
+        "symbols": [],
+        "urls": [],
+        "hashtags": [
+          {
+            "indices": null,
+            "text": "Ford"
+          },
+          {
+            "indices": null,
+            "text": "Mustang"
+          }
+        ],
+        "user_mentions": [
+          {
+            "id": 2244994945,
+            "id_str": "2244994945",
+            "indices": [
+              0,
+              12
+            ],
+            "name": "Contoso Auto",
+            "screen_name": "ContosoAuto"
+          }
+        ]
+      },
      "textTranslated": "@ContosoAuto My 2019 #Ford #Mustang is the best car of all!"
    }
    ```
 
-   > Notice the addition of the `textTranslated` field to the bottom of the record. This contains the English translation of the contents of the `text` field in the tweet. You will also notice that the `keyphrases` field contains only English words and phrases. This is because the `KeyPhraseExtractionSkill` was pointed to the new `textTranslated` field with the latest updates to the search pipeline.
+   > Notice the addition of the `textTranslated` field to the bottom of the record. This contains the English translation of the contents of the `text` field in the tweet. You will also notice that the `Keyphrases` field contains only English words and phrases. This is because the `KeyPhraseExtractionSkill` was pointed to the new `textTranslated` field with the latest updates to the search pipeline.
 
    ![Query for records where language is es.](media/azure-search-query-language-is-es.png "Search query")
 
-   > In addition, notice that each record returned contains a `@search.score` field with a numeric value. This value indicates the confidence of the match with the search query. The higher the value, the more likely it is to be a match for the query. If you scroll down past the records where `"language"="es"`, you will see the search score values drop, as those records don't match the query.
+   > In addition, notice that each record returned contains a `@search.score` field with a numeric value. This value indicates the confidence of the match with the search query. The higher the value, the more likely it is to be a match for the query. If you scroll down past the records where `"Language"="es"`, you will see the search score values drop, as those records don't match the query.
 
 4. Try another search, such as "cold battery" and observe the results.
 
    ![Query for records containing "cold" and "battery"](media/azure-search-query-cold-battery.png "Search query")
 
-5. Now, let's try a slightly more advanced search. We want to look for only records that mention a "corvette", and we only want to retrieve the `text`, `userLocation`, and `sentiment` fields in our results. Paste the following into the Query string box, and select **Search**:
+5. Now, let's try a slightly more advanced search. We want to look for only records that mention a "corvette", and we only want to retrieve the `text`, `user.location`, and `sentiment` fields in our results. Paste the following into the Query string box, and select **Search**:
 
    ```http
    search=corvette&$select=text,user/location,sentiment&$count=true
@@ -797,7 +830,7 @@ In this task, you will run your Search Indexer and then query data in the index.
 7. The final query we will run adds the `$orderBy` parameter, which allow you to specify the sort order of your results. In this case, let's search for records where the sentiment is the highest, filtering for records where the sentiment is greater than 0.9, and ordering the results in descending order.
 
    ```http
-   search=*&$select=text,userLocation,sentiment&$filter=sentiment gt 0.9&$count=true&$orderby=sentiment desc
+   search=*&$select=text,user/location,sentiment&$filter=sentiment gt 0.9&$count=true&$orderby=sentiment desc
    ```
 
    ![Using the orderBy filter in a search query](media/azure-search-query-orderby.png "Ordered search query")

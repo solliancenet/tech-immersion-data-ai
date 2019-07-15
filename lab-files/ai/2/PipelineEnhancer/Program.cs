@@ -78,7 +78,6 @@ namespace PipelineEnhancer
 
                     try
                     {
-
                         // Retrieve the components from the API, or create base objects if they don't exist.
                         var index = await CognitiveSearchHelper.GetIndex(searchClient, appConfig.Search.IndexName);
                         var indexer = await CognitiveSearchHelper.GetIndexer(searchClient, appConfig.Search);
@@ -146,7 +145,12 @@ namespace PipelineEnhancer
                 return;
             }
 
-            index.Fields.Add(new Field("sentiment", DataType.Double));
+            var sentimentField = new Field("sentiment", DataType.Double)
+            {
+                IsSortable = true,
+                IsFilterable = true
+            };
+            index.Fields.Add(sentimentField);
             indexer.OutputFieldMappings.Add(CognitiveSearchHelper.CreateFieldMapping("document/sentiment", "sentiment").GetAwaiter().GetResult());
             skillset.Skills.Add(new SentimentSkill
             {
@@ -204,7 +208,7 @@ namespace PipelineEnhancer
                 Inputs = new List<InputFieldMappingEntry>
                 {
                     new InputFieldMappingEntry("text", "/document/text"),
-                    new InputFieldMappingEntry("language", "/document/language")
+                    new InputFieldMappingEntry("language", "/document/Language")
                 },
                 Outputs = new List<OutputFieldMappingEntry>
                 {
