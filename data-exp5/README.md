@@ -44,11 +44,11 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
 ### Task 1: Create the data flow
 
-1.  Browse to the Azure Portal and navigate to the `tech-immersion` resource group and select the Azure Data Factory instance `tech-immersion-data-factory`.
+1.  Browse to the Azure Portal and navigate to the `tech-immersion-XXXXX` resource group and select the Azure Data Factory instance `tech-immersion-df-XXXXX`.
 
     ![The Data Factory resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-data-factory.png 'Tech Immersion resource group')
 
-2.  On the Overview blade, select **Author & Monitor**.
+2.  On the **Overview** blade, select **Author & Monitor**.
 
     ![The author and monitor button in the Azure Data Factory overview page](./media/01-author-monitor.png)
 
@@ -74,33 +74,35 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
 8.  In the tool tip that appears, click **Finish**.
 
-9.  Select Add Source on the data flow design surface.
+9.  Select the **Add Source** area on the data flow design surface.
 
     ![The Add Source drop target](media/08-add-source.png)
 
 10. In the tool tip that appears, read the guide text and select **Next** until it is dismissed.
 
-11. Near the top of the window, toggle the Data Flow Debug to on and then select OK in the dialog that appears. This will provision a small Databricks cluster behind the scenes that you will use to inspect your data as you are building the data flow. It takes about 5 minutes to be ready, but you can continue on with the next steps while it starts up.
+11. Near the top of the window, toggle the **Data Flow Debug** to on and then select **OK** in the dialog that appears. This will provision a small Databricks cluster behind the scenes that you will use to inspect your data as you are building the data flow. It takes about 5 minutes to be ready, but you can continue on with the next steps while it starts up.
 
     ![Toggling the Data Flow Debug on](media/10-data-flow-debug.png)
 
-12. In the Source Setting tab, select **+ New** next to _Source dataset_.
+12. Select the new source data set item, and then in the property panel, select the **Source Setting** tab, 
+
+13.  Select **+ New** next to _Source dataset_.
 
     ![Configuring the Source Settings](media/10-new-source-dataset.png)
 
-13. On the New Data Set panel, select **Azure Blob Storage** and then select **Continue**.
+14. On the New Data Set panel, select **Azure Blob Storage** and then select **Continue**.
 
     ![Selecting Blob Storage as the New Dataset source](media/12-blob-storage-source.png)
 
-14. On the Select Format panel, select **DelimitedText** and select **Continue**.
+15. On the Select Format panel, select **DelimitedText** and select **Continue**.
 
     ![Selecting DelimitedText as the format](media/13-text-source.png)
 
-15. On Set Properties, set the Name to `trip_data_input` and the under Linked service select `AzureBlobStorage`, which is a storage account that has been added for you.
+16. On Set Properties, set the Name to `trip_data_input` and the under Linked service select `AzureBlobStorage`, which is a storage account that has been added for you.
 
     ![Setting the name and linked service](media/14-set-properties.png)
 
-16. On Set Properties, for the File Path configure the following values:
+17. On Set Properties, for the File Path configure the following values:
 
     - Container: `data`
     - File: `trip_data_1.csv`
@@ -108,9 +110,9 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
     ![Setting the file path to the input file](media/16-set-file-path.png)
 
-17. Select **Finish**.
+18. Select **Finish**.
 
-18. You now have your source CSV file configured in the data flow.
+19. You now have your source CSV file configured in the data flow.
 
 ### Task 2: Previewing the trip data
 
@@ -158,7 +160,7 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
     ![The properties for the trip fare input](media/24-properties-tripfare.png)
 
-6.  With the tripfare node selected, in the property panel select Projection and then select Detect data type to set the schema for this data source.
+6.  With the tripfare node selected, in the property panel select **Projection** and then select **Detect data type** to set the schema for this data source.
 
     ![Viewing the auto assigned data types for the tripfare source](media/25-tripfare-datatypes.png)
 
@@ -200,6 +202,8 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
     ![Configured aggregates](media/30-trip-aggregates.png)
 
+> NOTE:  TotalTripFare is not a source column, so type its name rather than selecting it.
+
 4.  At this point your data flow should look like the following:
 
 ![Data flow showing the two sources, the join and the aggregate](media/31-flow-snapshot.png)
@@ -239,9 +243,9 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
     ![Selecting trigger now](media/35-trigger-now.png)
 
-3.  Select **Monitor** from the tabs on the left. Watch the status of your pipeline as it runs. Select **Refresh** at any point to update the listing. It should take **about 7 minutes** to completely execute your pipeline.
+3.  Select **Monitor** from the menu tabs on the left. Watch the status of your pipeline as it runs. Select **Refresh** at any point to update the listing. It should take **about 7 minutes** to completely execute your pipeline.
 
-4.  When the pipeline has completed, navigate to the `tech-immersion` resource group, select the `samplefiles` storage account and select Blobs and then the `data` folder.
+4.  When the pipeline has completed, navigate to the `tech-immersion-XXXXX` resource group, select the `samplefiles` storage account and select **Blobs** and then the `data` folder.
 
     ![Select blobs in the Azure Storage account](media/37-select-blobs.png)
 
@@ -259,7 +263,7 @@ In this task, you will set up your ADLS Gen2 filesystem using a Databricks noteb
 
    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
 
-2. Prior to using ADF to move data into your ADLS Gen2 instance, you must create a filesystem in ADLS Gen2. Within the resource group, select the storage account whose name ends in `adlsgen2`.
+2. Prior to using ADF to move data into your ADLS Gen2 instance, you must create a filesystem in ADLS Gen2. Within the resource group, select the storage account whose name like `adlsstrgXXXXX`.
 
 3. On the Overview blade, look under services and select **Data Lake Gen 2 file systems**.
 
@@ -275,9 +279,7 @@ In this task, you will set up your ADLS Gen2 filesystem using a Databricks noteb
 
     > The `CopyData` pipeline consists of three copy activities. Two of the activities connect to your Azure SQL Database instance to retrieve vehicle data from tables there. The third connects to Cosmos DB to retrieve batch vehicle telemetry data. Each of the copy activities writes data into files in ADLS Gen2.
 
-3.  On the pipeline toolbar, select **Trigger** to run the `CopyData` pipeline, and then select **Finish** on the Pipeline Run dialog. You will receive a notification that they `CopyData` pipeline is running.
-
-    ![Trigger is highlighted in the Data Factory pipeline toolbar.](media/data-factory-pipeline-toolbar.png 'Data Factory pipeline toolbar')
+3.  On the pipeline toolbar, select **Add Trigger**, then select **Trigger Now**, and then select **Finish** on the Pipeline Run dialog. You will receive a notification that they `CopyData` pipeline is running.
 
 4.  To observe the pipeline run, select the **Monitor** icon from the left-hand menu, which will bring up a list of active and recent pipeline runs.
 
