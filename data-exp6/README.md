@@ -160,7 +160,7 @@ In this task, you will quickly set up your ADLS Gen2 filesystem using a Databric
 
 9. In the **1-Environment-Setup** notebook, follow the instructions contained in the notebook, and then return here to complete the remaining steps of this task.
 
-10. In the Azure portal, navigate to the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) as you did in step 1 above, and then select **tech-immersion-data-factory** from the list of resources.
+10. In the Azure portal, navigate to the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) as you did in step 1 above, and then select **tech-immersion-df-XXXXX** from the list of resources.
 
     ![The Data Factory resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-data-factory.png 'Tech Immersion resource group')
 
@@ -278,7 +278,7 @@ In this task, you will use Power BI Desktop to read data from Azure SQL DW to cr
 
        ![The Server name is highlighted on the SQL DW overview blade.](media/sql-dw-server-name.png 'SQL Server Data Warehouse')
 
-   - **Database**: Enter tech-immersion-sql-dw.
+   - **Database**: Enter tech-immersion-sql-dw-XXXXX.
    - **Data Connectivity mode**: Select DirectQuery.
 
    ![The Power BI SQL Server database connection dialog is displayed. The tech-immersion-sql-dw server name is entered into the Server box, and tech-immersion-sql-dw is entered into the Database field. DirectQuery is selected for the Data Connectivity mode.](media/power-bi-sql-server-database.png 'Power BI SQL Server database connection')

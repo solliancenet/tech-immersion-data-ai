@@ -257,7 +257,7 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
 ### Task 1: Prepare the ADLS file system
 
-In this task, you will set up your ADLS Gen2 filesystem using a Databricks notebook, and then review and execute ADF pipelines to copy data from various sources, including Cosmos DB, in your ADLS Gen2 filesystem.
+In this task, you will set up your ADLS Gen2 filesystem, and then review and execute ADF pipelines to copy data from various sources, including Cosmos DB, in your ADLS Gen2 filesystem.
 
 1. In a web browser, navigate to the [Azure portal](https://portal.azure.com), select **Resource groups** from the left-hand menu, and then select the resource group named **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
 
