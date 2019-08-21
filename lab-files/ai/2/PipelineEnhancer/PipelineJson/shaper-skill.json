@@ -1,0 +1,105 @@
+{
+  "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+  "name": "ShaperSkill",
+  "description": "ShaperSkill for knowledge store",
+  "context": "/document",
+  "inputs": [
+    {
+      "name": "created_at",
+      "source": "/document/created_at",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "id_str",
+      "source": "/document/id_str",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "text",
+      "source": "/document/text",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "textTranslated",
+      "source": "/document/textTranslated",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "sentiment",
+      "source": "/document/sentiment",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "user",
+      "source": "/document/user",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "entities",
+      "source": "/document/entities",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "id",
+      "source": "/document/id",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "rid",
+      "source": "/document/rid",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "KeyPhrases",
+      "source": "/document/text/Keyphrases/*",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "LanguageCode",
+      "source": "/document/Language",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "Entities",
+      "source": null,
+      "sourceContext": "/document/text/ExtractedEntities/*",
+      "inputs": [
+        {
+          "name": "Name",
+          "source": "/document/text/ExtractedEntities/*/name",
+          "sourceContext": null,
+          "inputs": []
+        },
+        {
+          "name": "Type",
+          "source": "/document/text/ExtractedEntities/*/type",
+          "sourceContext": null,
+          "inputs": []
+        },
+        {
+          "name": "Url",
+          "source": "/document/text/ExtractedEntities/*/wikipediaUrl",
+          "sourceContext": null,
+          "inputs": []
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "targetName": "tableprojection"
+    }
+  ]
+}

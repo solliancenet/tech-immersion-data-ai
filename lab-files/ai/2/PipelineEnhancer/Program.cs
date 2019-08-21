@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace PipelineEnhancer
 {
@@ -36,14 +37,14 @@ namespace PipelineEnhancer
             {
                 while (true)
                 {
-                    Console.WriteLine("PipelineEnhancer creates and updates Cognitive Search pipelines.");
                     Console.WriteLine("=============");
+                    Console.WriteLine("Choose an option below to run the PipelineEnhancer.");
                     Console.WriteLine("** Enter 1 to add a Sentiment Analysis cognitive skill to the Tweets search index.");
-                    //Console.WriteLine("** Enter 2 to include Personalized ranking information in the Tweets search index.");
                     Console.WriteLine("** Enter 2 to integrate a custom text translator skill to the Tweets search index.");
-                    Console.WriteLine("** Enter 3 to create a new search pipeline for searching and recognizing forms in Blob Storage.");
-                    Console.WriteLine("** Enter 4 to create a new search pipeline for indexing vehicle telemetry and inspecting for engine temperature anomalies.");
-                    Console.WriteLine("=============");
+                    //Console.WriteLine("** Enter 3 to integrate a custom summarizer skill using a deployed ML model.");
+                    Console.WriteLine("** Enter 3 to add a knowledge store.");
+                    Console.WriteLine("** Enter 4 to create a new search pipeline for searching and recognizing forms in Blob Storage.");
+                    Console.WriteLine("** Enter 5 to create a new search pipeline for indexing vehicle telemetry and inspecting for engine temperature anomalies.");
                     Console.WriteLine("** Enter X to exit the console application.");
                     Console.WriteLine("=============");
                     Console.WriteLine("");
@@ -54,20 +55,21 @@ namespace PipelineEnhancer
                     {
                         Console.Write("Enter the number of the operation you would like to perform > ");
 
-                        var input = Console.ReadLine();
+                        var input = Console.ReadLine().Trim();
                         if (input.Equals("1", StringComparison.InvariantCultureIgnoreCase) ||
                             input.Equals("2", StringComparison.InvariantCultureIgnoreCase) ||
                             input.Equals("3", StringComparison.InvariantCultureIgnoreCase) ||
                             input.Equals("4", StringComparison.InvariantCultureIgnoreCase) ||
-                            //input.Equals("5", StringComparison.InvariantCultureIgnoreCase) ||
+                            input.Equals("5", StringComparison.InvariantCultureIgnoreCase) ||
+                            //input.Equals("6", StringComparison.InvariantCultureIgnoreCase) ||
                             input.Equals("X", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            userInput = input.Trim();
+                            userInput = input;
                             break;
                         }
                         else
                         {
-                            Console.WriteLine("Invalid input entered. Please enter a number between 1 and 4, or X.");
+                            Console.WriteLine("Invalid input entered. Please enter a number between 1 and 6, or X.");
                         }
                     }
 
@@ -78,23 +80,32 @@ namespace PipelineEnhancer
 
                     try
                     {
-                        // Retrieve the components from the API, or create base objects if they don't exist.
-                        var index = await CognitiveSearchHelper.GetIndex(searchClient, appConfig.Search.IndexName);
-                        var indexer = await CognitiveSearchHelper.GetIndexer(searchClient, appConfig.Search);
-                        var skillset = await CognitiveSearchHelper.GetSkillset(searchClient, appConfig.Search.SkillsetName, appConfig.CognitiveServices);
+                        // Set the components back to their base objects, from JSON files
+                        var index = await CognitiveSearchHelper.GetIndexFromFile(appConfig.Search.IndexName);
+                        var indexer = await CognitiveSearchHelper.GetIndexerFromFile(appConfig.Search);
+                        var skillset = await CognitiveSearchHelper.GetSkillsetFromFile(appConfig.Search.SkillsetName, appConfig.CognitiveServices);
+
                         var message = "";
 
                         Console.WriteLine("");
                         
                         switch(userInput)
                         {
-                            case "4":
+                            case "5":
                                 await CreateAnomalyDetectionPipeline(searchClient, appConfig);
-                                continue;
-                            case "3":
+                                break;
+                            case "4":
                                 var modelId = await TrainFormRecognizerModel(appConfig.FormRecognizer, appConfig.BlobStorage);
                                 await CreateFormsRecognitionPipeline(searchClient, appConfig, modelId);
-                                continue;
+                                break;
+                            case "3":
+                                AddKnowledgeStore(searchClient, appConfig, ref index, ref indexer, ref skillset);
+                                Console.WriteLine("Successfully added the knowledge store to the cognitive search pipeline.");
+                                break;
+                            //case "3":
+                            //    AddCustomSummarizerSkill(ref index, ref indexer, ref skillset, appConfig.FunctionApp);
+                            //    Console.WriteLine("The custom machine learning model skill was successfully integrated to the search pipeline.");
+                            //    goto case "2";
                             case "2":
                                 AddCustomTranslateSkill(ref index, ref indexer, ref skillset, appConfig.FunctionApp);
                                 Console.WriteLine("Your custom translator skill was successfully integrated to the search pipeline.");
@@ -111,10 +122,7 @@ namespace PipelineEnhancer
                                     });
                                 break;
                             default:
-                                index = await CognitiveSearchHelper.GetIndexFromFile(appConfig.Search.IndexName);
-                                indexer = await CognitiveSearchHelper.GetIndexerFromFile(appConfig.Search);
-                                skillset = await CognitiveSearchHelper.GetSkillsetFromFile(appConfig.Search.SkillsetName, appConfig.CognitiveServices);
-                                message = "The search pipeline has been restored to its initial state";
+                                message = "Resetting the search pipeline to its initial state...";
                                 await CognitiveSearchHelper.CreateCognitiveSearchPipeline(searchClient, appConfig.Search, index, indexer, skillset)
                                     .ContinueWith(t =>
                                     {
@@ -164,26 +172,7 @@ namespace PipelineEnhancer
 
         #endregion
 
-        #region Task 2: Add Personalizer fields
-
-        #endregion
-
-        #region Task 2: Add user fields
-
-        private static void AddUserInfoToIndex(ref Index index, ref Indexer indexer)
-        {
-            var analyzer = AnalyzerName.StandardLucene;
-            // Create a new index fields for userName and userLocation
-            index.Fields.Add(new Field("userName", analyzer));
-            index.Fields.Add(new Field("userLocation", analyzer));
-
-            indexer.OutputFieldMappings.Add(CognitiveSearchHelper.CreateFieldMapping("/document/user/name", "userName").GetAwaiter().GetResult());
-            indexer.OutputFieldMappings.Add(CognitiveSearchHelper.CreateFieldMapping("/document/user/location", "userLocation").GetAwaiter().GetResult());
-        }
-
-        #endregion
-
-        #region Task 3: Integrate custom translator skill
+        #region Task 2: Integrate custom translator skill
 
         private static void AddCustomTranslateSkill(ref Index index, ref Indexer indexer, ref Skillset skillset, FunctionAppConfig config)
         {
@@ -237,7 +226,90 @@ namespace PipelineEnhancer
 
         #endregion
 
-        #region Task 4: Form Recognizer skill
+        #region Task 3: Integrate custom summarizer ML model
+
+        private static void AddCustomSummarizerSkill(ref Index index, ref Indexer indexer, ref Skillset skillset, FunctionAppConfig config)
+        {
+            var targetField = "summary";
+            var headers = new Dictionary<string, string>
+            {
+                { "Content-Type", "application/json" }
+            };
+
+            index.Fields.Add(new Field(targetField, AnalyzerName.StandardLucene));
+            indexer.OutputFieldMappings.Add(CognitiveSearchHelper.CreateFieldMapping($"/document/{targetField}", targetField).GetAwaiter().GetResult());
+
+            // Create the custom translate skill
+            skillset.Skills.Add(new WebApiSkill
+            {
+                Description = "Custom summarization skill",
+                Context = "/document",
+                Uri = $"{config.Url}/api/Summarize?code={config.DefaultHostKey}",
+                HttpMethod = "POST",
+                //HttpHeaders = new WebApiHttpHeaders(headers),
+                BatchSize = 1,
+                Inputs = new List<InputFieldMappingEntry>
+                {
+                    new InputFieldMappingEntry("text", "/document/textTranslated")
+                },
+                Outputs = new List<OutputFieldMappingEntry>
+                {
+                    new OutputFieldMappingEntry("summaryText", targetField)
+                }
+            });
+        }
+        #endregion
+
+        #region Task 4: Add knowledge store
+
+        private static void AddKnowledgeStore(SearchServiceClient searchClient, AppConfig appConfig, ref Index index, ref Indexer indexer, ref Skillset skillset)
+        {
+            // Add the skills from previous steps
+            AddSentimentAnalysisSkill(ref index, ref indexer, ref skillset);
+            AddCustomTranslateSkill(ref index, ref indexer, ref skillset, appConfig.FunctionApp);
+            //AddCustomSummarizerSkill(ref index, ref indexer, ref skillset, appConfig.FunctionApp);
+
+            // Convert the Skillset into a JSON string.
+
+            var skillsetJson = CognitiveSearchHelper.GetSkillsetJson(skillset).GetAwaiter().GetResult();
+
+            //  Insert ShaperSkill into the Skillset as a JSON string
+            Console.WriteLine("Adding Shaper Skill to the pipeline to set up the table projections.");
+            var shaperSkillJson = GetJsonFromFile("shaper-skill").GetAwaiter().GetResult();
+            var skillsetJsonWithShaperSkill = CognitiveSearchHelper.InsertSkillAsJson(skillsetJson, shaperSkillJson);
+
+            // Insert knowledge store JSON string into the Skillset JSON
+            Console.WriteLine("Inserting the knowledge store with table projections.");
+            var updatedSkillset = InsertKnowledgeStoreJson(skillsetJsonWithShaperSkill, appConfig.BlobStorage);
+
+            // Create the search pipeline using the updated skillset JSON. No SDK exists yet for doing this using the SDK objects, so must use the REST API to accomplish adding a knowledge store via code.
+            Console.WriteLine("Rebuilding cognitive search pipeline...");
+            CognitiveSearchHelper.CreateCognitiveSearchPipeline(searchClient, appConfig.Search, index, indexer, skillset.Name, updatedSkillset).GetAwaiter().GetResult();
+        }
+
+        private static string InsertKnowledgeStoreJson(string skillsetJson, BlobStorageConfig storageConfig)
+        {
+            var knowledgeStoreJson = GetJsonFromFile("knowledge-store").GetAwaiter().GetResult();
+            knowledgeStoreJson = knowledgeStoreJson.Replace("[storage-connection-string]", storageConfig.ConnectionString);
+
+            var skillset = JObject.Parse(skillsetJson);
+            var jtoken = JToken.Parse(knowledgeStoreJson);
+            skillset.Add("knowledgeStore", jtoken);
+            return skillset.ToString();
+        }
+
+        private static async Task<string> GetJsonFromFile(string fileName)
+        {
+            using (var reader = new StreamReader($"PipelineJson/{fileName}.json"))
+            {
+                var json = await reader.ReadToEndAsync();
+                return json;
+            }
+        }
+
+        #endregion
+
+        #region Task 5: Form Recognizer skill
 
         private static async Task CreateFormsRecognitionPipeline(SearchServiceClient searchClient, AppConfig appConfig, string modelId)
         {
@@ -266,9 +338,6 @@ namespace PipelineEnhancer
                         ? t.Exception.Message
                         : "Your forms recognizer pipeline was successfully created.");
                 });
-
-            Console.WriteLine("");
-            Console.WriteLine("");
         }
 
         /// <summary>
@@ -354,7 +423,7 @@ namespace PipelineEnhancer
 
         #endregion
 
-        #region Task 7: Anomaly detection skill
+        #region Task 6: Anomaly detection skill
 
         private static async Task CreateAnomalyDetectionPipeline(SearchServiceClient searchClient, AppConfig appConfig)
         {
@@ -377,7 +446,7 @@ namespace PipelineEnhancer
                 Description = "Anomaly detection skills",
                 CognitiveServices = new CognitiveServicesByKey(appConfig.CognitiveServices.Key, appConfig.CognitiveServices.ResourceId),
                 Skills = new List<Skill>()
-        };
+            };
 
             Console.WriteLine("Adding Custom Anomaly Detector skill to pipeline");
             AddCustomAnomalyDetectorSkill(ref index, ref indexer, ref skillset, appConfig);
@@ -389,9 +458,6 @@ namespace PipelineEnhancer
                         ? t.Exception.Message
                         : "Your anomaly detection pipeline was successfully created.");
                 });
-
-            Console.WriteLine("");
-            Console.WriteLine("");
         }
 
         private static void AddCustomAnomalyDetectorSkill(ref Index index, ref Indexer indexer, ref Skillset skillset, AppConfig config)
