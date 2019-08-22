@@ -10,6 +10,7 @@ The computer or VM on which you run the scripts to deploy the cluster and restor
 - Latest version of [.NET Core](https://www.microsoft.com/net/download) including the .NET Core SDK ([version 2.2](https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.105-windows-x64-installer) or greater)
 - [Node.js](https://nodejs.org/) version 8.5 or higher
 - [Bot Framework Emulator](https://github.com/Microsoft/BotFramework-Emulator/releases/latest)
+- PowerShell Core (latest release): <https://github.com/PowerShell/PowerShell/releases>
 - Azure Bot Service command line (CLI) tools. It's important to do this even if you have earlier versions as the Virtual Assistant makes use of new deployment capabilities. **Minimum version 4.3.2 required for msbot, and minimum version 1.1.0 required for ludown.**
 
   ```shell
