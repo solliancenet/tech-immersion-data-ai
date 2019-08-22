@@ -15,7 +15,7 @@ Each attendee will have a resource group containing the following resources:
   - Name: tech-immersion
 - Cognitive Services
   - S0 Standard
-  - Name: tech-immersion-cog-serv
+  - Name: tech-immersion-cog-services
 - Anomaly Detector
   - S0
   - Name: tech-immersion-anomaly-detector
@@ -31,8 +31,7 @@ Each attendee will have a resource group containing the following resources:
   - Consumption Plan
   - Name: ti-function-day2
 - Azure Blob storage account
-
-  - Name: techimmersionstorageXXXXX
+  - Name: techimmersionstoreXXXXX
   - Must be in the same region as the Form Recognizer service.
 
 ## Lab computer pre-requisites

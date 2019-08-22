@@ -1,5 +1,5 @@
 {
-  "description": "basic text skillset",
+  "description": "Extract entities, detect language and extract key-phrases",
   "skills": [
     {
       "@odata.type": "#Microsoft.Skills.Text.EntityRecognitionSkill",
@@ -16,7 +16,7 @@
       ],
       "defaultLanguageCode": "en",
       "minimumPrecision": null,
-      "includeTypelessEntities": null,
+      "includeTypelessEntities": true,
       "inputs": [
         {
           "name": "text",
@@ -46,7 +46,11 @@
         },
         {
           "name": "entities",
-          "targetName": "entities"
+          "targetName": "ExtractedEntities"
+        },
+        {
+          "name": "namedEntities",
+          "targetName": "NamedEntities"
         }
       ]
     },

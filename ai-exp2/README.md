@@ -2,20 +2,23 @@
 
 ## AI, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [AI, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search](#AI-Experience-2---Yield-quick-insights-from-unstructured-data-with-Knowledge-Mining-and-Cognitive-Search)
-  - [Technology overview](#Technology-overview)
-  - [Scenario overview](#Scenario-overview)
-  - [Task 1: Populate Cosmos DB with tweets from a generator](#Task-1-Populate-Cosmos-DB-with-tweets-from-a-generator)
-  - [Task 2: Create a basic Cognitive Search pipeline using the Azure portal](#Task-2-Create-a-basic-Cognitive-Search-pipeline-using-the-Azure-portal)
-  - [Task 3: Enhance the Cognitive Search pipeline](#Task-3-Enhance-the-Cognitive-Search-pipeline)
-  - [Task 4: Publish Function App for custom skills](#Task-4-Publish-Function-App-for-custom-skills)
-  - [Task 5: Integrate Text Translate custom skill into pipeline](#Task-5-Integrate-Text-Translate-custom-skill-into-pipeline)
-  - [Task 6: Run indexer and query translation data](#Task-6-Run-indexer-and-query-translation-data)
-  - [Task 7: Create Forms Recognizer Pipeline](#Task-7-Create-Forms-Recognizer-Pipeline)
-  - [Task 8: Create an Anomaly Detection pipeline](#Task-8-Create-an-Anomaly-Detection-pipeline)
-  - [Wrap-up](#Wrap-up)
-  - [Additional resources and more information](#Additional-resources-and-more-information)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
+  - [AI, Experience 2 - Yield quick insights from unstructured data with Knowledge Mining and Cognitive Search](#ai-experience-2---yield-quick-insights-from-unstructured-data-with-knowledge-mining-and-cognitive-search)
+  - [Technology overview](#technology-overview)
+  - [Scenario overview](#scenario-overview)
+  - [Task 1: Populate Cosmos DB with tweets from a generator](#task-1-populate-cosmos-db-with-tweets-from-a-generator)
+  - [Task 2: Create a basic Cognitive Search pipeline using the Azure portal](#task-2-create-a-basic-cognitive-search-pipeline-using-the-azure-portal)
+  - [Task 3: Enhance the Cognitive Search pipeline](#task-3-enhance-the-cognitive-search-pipeline)
+  - [Task 4: Publish Function App for custom skills](#task-4-publish-function-app-for-custom-skills)
+  - [Task 5: Integrate Text Translate custom skill into pipeline](#task-5-integrate-text-translate-custom-skill-into-pipeline)
+  - [TODO: REMOVE THIS: Task 6: Add custom skill using deployed machine learning model](#todo-remove-this-task-6-add-custom-skill-using-deployed-machine-learning-model)
+  - [Task 6: Query data in the Azure portal](#task-6-query-data-in-the-azure-portal)
+  - [Task 7: Add a knowledge store](#task-7-add-a-knowledge-store)
+  - [Task 8: Visualize enriched documents in Power BI](#task-8-visualize-enriched-documents-in-power-bi)
+  - [Task 9: Create Forms Recognizer Pipeline](#task-9-create-forms-recognizer-pipeline)
+  - [Task 10: Create an Anomaly Detection pipeline](#task-10-create-an-anomaly-detection-pipeline)
+  - [Wrap-up](#wrap-up)
+  - [Additional resources and more information](#additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -44,16 +47,16 @@ In this experience, you will learn the mechanics of using Cognitive Search and K
 
 For this experience, you will be using the `tweets` container in ContosoAuto's Cosmos DB as a data source for your Cognitive Search pipeline. In order to use Cosmos DB as a data source, documents must exist in the target container prior to creating the Data Source in Azure Search. In this task, you will populate the `tweets` container in your Cosmos DB `ContosoAuto` database using a tweet generator application running in Visual Studio.
 
-1. Open File Explorer and navigate to `C:\lab-files\ai\2`. Double-click on **`CognitiveSearch.sln`** to open the solution in Visual Studio. If you are prompted about how to open the file, choose **Visual Studio 2017**. If you are prompted by Visual Studio to log in, use the Azure credentials you are using for this workshop.
+1. Open File Explorer and navigate to `C:\lab-files\ai\2`. Double-click on **`CognitiveSearch.sln`** to open the solution in Visual Studio. If you are prompted about how to open the file, choose **Visual Studio 2019**. If you are prompted by Visual Studio to log in, use the Azure credentials you are using for this workshop.
 
     ![File Explorer window with `CognitiveSearch.sln` file highlighted.](media/windows-explorer-cognitive-search-sln.png "File Explorer")
 
     The Visual Studio solution contains the following projects:
 
    - **CosmosDb.Common**: Common library containing models and classes used by other projects within the solution to communicate with Azure Cosmos DB.
-   - **CustomSkillFunctions**: Contains Azure Functions that are used to perform the action behind custom cognitive skills, such as translating non-English tweets to English and recognizing form fields.
+   - **CustomSkillFunctions**: Contains the Azure Functions that are used to perform actions behind custom cognitive skills, such as translating non-English tweets to English and recognizing form fields.
    - **DataGenerator**: Console app that generates simulated tweets and vehicle telemetry data and sends it to Cosmos DB.
-   - **PipelineEnhancer**: Console app that interacts with Azure Search Service REST APIs to enhance the Cognitive Search pipeline.
+   - **PipelineEnhancer**: Console app that interacts with Azure Search Service SDK and REST APIs to enhance the Cognitive Search pipeline.
 
 2. In the Solution Explorer on the left-hand side of Visual Studio, expand the **DataGenerator** project, and then locate and open the `appsettings.json` file.
 
@@ -113,7 +116,7 @@ With data now streaming into your Cosmos DB `tweets` container, you are ready to
 
     ![A tweet document is displayed, with the text field highlighted.](media/cosmos-db-tweet-document.png "Tweet document")
 
-    > The `text` field, which contains the content of the tweet, and is what you will be using as you begin building your Cognitive Search pipeline.
+    > The `text` field, which contains the content of the tweet, is what you will be using as you begin building your Cognitive Search pipeline.
 
 4. With a better understanding of the structure of the tweet documents stored in Cosmos DB, let's move on to creating a basic Cognitive Search pipeline. From your Cosmos DB blade in the Azure portal, select **Add Azure Search** from the left-hand menu, select your **tech-immersion** search service, and then select **Next: Connect to your data**.
 
@@ -138,19 +141,26 @@ With data now streaming into your Cosmos DB `tweets` container, you are ready to
 
 6. Select **Next: Add cognitive search (Optional)**.
 
-    > In this step, you will add a set of enrichment steps to the data being ingested from Cosmos DB. In a Cognitive Search pipeline, individual enrichment steps are called _skills_, and the collection of enrichment steps is a _skillset_. The predefined skills available at this step through the UI use pre-trained models to extract additional information from the documents. The [EntityRecognitionSkill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-entity-recognition) extracts entities (people, location, organization, emails, URLs, DateTime fields) from the document. The [LanguageDetectionSkill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-language-detection) is used to detect the primary language used in the document, and the [KeyPhraseExtractionSkill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-keyphrases) detects important phrases based on term placement, linguistic rules, proximity to other terms, and how unusual the term is within the source data. Read about all of the available [predefined cognitive skills](https://docs.microsoft.com/en-us/azure/search/cognitive-search-predefined-skills) to learn more.
-
-7. On the **Add cognitive search (Optional)** tab:
-
-   - Expand **Attach Cognitive Services** and select your **tech-immersion-cog-services** instance. This will associate your Cognitive Services account with the Skillset you are creating.
-   - Expand **Add Enrichments**, enter **tweet-skillset** as the name, and select **text** as the source data field.
-   - Check the box next to the Text Cognitive Skills header to select all of the options.
-
-   ![The Add cognitive search tab is displayed, with the settings specified above entered into the form.](media/cosmos-db-add-azure-search-add-cognitive-search.png "Add cognitive search")
-
    > Cognitive search is an AI feature in Azure Search, used to extract text from images, blobs, and other unstructured data sources - enriching the content to make it more searchable in an Azure Search index. Extraction and enrichment are implemented through cognitive skills attached to an indexing pipeline. Cognitive skills in Azure Search are based on machine learning models in the Cognitive Services APIs: [Computer Vision](https://docs.microsoft.com/azure/cognitive-services/computer-vision/) and [Text Analysis](https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview). To learn more, read [What is "cognitive search" in Azure Search](https://docs.microsoft.com/en-us/azure/search/cognitive-search-concept-intro).
 
+7. On the **Add cognitive search (Optional)** tab, do the following:
+
+   - Expand the **Attach Cognitive Services** section and select your **tech-immersion-cog-services** instance from the list. This will associate your Cognitive Services account with the Skillset you are creating.
+
+   ![The Attach Cognitive Services section of the Add cognitive search (Optional) tab is highlighted, and the Cognitive Service resource is highlighted in the list.](media/cosmos-db-add-azure-search-attach-cognitive-services.png "Attach Cognitive Services")
+
+   - Expand the **Add Enrichments** section and set the following configuration:
+     - Enter **tweet-skillset** as the name.
+     - Select **text** as the source data field.
+     - Check the box next to the Text Cognitive Skills header to select all of the options.
+
+   ![The Add enrichments section of the Add cognitive search (Optional) tab is highlighted, and the values specified above are entered into the form and highlighted.](media/cosmos-db-add-azure-search-add-enrichments.png "Add enrichments")
+
+   > In the section above, you added a set of enrichment steps to the data being ingested from Cosmos DB. In a Cognitive Search pipeline, individual enrichment steps are called _skills_, and the collection of enrichment steps is a _skillset_. The predefined skills available at this step through the UI use pre-trained models to extract additional information from the documents. The [EntityRecognitionSkill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-entity-recognition) extracts entities (people, location, organization, emails, URLs, DateTime fields) from the document. The [LanguageDetectionSkill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-language-detection) is used to detect the primary language used in the document, and the [KeyPhraseExtractionSkill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-keyphrases) detects important phrases based on term placement, linguistic rules, proximity to other terms, and how unusual the term is within the source data. You can learn more by reading about the available [predefined cognitive skills](https://docs.microsoft.com/en-us/azure/search/cognitive-search-predefined-skills).
+
 8. Select **Next: Customize target index**.
+
+   ![The Next: Customize target index button is highlighted.](media/cosmos-db-add-azure-search-next-customize-target-index.png "Next: Customize target index")
 
 9. On the **Customize target index** tab, do the following:
 
@@ -262,15 +272,15 @@ With data now streaming into your Cosmos DB `tweets` container, you are ready to
     }
     ```
 
-    > As you inspect the result documents, take note of the various components that were added to enrich the tweet data using built-in cognitive skills. You can go back into Cosmos DB to see the base document structure, and compare that to the search result with the additional data. The cognitive search created fields are people, organizations, locations, key phrases, and language. These fields contain information extracted by the individual cognitive skills from the `text` field.
+    > As you inspect the result documents, take note of the various components that were added to enrich the tweet data using built-in cognitive skills. You can go back into Cosmos DB to see the base document structure, and compare that to the search result with the additional data. The cognitive search created fields are People, Organizations, Locations, Keyphrases, and Language. These fields contain information extracted from the `text` field by the individual cognitive skills you selected on the **Add cognitive search** page above.
 
 ## Task 3: Enhance the Cognitive Search pipeline
 
-In the previous task, you created the beginnings of your Cognitive Search pipeline when you added built-in Cognitive Skills for extracting people, organization and location names, key phrases and for detecting the primary language. In this task, you will enhance your Cognitive Search pipeline using functionality available only through the [Azure Search Service REST APIs](https://docs.microsoft.com/en-us/rest/api/searchservice/).
+In the previous task, you created a basic Cognitive Search pipeline using the Azure portal user interface. This pipeline uses built-in Cognitive Skills for extracting people, organization and location names, key phrases and for detecting the primary language. In this task, you will enhance your Cognitive Search pipeline using functionality available only through the [Azure Search Service REST APIs](https://docs.microsoft.com/en-us/rest/api/searchservice/).
 
-1. You will use a console application, `PipelineEnhancer`, running from Visual Studio to make calls to the Azure Search Service REST APIs to update your Skillset, Index, and Indexer with these enhancements.
+1. You will use a console application running from Visual Studio to add skills not available through the Azure portal to your cognitive search pipeline. The console application calls the Azure Search Service REST APIs to update various components of your cognitive search pipeline with these enhancements. In the steps below you will be updating the skillset, index, and indexer of your search pipeline with these enhancements.
 
-2. To prepare the console application, you will need to add multiple values for various Azure services into the `appsettings.json` file. Return to Visual Studio, and open the `appsettings.json` file located under the `PipelineEnhancer` project.
+2. To prepare the console application, you first need to add multiple values for various Azure services into the `appsettings.json` file. Return to Visual Studio, and open the `appsettings.json` file located under the `PipelineEnhancer` project.
 
    ![`appsettings.json` is highlighted under the PipelineEnhancer solution.](media/visual-studio-solution-explorer-pipeline-enhancer.png "Solution explorer")
 
@@ -478,7 +488,7 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
     }
     ```
 
-    > In the above JSON, the `inputs` specify the field in the source data document to send for analysis. The `outputs` section dictates that the `score` value returned by the Text Analytics in Cognitive Services should be output into a field named `sentiment` in the search results. This is sent into the REST API, along with the JSON from the previously built skillset to update or create the skillset.
+    > In the above JSON, the `inputs` specify the field in the source data document to send for analysis. The `outputs` section dictates that the `score` value returned by the Text Analytics endpoint in Cognitive Services should be mapped to an output field named `sentiment` in the search results. This is sent into the REST API, along with the JSON from the previously built skillset to update or create the skillset.
 
 39. To add sentiment analysis to your pipeline you will run the `PipelineEnhancer` project within the **CognitiveSearch** solution in Visual Studio. To run the project, right-click the `PipelineEnhancer` project in Visual Studio and select **Set as StartUp Project**.
 
@@ -510,73 +520,138 @@ In the previous task, you created the beginnings of your Cognitive Search pipeli
 
     ```json
     {
-      "@search.score": 1,
-      "created_at": "2019-06-09T18:34:23.335Z",
-      "id_str": "988777959",
-      "id": "dc26f05e-1c09-4da7-b705-65a9c20d8865",
-      "text": "@ContosoAuto Mi 2019 #Toyota #Tundra es el mejor auto de todos!",
-      "rid": "ZTR0eEFKdXRIZklIQUFBQUFBQUFBQT090",
-      "People": [],
-      "Organizations": [
-        "Toyota"
-      ],
-      "Locations": [
-        "Mi"
-      ],
-      "Keyphrases": [
-        "Tundra es",
-        "Toyota",
-        "mejor",
-        "ContosoAuto Mi",
-        "todos"
-      ],
-      "Language": "es",
-      "sentiment": 0.5,
-      "user": {
-        "id": 962792147,
-        "id_str": "991150723",
-        "name": "Max Luikart",
-        "screen_name": "MaxLuikart",
-        "location": "San Diego, CA",
-        "url": "",
-        "description": ""
-      },
-      "entities": {
-        "symbols": [],
-        "urls": [],
-        "hashtags": [
-          {
-            "indices": null,
-            "text": "Toyota"
-          },
-          {
-            "indices": null,
-            "text": "Tundra"
-          }
+        "@search.score": 1,
+        "created_at": "2019-08-20T16:49:29.181Z",
+        "id_str": "446580278",
+        "text": "In my #Audi #A6 headed for the Jackson, WY airport.",
+        "id": "5e849de9-ae94-4adf-b805-a5318f65758b",
+        "rid": "WXBBeEFLQ2xIbkVCQUFBQUFBQUFBQT090",
+        "People": [],
+        "Organizations": [
+            "Audi"
         ],
-        "user_mentions": [
-          {
-            "id": 2244994945,
-            "id_str": "2244994945",
-            "indices": [
-              0,
-              12
+        "Locations": [
+            "WY"
+        ],
+        "Keyphrases": [
+            "Jackson",
+            "A6",
+            "WY airport",
+            "Audi"
+        ],
+        "Language": "en",
+        "sentiment": 0.5,
+        "user": {
+            "id": 553965933,
+            "id_str": "175143698",
+            "name": "Jeffry Dorval",
+            "screen_name": "JeffryDorval",
+            "location": "Fresno, CA",
+            "url": "",
+            "description": ""
+        },
+        "entities": {
+            "symbols": [],
+            "urls": [],
+            "hashtags": [
+                {
+                    "indices": null,
+                    "text": "Audi"
+                },
+                {
+                    "indices": null,
+                    "text": "A6"
+                }
             ],
-            "name": "Contoso Auto",
-            "screen_name": "ContosoAuto"
-          }
+            "user_mentions": [
+                {
+                    "id": 2244994945,
+                    "id_str": "2244994945",
+                    "indices": [
+                        0,
+                        12
+                    ],
+                    "name": "Contoso Auto",
+                    "screen_name": "ContosoAuto"
+                }
+            ]
+        },
+        "ExtractedEntities": [
+            {
+                "name": "Audi",
+                "wikipediaId": "Audi",
+                "wikipediaLanguage": "en",
+                "wikipediaUrl": "https://en.wikipedia.org/wiki/Audi",
+                "bingId": "730a7f52-1008-b42b-2fb3-7658cbaa449b",
+                "type": "Organization",
+                "subType": null,
+                "matches": [
+                    {
+                        "text": "Audi",
+                        "offset": 7,
+                        "length": 4
+                    }
+                ]
+            },
+            {
+                "name": "Wyoming",
+                "wikipediaId": "Wyoming",
+                "wikipediaLanguage": "en",
+                "wikipediaUrl": "https://en.wikipedia.org/wiki/Wyoming",
+                "bingId": "bff03ad6-2b7f-400b-a76e-eb9fc4a93961",
+                "type": "Location",
+                "subType": null,
+                "matches": [
+                    {
+                        "text": "WY",
+                        "offset": 39,
+                        "length": 2
+                    }
+                ]
+            },
+            {
+                "name": "Audi A6",
+                "wikipediaId": "Audi A6",
+                "wikipediaLanguage": "en",
+                "wikipediaUrl": "https://en.wikipedia.org/wiki/Audi_A6",
+                "bingId": "7756727c-b520-7cd6-9e4f-e1de15c0ae49",
+                "type": "Other",
+                "subType": null,
+                "matches": [
+                    {
+                        "text": "A6",
+                        "offset": 13,
+                        "length": 2
+                    }
+                ]
+            }
+        ],
+        "NamedEntities": [
+            {
+                "category": "Organization",
+                "value": "Audi",
+                "offset": 7,
+                "confidence": 0.8
+            },
+            {
+                "category": "Location",
+                "value": "WY",
+                "offset": 39,
+                "confidence": 0.5196134448051453
+            }
         ]
-      }
     }
     ```
 
     > Notice the addition of the `sentiment` field in the results. The value contained in this field is a numeric prediction made by a machine learning model about the sentiment of the contents of the `text` field in the tweet. Scores range from 0 to 1. Scores close to 1 indicate positive sentiment, and scores close to 0 indicate negative sentiment. Scores in the middle are considered to be neutral in the expression of sentiment. In the record above, the sentiment was determined to be neutral, 0.5, by the ML model.
 
+    > In addition to the `sentiment` field, you may have also noticed two new objects within the search documents, `ExtractedEntities` and `NamedEntities`. These properties are part of the `EntityRecognitionSkill` added through the Azure portal, but are not included in the search documents by default. We added these using the REST APIs to further enhance the enrichments available in search index.
+
 46. Return to the `PipelineEnhancer` console app, and enter **X** at the command prompt to exit the console application.
 
 ## Task 4: Publish Function App for custom skills
 
-In addition to predefined Cognitive skills, you can also integrate custom skills into your Cognitive Search pipeline. In this task, you will update a few values in the Function code inside the `CustomSkillsFunctions` project in Visual Studio, and then deploy the Function App to Azure. For this experience we are using an [Azure Function App](https://azure.microsoft.com/services/functions/) to wrap the custom cognitive skills, so that they implements the required custom skill interface. You will be implementing three different custom skills in the following tasks, so you will configure the Functions now, so you don't have to publish them within each exercise.
+In addition to predefined Cognitive skills, you also have the ability to integrate custom skills into your Cognitive Search pipelines. In this task, you will update a few values in the Function code inside the `CustomSkillsFunctions` project in Visual Studio, and then deploy the Function App to Azure. For this experience we are using an [Azure Function App](https://azure.microsoft.com/services/functions/) to wrap the custom cognitive skills, so that they implements the required custom skill interface. You will be implementing three different custom skills in the following tasks, so you will configure the Functions now, so you don't have to publish them within each exercise.
 
 > While this example uses an Azure Function to host a web API, you can use any approach as long as it meets the [interface requirements for a cognitive skill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-custom-skill-interface). Azure Functions, however, make it very easy to create custom skills.
 
@@ -733,83 +808,174 @@ With the Function App now in place to support your Text Translator custom skill,
 
    > In addition to updating the Skillset JSON, the Indexer and Index were also be updated to include a new field named `textTranslated`.
 
-## Task 6: Run indexer and query translation data
+## TODO: REMOVE THIS: Task 6: Add custom skill using deployed machine learning model
 
-In this task, you will run your Search Indexer and then query data in the index.
+In this task, you will add another custom skill to your pipeline. This time, you will be adding a skill that calls a machine learning model that is deployed to a web service. The machine learning model creates a 5 word summary... TODO: Complete this intro, and then add the appropriate steps for this.
+
+TODO: Need to add steps and services to the environment setup doc for this lab to get everything in place.
+
+## Task 6: Query data in the Azure portal
+
+In this task, you will run various queries against your Search Index to explore a few of the search capabilities of Azure Search.
 
 1. In the Azure portal, navigate to your **Search service** resource and select **Search explorer** in the toolbar on the overview blade.
 
    ![Azure Search Service blade is displayed, with Search explorer highlighted.](media/azure-search-explorer.png "Search explorer")
 
-   > The last step of Task 5 deleted and recreated your Index, Indexer and Skillset. If you don't see any search results, you may need to select **Indexers** on the Overview blade and then **tweet-indexer**. Select **Run** to force the Indexer to run against your tweet data again before attempting to run a search against the index. If the status is **In progress**, select **Refresh** in the toolbar, and wait for the status to change to **Success**.
+   > The last step of the previous task deleted and recreated your Index, Indexer and Skillset. If you don't see any search results, you may need to select **Indexers** on the Overview blade and then **tweet-indexer**. Select **Run** to force the Indexer to run against your tweet data again before attempting to run a search against the index. If the status is **In progress**, select **Refresh** in the toolbar, and wait for the status to change to **Success**.
 
 2. On the Search explorer tab, select **Search** and observe the results.
 
    ![The Search button is highlighted on the Azure Search Index blade.](media/azure-search-index-search.png "Search")
 
-3. You can now play around with the search functionality. Below, you will enter a few queries that simulate what an application user may enter. These queries tend to resemble natural language, so we will start there. In the Query string field, enter "language is es", and observe the results. This will return one of the records in the search results where the language was detected as Spanish.
+3. You can now play around with the search functionality. Below, you will enter a few queries that simulate what an application user may enter. These queries tend to resemble natural language, so we will start there.
+
+4. In the Query string field, enter "language is es", and observe the results. This will return records in the search results where the language was detected as Spanish.
 
    ```json
    {
-     "@search.score": 0.94444835,
-     "text": "@ContosoAuto Mi 2019 #Ford #Mustang es el mejor auto de todos!",
-     "rid": "YmpnZEFKMUhibTN2QkFBQUFBQUFBQT090",
-     "People": [],
-     "Prganizations": ["Ford"],
-     "Locations": [],
-     "Keyphrases": ["Mustang", "Ford", "the best"],
-     "Language": "es",
-     "sentiment": 0.986368536949158,
+      "@search.score": 0.70444596,
+      "created_at": "2019-08-20T16:51:52.964Z",
+      "id_str": "707150435",
+      "text": "Mi 2019 #Dodge #Durango es el mejor auto de todos!",
+      "id": "676fba50-5c72-4bac-905d-8dbac7632c6e",
+      "rid": "WXBBeEFLQ2xIbkdPQUFBQUFBQUFBQT090",
+      "People": [],
+      "Organizations": [
+          "Dodge"
+      ],
+      "Locations": [
+          "Durango"
+      ],
+      "Keyphrases": [
+          "Durango",
+          "Dodge",
+          "the best",
+          "ever",
+          "My"
+      ],
+      "Language": "es",
+      "textTranslated": "My 2019 #Dodge #Durango is the best car ever!",
+      "sentiment": 0.5,
       "user": {
-        "id": 962792147,
-        "id_str": "991150723",
-        "name": "Max Luikart",
-        "screen_name": "MaxLuikart",
-        "location": "San Diego, CA",
-        "url": "",
-        "description": ""
+          "id": 510318147,
+          "id_str": "169547855",
+          "name": "Hoyt Asselmeier",
+          "screen_name": "HoytAsselmeier",
+          "location": "New York, NY",
+          "url": "",
+          "description": ""
       },
       "entities": {
-        "symbols": [],
-        "urls": [],
-        "hashtags": [
+          "symbols": [],
+          "urls": [],
+          "hashtags": [
+              {
+                  "indices": null,
+                  "text": "Dodge"
+              },
+              {
+                  "indices": null,
+                  "text": "Durango"
+              }
+          ],
+          "user_mentions": [
+              {
+                  "id": 2244994945,
+                  "id_str": "2244994945",
+                  "indices": [
+                      0,
+                      12
+                  ],
+                  "name": "Contoso Auto",
+                  "screen_name": "ContosoAuto"
+              }
+          ]
+      },
+      "ExtractedEntities": [
           {
-            "indices": null,
-            "text": "Ford"
+              "name": "2019",
+              "wikipediaId": null,
+              "wikipediaLanguage": null,
+              "wikipediaUrl": null,
+              "bingId": null,
+              "type": "DateTime",
+              "subType": "DateRange",
+              "matches": [
+                  {
+                      "text": "2019",
+                      "offset": 3,
+                      "length": 4
+                  }
+              ]
           },
           {
-            "indices": null,
-            "text": "Mustang"
-          }
-        ],
-        "user_mentions": [
+              "name": "Dodge",
+              "wikipediaId": "Dodge",
+              "wikipediaLanguage": "es",
+              "wikipediaUrl": "https://es.wikipedia.org/wiki/Dodge",
+              "bingId": "f4c7e3f7-b855-e6b4-cf0c-bf4919141399",
+              "type": "Organization",
+              "subType": null,
+              "matches": [
+                  {
+                      "text": "Dodge",
+                      "offset": 9,
+                      "length": 5
+                  }
+              ]
+          },
           {
-            "id": 2244994945,
-            "id_str": "2244994945",
-            "indices": [
-              0,
-              12
-            ],
-            "name": "Contoso Auto",
-            "screen_name": "ContosoAuto"
+              "name": "Durango",
+              "wikipediaId": null,
+              "wikipediaLanguage": null,
+              "wikipediaUrl": null,
+              "bingId": null,
+              "type": "Location",
+              "subType": null,
+              "matches": [
+                  {
+                      "text": "Durango",
+                      "offset": 16,
+                      "length": 7
+                  }
+              ]
           }
-        ]
-      },
-     "textTranslated": "@ContosoAuto My 2019 #Ford #Mustang is the best car of all!"
+      ],
+      "NamedEntities": [
+          {
+              "category": "DateTime",
+              "value": "2019",
+              "offset": 3,
+              "confidence": 0.8
+          },
+          {
+              "category": "Organization",
+              "value": "Dodge",
+              "offset": 9,
+              "confidence": 0.8
+          },
+          {
+              "category": "Location",
+              "value": "Durango",
+              "offset": 16,
+              "confidence": 0.9789837598800659
+          }
+      ]
    }
    ```
 
-   > Notice the addition of the `textTranslated` field to the bottom of the record. This contains the English translation of the contents of the `text` field in the tweet. You will also notice that the `Keyphrases` field contains only English words and phrases. This is because the `KeyPhraseExtractionSkill` was pointed to the new `textTranslated` field with the latest updates to the search pipeline.
+   > Notice the addition of the `textTranslated` field to the results documents. This was added by the custom text translation skill you added above and it contains the English translation of the contents of the `text` field in the tweet. You will also notice that the `Keyphrases` field contains only English words and phrases. This is because the `KeyPhraseExtractionSkill` was pointed to the new `textTranslated` field with the latest updates to the search pipeline.
 
    ![Query for records where language is es.](media/azure-search-query-language-is-es.png "Search query")
 
    > In addition, notice that each record returned contains a `@search.score` field with a numeric value. This value indicates the confidence of the match with the search query. The higher the value, the more likely it is to be a match for the query. If you scroll down past the records where `"Language"="es"`, you will see the search score values drop, as those records don't match the query.
 
-4. Try another search, such as "cold battery" and observe the results.
+5. Try another search, such as "cold battery" and observe the results.
 
    ![Query for records containing "cold" and "battery"](media/azure-search-query-cold-battery.png "Search query")
 
-5. Now, let's try a slightly more advanced search. We want to look for only records that mention a "corvette", and we only want to retrieve the `text`, `user.location`, and `sentiment` fields in our results. Paste the following into the Query string box, and select **Search**:
+6. Now, let's try a slightly more advanced search. We want to look for only records that mention a "corvette", and we only want to retrieve the `text`, `user.location`, and `sentiment` fields in our results. Paste the following into the Query string box, and select **Search**:
 
    ```http
    search=corvette&$select=text,user/location,sentiment&$count=true
@@ -817,9 +983,9 @@ In this task, you will run your Search Indexer and then query data in the index.
 
    ![Query for records containing corvette, and returning only the text, userLocation, and sentiment.](media/azure-search-query-corvette.png "Search query")
 
-   > Add `$select` limits results to the explicitly named fields for more readable output in Search explorer.
+   > Adding the `$select` parameter limits results to the explicitly named fields for more readable output in the Search explorer.
 
-6. You can take that query even further by adding in the `$filter` parameter. Use the `$filter` parameter when you want to specify precise criteria rather than free text search. This example searches for sentiment less than 0.25, so we can target tweets with negative sentiment in the search results.
+7. You can take that query even further by adding in the `$filter` parameter. Use the `$filter` parameter when you want to specify precise criteria rather than free text search. This example searches for sentiment less than 0.25, so we can target tweets with negative sentiment in the search results.
 
    ```http
    search=corvette&$select=text,user/location,sentiment&$filter=sentiment lt 0.25&$count=true
@@ -827,7 +993,7 @@ In this task, you will run your Search Indexer and then query data in the index.
 
    ![Using the $filter parameter to further refine search results.](media/azure-search-query-filter.png "Filtered search query")
 
-7. The final query we will run adds the `$orderBy` parameter, which allow you to specify the sort order of your results. In this case, let's search for records where the sentiment is the highest, filtering for records where the sentiment is greater than 0.9, and ordering the results in descending order.
+8. The final query we will run adds the `$orderBy` parameter, which allow you to specify the sort order of your results. In this case, let's search for records where the sentiment is the highest, filtering for records where the sentiment is greater than 0.9, and ordering the results in descending order.
 
    ```http
    search=*&$select=text,user/location,sentiment&$filter=sentiment gt 0.9&$count=true&$orderby=sentiment desc
@@ -837,7 +1003,440 @@ In this task, you will run your Search Indexer and then query data in the index.
 
    > In the search results, observe that the sentiment values slowly decrease as you scroll down through the returned documents.
 
-## Task 7: Create Forms Recognizer Pipeline
+## Task 7: Add a knowledge store
+
+Above, you added a series of enrichments to your Azure Search index using both pre-built and custom cognitive skills. These enrichments were used to add structure and metadata to documents within your Azure Search index, making searching more effective. There are many scenarios, however, where access to the additional metadata inserted into to your documents by the use of cognitive search can be useful outside of Azure Search, such as for knowledge mining.
+
+Azure Search provides the ability to export enriched documents to a **knowledge store**. The knowledge store feature enables you to save enriched documents to either blobs or tables in an Azure Storage account by using projections. Projections are views of enriched documents creating using a Shaper Skill that can be saved to physical storage for knowledge mining purposes. A projection lets you "project" your data into a shape that aligns with your needs, preserving relationships so that tools like Power BI can read the data with no additional effort. Using the knowledge store feature allows documents to be saved for subsequent evaluation, exploration, and to potentially become inputs to a downstream data science workload. Any tool or process that can connect to Azure Storage can consume the contents of a knowledge store.
+
+![Diagram of knowledge store projections from enriched search index documents.](media/knowledge-store-projections.png "Knowledge store projections")
+
+The knowledge store supports two types of projections:
+
+- **Tables**: For data that is best represented as rows and columns, table projections allow you to define a schematized shape or projection in Table storage.
+- **Objects**: When you need a JSON representation of your data and enrichments, object projections are saved as blobs.
+
+For this workshop, we will target table projects. In the steps below, you will use the `PipelineEnhancer` to add a knowledge store to your search pipeline and send the documents to Azure Table storage. The `PipelineEnhancer` application will add two items to the Skillset associated with your cognitive search pipeline, a `ShaperSkill` and a `knowledgeStore` definition.
+
+The [Shaper Cognitive Skill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-shaper) can be used to consolidate multiple inputs into a complex type, and output that as a projection, as you can see in the JSON below.
+
+```json
+{
+  "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+  "name": "ShaperSkill",
+  "description": "ShaperSkill for knowledge store",
+  "context": "/document",
+  "inputs": [
+    {
+      "name": "created_at",
+      "source": "/document/created_at",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "id_str",
+      "source": "/document/id_str",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "text",
+      "source": "/document/text",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "textTranslated",
+      "source": "/document/textTranslated",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "sentiment",
+      "source": "/document/sentiment",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "user",
+      "source": "/document/user",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "entities",
+      "source": "/document/entities",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "id",
+      "source": "/document/id",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "rid",
+      "source": "/document/rid",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "KeyPhrases",
+      "source": "/document/text/Keyphrases/*",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "LanguageCode",
+      "source": "/document/Language",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "Entities",
+      "source": null,
+      "sourceContext": "/document/text/ExtractedEntities/*",
+      "inputs": [
+        {
+          "name": "Name",
+          "source": "/document/text/ExtractedEntities/*/name",
+          "sourceContext": null,
+          "inputs": []
+        },
+        {
+          "name": "Type",
+          "source": "/document/text/ExtractedEntities/*/type",
+          "sourceContext": null,
+          "inputs": []
+        },
+        {
+          "name": "Url",
+          "source": "/document/text/ExtractedEntities/*/wikipediaUrl",
+          "sourceContext": null,
+          "inputs": []
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "targetName": "tableprojection"
+    }
+  ]
+}
+```
+
+> In the JSON above, fields from the documents are added to an output object named `tableprojection`. This output is used by the knowledge store to create tables that will be written to Azure Table storage.
+
+The second object being added to the Skillset by the `PipelineEnhancer` is the definition of the knowledge store. This defined the path to the storage account hosting the knowledge store, along with definitions of the table projections that will be created there. The code below defines four tables (`Documents`, `KeyPhrases`, `Entities`, and `Users`) that will be created from the `tableprojection` object created by the `ShaperSkill`.
+
+```json
+"knowledgeStore": {
+  "storageConnectionString": "[storage-connection-string]",
+  "projections": [
+    {
+      "tables": [
+        {
+          "tableName": "Documents",
+          "generatedKeyName": "DocumentId",
+          "source": "/document/tableprojection",
+          "sourceContext": null,
+          "inputs": []
+        },
+        {
+          "tableName": "KeyPhrases",
+          "generatedKeyName": "KeyPhraseId",
+          "source": null,
+          "sourceContext": "/document/tableprojection/KeyPhrases/*",
+          "inputs": [
+            {
+              "name": "Keyphrases",
+              "source": "/document/tableprojection/KeyPhrases/*",
+              "sourceContext": null,
+              "inputs": []
+            }
+          ]
+        },
+        {
+          "tableName": "Entities",
+          "generatedKeyName": "EntityId",
+          "source": "/document/tableprojection/Entities/*",
+          "sourceContext": null,
+          "inputs": []
+        },
+        {
+          "tableName": "Users",
+          "generatedKeyName": "UserId",
+          "source": null,
+          "sourceContext": "/document/tableprojection/user",
+          "inputs": [
+            {
+              "name": "id",
+              "source": "/document/tableprojection/user/id",
+              "sourceContext": null,
+              "inputs": []
+            },
+            {
+              "name": "id_str",
+              "source": "/document/tableprojection/user/id_str",
+              "sourceContext": null,
+              "inputs": []
+            },
+            {
+              "name": "name",
+              "source": "/document/tableprojection/user/name",
+              "sourceContext": null,
+              "inputs": []
+            },
+            {
+              "name": "screen_name",
+              "source": "/document/tableprojection/user/screen_name",
+              "sourceContext": null,
+              "inputs": []
+            },
+            {
+              "name": "location",
+              "source": "/document/tableprojection/user/location",
+              "sourceContext": null,
+              "inputs": []
+            }
+          ]
+        }
+      ],
+      "objects": []
+    }
+  ]
+}
+```
+
+Now, let's add the knowledge store to your search pipeline.
+
+1. Return to the `PipelineEnhancer` console application, and enter **3** at the prompt and press enter. This will execute the steps to add a knowledge store.
+
+   ![3 is entered at the Pipeline Enhancer command prompt.](media/pipeline-enhancer-3.png "Pipeline Enhancer")
+
+   > The knowledge store feature is still in preview, and the the .NET SDK currently does not provide objects for working with the it, so the code executing for this step is building raw JSON and sending that to the Azure Search REST API to update the pipeline. The JSON snippets above are added to the JSON retrieve for the existing pipeline and then sent back to the REST API to recreate the pipeline components. The `storageConnectionString` value is updated within code to add the connection string of your Azure Storage account, which you added to the `appsettings.json` in a previous step.
+
+2. When the console app completes you will receive a message stating that the knowledge store was successfully added.
+
+3. Return to your Azure Search service in the Azure portal, and select **Indexers**.
+  
+   > The process above deleted and recreated your Index, Indexer and Skillset, so you may need to select the **tweet-indexer** on your Azure Search Service blade, and then select **Run** to force the Indexer to run against your tweet data again before attempting to run a search against the index in the next step.
+
+4. When the indexer finishes running you may notice a status of **Warning**.
+
+   ![A status of Warning is displayed for the tweet-indexer.](media/azure-search-indexer-warning.png "Warning status")
+
+5. To view the details of any warnings, select the **tweet-indexer**, and then select the most recent run within the Execution details block. On the right-hand screen, you will be able to view any errors and warnings in more detail.
+
+   ![The tweet-indexer details screen is displayed, with the last run selected and details about the warning displayed.](media/azure-search-indexer-warning-details.png "Warning details")
+
+   >  The warning in this instance is caused by the fact that not every `ExtractedEntity` has its `wikipediaUrl` property populated. This warning can be safely ignored.
+
+6. Projections are the mechanism you use to structure data in a knowledge store. Using the code above the projection output was saved as a collection of related tables. Using the Azure portal, an easy way to view knowledge store contents is through the built-in Storage Explorer for Azure storage.
+
+7. In the Azure portal, navigate to the **techimmersionstoreXXXXX** storage account resource (where XXXXX is the unique identifier assigned to you for this workshop), select **Storage Explorer (preview)** from the left-hand menu and then select **TABLES** to expand it.
+
+   ![The tables within the techimmersionXXXXX storage account are highlighted](media/storage-explorer-tables.png "Azure Storage Explorer")
+
+8. Select the Documents table and review the structure that was created by the knowledge store. Notice that new columns were added to provide identifiers and enable relationships between the tables. Fields from the documents in the search index are located at the end of each row.
+
+   ![The Documents table is selected and the data within the table is displayed.](media/storage-explorer-tables-documents.png "Storage Explorer")
+
+9. Take a moment to explore the other tables that were created. You will be accessing the data within these tables from Power BI in the next task.
+
+## Task 8: Visualize enriched documents in Power BI
+
+In this task you will do some knowledge mining using Power BI and data written to the knowledge store.
+
+1. On your JumpBox VM, open Power BI Desktop from the Windows Start menu.
+
+2. On the **Welcome to Power BI Desktop** dialog, select the **Already have a Power BI account? Sign in** link in the bottom.
+
+   ![The welcome to Power BI Desktop screen is displayed with the Sign in link highlighted.](media/power-bi-welcome-screen.png "Welcome to Power BI Desktop")
+
+3. On the Sign in screen that appears, select the **X** in the upper right-hand corner to close the dialog.
+
+   ![The X (close) button is highlighted on the Sign in screen.](media/power-bi-sign-in.png "Sign in")
+
+4. Next, on the Power BI Desktop splash screen, select **Get data**.
+
+   ![Get data is highlighted on the Power BI splash screen.](media/power-bi-get-data.png "Power BI")
+
+5. In the **Get data** dialog, select **Azure** on the left-hand list, and then select **Azure Table Storage** from the Azure options.
+
+   ![Azure and Azure Table Storage are selected and highlighted in the Get data dialog.](media/power-bi-get-data-azure-table-storage.png "Get data")
+
+6. Select **Connect**.
+
+7. On the Azure Table Storage dialog, enter the name of your Azure Storage account, which you can get from the Environment Details sheet provided to you for this lab. The storage account name should be **techimmersionstoreXXXXX** (where XXXXX is the unique identifier assigned to you for this workshop.)
+
+   ![The storage account name is entered into the Account name or URL field on the Azure Table Storage dialog.](media/power-bi-get-data-azure-table-storage-account-name.png "Azure Table Storage")
+
+8. On the **Navigator** dialog, select all four tables by checking the box next to each one, and then select **Load**.
+
+   ![All four tables are selected in the navigator dialog, and the load button is highlighted.](media/power-bi-get-data-table-navigator.png "Navigator")
+
+9. It will take a moment to load the data from each of the tables. A loading dialog will be displayed to provide a progress indicator for each table.
+
+   ![Status indicators for each table are displayed on the Load dialog.](media/power-bi-load.png "Load data")
+
+10. Once loaded, you will see the tables appear under **Fields** on the right-hand side of the Power BI Desktop window. Expand the Documents table and review the fields listed.
+
+    ![The Documents table is expanded under fields, and the resulting list of fields in highlighted.](media/power-bi-tables-documents-fields.png "Fields")
+
+11. As you can see, the content fields from Azure Table Storage are not yet accessible. To access the field in the table we need to edit the queries that are used to pull the table data from your Storage account. On the Power BI Desktop toolbar, select **Edit Queries**.
+
+    ![The Edit Queries menu item is highlighted in the Power BI Desktop toolbar.](media/power-bi-edit-queries.png "Edit queries")
+
+12. In the Power Query Editor dialog, select the **Documents** table under Queries.
+
+13. Right-click the **Content** column header, and in the context menu select **Remove Other Columns**. This will remove the `PartitionKey`, `RowKey`, and `Timestamp` columns from the table.
+
+    ![The Remove Other Columns option is highlighted in the context menu of the Content column.](media/power-bi-query-editor-remove-other-columns.png "Remove other columns")
+
+14. Next, select the **Expand Content** button within the **Content** column.
+
+    ![The Documents table is highlighted under Queries on the left and the Expand Content button is highlighted for the Content column.](media/power-bi-queries-documents-expand-content.png "Documents")
+
+15. In the dialog that appears, ensure all columns are checked in the list. Uncheck ****Use original column name as a prefix** unchecked, and then select **OK**.
+
+    ![All columns are selected in the expand content dialog, and the OK button is highlighted.](media/power-bi-queries-documents-expand-select-all-columns.png "Expand Content")
+
+16. This action will expand each column with the **Content** field into a new column in the tableOn the right-hand side of the dialog you can view the query transformation steps that have been applied. Should you wish to undo a change, you can select the X next to that step in the list.
+
+    ![The expanded content is displayed, and the list of applied steps is highlighted.](media/power-bi-queries-documents-expanded-columns.png "Query applied steps")
+
+17. Within the expanded columns for the **Documents** table, locate the **sentiment** field, select the **Data Type** icon for the column, and change it to **Decimal Number**.
+
+    ![The data type selector is displayed for the sentiment column and decimal number is highlighted.](media/power-bi-change-column-data-type.png "Change data type")
+
+18. Next, select **Entities** under Queries and repeat the steps above to remove the unnecessary columns and expand the contents of the **Content** column. There are no columns that need to have their data types changes, so skip that step for the remaining tables.
+
+19. Repeat this process for the **KeyPhrases** and **Users** tables.
+
+20. When the query edits have been made on all of the tables, select **Close & Apply** in the Power Query Editor window's toolbar.
+
+    ![The Close & Apply button is highlighted on the Power Query Editor dialog.](media/power-bi-query-editor-close-apply.png "Close & Apply")
+
+21. When the updated queries finish loading, expand **Documents** under Fields on the right-hand side of the Power BI Desktop window, and confirm that you can now see the Content fields.
+
+    ![The Documents table is expanded under Fields, and the list of fields includes the Content fields expanded in the previous steps.](media/power-bi-fields-updated.png "Power BI Fields")
+
+22. With the fields reflecting properly, you are now ready to add some visualizations for your enriched data. In the Visualizations pane, select the **Gauge** visual to add it to the report canvas.
+
+    ![The gauge visualization is highlighted.](media/power-bi-visuals-gauge.png "Visualizations")
+
+23. In the properties pane for the Gauge visualization, drag the `sentiment` field under the Documents table into the **Value** box.
+
+    ![An arrow is pointing from the sentiment field under the Documents table to the Value field under the gauge visualization.](media/power-bi-visuals-gauge-value.png "Gauge visualization")
+
+24. Next, select the drop down arrow next to `sentiment` in the Value field, and select **Average**.
+
+    ![The drop down next to sentiment is highlighted and in the resulting context menu Average is selected and highlighted.](media/power-bi-visuals-gauge-value-average.png "Gauge visualization")
+
+25. Select the **Format** icon in the Visualizations properties pane.
+
+    ![The Format button under Visualizations is highlighted.](media/power-bi-visuals-format.png "Format Visualizations")
+
+26. On the Format pane of the Gauge visualization, expand **Gauge axis** and enter the following values:
+
+    - **Min**: 0
+    - **Max**: 1
+    - **Target**: 0.75
+
+    ![The Gauge axis section in the format pane is expanded and the values specified above are entered into the fields.](media/power-bi-visuals-gauge-axis.png "Gauge format")
+
+27. Now expand the **Title** section and enter **Sentiment KPI** as the Title text.
+
+    ![The Title section is expanded and Sentiment KPI is highlighted within the Title text field.](media/power-bi-visuals-gauge-title.png "Gauge format")
+
+28. Click anywhere in the whitespace of the report canvas to deselect the Gauge visualization. The gauge should look similar to the following:
+
+    ![The completed gauge visualization is displayed.](media/power-bi-canvas-gauge.png "Gauge visualization")
+
+29. Before moving on to the next visualization, let's set up relationships between the tables. On the left-hand side of the Power BI report canvas, select the **Model** icon.
+
+    ![The Model icon is highlighted on the left-hand toolbar.](media/power-bi-table-relationships-editor.png "Tables")
+
+30. On the Models view, select the ellipsis on the Documents table to bring up the context menu, and then select **Manage relationships**.
+
+    ![The Manage relationships items is highlighted in the Documents table's context menu.](media/power-bi-models-documents-manage-relationships.png "Manage relationships")
+
+31. In the **Manage relationships** dialog, select **New...**.
+
+    ![The New... button is highlighted on the Manage relationships dialog.](media/power-bi-manage-relationships-new.png "Manage relationships")
+
+32. On the **Create relationship** dialog, do the following:
+
+    - Select **Documents** in the top drop down list.
+    - Select the **DocumentId** column in the Documents table view.
+    - Select **Entities** in the bottom drop down list.
+    - Select the **DocumentId** column in the Entities table view.
+    - Leave the Cardinality set to **Many to Many** and the Cross filter direction set to **Both**.
+    - Ensure the Make this relationship active box is checked.
+    - Select **OK**.
+
+    ![The settings specified above are highlighted in the Create relationship dialog.](media/power-bi-documents-to-entities.png "Create relationship")
+
+33. Back on the **Manage relationships** dialog, select **New...** again.
+
+    ![The Entities to Documents relationship is displayed and the New... button is highlighted on the Manage relationships dialog.](media/power-bi-manage-relationships-new-again.png "Manage relationships")
+
+34. In the **Create relationship** dialog, repeat step 32, this time selecting **KeyPhrases** in the bottom drop down list.
+
+35. Select **New...** again on the **Manage relationships** dialog, and create a relationship between **Documents** and **Users** by repeating step 32 and selecting **Users** in the bottom drop down list. You should now see three relationships defined in the **Manage relationships** dialog.
+
+    ![The newly defined relationships are highlighted in the Manage relationships dialog.](media/power-bi-manage-relationships-list.png "Manage relationships")
+
+36. Select **Close**.
+
+37. The relationship are represented as lines connecting the tables. Return to the report canvas by selecting the **Report** icon in the left-hand toolbar.
+
+    ![The relationships between tables are displays as lines connecting the tables, and the Report icon is highlighted in the left-hand toolbar.](media/power-bi-report-canvas.png "Report canvas")
+
+38. On the Report view, select the **Map** visualization to add that to the canvas.
+
+    ![The Map visualization is highlighted under Visualizations.](media/power-bi-visuals-map.png "Visualizations")
+
+39. Under Fields, expand the Users table and drag the **location** field into the **Location** box of the Map visualization. Then, drag the **sentiment** field from the Documents table into the **Size** field.
+
+    ![The Visualizations and Fields sections are displayed, with arrows pointing from the Users location field to the Location box and the Documents sentiment field to the Size box.](media/power-bi-visuals-map-properties.png "Visualizations")
+
+40. As you did previously, select the drop down arrow next to sentiment in the Size field and select **Average** from the context menu.
+
+    ![The drop down menu for the sentiment field in the Size box is highlighted and Average is highlighted in the context menu.](media/power-bi-visuals-maps-size.png "Visualizations")
+
+41. Finally, select the **Format** icon as you did above, expand the **Title** section, and set the **Title text** of the Map visualization to "Average sentiment by location".
+
+42. Click anywhere in the whitespace of the report canvas to unselect the Map visualization.
+
+43. Next, select a **Treemap** visualization and drag the **Keyphrases** field from the **KeyPhrases** table into the **Group** and **Values** fields on the Treemap visualization.
+
+    ![The Treemap visualization is selected and highlighted and arrows are pointing from the Keyphrases field to the Group and Values boxes.](media/power-bi-visuals-treemap.png "Visualizations")
+
+44. Select the **Format** icon, and set the visualization title to **Keyphrase treemap**.
+
+45. Click anywhere in the whitespace of the report canvas to unselect the Treemap visualization.
+
+46. The final visualization you will add is a **Table** visualization. Select it from the list of visualizations and set the following:
+
+    - Drag the **Keyphrases** field from the KeyPhrases table into the **Values** box.
+    - Drag the **Keyphrases** field into the Values box a second time, and on the second Keyphrases item select the drop down arrow and select **Count** from the context menu.
+
+    ![The table visualization is highlighted and selected and the values specified above are entered into the properties pane.](media/power-bi-visuals-table.png "Visualizations")
+
+47. Click anywhere in the whitespace of the report canvas to unselect the Table visualization.
+
+48. Resize and reposition the visualizations so your report dashboard looks similar to the following:
+
+    ![The completed report dashboard is displayed.](media/power-bi-dashboard.png "Dashboard")
+
+In the steps above, you created a knowledge store from your search index and then used that to consume the enriched documents using Power BI with Power Query. Reshaping performed by the Shaper Skill created multiple projections that allowed you to define tables that align with the intended use of the data while preserving relationships.
+
+## Task 9: Create Forms Recognizer Pipeline
 
 Now that you've had a chance to explore some of the cognitive search capabilities of Azure Search, let's dive into some more advanced Cognitive Services that can be integrated within the cognitive search pipeline through the use of custom skills. The Function App you deployed into Azure contained three functions. In addition to the Translate function, it also included a function to leverage the [Form Recognizer](https://azure.microsoft.com/en-us/services/cognitive-services/form-recognizer/) service, which you will implement in this task.
 
@@ -849,17 +1448,17 @@ ContosoAuto has provided you access to an Azure Blob storage account where they 
 
 ![Example form to be indexed by the Form Recognizer.](media/form-example.png "Example form")
 
-1. To get started, return to the PipelineEnhancer console application.
+1. To get started, return to the `PipelineEnhancer` console application.
 
-2. At the prompt, enter **3** and press enter.
+2. At the prompt, enter **4** and press enter.
 
-   ![3 is entered at the Pipeline Enhancer command prompt.](media/pipeline-enhancer-3.png "Pipeline Enhancer")
+   ![4 is entered at the Pipeline Enhancer command prompt.](media/pipeline-enhancer-4.png "Pipeline Enhancer")
 
 3. In the first task of this experience, you saw how to create an Azure Search index through the Azure portal UI. In this task, will not need to go through those steps, as the new search pipeline is being created via code, accessing the [Azure Search Service REST API](https://docs.microsoft.com/azure/search/search-api-preview) and the [Azure Search .NET SDK](https://docs.microsoft.com/en-us/azure/search/search-howto-dotnet-sdk). Using the SDK and API, it is possible to quickly and easily create new pipelines, as well as update and manage existing pipelines.
 
-4. Observe the output of the previous command in PipelineEnhancer console app. In addition to creating a new search pipeline using a Blob Storage data source, which includes a Form Recognizer custom skill, the application also passed in your Blob Storage account info to allow the Form Recognizer model to be trained with the sample forms.
+4. Observe the output of the previous command in `PipelineEnhancer` console app. In addition to creating a new search pipeline using a Blob Storage data source, which includes a Form Recognizer custom skill, the application also passed in your Blob Storage account info to allow the Form Recognizer model to be trained with the sample forms.
 
-   ![The output from entering 3 into the command prompt is displayed.](media/pipeline-enhancer-3-output.png "Pipeline Enhancer")
+   ![The output from entering 4 into the command prompt is displayed.](media/pipeline-enhancer-4-output.png "Pipeline Enhancer")
 
 5. Now, let's take a look at the results of our new search index. Navigate to your Search Service in the Azure portal, and select **Indexers**. Under Indexers, notice the new **forms-indexer**. The indexer should have run upon creation, so very you see a status of **Success**, and then select **Search explorer** from the toolbar.
 
@@ -896,7 +1495,7 @@ ContosoAuto has provided you access to an Azure Blob storage account where they 
 
 Azure Form Recognizer is a cognitive service that uses machine learning technology to identify and extract key-value pairs and table data from form documents. It then outputs structured data that includes the relationships in the original file. Unsupervised learning allows the model to understand the layout and relationships between fields and entries without manual data labeling or intensive coding and maintenance. This capability allows you to easily extract information about the structure and fields within your forms, making that information searchable with minimal development effort.
 
-## Task 8: Create an Anomaly Detection pipeline
+## Task 10: Create an Anomaly Detection pipeline
 
 ContosoAuto has also asked if it would be possible to add incoming vehicle telemetry to a search index. They store this data in Cosmos DB, in a container named `vehicle-telemetry`. They have also asked it would be possible use a custom cognitive skill to inspect some of this data for anomalies, and add that information to the search index, so they can easily find anomalous data.
 
@@ -959,9 +1558,9 @@ To accomplish this, we will use the the final function you deployed to your Func
 
     > The `engineTemperature` field will be used to demonstrate the capabilities of the Anomaly Detector API. The `engineTemperature` value for each document will be compared against time series data of engine temperatures to determine if the value is outside of the normal range.
 
-7. To create the new anomaly detector search index, return to the open `PipelineEnhancer` console app, and enter **4** at the prompt.
+7. To create the new anomaly detector search index, return to the open `PipelineEnhancer` console app, and enter **5** at the prompt.
 
-   ![4 is entered at the prompt in the pipeline enhancer and the output is highlighted.](media/pipeline-enhancer-4.png "Pipeline Enhancer")
+   ![5 is entered at the prompt in the pipeline enhancer and the output is highlighted.](media/pipeline-enhancer-5.png "Pipeline Enhancer")
 
 8. When you see the output that the anomaly detection pipeline was successfully created, navigate to your Search Service in the Azure portal, select **Indexers**, and observe the new **telemetry-indexer**.
 

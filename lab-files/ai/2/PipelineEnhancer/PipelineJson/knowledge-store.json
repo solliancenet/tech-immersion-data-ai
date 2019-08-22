@@ -1,0 +1,76 @@
+{
+  "storageConnectionString": "[storage-connection-string]",
+  "projections": [
+    {
+      "tables": [
+        {
+          "tableName": "Documents",
+          "generatedKeyName": "DocumentId",
+          "source": "/document/tableprojection",
+          "sourceContext": null,
+          "inputs": []
+        },
+        {
+          "tableName": "KeyPhrases",
+          "generatedKeyName": "KeyPhraseId",
+          "source": null,
+          "sourceContext": "/document/tableprojection/KeyPhrases/*",
+          "inputs": [
+            {
+              "name": "Keyphrases",
+              "source": "/document/tableprojection/KeyPhrases/*",
+              "sourceContext": null,
+              "inputs": []
+            }
+          ]
+        },
+        {
+          "tableName": "Entities",
+          "generatedKeyName": "EntityId",
+          "source": "/document/tableprojection/Entities/*",
+          "sourceContext": null,
+          "inputs": []
+        },
+        {
+          "tableName": "Users",
+          "generatedKeyName": "UserId",
+          "source": null,
+          "sourceContext": "/document/tableprojection/user",
+          "inputs": [
+            {
+              "name": "id",
+              "source": "/document/tableprojection/user/id",
+              "sourceContext": null,
+              "inputs": []
+            },
+            {
+              "name": "id_str",
+              "source": "/document/tableprojection/user/id_str",
+              "sourceContext": null,
+              "inputs": []
+            },
+            {
+              "name": "name",
+              "source": "/document/tableprojection/user/name",
+              "sourceContext": null,
+              "inputs": []
+            },
+            {
+              "name": "screen_name",
+              "source": "/document/tableprojection/user/screen_name",
+              "sourceContext": null,
+              "inputs": []
+            },
+            {
+              "name": "location",
+              "source": "/document/tableprojection/user/location",
+              "sourceContext": null,
+              "inputs": []
+            }
+          ]
+        }
+      ],
+      "objects": []
+    }
+  ]
+}

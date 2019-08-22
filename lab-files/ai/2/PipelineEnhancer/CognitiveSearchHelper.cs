@@ -2,6 +2,7 @@
 using Microsoft.Azure.Search.Models;
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PipelineEnhancer.Configuration;
 using PipelineEnhancer.Models;
 using System;
@@ -217,13 +218,7 @@ namespace PipelineEnhancer
                 using (var request = new HttpRequestMessage())
                 {
                     request.Method = HttpMethod.Put;
-                    var serializerSettings = new JsonSerializerSettings();
-                    serializerSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Skill>("@odata.type"));
-                    serializerSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CognitiveServices>("@odata.type"));
-                    var payload = await Task.Run(() => JsonConvert.SerializeObject(skillset, serializerSettings));
-                    // Remove problematic values
-                    var cleanPayload = payload.Replace(",\"@odata.etag\":null", "").Replace("\"httpHeaders\":null,", "");
-
+                    var cleanPayload = await GetSkillsetJson(skillset);
                     var content = new StringContent(cleanPayload, Encoding.UTF8, "application/json");
 
                     var response = await (httpClient.PutAsync(uri, content));
@@ -240,6 +235,66 @@ namespace PipelineEnhancer
                     }
                 }
             }
+        }
+
+        private static async Task<Skillset> CreateSkillsetViaApi(SearchConfig config, string skillsetName, string skillset)
+        {
+            // This function is necessary because currently the SDK fails when trying to create 
+            var uri = new Uri($"https://{config.ServiceName}.search.windows.net/skillsets/{skillsetName}?api-version={config.ApiVersion}");
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Add("api-key", config.Key);
+
+                using (var request = new HttpRequestMessage())
+                {
+                    request.Method = HttpMethod.Put;
+                    var content = new StringContent(skillset, Encoding.UTF8, "application/json");
+
+                    var response = await (httpClient.PutAsync(uri, content));
+                    var responseContent = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return JsonConvert.DeserializeObject<Skillset>(responseContent);
+                    }
+                    else
+                    {
+                        var error = JsonConvert.DeserializeObject<ErrorResponse>(responseContent);
+                        throw new Exception(error.Error.Message);
+                    }
+                }
+            }
+        }
+
+        public static async Task<string> GetSkillsetJson(Skillset skillset)
+        {
+            var serializerSettings = new JsonSerializerSettings();
+            serializerSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Skill>("@odata.type"));
+            serializerSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CognitiveServices>("@odata.type"));
+            var payload = await Task.Run(() => JsonConvert.SerializeObject(skillset, serializerSettings));
+            // Remove problematic values
+            var cleanPayload = payload.Replace(",\"@odata.etag\":null", "").Replace("\"httpHeaders\":null,", "");
+
+            return await Task.FromResult(cleanPayload);
+        }
+
+        public static string InsertSkillAsJson(string skillsetJson, string jsonToInsert)
+        {
+            var skillset = JObject.Parse(skillsetJson);
+            var jtoken = JToken.Parse(jsonToInsert);
+
+            var skills = new JArray();
+            foreach(var skill in skillset["skills"])
+            {
+                skills.Add(skill);
+            }
+            skills.Add(jtoken);
+
+            skillset["skills"] = skills;
+
+            return skillset.ToString();
         }
 
         private static async Task DeleteSkillsetIfExists(ISearchServiceClient serviceClient, string skillsetName)
@@ -274,6 +329,30 @@ namespace PipelineEnhancer
                 {
                     await CreateSkillset(searchClient, skillset);
                 }
+                await CreateIndex(searchClient, index);
+                await CreateIndexer(searchClient, indexer);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates the Index, Indexer, and Skillset for the cognitive search pipeline.
+        /// </summary>
+        public static async Task CreateCognitiveSearchPipeline(ISearchServiceClient searchClient, SearchConfig searchConfig, Index index, Indexer indexer, string skillsetName, string skillset)
+        {
+            try
+            {
+                // Delete the existing Index, Indexer and Skillset
+                await DeleteIndexerIfExists(searchClient, indexer.Name);
+                await DeleteSkillsetIfExists(searchClient, skillsetName);
+                await DeleteIndexIfExists(searchClient, index.Name);
+
+                // Create a new Index, Indexer and Skillset.
+                // Currently, there is no SDK available for including a knowledge store in a skillset, so pass in the JSON string to the API to handle this.
+                await CreateSkillsetViaApi(searchConfig, skillsetName, skillset);
                 await CreateIndex(searchClient, index);
                 await CreateIndexer(searchClient, indexer);
             }

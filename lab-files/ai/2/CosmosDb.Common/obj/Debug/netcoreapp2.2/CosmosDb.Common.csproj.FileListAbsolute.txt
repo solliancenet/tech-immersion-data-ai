@@ -1,12 +1,3 @@
-\\Mac\Home\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\bin\Debug\netcoreapp2.2\CosmosDb.Common.deps.json
-\\Mac\Home\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\bin\Debug\netcoreapp2.2\CosmosDb.Common.dll
-\\Mac\Home\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\bin\Debug\netcoreapp2.2\CosmosDb.Common.pdb
-\\Mac\Home\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.csprojAssemblyReference.cache
-\\Mac\Home\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.csproj.CoreCompileInputs.cache
-\\Mac\Home\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.AssemblyInfoInputs.cache
-\\Mac\Home\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.AssemblyInfo.cs
-\\Mac\Home\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.dll
-\\Mac\Home\tech-immersion-data-ai\lab-files\ai\2\CosmosDb.Common\obj\Debug\netcoreapp2.2\CosmosDb.Common.pdb
 C:\CognitiveSearch\CosmosDb.Common\bin\Debug\netcoreapp2.2\CosmosDb.Common.deps.json
 C:\CognitiveSearch\CosmosDb.Common\bin\Debug\netcoreapp2.2\CosmosDb.Common.dll
 C:\CognitiveSearch\CosmosDb.Common\bin\Debug\netcoreapp2.2\CosmosDb.Common.pdb

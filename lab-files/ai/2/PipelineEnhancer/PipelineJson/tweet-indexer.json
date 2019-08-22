@@ -17,29 +17,39 @@
   "fieldMappings": [],
   "outputFieldMappings": [
     {
-        "sourceFieldName": "/document/text/People",
-        "targetFieldName": "People",
-        "mappingFunction": null
+      "sourceFieldName": "/document/text/People",
+      "targetFieldName": "People",
+      "mappingFunction": null
     },
     {
-        "sourceFieldName": "/document/text/Organizations",
-        "targetFieldName": "Organizations",
-        "mappingFunction": null
+      "sourceFieldName": "/document/text/Organizations",
+      "targetFieldName": "Organizations",
+      "mappingFunction": null
     },
     {
-        "sourceFieldName": "/document/text/Locations",
-        "targetFieldName": "Locations",
-        "mappingFunction": null
+      "sourceFieldName": "/document/text/Locations",
+      "targetFieldName": "Locations",
+      "mappingFunction": null
     },
     {
-        "sourceFieldName": "/document/text/Keyphrases",
-        "targetFieldName": "Keyphrases",
-        "mappingFunction": null
+      "sourceFieldName": "/document/text/ExtractedEntities",
+      "targetFieldName": "ExtractedEntities",
+      "mappingFunction": null
     },
     {
-        "sourceFieldName": "/document/Language",
-        "targetFieldName": "Language",
-        "mappingFunction": null
+      "sourceFieldName": "/document/text/NamedEntities",
+      "targetFieldName": "NamedEntities",
+      "mappingFunction": null
+    },
+    {
+      "sourceFieldName": "/document/text/Keyphrases",
+      "targetFieldName": "Keyphrases",
+      "mappingFunction": null
+    },
+    {
+      "sourceFieldName": "/document/Language",
+      "targetFieldName": "Language",
+      "mappingFunction": null
     }
-]
+  ]
 }

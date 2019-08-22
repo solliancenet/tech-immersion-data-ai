@@ -42,13 +42,13 @@
           }
         }
       },
-      "Microsoft.Azure.Search.Common/9.0.1": {
+      "Microsoft.Azure.Search.Common/9.1.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Rest.ClientRuntime": "[2.3.19, 3.0.0)",
-          "Microsoft.Rest.ClientRuntime.Azure": "[3.3.19, 4.0.0)",
+          "Microsoft.Rest.ClientRuntime": "[2.3.20, 3.0.0)",
+          "Microsoft.Rest.ClientRuntime.Azure": "[3.3.18, 4.0.0)",
           "Newtonsoft.Json": "10.0.3",
-          "System.Net.Http": "4.3.0"
+          "System.Net.Http": "4.3.4"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.Azure.Search.Common.dll": {}
@@ -57,15 +57,15 @@
           "lib/netstandard2.0/Microsoft.Azure.Search.Common.dll": {}
         }
       },
-      "Microsoft.Azure.Search.Service/9.0.1": {
+      "Microsoft.Azure.Search.Service/9.1.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Azure.Search.Common": "[9.0.1, 10.0.0)",
-          "Microsoft.Rest.ClientRuntime": "[2.3.19, 3.0.0)",
-          "Microsoft.Rest.ClientRuntime.Azure": "[3.3.19, 4.0.0)",
+          "Microsoft.Azure.Search.Common": "9.1.0",
+          "Microsoft.Rest.ClientRuntime": "[2.3.20, 3.0.0)",
+          "Microsoft.Rest.ClientRuntime.Azure": "[3.3.18, 4.0.0)",
           "Microsoft.Spatial": "7.5.3",
           "Newtonsoft.Json": "10.0.3",
-          "System.Net.Http": "4.3.0"
+          "System.Net.Http": "4.3.4"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.Azure.Search.Service.dll": {}
@@ -375,7 +375,7 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.Rest.ClientRuntime/2.3.19": {
+      "Microsoft.Rest.ClientRuntime/2.3.20": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "10.0.3"
@@ -387,17 +387,18 @@
           "lib/netstandard2.0/Microsoft.Rest.ClientRuntime.dll": {}
         }
       },
-      "Microsoft.Rest.ClientRuntime.Azure/3.3.19": {
+      "Microsoft.Rest.ClientRuntime.Azure/3.3.18": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Rest.ClientRuntime": "[2.3.19, 3.0.0)",
+          "Microsoft.Rest.ClientRuntime": "[2.3.17, 3.0.0)",
+          "NETStandard.Library": "1.6.1",
           "Newtonsoft.Json": "10.0.3"
         },
         "compile": {
-          "lib/netstandard2.0/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+          "lib/netstandard1.4/Microsoft.Rest.ClientRuntime.Azure.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Rest.ClientRuntime.Azure.dll": {}
+          "lib/netstandard1.4/Microsoft.Rest.ClientRuntime.Azure.dll": {}
         }
       },
       "Microsoft.Spatial/7.5.3": {
@@ -1813,49 +1814,33 @@
         "runtimes/win7-x64/native/Microsoft.Azure.Documents.ServiceInterop.dll"
       ]
     },
-    "Microsoft.Azure.Search.Common/9.0.1": {
-      "sha512": "1J4ZYuuzO/qKPwbGeJryIPUJP+4cMxkvEwxwQfv/LcmRxHOcHpSf60hC/ugFXatEedD9ZIYABlMZZoeA20LdKg==",
+    "Microsoft.Azure.Search.Common/9.1.0": {
+      "sha512": "epPhqvj/YbAij+pYgqkFUdFgO+TPA9WnnaFu81tJCVlWrEoBe+oHHxo+8O36uwQ7cG/t+ClhdmoD/+k6PPwSnQ==",
       "type": "package",
-      "path": "microsoft.azure.search.common/9.0.1",
+      "path": "microsoft.azure.search.common/9.1.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/net452/Microsoft.Azure.Search.Common.dll",
-        "lib/net452/Microsoft.Azure.Search.Common.runtimeconfig.json",
-        "lib/net452/Microsoft.Azure.Search.Common.xml",
         "lib/net461/Microsoft.Azure.Search.Common.dll",
-        "lib/net461/Microsoft.Azure.Search.Common.runtimeconfig.json",
-        "lib/net461/Microsoft.Azure.Search.Common.xml",
         "lib/netstandard1.4/Microsoft.Azure.Search.Common.dll",
-        "lib/netstandard1.4/Microsoft.Azure.Search.Common.runtimeconfig.json",
-        "lib/netstandard1.4/Microsoft.Azure.Search.Common.xml",
         "lib/netstandard2.0/Microsoft.Azure.Search.Common.dll",
-        "lib/netstandard2.0/Microsoft.Azure.Search.Common.runtimeconfig.json",
-        "lib/netstandard2.0/Microsoft.Azure.Search.Common.xml",
-        "microsoft.azure.search.common.9.0.1.nupkg.sha512",
+        "microsoft.azure.search.common.9.1.0.nupkg.sha512",
         "microsoft.azure.search.common.nuspec"
       ]
     },
-    "Microsoft.Azure.Search.Service/9.0.1": {
-      "sha512": "ixCnLsLJofAuZeizMNup1+fF/7atoTa+CzMThw1CHuVN1pldBY0GZTPi9uzs28j6FvBg4KIb1CoBdtuJ03KjSw==",
+    "Microsoft.Azure.Search.Service/9.1.0": {
+      "sha512": "HfQwPK2PYPrX9MDQ92tlAzcw14WG3tnGqFtBQxp8jACDJI4uAk0QDrKi0spI0imeIxoa8iMhe/oH9mhPDC+c+w==",
       "type": "package",
-      "path": "microsoft.azure.search.service/9.0.1",
+      "path": "microsoft.azure.search.service/9.1.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/net452/Microsoft.Azure.Search.Service.dll",
-        "lib/net452/Microsoft.Azure.Search.Service.runtimeconfig.json",
-        "lib/net452/Microsoft.Azure.Search.Service.xml",
         "lib/net461/Microsoft.Azure.Search.Service.dll",
-        "lib/net461/Microsoft.Azure.Search.Service.runtimeconfig.json",
-        "lib/net461/Microsoft.Azure.Search.Service.xml",
         "lib/netstandard1.4/Microsoft.Azure.Search.Service.dll",
-        "lib/netstandard1.4/Microsoft.Azure.Search.Service.runtimeconfig.json",
-        "lib/netstandard1.4/Microsoft.Azure.Search.Service.xml",
         "lib/netstandard2.0/Microsoft.Azure.Search.Service.dll",
-        "lib/netstandard2.0/Microsoft.Azure.Search.Service.runtimeconfig.json",
-        "lib/netstandard2.0/Microsoft.Azure.Search.Service.xml",
-        "microsoft.azure.search.service.9.0.1.nupkg.sha512",
+        "microsoft.azure.search.service.9.1.0.nupkg.sha512",
         "microsoft.azure.search.service.nuspec"
       ]
     },
@@ -2316,10 +2301,10 @@
         "version.txt"
       ]
     },
-    "Microsoft.Rest.ClientRuntime/2.3.19": {
-      "sha512": "NGGS7xTLVEQ33BnZynLhRjkMK/P04E2H0Y5b7fiKXBtNUEdlhRczaO3OeVD7d6jvP8TEjD+KhOEhIjd6ttUSiA==",
+    "Microsoft.Rest.ClientRuntime/2.3.20": {
+      "sha512": "bw/H1nO4JdnhTagPHWIFQwtlQ6rb2jqw5RTrqPsPqzrjhJxc7P6MyNGdf4pgHQdzdpBSNOfZTEQifoUkxmzYXQ==",
       "type": "package",
-      "path": "microsoft.rest.clientruntime/2.3.19",
+      "path": "microsoft.rest.clientruntime/2.3.20",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2335,30 +2320,24 @@
         "lib/netstandard2.0/Microsoft.Rest.ClientRuntime.dll",
         "lib/netstandard2.0/Microsoft.Rest.ClientRuntime.runtimeconfig.json",
         "lib/netstandard2.0/Microsoft.Rest.ClientRuntime.xml",
-        "microsoft.rest.clientruntime.2.3.19.nupkg.sha512",
+        "microsoft.rest.clientruntime.2.3.20.nupkg.sha512",
         "microsoft.rest.clientruntime.nuspec"
       ]
     },
-    "Microsoft.Rest.ClientRuntime.Azure/3.3.19": {
-      "sha512": "+NVBWvRXNwaAPTZUxjUlQggsrf3X0GbiRoxYfgc3kG9E55ZxZxvZPT3nIfC4DNqzGSXUEvmLbckdXgBBzGdUaA==",
+    "Microsoft.Rest.ClientRuntime.Azure/3.3.18": {
+      "sha512": "ci0krYG4KKbZUXwavNYF/ztwH9nnZ9oK3yAkhyvg7qCI3BAeqOBZdFwRLEj8erHurKvOVy3VYULpskf1kWRBWQ==",
       "type": "package",
-      "path": "microsoft.rest.clientruntime.azure/3.3.19",
+      "path": "microsoft.rest.clientruntime.azure/3.3.18",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/net452/Microsoft.Rest.ClientRuntime.Azure.dll",
         "lib/net452/Microsoft.Rest.ClientRuntime.Azure.runtimeconfig.json",
         "lib/net452/Microsoft.Rest.ClientRuntime.Azure.xml",
-        "lib/net461/Microsoft.Rest.ClientRuntime.Azure.dll",
-        "lib/net461/Microsoft.Rest.ClientRuntime.Azure.runtimeconfig.json",
-        "lib/net461/Microsoft.Rest.ClientRuntime.Azure.xml",
         "lib/netstandard1.4/Microsoft.Rest.ClientRuntime.Azure.dll",
         "lib/netstandard1.4/Microsoft.Rest.ClientRuntime.Azure.runtimeconfig.json",
         "lib/netstandard1.4/Microsoft.Rest.ClientRuntime.Azure.xml",
-        "lib/netstandard2.0/Microsoft.Rest.ClientRuntime.Azure.dll",
-        "lib/netstandard2.0/Microsoft.Rest.ClientRuntime.Azure.runtimeconfig.json",
-        "lib/netstandard2.0/Microsoft.Rest.ClientRuntime.Azure.xml",
-        "microsoft.rest.clientruntime.azure.3.3.19.nupkg.sha512",
+        "microsoft.rest.clientruntime.azure.3.3.18.nupkg.sha512",
         "microsoft.rest.clientruntime.azure.nuspec"
       ]
     },
@@ -5904,7 +5883,7 @@
     ".NETCoreApp,Version=v2.2": [
       "CosmosDb.Common >= 1.0.0",
       "Microsoft.Azure.DocumentDB.Core >= 2.4.0",
-      "Microsoft.Azure.Search.Service >= 9.0.1",
+      "Microsoft.Azure.Search.Service >= 9.1.0",
       "Microsoft.Extensions.Configuration >= 2.2.0",
       "Microsoft.Extensions.Configuration.Binder >= 2.2.4",
       "Microsoft.Extensions.Configuration.Json >= 2.2.0",
@@ -5914,23 +5893,26 @@
   },
   "packageFolders": {
     "C:\\Users\\Kyle\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Y:\\tech-immersion-data-ai\\lab-files\\ai\\2\\PipelineEnhancer\\PipelineEnhancer.csproj",
+      "projectUniqueName": "\\\\Mac\\Home\\tech-immersion-data-ai\\lab-files\\ai\\2\\PipelineEnhancer\\PipelineEnhancer.csproj",
       "projectName": "PipelineEnhancer",
-      "projectPath": "Y:\\tech-immersion-data-ai\\lab-files\\ai\\2\\PipelineEnhancer\\PipelineEnhancer.csproj",
+      "projectPath": "\\\\Mac\\Home\\tech-immersion-data-ai\\lab-files\\ai\\2\\PipelineEnhancer\\PipelineEnhancer.csproj",
       "packagesPath": "C:\\Users\\Kyle\\.nuget\\packages\\",
-      "outputPath": "Y:\\tech-immersion-data-ai\\lab-files\\ai\\2\\PipelineEnhancer\\obj\\",
+      "outputPath": "\\\\Mac\\Home\\tech-immersion-data-ai\\lab-files\\ai\\2\\PipelineEnhancer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
         "C:\\Users\\Kyle\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"
@@ -5943,8 +5925,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "Y:\\tech-immersion-data-ai\\lab-files\\ai\\2\\CosmosDb.Common\\CosmosDb.Common.csproj": {
-              "projectPath": "Y:\\tech-immersion-data-ai\\lab-files\\ai\\2\\CosmosDb.Common\\CosmosDb.Common.csproj"
+            "\\\\Mac\\Home\\tech-immersion-data-ai\\lab-files\\ai\\2\\CosmosDb.Common\\CosmosDb.Common.csproj": {
+              "projectPath": "\\\\Mac\\Home\\tech-immersion-data-ai\\lab-files\\ai\\2\\CosmosDb.Common\\CosmosDb.Common.csproj"
             }
           }
         }
@@ -5964,7 +5946,7 @@
           },
           "Microsoft.Azure.Search.Service": {
             "target": "Package",
-            "version": "[9.0.1, )"
+            "version": "[9.1.0, )"
           },
           "Microsoft.Extensions.Configuration": {
             "target": "Package",

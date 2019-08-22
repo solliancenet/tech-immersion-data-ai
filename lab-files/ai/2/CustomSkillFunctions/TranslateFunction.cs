@@ -20,7 +20,7 @@ namespace CustomSkillFunctions
         static readonly string _path = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0";
 
         // NOTE: Replace this example key with a valid subscription key.
-        static readonly string _subscriptionKey = " < enter your api key here>";
+        static readonly string _subscriptionKey = "< enter your api key here>";
 
         [FunctionName("Translate")]
         public static async Task<IActionResult> Run(
@@ -30,14 +30,14 @@ namespace CustomSkillFunctions
             string requestBody = new StreamReader(req.Body).ReadToEnd();
             log.LogInformation($"Translate function receivied a request. Request body: {requestBody}");
 
-            var request = JsonConvert.DeserializeObject<TranslateRequest>(requestBody);
+            var request = JsonConvert.DeserializeObject<CustomSkillRequest>(requestBody);
 
             // Validation
             if (request?.Values == null)
             {
                 return new BadRequestObjectResult("Could not find values array");
             }
-            if (request.Values.Any() == false || string.IsNullOrWhiteSpace(request.Values.First().Data?.Text) == true)
+            if (request.Values.Any() == false || request.Values.First().Data == null)
             {
                 // It could not find a record, then return empty values array.
                 return new BadRequestObjectResult("Could not find valid records in values array");
@@ -49,11 +49,19 @@ namespace CustomSkillFunctions
                 return new BadRequestObjectResult("recordId cannot be null");
             }
 
-            log.LogInformation($"Translate function translating '{valueToTranslate.Data.Text}' from {valueToTranslate.Data.Language} to English.");
+            string textToTranslate = valueToTranslate.Data.text;
+            string language = valueToTranslate.Data.language ?? "en";
 
-            var translatedText = valueToTranslate.Data.Language != "en"
-                ? await TranslateText(valueToTranslate.Data.Text)
-                : valueToTranslate.Data.Text;
+            if (string.IsNullOrWhiteSpace(textToTranslate))
+            {
+                return new BadRequestObjectResult("Text to translate is required.");
+            }
+
+            log.LogInformation($"Translate function translating '{textToTranslate}' from {language} to English.");
+
+            var translatedText = language != "en"
+                ? await TranslateText(textToTranslate)
+                : textToTranslate;
 
             log.LogInformation($"Translate function translation '{translatedText}'.");
 
