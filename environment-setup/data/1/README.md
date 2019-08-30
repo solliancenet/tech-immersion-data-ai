@@ -2,24 +2,24 @@
 
 Complete the steps below to deploy and configure SQL Server 2019 for the [Data, DBA Experience](../../../../data-exp1/dba.md) workshop.
 
-- [Setup steps for Experience 1](#Setup-steps-for-Experience-1)
-  - [Lab VM requirements](#Lab-VM-requirements)
-  - [Experience requirements](#Experience-requirements)
-  - [Set up HGS VM](#Set-up-HGS-VM)
-  - [Set up SQL Server 2019 VM](#Set-up-SQL-Server-2019-VM)
-    - [Create Windows Server 2019 Datacenter VM](#Create-Windows-Server-2019-Datacenter-VM)
-    - [Install SQL Server 2019](#Install-SQL-Server-2019)
-    - [Configure the SQL Server computer as a guarded host](#Configure-the-SQL-Server-computer-as-a-guarded-host)
-    - [Configure SQL Server 2019](#Configure-SQL-Server-2019)
-    - [Enable Always Encrypted with secure enclaves in SQL Server](#Enable-Always-Encrypted-with-secure-enclaves-in-SQL-Server)
-    - [Install a sales database per user](#Install-a-sales-database-per-user)
-    - [Configure attendee databases](#Configure-attendee-databases)
-  - [Set up SQL Server 2008 R2 VM](#Set-up-SQL-Server-2008-R2-VM)
-    - [Provision SQL Server 2008 R2 on Windows Server 2008 R2 VM](#Provision-SQL-Server-2008-R2-on-Windows-Server-2008-R2-VM)
-    - [Configure SQL Server 2008 R2 VM](#Configure-SQL-Server-2008-R2-VM)
-    - [Restore ContosoAutoDb database](#Restore-ContosoAutoDb-database)
-    - [Create an SMB network share on the sqlserver2008r2 VM](#Create-an-SMB-network-share-on-the-sqlserver2008r2-VM)
-  - [Create SQL Server 2017 VM in Azure](#Create-SQL-Server-2017-VM-in-Azure)
+- [Setup steps for Experience 1](#setup-steps-for-experience-1)
+  - [Lab VM requirements](#lab-vm-requirements)
+  - [Experience requirements](#experience-requirements)
+  - [Set up HGS VM](#set-up-hgs-vm)
+  - [Set up SQL Server 2019 VM](#set-up-sql-server-2019-vm)
+    - [Create Windows Server 2019 Datacenter VM](#create-windows-server-2019-datacenter-vm)
+    - [Install SQL Server 2019](#install-sql-server-2019)
+    - [Configure the SQL Server computer as a guarded host](#configure-the-sql-server-computer-as-a-guarded-host)
+    - [Configure SQL Server 2019](#configure-sql-server-2019)
+    - [Enable Always Encrypted with secure enclaves in SQL Server](#enable-always-encrypted-with-secure-enclaves-in-sql-server)
+    - [Install a sales database per user](#install-a-sales-database-per-user)
+    - [Configure attendee databases](#configure-attendee-databases)
+  - [Set up SQL Server 2008 R2 VM](#set-up-sql-server-2008-r2-vm)
+    - [Provision SQL Server 2008 R2 on Windows Server 2008 R2 VM](#provision-sql-server-2008-r2-on-windows-server-2008-r2-vm)
+    - [Configure SQL Server 2008 R2 VM](#configure-sql-server-2008-r2-vm)
+    - [Restore ContosoAutoDb database](#restore-contosoautodb-database)
+    - [Create an SMB network share on the sqlserver2008r2 VM](#create-an-smb-network-share-on-the-sqlserver2008r2-vm)
+  - [Create SQL Server 2017 VM in Azure](#create-sql-server-2017-vm-in-azure)
 
 ## Lab VM requirements
 
@@ -354,8 +354,6 @@ In this task, you will provision another virtual machine (VM) in Azure to host a
 8. Select **Add**.
 
 ### Configure SQL Server 2008 R2 VM
-
-> TODO: Update. This can use the shared SQLSERVER2008R2 VM created for D1-E3, and the same database.
 
 In this task, you will open an RDP connection to the sql-2008 VM, disable Internet Explorer Enhanced Security Configuration, and add a firewall rule to open port 1433 to inbound TCP traffic. You will also install Data Migration Assistant (DMA).
 

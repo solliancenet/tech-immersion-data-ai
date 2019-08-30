@@ -11,7 +11,6 @@
   - [Task 3: Enhance the Cognitive Search pipeline](#task-3-enhance-the-cognitive-search-pipeline)
   - [Task 4: Publish Function App for custom skills](#task-4-publish-function-app-for-custom-skills)
   - [Task 5: Integrate Text Translate custom skill into pipeline](#task-5-integrate-text-translate-custom-skill-into-pipeline)
-  - [TODO: REMOVE THIS: Task 6: Add custom skill using deployed machine learning model](#todo-remove-this-task-6-add-custom-skill-using-deployed-machine-learning-model)
   - [Task 6: Query data in the Azure portal](#task-6-query-data-in-the-azure-portal)
   - [Task 7: Add a knowledge store](#task-7-add-a-knowledge-store)
   - [Task 8: Visualize enriched documents in Power BI](#task-8-visualize-enriched-documents-in-power-bi)
@@ -807,12 +806,6 @@ With the Function App now in place to support your Text Translator custom skill,
    ![2 is entered at the prompt in the pipeline enhancer](media/pipeline-enhancer-2.png "Pipeline Enhancer")
 
    > In addition to updating the Skillset JSON, the Indexer and Index were also be updated to include a new field named `textTranslated`.
-
-## TODO: REMOVE THIS: Task 6: Add custom skill using deployed machine learning model
-
-In this task, you will add another custom skill to your pipeline. This time, you will be adding a skill that calls a machine learning model that is deployed to a web service. The machine learning model creates a 5 word summary... TODO: Complete this intro, and then add the appropriate steps for this.
-
-TODO: Need to add steps and services to the environment setup doc for this lab to get everything in place.
 
 ## Task 6: Query data in the Azure portal
 
