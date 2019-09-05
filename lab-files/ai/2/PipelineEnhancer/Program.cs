@@ -545,7 +545,7 @@ namespace PipelineEnhancer
 
             var requestBody = JsonConvert.SerializeObject(timeSeriesData);
 
-            // Send the training request to the Anomaly Detector batch detect enpoint.
+            // Send the training request to the Anomaly Detector batch detect endpoint.
             using (var client = new HttpClient())
             {
                 using (var request = new HttpRequestMessage())
