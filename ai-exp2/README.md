@@ -693,12 +693,16 @@ In addition to predefined Cognitive skills, you also have the ability to integra
 
    ![The `AnalyzeFormFunction.cs` file is highlighted in the Visual Studio Solution Explorer.](media/visual-studio-analyze-form-function.png "Solution Explorer")
 
-10. In the `AnalyzeFormFunction.cs` file, locate the line of code (line 21) that looks like the following:
+10. In the `AnalyzeFormFunction.cs` file, locate the lines of code (starting on line 20) that look like the following:
 
     ```csharp
+    // NOTE: Ensure the service endpoint matches where your service is deployed and update as needed.
+    private static readonly string serviceEndpoint = "https://westus2.api.cognitive.microsoft.com/";
     // NOTE: Replace this example key with a valid subscription key.
     private static readonly string key = "<enter your api key here>";
     ```
+
+    > **IMPORTANT**: If your Forms Recognizer endpoint is not in the `West US 2` region, you will need to update the `serviceEndpoint` value to reflect to proper region. Your Forms Recognizer pipeline will fail with if the `serviceEndpoint` is pointing to the incorrect region.
 
 11. Replace the value within double-quotes (`<enter your api key here>`) with the API key you copied for the Translator Cognitive Service. The line should now look similar to this:
 
