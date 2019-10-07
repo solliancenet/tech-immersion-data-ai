@@ -361,105 +361,103 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
 
     ![The Form Recognizer Cognitive Service resource is displayed.](media/tech-immersion-form-recog-resource.png "Form Recognizer resource")
 
-16. Select **Overview** from the left-hand menu of the Form Recognizer Cognitive Services blade, and copy the **Endpoint** value.
+16. Select **Quick start** from the left-hand menu of the Form Recognizer Cognitive Services blade. From this screen, you will copy the **Key1** and **Endpoint** values.
 
-    ![The Endpoint for the Form Recognizer is highlighted.](media/form-recognizer-endpoint.png "Form Recognizer endpoint")
+    ![The Key1 and Endpoint values for the Form Recognizer are highlighted.](media/form-recognizer-endpoint.png "Form Recognizer Quick Start")
 
 17. Return to Visual Studio and in the `appsettings.json` file, paste the **Endpoint** value into the `Endpoint` field value within the `FormRecognizer` section. It should look similar to the following:
 
     ```json
-    "Endpoint": "https://westus2.api.cognitive.microsoft.com/"
+    "Endpoint": "https://tech-immersion-form-recog.cognitiveservices.azure.com/"
     ```
 
-18. Return to your Form Recognizer Cognitive Services account in the Azure portal, and select **Keys** from the left-hand menu. On the Keys blade, copy the **Key 1** value by selecting the copy button to the right of the field.
-
-19. Return to Visual Studio and in the `appsettings.json` file, paste the Key 1 value into the value for the `Key` field within the `FormRecognizer` section. It will look similar to the following.
+18. Next, copy the **Key1** value and in the `appsettings.json` file, paste it into the value for the `Key` field within the `FormRecognizer` section. It will look similar to the following.
 
     ```json
     "Key": "9d1079dd70494ac3b366a8a91e363b5b"
     ```
 
-20. To retrieve the required values for your Azure Blob Storage account, select the **techimmersionstorageXXXXX** Storage account resource from your resource group (where XXXXX is the unique identifier assigned to you for this workshop).
+19. To retrieve the required values for your Azure Blob Storage account, select the **techimmersionstorageXXXXX** Storage account resource from your resource group (where XXXXX is the unique identifier assigned to you for this workshop).
 
     ![The techimmersionstorageXXXXX resource is highlighted in the list of resources.](media/tech-immersion-storage-account.png "Storage account")
 
-21. On the Storage account blade, select **Access keys** from the left-hand menu, and then copy the Storage account name.
+20. On the Storage account blade, select **Access keys** from the left-hand menu, and then copy the Storage account name.
 
     ![The Storage account name is highlighted on the overview blade.](media/storage-account-name.png "Storage account")
 
-22. Return to Visual Studio and in the `appsettings.json` file, paste the Name value into the value for the `AccountName` field within the `BlobStorage` section. It will look similar to the following.
+21. Return to Visual Studio and in the `appsettings.json` file, paste the Name value into the value for the `AccountName` field within the `BlobStorage` section. It will look similar to the following.
 
     ```json
     "AccountName": "techimmersionstorage"
     ```
 
-23. Return to the Access keys blade of your storage account in the Azure portal, and copy the key1 **Connection string**.
+22. Return to the Access keys blade of your storage account in the Azure portal, and copy the key1 **Connection string**.
 
-24. Return to Visual Studio and in the `appsettings.json` file, paste the Connection string value into the value for the `ConnectionString` field within the `BlobStorage` section. It will look similar to the following.
+23. Return to Visual Studio and in the `appsettings.json` file, paste the Connection string value into the value for the `ConnectionString` field within the `BlobStorage` section. It will look similar to the following.
 
     ```json
     "ConnectionString": "DefaultEndpointsProtocol=https;AccountName=techimmersionstorage;AccountKey=4JBkkA1ot5bDZoLs4DvlH+7e5UXwrFxxrYb4taYMgkkrSdB8fan7E0coGlzvtzrlqPBzJg+DKpAFPoCHBIxlag==;EndpointSuffix=core.windows.net"
     ```
 
-25. The final setting you need for your Blob storage account is a shared access signature, or SAS token. Return to your Blob storage account in the Azure portal and select **Shared access signature** from the left-hand menu. On the Shared access signature blade, enter an **End** date for a week or two in the future, select **Generate SAS and connection string** and then copy the **SAS token** value.
+24. The final setting you need for your Blob storage account is a shared access signature, or SAS token. Return to your Blob storage account in the Azure portal and select **Shared access signature** from the left-hand menu. On the Shared access signature blade, enter an **End** date for a week or two in the future, select **Generate SAS and connection string** and then copy the **SAS token** value.
 
     ![On the Shared access signature blade, the end date is highlighted, the Generate SAS and connection string button is highlighted, and the copy button for the SAS token is highlighted.](media/blob-storage-generate-sas.png "Shared access signature")
 
-26. Return to Visual Studio and in the `appsettings.json` file, paste the SAS token string value into the value for the `SasToken` field within the `BlobStorage` section. It will look similar to the following.
+25. Return to Visual Studio and in the `appsettings.json` file, paste the SAS token string value into the value for the `SasToken` field within the `BlobStorage` section. It will look similar to the following.
 
     ```json
     "SasToken": "?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-07-02T01:20:49Z&st=2019-06-15T17:20:49Z&spr=https&sig=8LBK6113sDnaqp1X7A3nyXQL5l%2F5VgBsa5Ma6%2BYawuY%3D"
     ```
 
-27. Next, you need to retrieve your Cosmos DB connection string. In the [Azure portal](https://portal.azure.com), select the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop), and then select the **tech-immersionXXXXX** Azure Cosmos DB account from the list of resources (where XXXXX is the unique identifier assigned to you for this workshop) within the resource group.
+26. Next, you need to retrieve your Cosmos DB connection string. In the [Azure portal](https://portal.azure.com), select the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop), and then select the **tech-immersionXXXXX** Azure Cosmos DB account from the list of resources (where XXXXX is the unique identifier assigned to you for this workshop) within the resource group.
 
     ![The Azure Cosmos DB account resource is selected from the list of resources in the tech-immersion resource group.](media/tech-immersion-rg-cosmosdb.png "Tech Immersion resource group")
 
     > **IMPORTANT**: There may be two Cosmos DB accounts in your resource group. Select the Cosmos DB account named **tech-immersionXXXXX**, with no hyphen between immersion and XXXXX.
 
-28. On your Cosmos DB blade, select **Keys** from the left-hand menu.
+27. On your Cosmos DB blade, select **Keys** from the left-hand menu.
 
     ![The Keys link on the left-hand menu is highlighted.](media/cosmos-db-keys-link.png "Keys link")
 
-29. Copy the **Primary Connection String** value by selecting the copy button to the right of the field.
+28. Copy the **Primary Connection String** value by selecting the copy button to the right of the field.
 
     ![The Primary Connection String key is copied.](media/cosmos-db-keys.png "Keys")
 
-30. Return to the `appsettings.json` file in Visual Studio and paste the Primary Connection String into the value for the `ConnectionString` setting within the `CosmosDb` section. The settings should look similar to the following:
+29. Return to the `appsettings.json` file in Visual Studio and paste the Primary Connection String into the value for the `ConnectionString` setting within the `CosmosDb` section. The settings should look similar to the following:
 
     ```json
     "ConnectionString": "AccountEndpoint=https://tech-immersion.documents.azure.com:443/;AccountKey=p9avU3FcaeffHI50SeenA6zfvUcoZEk3rYwg4FdrsRfqrj3AfobcKdacfBkHlGZ1eiBnMafwhjxdoEUSai8LLA==;"
     ```
 
-31. The final settings you need to retrieve are those for your Azure Function App. In the Azure portal, navigate to your **ti-function-day2-XXXXX** Function App (where XXXXX is the unique identifier assigned to you for this workshop), and copy the **URL** on the Overview blade.
+30. The final settings you need to retrieve are those for your Azure Function App. In the Azure portal, navigate to your **ti-function-day2-XXXXX** Function App (where XXXXX is the unique identifier assigned to you for this workshop), and copy the **URL** on the Overview blade.
 
     ![The URL field is highlighted on the overview blade of the Function App.](media/function-app-url.png "Function App")
 
-32. Return to the `appsettings.json` file for the `PipelineEnhancer` project in Visual Studio, and paste the value into the `Url` setting within the `FunctionApp` section. It should look similar to:
+31. Return to the `appsettings.json` file for the `PipelineEnhancer` project in Visual Studio, and paste the value into the `Url` setting within the `FunctionApp` section. It should look similar to:
 
     ```json
     "Url": "https://tech-immersion-functions.azurewebsites.net"
     ```
 
-33. Back in the Azure portal, select **Function app settings** on the Overview blade.
+32. Back in the Azure portal, select **Function app settings** on the Overview blade.
 
     ![Function app settings link.](media/function-app-settings.png "Function app settings")
 
-34. On the Function app settings tab, select the **Copy** button next to the **default** Host Key.
+33. On the Function app settings tab, select the **Copy** button next to the **default** Host Key.
 
     ![The default host key copy button is highlighted.](media/function-app-default-host-key.png "Function app settings default host key")
 
-35. Return to Visual Studio and the `appsettings.json` file for the `PipelineEnhancer` project, and paste default host key value into the `DefaultHostKey` setting within the `FunctionApp` section. It will look similar to the following:
+34. Return to Visual Studio and the `appsettings.json` file for the `PipelineEnhancer` project, and paste default host key value into the `DefaultHostKey` setting within the `FunctionApp` section. It will look similar to the following:
 
     ```json
     "DefaultHostKey": "h3CqiI4JFKMGaN2BHwtYwxmgfwtqW0kaWbpaEQkyAcR3Lle5fKs9rg=="
     ```
 
-36. Save `appsettings.json`. The file should now resemble the following.
+35. Save `appsettings.json`. The file should now resemble the following.
 
     ![Search service values entered into the appsettings.json file.](media/pipeline-enhancer-app-settings-search-service.png "App settings")
 
-37. You are now ready to move on to adding the enhancements to your pipeline. The [create skillset API](https://docs.microsoft.com/en-us/rest/api/searchservice/create-skillset) uses the following endpoint:
+36. You are now ready to move on to adding the enhancements to your pipeline. The [create skillset API](https://docs.microsoft.com/en-us/rest/api/searchservice/create-skillset) uses the following endpoint:
 
     ```http
     PUT https://[servicename].search.windows.net/skillsets/[skillset name]?api-version=2017-11-11-Preview
@@ -467,7 +465,7 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
     Content-Type: application/json
     ```
 
-38. To add the [sentiment analysis pre-built skill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-sentiment) to your search pipeline, the `PipelineEnhancer` app will append the following JSON to the body of the Skillset you created through the Azure portal UI.
+37. To add the [sentiment analysis pre-built skill](https://docs.microsoft.com/en-us/azure/search/cognitive-search-skill-sentiment) to your search pipeline, the `PipelineEnhancer` app will append the following JSON to the body of the Skillset you created through the Azure portal UI.
 
     ```json
     {
@@ -489,33 +487,33 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
 
     > In the above JSON, the `inputs` specify the field in the source data document to send for analysis. The `outputs` section dictates that the `score` value returned by the Text Analytics endpoint in Cognitive Services should be mapped to an output field named `sentiment` in the search results. This is sent into the REST API, along with the JSON from the previously built skillset to update or create the skillset.
 
-39. To add sentiment analysis to your pipeline you will run the `PipelineEnhancer` project within the **CognitiveSearch** solution in Visual Studio. To run the project, right-click the `PipelineEnhancer` project in Visual Studio and select **Set as StartUp Project**.
+38. To add sentiment analysis to your pipeline you will run the `PipelineEnhancer` project within the **CognitiveSearch** solution in Visual Studio. To run the project, right-click the `PipelineEnhancer` project in Visual Studio and select **Set as StartUp Project**.
 
     ![In the Solution Explorer, PipelineEnhancer is highlighted, and the right-click context menu is displayed. Set as StartUp Project is highlighted in the context menu.](media/visual-studio-pipeline-enhancer-startup-project.png "Pipeline Enhancer")
 
-40. Now, select the run button on the Visual Studio toolbar, which is the one with a green arrow followed by the text "PipelineEnhancer."
+39. Now, select the run button on the Visual Studio toolbar, which is the one with a green arrow followed by the text "PipelineEnhancer."
 
     ![The run button is displayed for PipelineEnhancer.](media/visual-studio-run-pipeline-enhancer.png "Run button")
 
-41. At the command prompt for the console app, enter **1** to incorporate the Sentiment cognitive skill to your pipeline.
+40. At the command prompt for the console app, enter **1** to incorporate the Sentiment cognitive skill to your pipeline.
 
     ![1 is entered at the prompt in the pipeline enhancer](media/pipeline-enhancer-1.png "Pipeline Enhancer")
 
-42. When the console app completes you will receive a message stating that the sentiment analysis skill was successfully added.
+41. When the console app completes you will receive a message stating that the sentiment analysis skill was successfully added.
 
     ![A success message is displayed in the PipelineEnhancer console window.](media/pipeline-enhancer-sentiment-analysis-success.png "Pipeline enhancer")
 
     > In addition to updating the Skillset JSON, the Indexer and Index were also be updated to include a new field named `sentiment`.
 
-43. The process above deleted and recreated your Index, Indexer and Skillset, so you may need to select **Indexers** and the **tweet-indexer** on your Azure Search Service blade, and then select **Run** to force the Indexer to run against your tweet data again before attempting to run a search against the index in the next step.
+42. The process above deleted and recreated your Index, Indexer and Skillset, so you may need to select **Indexers** and the **tweet-indexer** on your Azure Search Service blade, and then select **Run** to force the Indexer to run against your tweet data again before attempting to run a search against the index in the next step.
 
     > The Indexer **Run** screen does not refresh when the indexer has finished, so you can return to the overview blade of the Search service, and then select **Indexers**. Then, you can use the **Refresh** button on the Search service tool bar, next to Search explorer, to refresh the status. The **tweet-indexer** will display a status of **Success** when it finishes.
 
-44. Return to your Azure Search service in the Azure portal and select **Search explorer** on the Search Service toolbar.
+43. Return to your Azure Search service in the Azure portal and select **Search explorer** on the Search Service toolbar.
 
     ![The Search explorer button on the Search Service toolbar is highlighted.](media/azure-search-service-toolbar-search-explorer.png "Search Service toolbar")
 
-45. On the Search explorer tab, select **Search** and inspect one of the records in the search results.
+44. On the Search explorer tab, select **Search** and inspect one of the records in the search results.
 
     ```json
     {
@@ -646,7 +644,7 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
 
     > In addition to the `sentiment` field, you may have also noticed two new objects within the search documents, `ExtractedEntities` and `NamedEntities`. These properties are part of the `EntityRecognitionSkill` added through the Azure portal, but are not included in the search documents by default. We added these using the REST APIs to further enhance the enrichments available in search index.
 
-46. Return to the `PipelineEnhancer` console app, and enter **X** at the command prompt to exit the console application.
+45. Return to the `PipelineEnhancer` console app, and enter **X** at the command prompt to exit the console application.
 
 ## Task 4: Publish Function App for custom skills
 
@@ -696,68 +694,74 @@ In addition to predefined Cognitive skills, you also have the ability to integra
 10. In the `AnalyzeFormFunction.cs` file, locate the lines of code (starting on line 20) that look like the following:
 
     ```csharp
-    // NOTE: Ensure the service endpoint matches where your service is deployed and update as needed.
-    private static readonly string serviceEndpoint = "https://westus2.api.cognitive.microsoft.com/";
-    // NOTE: Replace this example key with a valid subscription key.
+    // TODO: Replace the service endpoint with the endpoint for your Forms Recognizer service.
+    private static readonly string serviceEndpoint = "<enter your service endpoint here>";
+    // TODO: Replace this example key with a valid subscription key.
     private static readonly string key = "<enter your api key here>";
     ```
 
-    > **IMPORTANT**: If your Forms Recognizer endpoint is not in the `West US 2` region, you will need to update the `serviceEndpoint` value to reflect to proper region. Your Forms Recognizer pipeline will fail with if the `serviceEndpoint` is pointing to the incorrect region.
+11. Replace the `serviceEndpoint` value with the endpoint of your Forms Recognizer service. You can retrieve this from the **Overview** blade of the Forms Recognizer service in the Azure portal, or from the `appsettings.json` file on the `PipelineEnhancer` in Visual Studio. The completed line will look similar to:
 
-11. Replace the value within double-quotes (`<enter your api key here>`) with the API key you copied for the Translator Cognitive Service. The line should now look similar to this:
+    ```csharp
+    private static readonly string serviceEndpoint = "https://tech-immersion-form-recog.cognitiveservices.azure.com/";
+    ```
+
+    > **IMPORTANT**: Your Forms Recognizer pipeline will fail with if the `serviceEndpoint` is pointing to the incorrect region.
+
+12. Replace the value within double-quotes (`<enter your api key here>`) with the API key you copied for the Translator Cognitive Service. The line should now look similar to this:
 
     ```csharp
     private static readonly string key = "9d1079dd70494ac3b366a8a91e363b5b";
     ```
 
-12. Save `AnalyzeFormFunction.cs`.
+13. Save `AnalyzeFormFunction.cs`.
 
-13. Return to the Azure portal, and select the **tech-immersion-anomaly-detector** resource from the list of resources in the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
+14. Return to the Azure portal, and select the **tech-immersion-anomaly-detector** resource from the list of resources in the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
 
-14. On the Anomaly Detector Cognitive Services blade, select **Keys** from the left-hand menu, and then select the Copy button next to the value for **Key 1**.
+15. On the Anomaly Detector Cognitive Services blade, select **Keys** from the left-hand menu, and then select the Copy button next to the value for **Key 1**.
 
     ![The copy button for Key 1 is highlighted on the Keys blade.](media/cognitive-services-anomaly-detector-keys.png "Keys")
 
-15. Return to `CustomSkillFunctions` project in Visual Studio, and in the Solution Explorer on the right-hand side, open `DetectAnomaliesFunction.cs`.
+16. Return to `CustomSkillFunctions` project in Visual Studio, and in the Solution Explorer on the right-hand side, open `DetectAnomaliesFunction.cs`.
 
     ![The `DetectAnomaliesFunction.cs` file is highlighted in the Visual Studio Solution Explorer.](media/visual-studio-detect-anomalies-function.png "Solution Explorer")
 
-16. In the `DetectAnomaliesFunction.cs` file, locate the line of code (line 21) that looks like the following:
+17. In the `DetectAnomaliesFunction.cs` file, locate the line of code (line 21) that looks like the following:
 
     ```csharp
     // NOTE: Replace this example key with a valid subscription key.
     private static readonly string key = "<enter your api key here>";
     ```
 
-17. Replace the value within double-quotes (`<enter your api key here>`) with the API key you copied for the Translator Cognitive Service. The line should now look similar to this:
+18. Replace the value within double-quotes (`<enter your api key here>`) with the API key you copied for the Translator Cognitive Service. The line should now look similar to this:
 
     ```csharp
     private static readonly string key = "e5fe6a9a9702447680864369d7a8965e";
     ```
 
-18. Save `DetectAnomaliesFunction.cs`.
+19. Save `DetectAnomaliesFunction.cs`.
 
-19. You are now ready to deploy the function into your Azure Function App. Right-click the `CustomSkillFunctions` project, and select **Publish** from the context menu.
+20. You are now ready to deploy the function into your Azure Function App. Right-click the `CustomSkillFunctions` project, and select **Publish** from the context menu.
 
     ![Publish is highlighted in the context menu for the TextTranslateFunction project.](media/visual-studio-function-publish.png "Publish")
 
-20. On the **Pick a publish target** dialog, choose **Select Existing** and select **Publish**.
+21. On the **Pick a publish target** dialog, choose **Select Existing** and select **Publish**.
 
     ![Select Existing is highlighted and selected on the Pick a publish target dialog. The publish button is highlighted.](media/visual-studio-function-publish-target.png "Pick a publish target")
 
     > If you are prompted to sign in, use the Azure credentials provided to you for this experience.
 
-21. On the **App service** dialog, select your Subscription and locate the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) in the list. Select the Function App named **ti-function-day2-XXXXX** from the list of resources (where XXXXX is the unique identifier assigned to you for this workshop).
+22. On the **App service** dialog, select your Subscription and locate the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) in the list. Select the Function App named **ti-function-day2-XXXXX** from the list of resources (where XXXXX is the unique identifier assigned to you for this workshop).
 
     ![The tech-immersion-functions Function App is highlighted in the search results.](media/visual-studio-function-publish-app-service.png "App service")
 
     > You may need to enter the credentials of the account you are using for this workshop before you can see any resources for your subscription.
 
-22. Select **OK**. This will start the publish process. You will see an animated progress icon next to the Publish button while the deployment is in progress.
+23. Select **OK**. This will start the publish process. You will see an animated progress icon next to the Publish button while the deployment is in progress.
 
     ![The progress icon is highlighted on the Publish dialog.](media/visual-studio-function-publish-progress.png "Publish")
 
-23. When the publish is complete, you can open the **Output** window at the bottom left-hand corner of the Visual Studio window to observe the results. You should see messages that the **Publish Succeeded** and **Publish completed**.
+24. When the publish is complete, you can open the **Output** window at the bottom left-hand corner of the Visual Studio window to observe the results. You should see messages that the **Publish Succeeded** and **Publish completed**.
 
     ![The publish succeeded and publish completed messages are highlighted in the Output window.](media/visual-studio-function-publish-output.png "Output")
 

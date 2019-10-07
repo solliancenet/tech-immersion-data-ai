@@ -29,6 +29,7 @@ Each attendee will have a resource group containing the following resources:
   - Name: tech-immersion-translator
 - Azure Function App
   - Consumption Plan
+  - Runtime stack: .Net Core
   - Name: ti-function-day2
 - Azure Blob storage account
   - Name: techimmersionstoreXXXXX

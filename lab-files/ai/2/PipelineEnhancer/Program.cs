@@ -37,6 +37,7 @@ namespace PipelineEnhancer
             {
                 while (true)
                 {
+                    Console.ResetColor();
                     Console.WriteLine("=============");
                     Console.WriteLine("Choose an option below to run the PipelineEnhancer.");
                     Console.WriteLine("** Enter 1 to add a Sentiment Analysis cognitive skill to the Tweets search index.");
