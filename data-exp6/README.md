@@ -150,6 +150,8 @@ In this task, you will quickly set up your ADLS Gen2 filesystem using a Databric
 
 6. Select the drop down arrow next to Shared, and select **Import** from the context menu.
 
+  > The Tech-Immersion notebook might already be imported in your Databricks environment, in that case you can continue with step 8.
+  
    ![Import is highlighted in the context menu for the Shared workspace in Databricks.](media/databricks-workspace-shared-import.png 'Import')
 
 7. On the Import Notebooks dialog, select **Browse** and select the **`Tech-Immersion.dbc`** file located in the `C:\lab-files\data\6` folder on your lab VM, and then select **Import**.
