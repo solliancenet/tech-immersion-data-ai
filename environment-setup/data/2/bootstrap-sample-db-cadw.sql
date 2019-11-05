@@ -1,5 +1,5 @@
 USE master;  
-GO  
+GO
 -- Enable external scripts execution for R/Python/Java:
 exec sp_configure 'external scripts enabled', 1;
 RECONFIGURE WITH OVERRIDE;
@@ -17,11 +17,18 @@ NOUNLOAD,  STATS = 5
 
 GO
 
-IF NOT EXISTS(SELECT * FROM sys.external_data_sources WHERE name = 'SqlDataPool')
+USE ContosoAutoDW;
+GO
+
+IF NOT EXISTS(SELECT *
+FROM sys.external_data_sources
+WHERE name = 'SqlDataPool')
 CREATE EXTERNAL DATA SOURCE SqlDataPool
-WITH (LOCATION = 'sqldatapool://service-mssql-controller:8080/datapools/default');
-IF NOT EXISTS(SELECT * FROM sys.external_data_sources WHERE name = 'SqlStoragePool')
+WITH (LOCATION = 'sqldatapool://controller-svc:8080/datapools/default');
+IF NOT EXISTS(SELECT *
+FROM sys.external_data_sources
+WHERE name = 'SqlStoragePool')
 CREATE EXTERNAL DATA SOURCE SqlStoragePool
-WITH (LOCATION = 'sqlhdfs://service-mssql-controller:8080');
+WITH (LOCATION = 'sqlhdfs://controller-svc:8080/default');
 GO
 
