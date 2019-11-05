@@ -184,7 +184,7 @@ To start, we will use the External Table Wizard in Azure Data Studio to connect 
 
     ![The Summary step is displayed.](media/ads-external-table-csv-create.png 'Summary')
 
-16. As with the previous external table you created, a "Create External Table succeeded" dialog will appear under your task history in a few moments. Select the Servers link (Ctrl+G) on the left-hand menu, then expand the Tables list underneath your **sales** database and find the **dbo.stockitemholdings (External)** table. If you do not see it, right-click on the Tables folder, then select Refresh. **Right-click** the **dbo.stockitemholdings (External)** table, then select **Select Top 1000** from the context menu.
+16. As with the previous external table you created, a "Create External Table succeeded" dialog will appear under your task history in a few moments. Select the Servers link (Ctrl+G) on the left-hand menu, then expand the Tables list underneath your **sales_YOUR_UNIQUE_IDENTIFIER** database and find the **dbo.stockitemholdings (External)** table. If you do not see it, right-click on the Tables folder, then select Refresh. **Right-click** the **dbo.stockitemholdings (External)** table, then select **Select Top 1000** from the context menu.
 
     ![The Select Top 1000 rows menu item is highlighted.](media/ads-stockitemholdings-select-top-1000.png 'Select Top 1000')
 
@@ -234,7 +234,7 @@ In this task, you will use Azure Data Studio to execute a notebook that will ena
 
 1. In Azure Data Studio, click **File**, then **Open File...**.
 
-2. In the folder browser dialog, navigate to the **C:\lab-files\data\2** folder and select **predict-battery-life-with-sqlbdc.ipynb**.
+2. In the folder browser dialog, navigate to the **C:\Labfiles** folder and select **predict-battery-life-with-sqlbdc.ipynb**.
 
 3. When the notebook opens, you need to select the **Kernel** you would like to use to run the notebook. Locate the **Kernel** dropdown in the toolbar above the notebook, then select **PySpark3**.
 
@@ -252,7 +252,7 @@ In this task, you will use Azure Data Studio to execute a notebook that will ena
 
    ![Create External Table](media/task02-create-external-menu.png 'Create External Table')
 
-8. In Step 1 of the wizard, select the `sales` database and for the `Name for new external table` field provide **battery-life-predictions**. Click **Next**.
+8. In Step 1 of the wizard, select the `sales_YOUR_UNIQUE_IDENTIFIER` database and for the `Name for new external table` field provide **battery-life-predictions**. Click **Next**.
 
    ![Step 1 of the wizard is displayed.](media/ads-predictions-csv-wizard-step1.png 'Step 1')
 

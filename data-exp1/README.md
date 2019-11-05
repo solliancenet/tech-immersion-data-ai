@@ -2,23 +2,23 @@
 
 ## Data, Experience 1 - Business Critical Performance and Security with SQL Server 2019
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Data, Experience 1 - Business Critical Performance and Security with SQL Server 2019](#Data-Experience-1---Business-Critical-Performance-and-Security-with-SQL-Server-2019)
-  - [Technology overview](#Technology-overview)
-  - [Scenario overview](#Scenario-overview)
-  - [Experience requirements](#Experience-requirements)
-  - [Task 1: Connect to SQL Server 2019 with SSMS](#Task-1-Connect-to-SQL-Server-2019-with-SSMS)
-  - [Task 2: Query performance improvements with intelligent query processing](#Task-2-Query-performance-improvements-with-intelligent-query-processing)
-  - [Task 3: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS](#Task-3-Identify-PII-and-GDPR-related-compliance-issues-using-Data-Discovery--Classification-in-SSMS)
-  - [Task 4: Fix compliance issues with dynamic data masking](#Task-4-Fix-compliance-issues-with-dynamic-data-masking)
-  - [Task 5: Restrict data access with Row-level security](#Task-5-Restrict-data-access-with-Row-level-security)
-  - [Task 6: Always Encrypted with secure enclaves](#Task-6-Always-Encrypted-with-secure-enclaves)
-    - [Configure a secure enclave](#Configure-a-secure-enclave)
-    - [Provision enclave-enabled keys](#Provision-enclave-enabled-keys)
-    - [Encrypt customer email column](#Encrypt-customer-email-column)
-    - [Run rich queries against an encrypted column](#Run-rich-queries-against-an-encrypted-column)
-  - [Wrap-up](#Wrap-up)
-  - [Additional resources and more information](#Additional-resources-and-more-information)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
+  - [Data, Experience 1 - Business Critical Performance and Security with SQL Server 2019](#data-experience-1---business-critical-performance-and-security-with-sql-server-2019)
+  - [Technology overview](#technology-overview)
+  - [Scenario overview](#scenario-overview)
+  - [Experience requirements](#experience-requirements)
+  - [Task 1: Connect to SQL Server 2019 with SSMS](#task-1-connect-to-sql-server-2019-with-ssms)
+  - [Task 2: Query performance improvements with intelligent query processing](#task-2-query-performance-improvements-with-intelligent-query-processing)
+  - [Task 3: Identify PII and GDPR-related compliance issues using Data Discovery & Classification in SSMS](#task-3-identify-pii-and-gdpr-related-compliance-issues-using-data-discovery--classification-in-ssms)
+  - [Task 4: Fix compliance issues with dynamic data masking](#task-4-fix-compliance-issues-with-dynamic-data-masking)
+  - [Task 5: Restrict data access with Row-level security](#task-5-restrict-data-access-with-row-level-security)
+  - [Task 6: Always Encrypted with secure enclaves](#task-6-always-encrypted-with-secure-enclaves)
+    - [Configure a secure enclave](#configure-a-secure-enclave)
+    - [Provision enclave-enabled keys](#provision-enclave-enabled-keys)
+    - [Encrypt customer email column](#encrypt-customer-email-column)
+    - [Run rich queries against an encrypted column](#run-rich-queries-against-an-encrypted-column)
+  - [Wrap-up](#wrap-up)
+  - [Additional resources and more information](#additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -49,12 +49,7 @@ SSL/TLS certificates are widely used to secure access to SQL Server. In previous
 
 - Viewing and validating certificates installed in a SQL Server instance.
 - Identifying which certificates may be close to expiring.
-- Deploying certificates across Availability Group machines from the node holding the primary replica.
 - Deploying certificates across machines participating in a Failover Cluster instance from the active node.
-
-![Availability groups on Kubernetes.](media/availability-groups-kubernetes.png 'Availability groups on Kubernetes')
-
-For High Availability and Disaster Recovery, SQL Server 2019 now supports up to eight secondary replicas in an Always On Availability Group. Customers can also run Always On Availability Groups on containers using Kubernetes.
 
 SQL Server 2019 also has powerful tools for Business Intelligence including Analysis Services and Power BI Report Server which provide visual data exploration and interactive analysis of business data.
 
