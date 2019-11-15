@@ -1,6 +1,6 @@
 # Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions
 
-## Data, Experience 6 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI
+## Data, Experience 6 - Delivering the Modern Data Warehouse with Azure Synapse Analytics, Azure Databricks, Azure Data Factory, and Power BI
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
   - [Data, Experience 6 - Delivering the Modern Data Warehouse with Azure Synapse Analytics, Azure Databricks, Azure Data Factory, and Power BI](#Data-Experience-6---Delivering-the-Modern-Data-Warehouse-with-Azure-Synapse-Analytics-Azure-Databricks-Azure-Data-Factory-and-Power-BI)
