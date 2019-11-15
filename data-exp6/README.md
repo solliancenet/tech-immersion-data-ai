@@ -3,7 +3,7 @@
 ## Data, Experience 6 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI
 
 - [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Data, Experience 6 - Delivering the Modern Data Warehouse with Azure SQL Data Warehouse, Azure Databricks, Azure Data Factory, and Power BI](#Data-Experience-6---Delivering-the-Modern-Data-Warehouse-with-Azure-SQL-Data-Warehouse-Azure-Databricks-Azure-Data-Factory-and-Power-BI)
+  - [Data, Experience 6 - Delivering the Modern Data Warehouse with Azure Synapse Analytics, Azure Databricks, Azure Data Factory, and Power BI](#Data-Experience-6---Delivering-the-Modern-Data-Warehouse-with-Azure-Synapse-Analytics-Azure-Databricks-Azure-Data-Factory-and-Power-BI)
   - [Technology overview](#Technology-overview)
   - [Scenario overview](#Scenario-overview)
   - [Task 1: Start the vehicle telemetry generator](#Task-1-Start-the-vehicle-telemetry-generator)
@@ -12,8 +12,8 @@
   - [Task 4: Perform data aggregation and summarization](#Task-4-Perform-data-aggregation-and-summarization)
   - [Task 5: Persisting data to Databricks Delta tables](#Task-5-Persisting-data-to-Databricks-Delta-tables)
   - [Task 6: Visualizations and dashboards with Databricks](#Task-6-Visualizations-and-dashboards-with-Databricks)
-  - [Task 7: Send summarized data to Azure SQL DW](#Task-7-Send-summarized-data-to-Azure-SQL-DW)
-  - [Task 8: Generate reports in Power BI with data from Azure SQL DW](#Task-8-Generate-reports-in-Power-BI-with-data-from-Azure-SQL-DW)
+  - [Task 7: Send summarized data to Azure Synapse Analytics](#Task-7-Send-summarized-data-to-Azure-Synapse-Analytics)
+  - [Task 8: Generate reports in Power BI with data from Azure Synapse Analytics](#Task-8-Generate-reports-in-Power-BI-with-data-from-Azure-Synapse-Analytics)
   - [Wrap-up](#Wrap-up)
   - [Additional resources and more information](#Additional-resources-and-more-information)
 
@@ -25,7 +25,7 @@ A modern data warehouse lets you bring together all your data at any scale easil
 
 1. Combine all your structured, unstructured and semi-structured data (logs, files, and media) using Azure Data Factory to Azure Blob Storage.
 2. Leverage data in Azure Blob Storage to perform scalable analytics with Azure Databricks and achieve cleansed and transformed data.
-3. Cleansed and transformed data can be moved to Azure SQL Data Warehouse to combine with existing structured data, creating one hub for all your data. Leverage native connectors between Azure Databricks and Azure SQL Data Warehouse to access and move data at scale.
+3. Cleansed and transformed data can be moved to Azure Synapse Analytics to combine with existing structured data, creating one hub for all your data. Leverage native connectors between Azure Databricks and Azure Synapse Analytics to access and move data at scale.
 4. Build operational reports and analytical dashboards on top of Azure Data Warehouse to derive insights from the data, and use Azure Analysis Services to serve thousands of end users.
 5. Run ad hoc queries directly on data within Azure Databricks.
 
@@ -36,7 +36,7 @@ The same technologies also enable Advanced Analytics on big data, which allows c
 1. Bring together all your structured, unstructured and semi-structured data (logs, files, and media) using Azure Data Factory to Azure Blob Storage.
 2. Use Azure Databricks to clean and transform the structureless datasets and combine them with structured data from operational databases or data warehouses.
 3. Use scalable machine learning/deep learning techniques, to derive deeper insights from this data using Python, R or Scala, with inbuilt notebook experiences in Azure Databricks.
-4. Leverage native connectors between Azure Databricks and Azure SQL Data Warehouse to access and move data at scale.
+4. Leverage native connectors between Azure Databricks and Azure Synapse Analytics to access and move data at scale.
 5. Power users take advantage of the inbuilt capabilities of Azure Databricks to perform root cause determination and raw data analysis.
 6. Run ad hoc queries directly on data within Azure Databricks.
 7. Take the insights from Azure Databricks to Cosmos DB to make them accessible through web and mobile apps.
@@ -45,9 +45,9 @@ The same technologies also enable Advanced Analytics on big data, which allows c
 
 Like many organizations, ContosoAuto generates data from numerous system, each of which has its own location and format, including structured, unstructured, and semi-structured data. They would like the ability to combine and analyze these disparate datasets in order to gain actionable insights that can help them operate their business more efficiently.
 
-In this experience, ​​you will see how Azure Data Factory (ADF), Azure Databricks, and Azure SQL Data Warehouse (SQL DW) can be used together to build a modern data warehouse. You will start by using Azure Data Factory (ADF) to automate the movement of data in various formats gathered from various sources, including Cosmos DB, into a centralized repository, Azure Data Lake Storage Gen2 (ADLS Gen2) in this case. You will then use Azure Databricks to prepare and analyze those data, and finally write the aggregations to Azure SQL Data Warehouse (SQL DW).
+In this experience, ​​you will see how Azure Data Factory (ADF), Azure Databricks, and Azure Synapse Analytics (Data Warehouse) can be used together to build a modern data warehouse. You will start by using Azure Data Factory (ADF) to automate the movement of data in various formats gathered from various sources, including Cosmos DB, into a centralized repository, Azure Data Lake Storage Gen2 (ADLS Gen2) in this case. You will then use Azure Databricks to prepare and analyze those data, and finally write the aggregations to Azure Synapse Analytics.
 
-As part of the process, you will also use Databricks to connect to the Cosmos DB Change Feed to stream near-real-time vehicle telemetry data directly into your SQL DW using Spark Structured Streaming.
+As part of the process, you will also use Databricks to connect to the Cosmos DB Change Feed to stream near-real-time vehicle telemetry data directly into your Data Warehouse using Spark Structured Streaming.
 
 ## Task 1: Start the vehicle telemetry generator
 
@@ -242,9 +242,9 @@ In this task, you will use visualizations configured within a Databricks noteboo
 
 > The notebook contains all the instructions needed to complete this task. In addition, the final cell of the notebook contains instructions on the next step, which will include a link to the notebook for the next task in this experience, or instructions to return to this document.
 
-## Task 7: Send summarized data to Azure SQL DW
+## Task 7: Send summarized data to Azure Synapse Analytics
 
-In this task, you will use the Azure SQL Data Warehouse connector to write aggregated data from Databricks into your SQL DW. You will also apply aggregations to streaming data from the Cosmos DB Change Feed, and stream the data directly into your Azure SQL DW from Databricks.
+In this task, you will use the Azure Synapse Analytics connector to write aggregated data from Databricks into your Data Warehouse. You will also apply aggregations to streaming data from the Cosmos DB Change Feed, and stream the data directly into your Data Warehouse from Databricks.
 
 1. In your Databricks workspace, select **Workspace** from the left-hand menu, then select **Shared**.
 
@@ -254,29 +254,29 @@ In this task, you will use the Azure SQL Data Warehouse connector to write aggre
 
 > The notebook contains all the instructions needed to complete this task. In addition, the final cell of the notebook contains instructions on the next step, which will include a link to the notebook for the next task in this experience, or instructions to return to this document.
 
-## Task 8: Generate reports in Power BI with data from Azure SQL DW
+## Task 8: Generate reports in Power BI with data from Azure Synapse Analytics
 
-In this task, you will use Power BI Desktop to read data from Azure SQL DW to create reports showing vehicle telemetry data.
+In this task, you will use Power BI Desktop to read data from Azure Synapse Analytics to create reports showing vehicle telemetry data.
 
 1. Launch Power BI Desktop, and select **Get data** on the splash screen.
 
    ![The Power BI Desktop splash screen is shown with the Get data link highlighted.](media/power-bi-desktop.png 'Power BI Desktop splash screen')
 
-2. On the Get Data dialog, select **Azure** on the left-hand side, select **Azure SQL Data Warehouse** from the list of available Azure services, and then select **Connect**.
+2. On the Get Data dialog, select **Azure** on the left-hand side, select **Azure SQL Data Warehouse** or **Azure Synapse Analytics**  from the list of available Azure services, and then select **Connect**.
 
-   ![The Power BI Get Data dialog is displayed, with Azure selected on the left and Azure SQL Data Warehouse selected on the right. The Connect button is highlighted.](media/power-bi-get-data-sql-dw.png 'Power BI Get Data')
+   ![The Power BI Get Data dialog is displayed, with Azure selected on the left and Azure Synapse Analytics selected on the right. The Connect button is highlighted.](media/power-bi-get-data-sql-dw.png 'Power BI Get Data')
 
 3. On the SQL Server database dialog that appears, enter the following:
 
-   - **Server**: Copy and paste the name of your SQL DW Server from the Azure portal.
+   - **Server**: Copy and paste the name of your Data Warehouse Server from the Azure portal.
 
-     - In the Azure portal, navigate to the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop), and select your SQL data warehouse resource.
+     - In the Azure portal, navigate to the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop), and select your Azure Synapse Analytics resource.
 
-       ![The SQL data warehouse resource is highlighted in the tech-immersion resource group.](media/resources-group-sql-dw.png 'Tech Immersion Resource Group')
+       ![The Azure Synapse Analytics resource is highlighted in the tech-immersion resource group.](media/resources-group-sql-dw.png 'Tech Immersion Resource Group')
 
-     - On the SQL DW overview blade, copy the Server name.
+     - On the Azure Synapse Analytics overview blade, copy the Server name.
 
-       ![The Server name is highlighted on the SQL DW overview blade.](media/sql-dw-server-name.png 'SQL Server Data Warehouse')
+       ![The Server name is highlighted on the Azure Synapse Analytics overview blade.](media/sql-dw-server-name.png 'SQL Server Data Warehouse')
 
    - **Database**: Enter tech-immersion-sql-dw-XXXXX.
    - **Data Connectivity mode**: Select DirectQuery.
@@ -365,20 +365,20 @@ In this task, you will use Power BI Desktop to read data from Azure SQL DW to cr
 
 ## Wrap-up
 
-In this experience, ​​you used Azure Data Factory (ADF), Azure Databricks, and Azure SQL Data Warehouse (SQL DW) together to build a modern data warehouse.
+In this experience, ​​you used Azure Data Factory (ADF), Azure Databricks, and Azure Synapse Analytics together to build a modern data warehouse.
 
-You started by using Azure Data Factory (ADF) to automate the movement of data in various formats gathered from various sources, including Cosmos DB, into Azure Data Lake Storage Gen2 (ADLS Gen2). You then used Azure Databricks to prepare, analyze and visualize those data. Next, you used Spark Structured Streaming, in connection with the Azure Cosmos DB Spark Connector, to query streaming data from the Cosmos DB Change Feed, demonstrating how you can easily include near real-time data in your queries and aggregations in Databricks. You wrote aggregations of both static and streaming data into Azure SQL Data Warehouse (SQL DW).
+You started by using Azure Data Factory (ADF) to automate the movement of data in various formats gathered from various sources, including Cosmos DB, into Azure Data Lake Storage Gen2 (ADLS Gen2). You then used Azure Databricks to prepare, analyze and visualize those data. Next, you used Spark Structured Streaming, in connection with the Azure Cosmos DB Spark Connector, to query streaming data from the Cosmos DB Change Feed, demonstrating how you can easily include near real-time data in your queries and aggregations in Databricks. You wrote aggregations of both static and streaming data into Azure Synapse Analytics.
 
-You ended the modern data warehouse experience by using Power BI Desktop to connect to your SQL DW, and building a dashboard to provide visualizations of vehicle telemetry data.
+You ended the modern data warehouse experience by using Power BI Desktop to connect to your Data Warehouse, and building a dashboard to provide visualizations of vehicle telemetry data.
 
 ## Additional resources and more information
 
 To continue learning and expand your understanding of building modern data warehouses, use the links below.
 
 - [Azure Modern Data Warehouse](https://azure.microsoft.com/en-us/solutions/data-warehouse/)
-- [Introduction to Azure SQL Data Warehouse](https://www.youtube.com/watch?v=7MDCWgxPnVY) (video)
-- [More information about Azure SQL Data Warehouse](https://azure.microsoft.com/en-us/services/sql-data-warehouse/)
-- [Azure SQL Data Warehouse documentation](https://docs.microsoft.com/en-us/azure/sql-data-warehouse/)
+- [Introduction to Azure Synapse Analytics](https://www.youtube.com/watch?v=tMYOi5E14eU&t=4s) (video)
+- [More information about Azure Synapse Analytics](https://azure.microsoft.com/en-us/services/sql-data-warehouse/)
+- [Azure Synapse Analytics documentation](https://docs.microsoft.com/en-us/azure/sql-data-warehouse/)
 - [More information about Azure Data Factory](https://azure.microsoft.com/en-us/services/data-factory/)
 - [Modern data warehouse architecture](https://azure.microsoft.com/en-us/solutions/architecture/modern-data-warehouse/)
 - [Azure Data Factory documentation](https://docs.microsoft.com/en-us/azure/data-factory/)
