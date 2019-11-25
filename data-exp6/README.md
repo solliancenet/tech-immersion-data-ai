@@ -2,20 +2,20 @@
 
 ## Data, Experience 6 - Delivering the Modern Data Warehouse with Azure Synapse Analytics, Azure Databricks, Azure Data Factory, and Power BI
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Data, Experience 6 - Delivering the Modern Data Warehouse with Azure Synapse Analytics, Azure Databricks, Azure Data Factory, and Power BI](#Data-Experience-6---Delivering-the-Modern-Data-Warehouse-with-Azure-Synapse-Analytics-Azure-Databricks-Azure-Data-Factory-and-Power-BI)
-  - [Technology overview](#Technology-overview)
-  - [Scenario overview](#Scenario-overview)
-  - [Task 1: Start the vehicle telemetry generator](#Task-1-Start-the-vehicle-telemetry-generator)
-  - [Task 2: Execute ADF Pipeline to copy data](#Task-2-Execute-ADF-Pipeline-to-copy-data)
-  - [Task 3: Read streaming data from Cosmos DB using Databricks](#Task-3-Read-streaming-data-from-Cosmos-DB-using-Databricks)
-  - [Task 4: Perform data aggregation and summarization](#Task-4-Perform-data-aggregation-and-summarization)
-  - [Task 5: Persisting data to Databricks Delta tables](#Task-5-Persisting-data-to-Databricks-Delta-tables)
-  - [Task 6: Visualizations and dashboards with Databricks](#Task-6-Visualizations-and-dashboards-with-Databricks)
-  - [Task 7: Send summarized data to Azure Synapse Analytics](#Task-7-Send-summarized-data-to-Azure-Synapse-Analytics)
-  - [Task 8: Generate reports in Power BI with data from Azure Synapse Analytics](#Task-8-Generate-reports-in-Power-BI-with-data-from-Azure-Synapse-Analytics)
-  - [Wrap-up](#Wrap-up)
-  - [Additional resources and more information](#Additional-resources-and-more-information)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
+  - [Data, Experience 6 - Delivering the Modern Data Warehouse with Azure Synapse Analytics, Azure Databricks, Azure Data Factory, and Power BI](#data-experience-6---delivering-the-modern-data-warehouse-with-azure-synapse-analytics-azure-databricks-azure-data-factory-and-power-bi)
+  - [Technology overview](#technology-overview)
+  - [Scenario overview](#scenario-overview)
+  - [Task 1: Start the vehicle telemetry generator](#task-1-start-the-vehicle-telemetry-generator)
+  - [Task 2: Execute ADF Pipeline to copy data](#task-2-execute-adf-pipeline-to-copy-data)
+  - [Task 3: Read streaming data from Cosmos DB using Databricks](#task-3-read-streaming-data-from-cosmos-db-using-databricks)
+  - [Task 4: Perform data aggregation and summarization](#task-4-perform-data-aggregation-and-summarization)
+  - [Task 5: Persisting data to Databricks Delta tables](#task-5-persisting-data-to-databricks-delta-tables)
+  - [Task 6: Visualizations and dashboards with Databricks](#task-6-visualizations-and-dashboards-with-databricks)
+  - [Task 7: Send summarized data to Azure Synapse Analytics](#task-7-send-summarized-data-to-azure-synapse-analytics)
+  - [Task 8: Generate reports in Power BI with data from Azure Synapse Analytics](#task-8-generate-reports-in-power-bi-with-data-from-azure-synapse-analytics)
+  - [Wrap-up](#wrap-up)
+  - [Additional resources and more information](#additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -23,8 +23,8 @@ A modern data warehouse lets you bring together all your data at any scale easil
 
 ![Sample solution diagram.](media/solution-diagram1.png 'Sample solution diagram')
 
-1. Combine all your structured, unstructured and semi-structured data (logs, files, and media) using Azure Data Factory to Azure Blob Storage.
-2. Leverage data in Azure Blob Storage to perform scalable analytics with Azure Databricks and achieve cleansed and transformed data.
+1. Combine all your structured, unstructured and semi-structured data (logs, files, and media) using Azure Data Factory to Azure Data Lake Storage.
+2. Leverage data in Azure Data Lake Storage to perform scalable analytics with Azure Databricks and achieve cleansed and transformed data.
 3. Cleansed and transformed data can be moved to Azure Synapse Analytics to combine with existing structured data, creating one hub for all your data. Leverage native connectors between Azure Databricks and Azure Synapse Analytics to access and move data at scale.
 4. Build operational reports and analytical dashboards on top of Azure Synapse Analytics to derive insights from the data, and use Azure Analysis Services to serve thousands of end users.
 5. Run ad hoc queries directly on data within Azure Databricks.
@@ -33,7 +33,7 @@ The same technologies also enable Advanced Analytics on big data, which allows c
 
 ![Sample solution diagram.](media/solution-diagram2.png 'Sample solution diagram')
 
-1. Bring together all your structured, unstructured and semi-structured data (logs, files, and media) using Azure Data Factory to Azure Blob Storage.
+1. Bring together all your structured, unstructured and semi-structured data (logs, files, and media) using Azure Data Factory to Azure Data Lake Storage.
 2. Use Azure Databricks to clean and transform the structureless datasets and combine them with structured data from operational databases or data warehouses.
 3. Use scalable machine learning/deep learning techniques, to derive deeper insights from this data using Python, R or Scala, with inbuilt notebook experiences in Azure Databricks.
 4. Leverage native connectors between Azure Databricks and Azure Synapse Analytics to access and move data at scale.
@@ -45,13 +45,13 @@ The same technologies also enable Advanced Analytics on big data, which allows c
 
 Like many organizations, ContosoAuto generates data from numerous system, each of which has its own location and format, including structured, unstructured, and semi-structured data. They would like the ability to combine and analyze these disparate datasets in order to gain actionable insights that can help them operate their business more efficiently.
 
-In this experience, ​​you will see how Azure Data Factory (ADF), Azure Databricks, and Azure Synapse Analytics (Data Warehouse) can be used together to build a modern data warehouse. You will start by using Azure Data Factory (ADF) to automate the movement of data in various formats gathered from various sources, including Cosmos DB, into a centralized repository, Azure Data Lake Storage Gen2 (ADLS Gen2) in this case. You will then use Azure Databricks to prepare and analyze those data, and finally write the aggregations to Azure Synapse Analytics.
+In this experience, ​​you will see how Azure Data Factory (ADF), Azure Databricks, and Azure Synapse Analytics (Data Warehouse) can be used together to build a modern data warehouse. You will start by using Azure Data Factory (ADF) to automate the movement of data in various formats gathered from various sources, including Cosmos DB, into a centralized Azure Data Lake Storage Gen2 (ADLS Gen2) repository. You will then use Azure Databricks to prepare and analyze those data, and finally write the aggregations to Azure Synapse Analytics.
 
 As part of the process, you will also use Databricks to connect to the Cosmos DB Change Feed to stream near-real-time vehicle telemetry data directly into your Data Warehouse using Spark Structured Streaming.
 
 ## Task 1: Start the vehicle telemetry generator
 
-The data generator console application creates and sends simulated vehicle sensor telemetry for an array of vehicles (denoted by VIN (vehicle identification number)) directly to Cosmos DB. For this to happen, you first need to configure it with the Cosmos DB connection string.
+The data generator console application creates and sends simulated vehicle sensor telemetry for an array of vehicles, denoted by VIN (vehicle identification number), directly to Cosmos DB. For this to happen, you first need to configure it with the Cosmos DB connection string.
 
 In this task, you will configure and run the data generator to save simulated vehicle telemetry data to a `telemetry` collection in Cosmos DB.
 
@@ -67,50 +67,56 @@ In this task, you will configure and run the data generator to save simulated ve
 
    ![The `appsettings.json` file is highlighted in the C:\lab-files\data\6\TelemetryGenerator folder.](media/windows-explorer-appsettings-json.png 'Windows explorer')
 
-4. To retrieve your Cosmos DB connection string, open a web browser and navigate to the [Azure portal](https://portal.azure.com). Select **Resource groups** from the left-hand menu, and then select the **tech-immersionXXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
+4. To retrieve your Cosmos DB connection string, open a web browser and navigate to the [Azure portal](https://portal.azure.com) and select **Resource groups** from the Azure services menu.
+
+    ![Resource groups is highlighted in the Azure services list in the Azure portal.](media/azure-resource-groups.png "Resource groups")
+
+5. Select the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
 
    ![The tech-immersion resource group is selected.](media/tech-immersion-rg.png 'Resource groups')
 
-   > **IMPORTANT**: There may be two similarly named Cosmos DB instances. For this experience, you want the one in the format **tech-immersionXXXXX** with no hyphen between the word immersion, and your XXXXX unique identifier.
-
-5. Select the **Azure Cosmos DB account** from the list of resources in your resource group.
+6. Select the **Azure Cosmos DB account** from the list of resources in your resource group.
 
    ![The Azure Cosmos DB account is selected in the resource group.](media/tech-immersion-rg-cosmos-db.png 'Tech Immersion resource group')
 
-6. Select **Keys** from the left-hand menu.
+7. Select **Keys** from the left-hand menu.
 
    ![The Keys link on the left-hand menu is highlighted.](media/cosmos-db-keys-link.png 'Keys link')
 
-7. Copy the **Primary Connection String** value by selecting the copy button to the right of the field.
+8. Copy the **Primary Connection String** value by selecting the copy button to the right of the field.
 
    ![The Primary Connection String key is copied.](media/cosmos-db-keys.png 'Keys')
 
-8. Return to the `appsettings.json` file in your text editor, and paste your Cosmos DB connection string value next to `COSMOS_DB_CONNECTION_STRING`. Make sure you have quotes ("") around the value, as shown in the example below:
+9. Return to the `appsettings.json` file in your text editor, and paste your Cosmos DB connection string value next to `COSMOS_DB_CONNECTION_STRING`. Make sure you have double-quotes ("") around the value, as shown in the example below:
 
    ```json
    {
      "COSMOS_DB_CONNECTION_STRING": "AccountEndpoint=https://tech-immersion.documents.azure.com:443/;AccountKey=xVXyajzdlD3q4UXHIpMnriBhtasLztTrMrGSJgvRl8D1bUu1B7wwfGN1Q8rhBu0BHBTc2jR9iGPRtYpIV3lAkQ==;",
 
      "SECONDS_TO_LEAD": "0",
-     "SECONDS_TO_RUN": "2400"
+     "SECONDS_TO_RUN": "3600"
    }
    ```
 
    `SECONDS_TO_LEAD` is the amount of time to wait before sending vehicle telemetry data. Default value is `0`.
 
-   `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. Set the value to `2400`. Data will also stop transmitting when you enter <Ctrl+C> while the generator is running, or if you close the window.
+   `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. Ensure the value is set to `3600`, which instructs the generator to run for 60 minutes. Data will also stop transmitting when you enter <Ctrl+C> while the generator is running, or if you close the window.
 
-9. Save the `appsettings.json` file.
+   > **Note**: The telemetry generator needs to be running for the Cosmos DB Change Feed, Spark Structured Streaming, and Azure Synapse Analytics tasks below, so if it takes longer than 60 minutes to complete this lab, you may have to restart the generator.
 
-10. Open a new File Explorer window by selecting the File Explorer icon on the Windows Start Bar.
+10. Save the `appsettings.json` file.
+
+11. Open a new File Explorer window by selecting the File Explorer icon on the Windows Start Bar.
 
     ![The File Explorer icon is highlighted on the Windows Start Bar.](media/windows-start-bar-file-explorer.png 'Windows Start Bar')
 
-11. In the File Explorer window, navigate to the `C:\lab-files\data\6\TelemetryGenerator` folder, and then locate and double-click the `TransactionGenerator.exe` file to launch the console application.
+12. In the File Explorer window, navigate to the `C:\lab-files\data\6\TelemetryGenerator` folder, and then locate and double-click the `TransactionGenerator.exe` file to launch the console application.
 
     ![Screenshot of the console window.](media/telemetry-generator-console.png 'Console window')
 
-12. If you see a Windows Defender dialog pop up after attempting to run the executable, select **More info**.
+    > **Note**: If you search for the `TransactionGenerator.exe` file in the File Explorer search box, you will need to right-click the file in the search results and then select **Open file location** from the context menu. Failure to do this will result in an error when running the application that the Cosmos DB configuration must be provided.
+
+13. If you see a Windows Defender dialog pop up after attempting to run the executable, select **More info**.
 
     ![Select More Info on the Windows Defender dialog box.](media/windows-defender-more-info.png 'Windows Defender')
 
@@ -118,11 +124,11 @@ In this task, you will configure and run the data generator to save simulated ve
 
     ![Click Run Anyway.](media/windows-defender-run-anyway.png 'Windows Defender')
 
-13. A console window will open and you should see it start to send data after a few seconds. Once you see that it is sending data to Cosmos DB, _minimize_ the window and allow it to run in the background throughout this experience.
+14. A console window will open and you should see it start to send data after a few seconds. Once you see that it is sending data to Cosmos DB, _minimize_ the window and allow it to run in the background throughout this experience.
 
     ![Screenshot of the console window.](media/vs-console.png 'Console window')
 
-    > The top of the output displays information about the Cosmos DB collection you created (telemetry), the requested RU/s as well as estimated hourly and monthly cost. After every 1,000 records are requested to be sent, you will see output statistics.
+    > The top of the output displays information about the Cosmos DB collection you created (telemetry), the requested RU/s as well as estimated hourly and monthly cost. After every 250 records are requested to be sent, you will see output statistics.
 
 ## Task 2: Execute ADF Pipeline to copy data
 
@@ -323,6 +329,8 @@ In this task, you will use Power BI Desktop to read data from Azure Synapse Anal
 
     ![The line chart is shown on the report.](media/power-bi-line-chart.png 'Line chart')
 
+    > **Note**: Data generated is random, so you may not see the same trend lines as represented in the image above.
+
 14. Select a blank area on the report to deselect the line chart, and then select the **Area chart** visualization.
 
     ![The Area chart visualization is highlighted.](media/power-bi-area-chart-vis.png 'Area chart visualization')
@@ -338,6 +346,8 @@ In this task, you will use Power BI Desktop to read data from Azure Synapse Anal
 17. Your area chart should look similar to the following:
 
     ![The area chart on the report.](media/power-bi-area-chart.png 'Area chart')
+
+    > **Note**: Data generated is random, so you may not see the same trend lines as represented in the image above.
 
 18. Select a blank area on the report to deselect the area chart. Now select the **Line and stacked column chart** visualization.
 
@@ -357,6 +367,8 @@ In this task, you will use Power BI Desktop to read data from Azure Synapse Anal
 
     ![The line and stacked column chart on the report.](media/power-bi-line-and-stacked-column-chart.png 'Line and stacked column chart')
 
+    > **Note**: Data generated is random, so you may not see the same trend lines as represented in the image above.
+
 23. Select **Save** on the Power BI Desktop toolbar in the upper left of the window, and then select a file location and enter a name, such as "Vehicle Telemetry", then select **Save**.
 
 24. Your final report should look similar to the following:
@@ -375,14 +387,14 @@ You ended the modern data warehouse experience by using Power BI Desktop to conn
 
 To continue learning and expand your understanding of building modern data warehouses, use the links below.
 
-- [Azure Modern Data Warehouse](https://azure.microsoft.com/en-us/solutions/data-warehouse/)
+- [Azure Modern Data Warehouse](https://azure.microsoft.com/solutions/data-warehouse/)
 - [Introduction to Azure Synapse Analytics](https://www.youtube.com/watch?v=tMYOi5E14eU&t=4s) (video)
-- [More information about Azure Synapse Analytics](https://azure.microsoft.com/en-us/services/sql-data-warehouse/)
-- [Azure Synapse Analytics documentation](https://docs.microsoft.com/en-us/azure/sql-data-warehouse/)
-- [More information about Azure Data Factory](https://azure.microsoft.com/en-us/services/data-factory/)
-- [Modern data warehouse architecture](https://azure.microsoft.com/en-us/solutions/architecture/modern-data-warehouse/)
-- [Azure Data Factory documentation](https://docs.microsoft.com/en-us/azure/data-factory/)
-- [More information about Azure Databricks](https://azure.microsoft.com/en-us/services/databricks/)
-- [Azure Databricks documentation](https://docs.microsoft.com/en-us/azure/azure-databricks/)
-- [Power BI product page](https://powerbi.microsoft.com/en-us/)
-- [Power BI documentation](https://docs.microsoft.com/en-us/power-bi/)
+- [More information about Azure Synapse Analytics](https://azure.microsoft.com/services/sql-data-warehouse/)
+- [Azure Synapse Analytics documentation](https://docs.microsoft.com/azure/sql-data-warehouse/)
+- [More information about Azure Data Factory](https://azure.microsoft.com/services/data-factory/)
+- [Modern data warehouse architecture](https://azure.microsoft.com/solutions/architecture/modern-data-warehouse/)
+- [Azure Data Factory documentation](https://docs.microsoft.com/azure/data-factory/)
+- [More information about Azure Databricks](https://azure.microsoft.com/services/databricks/)
+- [Azure Databricks documentation](https://docs.microsoft.com/azure/azure-databricks/)
+- [Power BI product page](https://powerbi.microsoft.com/)
+- [Power BI documentation](https://docs.microsoft.com/power-bi/)
