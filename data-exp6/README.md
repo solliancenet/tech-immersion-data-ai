@@ -148,6 +148,8 @@ In this task, you will quickly set up your ADLS Gen2 filesystem using a Databric
 
 4. In your Databricks workspace, confirm your Databricks cluster is running by selecting **Clusters** from the left-hand menu, and ensure the Status is **Running**. If it is **Terminated**, select the **Start** button for the cluster. Select **Confirm** in the dialog to start the cluster.
 
+   > Check if the cluster is running a supported runtime version by opening the cluster. If there is a red warning sign next to the Databricks Runtime Version, edit the cluster and select a higher version.
+
    ![The start button for the cluster is highlighted on the Clusters page in Databricks.](media/databricks-cluster-start.png 'Clusters')
 
    > It will take 2-4 minutes for the cluster to start. You can move on to the next steps while the cluster is starting up.
