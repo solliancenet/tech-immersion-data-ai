@@ -42,7 +42,7 @@ In the user name box, enter your VM Admin User Name. Enter your VM Admin Passwor
 
 * **Data, Experience 7** - [Open Source Databases at Scale](./data-exp7/README.md)
 
-  In this experience, attendees will use advanced features of the managed PostgreSQL PaaS service on Azure to make Conto Auto's database more scalable and able to handle the rapid ingest of streaming data while simultaneously generating and serving pre-aggregated data for reports. Additionally, attendees will migrate their existing Oracle database to PostgreSQL running Azure.
+  In this experience, attendees will use advanced features of the managed PostgreSQL PaaS service on Azure to make Conto Auto's database more scalable and able to handle the rapid ingest of streaming data while simultaneously generating and serving pre-aggregated data for reports.
 
 ## AI: AI & Machine Learning-focused
 
