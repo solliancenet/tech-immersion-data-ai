@@ -284,7 +284,7 @@ In this task, you will use Power BI Desktop to read data from Azure Synapse Anal
 
        ![The Server name is highlighted on the Azure Synapse Analytics overview blade.](media/sql-dw-server-name.png 'SQL Server Data Warehouse')
 
-   - **Database**: Enter tech-immersion-sql-dw-XXXXX.
+   - **Database**: Enter tech-immersion-sql-dw.
    - **Data Connectivity mode**: Select DirectQuery.
 
    ![The Power BI SQL Server database connection dialog is displayed. The tech-immersion-sql-dw server name is entered into the Server box, and tech-immersion-sql-dw is entered into the Database field. DirectQuery is selected for the Data Connectivity mode.](media/power-bi-sql-server-database.png 'Power BI SQL Server database connection')
