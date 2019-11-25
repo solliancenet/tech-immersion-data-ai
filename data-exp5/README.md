@@ -2,23 +2,23 @@
 
 ## Data, Experience 5 - Simplifying data flows with Azure Data Factory
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [Data, Experience 5 - Simplifying data flows with Azure Data Factory](#Data-Experience-5---Simplifying-data-flows-with-Azure-Data-Factory)
-  - [Technology overview](#Technology-overview)
-  - [Scenario overview](#Scenario-overview)
-  - [Exercise 1: Using ADF Mapping Data Flows to visually configure data transformation pipelines](#Exercise-1-Using-ADF-Mapping-Data-Flows-to-visually-configure-data-transformation-pipelines)
-    - [Task 1: Create the data flow](#Task-1-Create-the-data-flow)
-    - [Task 2: Previewing the trip data](#Task-2-Previewing-the-trip-data)
-    - [Task 3: Configuring the tripfare data source](#Task-3-Configuring-the-tripfare-data-source)
-    - [Task 4: Join the data sources](#Task-4-Join-the-data-sources)
-    - [Task 5: Create an aggregate](#Task-5-Create-an-aggregate)
-    - [Task 6: Add the destination sink](#Task-6-Add-the-destination-sink)
-    - [Task 7: Run the pipeline](#Task-7-Run-the-pipeline)
-  - [Exercise 2: Execute an ADF Pipeline to copy data](#Exercise-2-Execute-an-ADF-Pipeline-to-copy-data)
-    - [Task 1: Prepare the ADLS file system](#Task-1-Prepare-the-ADLS-file-system)
-    - [Task 2: Using the Copy activity in Azure Data Factory](#Task-2-Using-the-Copy-activity-in-Azure-Data-Factory)
-  - [Wrap-up](#Wrap-up)
-  - [Additional resources and more information](#Additional-resources-and-more-information)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
+  - [Data, Experience 5 - Simplifying data flows with Azure Data Factory](#data-experience-5---simplifying-data-flows-with-azure-data-factory)
+  - [Technology overview](#technology-overview)
+  - [Scenario overview](#scenario-overview)
+  - [Exercise 1: Using ADF Mapping Data Flows to visually configure data transformation pipelines](#exercise-1-using-adf-mapping-data-flows-to-visually-configure-data-transformation-pipelines)
+    - [Task 1: Create the data flow](#task-1-create-the-data-flow)
+    - [Task 2: Previewing the trip data](#task-2-previewing-the-trip-data)
+    - [Task 3: Configuring the tripfare data source](#task-3-configuring-the-tripfare-data-source)
+    - [Task 4: Join the data sources](#task-4-join-the-data-sources)
+    - [Task 5: Create an aggregate](#task-5-create-an-aggregate)
+    - [Task 6: Add the destination sink](#task-6-add-the-destination-sink)
+    - [Task 7: Run the pipeline](#task-7-run-the-pipeline)
+  - [Exercise 2: Execute an ADF Pipeline to copy data](#exercise-2-execute-an-adf-pipeline-to-copy-data)
+    - [Task 1: Prepare the ADLS file system](#task-1-prepare-the-adls-file-system)
+    - [Task 2: Using the Copy activity in Azure Data Factory](#task-2-using-the-copy-activity-in-azure-data-factory)
+  - [Wrap-up](#wrap-up)
+  - [Additional resources and more information](#additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -86,7 +86,7 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
 12. Select the new source data set item, and then in the property panel, select the **Source Setting** tab, 
 
-13.  Select **+ New** next to _Source dataset_.
+13. Select **+ New** next to _Source dataset_.
 
     ![Configuring the Source Settings](media/10-new-source-dataset.png)
 
