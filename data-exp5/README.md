@@ -68,41 +68,47 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
     ![Dragging the data flow activity on to the pipeline design surface](media/05-drag-drop-data-flow.png)
 
-7.  In the Adding Data Flow panel, select **Create new Data Flow** and provide the Data Flow Name field a value of `FleetCalculations`. Select **Finish**.
+7. In the Adding Data Flow panel, choose **Create new data flow**, select **Mapping Data Flow** and select **OK**.
 
-    ![Setting the values for the data flow](media/07-adding-data-flow.png)
+    ![On the Add data flow dialog, Create new data flow is selected, Mapping Data Flow is highlighted and selected, and the OK button is highlighted.](media/adf-add-mapping-data-flow.png "Add Data Flow")
 
-8.  In the tool tip that appears, click **Finish**.
+8. Select **Finish** in the tooltip that appears.
 
-9.  Select the **Add Source** area on the data flow design surface.
+9. Populate the Data Flow Name field on the General tab with a value of `FleetCalculations`.
+
+    ![The name FleetCalculations is entered in the name field on the new data flow General tab.](media/mapping-data-flow-name.png "Data Flow General tab")
+
+10. In the tool tip that appears, click **Finish**.
+
+11. Select the **Add Source** area on the data flow design surface.
 
     ![The Add Source drop target](media/08-add-source.png)
 
-10. In the tool tip that appears, read the guide text and select **Next** until it is dismissed.
+12. In the tool tip that appears, read the guide text and select **Next** until it is dismissed.
 
-11. Near the top of the window, toggle the **Data Flow Debug** to on and then select **OK** in the dialog that appears. This will provision a small Databricks cluster behind the scenes that you will use to inspect your data as you are building the data flow. It takes about 5 minutes to be ready, but you can continue on with the next steps while it starts up.
+13. Near the top of the window, toggle the **Data Flow Debug** to on and then select **OK** in the dialog that appears. This will provision a small Databricks cluster behind the scenes that you will use to inspect your data as you are building the data flow. It takes about 5 minutes to be ready, but you can continue on with the next steps while it starts up.
 
     ![Toggling the Data Flow Debug on](media/10-data-flow-debug.png)
 
-12. Select the new source data set item, and then in the property panel, select the **Source Setting** tab, 
+14. Select the new source data set item, and then in the property panel, select the **Source Setting** tab, 
 
-13. Select **+ New** next to _Source dataset_.
+15. Select **+ New** next to _Source dataset_.
 
     ![Configuring the Source Settings](media/10-new-source-dataset.png)
 
-14. On the New Data Set panel, select **Azure Blob Storage** and then select **Continue**.
+16. On the New Data Set panel, select **Azure Blob Storage** and then select **Continue**.
 
     ![Selecting Blob Storage as the New Dataset source](media/12-blob-storage-source.png)
 
-15. On the Select Format panel, select **DelimitedText** and select **Continue**.
+17. On the Select Format panel, select **DelimitedText** and select **Continue**.
 
     ![Selecting DelimitedText as the format](media/13-text-source.png)
 
-16. On Set Properties, set the Name to `trip_data_input` and the under Linked service select `AzureBlobStorage`, which is a storage account that has been added for you.
+18. On Set Properties, set the Name to `trip_data_input` and the under Linked service select `AzureBlobStorage`, which is a storage account that has been added for you.
 
     ![Setting the name and linked service](media/14-set-properties.png)
 
-17. On Set Properties, for the File Path configure the following values:
+19. On Set Properties, for the File Path configure the following values:
 
     - Container: `data`
     - File: `trip_data_1.csv`
@@ -110,9 +116,9 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
     ![Setting the file path to the input file](media/16-set-file-path.png)
 
-18. Select **Finish**.
+20. Select **Finish**.
 
-19. You now have your source CSV file configured in the data flow.
+21. You now have your source CSV file configured in the data flow.
 
 ### Task 2: Previewing the trip data
 
