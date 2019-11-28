@@ -42,41 +42,67 @@ In this exercise, you will create a model that predicts battery failure from tim
 
 ### Task 1: Create an automated machine learning experiment using the Portal
 
-1. Navigate to your Azure Machine Learning workspace in the Azure Portal.
-2. Select `Automated machine learning` in the left navigation bar.
-3. Select **Create Experiment**.
+1. Navigate to your Azure Machine Learning workspace in the Azure Portal. Select `Overview` in the left navigation bar and then select **Launch the new Azure Machine Learning studio**. Alternatively, you can navigate directly to the new [Azure Machine Learning studio](https://ml.azure.com/). This will prompt you to select the workspace as part of the sign-in process.
 
-   ![Create new experiment](./media/02_CreateExperiment.png)
+   ![Navigate to Azure Machine Learning studio](./media/001_AzureMachineLearningStudio.png)
 
-4. Provide the experiment name: `automl-regression` and from the drop-down select **gpucluster** and then select **Next**.
+2. Select `Automated ML` in the left navigation bar.
 
-   ![Provide experiment name and click on compute](./media/03_NewExperiment_1.png)
+   ![Select Automated ML](./media/002_AutomatedML.png)
 
-5) Now you will upload the training data. Start by downloading the data from https://quickstartsws9073123377.blob.core.windows.net/azureml-blobstore-0d1c4218-a5f9-418b-bf55-902b65277b85/training-formatted.csv. Select **Upload** and then in the dialog that appears choose the file `training-formatted.csv` from your local disk.
+3. Select **New automated ML run** to start creating a new experiment.
 
-   ![Uploading the training data](./media/05_UploadDataFile.png)
+   ![New automated ML run](./media/003_CreateAutomatedMLRun.png)
 
-6) Select **training-formatted.csv** and review the training data. Be sure to scroll to the right to observe all of the columns in the data.
+4. Select **Create dataset** and choose the **From web files** option from the drop-down.
 
-   ![Reviewing the training data](./media/06_ReviewDataFile.png)
+   ![Create dataset from local file](./media/004_NewDataset_FromURL.png)
 
-7) Now, you will setup the Auto ML Experiment Basic Settings by providing the following values:
+5. Fill in the training data URL in the `Web URL` field: https://quickstartsws9073123377.blob.core.windows.net/azureml-blobstore-0d1c4218-a5f9-418b-bf55-902b65277b85/training-formatted.csv and click **Next** to load a preview of the parsed training data.
 
-   - Prediction Task: select **Regression**
+   ![Training data web URL](./media/005_Dataset_BasicInfo.png)
+
+6) In the `Settings and preview` page be sure to scroll to the right to observe all of the columns in the data. 
+
+   ![Reviewing the training data](./media/006_ReviewDataFile.png)
+
+7) Move on to the **Next** page to check the schema and then confirm the dataset details by selecting **Next** and then **Create** on the confirmation page.
+
+   ![Reviewing the schema of training data](./media/007_TrainingDataSchema.png)
+   
+   ![Confirm dataset creation](./media/007_ConfirmDataset.png)
+
+8) Now, you should be able to select the newly created dataset for your experiment. Select your newly created dataset and click **Next** to move to the experiment details page.
+
+   ![Select the dataset](./media/008_SelectDataset.png)
+
+9) Next, you will configure the Auto ML Experiment Basic Settings by providing the following values for the experiment name, target column and training compute:
+
+   - Experiment name: **automl-regression**
    - Target column: select **Survival_In_Days**
+   - Select training compute target: : select **aml-compute-cpu**
 
-     ![Setup Auto ML experiment basic settings](./media/07_SetupExp_1.png)
+   ![Setup Auto ML experiment basic settings](./media/009_SetupExperiment.png)
 
-8) Select **Advanced Settings** to expand that area. Provide the following settings:
+10) Move **Next** and select **Regression** in the `Task type settings` page.
 
-   - Primary metric: **normalized_root-mean_squared_error**
-   - Max number of iterations: **3**
-   - Number of Cross Validations: **5**
-   - Max concurrent iterations: **1**
+    ![Select Regression task type](./media/010_TaskTypeForExperiment.png)
 
-     ![Configuring the Advanced Settings as described](./media/08_SetupExp_2.png)
+11) Click **View additional configuration settings** to open advanced settings section. Provide the following settings:
 
-9) Select **Start** to run the experiment and begin automated machine learning process.
+   - Primary metric: **Normalized root mean squared error**
+   - Validation > Validation type: **k-fold cross validation**
+   - Validation > Number of Cross Validations: **5**
+   - Concurency > Max concurrent iterations: **1**
+    ![Configuring the Advanced Settings as described](./media/011_TaskConfigurationSettings.png)
+
+12) Select **Save** and **Finish** to run the experiment and begin automated machine learning process. 
+
+    ![Start Automate ML run](./media/012_CreatingExperiment.png)
+
+13) Wait until the Run status moves from **Preparing** to **Running** in the `Run Detail page`.
+
+    ![Preparing experiment](./media/012_PreparingExperiment.png)
 
 ### Task 2: Review the experiment run results
 
