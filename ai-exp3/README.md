@@ -72,7 +72,7 @@ In this exercise, you will create a model that predicts battery failure from tim
    
    ![Confirm dataset creation](./media/007_ConfirmDataset.png)
 
-8) Now, you should be able to select the newly created dataset for your experiment. Select your newly created dataset and click **Next** to move to the experiment details page.
+8) Now, you should be able to select the newly created dataset for your experiment. Select the `targeting-formatted-dataset` and click **Next** to move to the experiment details page.
 
    ![Select the dataset](./media/008_SelectDataset.png)
 
@@ -91,12 +91,13 @@ In this exercise, you will create a model that predicts battery failure from tim
 11) Click **View additional configuration settings** to open advanced settings section. Provide the following settings:
 
    - Primary metric: **Normalized root mean squared error**
+   - Exit criterion > Metric score threashold: **0.07**
    - Validation > Validation type: **k-fold cross validation**
    - Validation > Number of Cross Validations: **5**
    - Concurency > Max concurrent iterations: **1**
     ![Configuring the Advanced Settings as described](./media/011_TaskConfigurationSettings.png)
 
-12) Select **Save** and **Finish** to run the experiment and begin automated machine learning process. 
+12) Select **Save** and then **Finish** to run the experiment and begin the automated machine learning process. 
 
     ![Start Automate ML run](./media/012_CreatingExperiment.png)
 
@@ -106,27 +107,42 @@ In this exercise, you will create a model that predicts battery failure from tim
 
 ### Task 2: Review the experiment run results
 
-1. The experiment will run for about _10 minutes_. Once it completes you should examine the chart to observe the model performance for the primary metric for different iterations.
+1. The experiment will run for about _15 minutes_. Once it completes you should check the `Models` tab on the `Run Detail` page to observe the model performance for the primary metric for different runs.
 
-   ![Review run details - graph view](./media/09_ReviewRunDetails_1.png)
+   ![Review run details - graph view](./media/021_RunDetails1.png)
 
-2. Scroll down to see a table view of different iterations and select the iteration with the best **normalized root mean square error** score. Note that the normalized root mean square error measures the error between the predicted value and actual value. In this case, the model with the lowest normalized root mean square error is the best model.
+2. In the table view of different models, notice at the top the iteration with the best **normalized root mean square error** score. Note that the normalized root mean square error measures the error between the predicted value and actual value. In this case, the model with the lowest normalized root mean square error is the best model.
 
-   ![Review run details - table view](./media/010_ReviewRunDetails_2.png)
+   ![Review run details - table view](./media/022_RunDetails2.png)
+
+3. Select **Experiments** on the left navigation pane and select the experiment `automl-regression` to see the list of available runs.
+
+   ![Open experiment runs table](./media/023_CheckExperimentRuns.png)
+
+4. Select the option to **Include child runs** to be able to examine  model performance for the primary metric of different runs. By default, the left chart describes the `mean_absolute_error` value for each run. Click on the pen icon on the right corner of the mean_absolute_error chart to configure the `normalized_root_mean_square_error` metric representation.
+
+   ![Review runs - chart view](./media/024_IncludeChildRuns.png)
+
 
 ### Task 3: Register the Best Model
 
-1. Return to the top of the `Run Details` screen and select **Deploy Best Model** as shown. Note that deployment consists of four steps: (1) _Register Best Model_, (2) Download _Scoring and Environment Script files_, (3) Create _Deployment Image_ using the downloaded script files, and (4) Deploy _Scoring Web Service_ using the created image.
+1. Return to the `Run Details` screen for Run 1 which you can find by scrolling down to the last row in the iterations table.
 
-   ![The Deploy Best Model button](./media/014_DeployBestModel.png)
+    ![Open run details](./media/031_RunDetails1.png)
 
-2. You register the best model with the Azure Machine Learning model registry so that you can retrieve it later when you want to use it for scoring. Select **Register Model** link. Once the registration process has completed, the link will change to the text `Model has been registered`.
+2. Select **Download best model** as shown and save the `model.pkl` file on your local disk.
 
-   ![Register Best Model](./media/015_RegisterModel.png)
+   ![The Download best model link](./media/032_DeployBestModel.png)
 
-3. The model registration, will create a new model in your Azure Machine Learning workspace with the same name as the experiment: `automl-regression`. To view this model from the Azure Machine Learning workspace, select **Models**.
+3. You need to register the best model with the Azure Machine Learning model registry so that you can retrieve it later when you want to use it for scoring. Select ![Models button](./media/033_Models.png) in the left navigation pane. 
 
-   ![Viewing the list of models in the Azure Machine Learning workspace](media/03-automl-registered-model.png)
+4. Click the **Register Model** button at the top of the `Model list`. Enter the name of your model: `automl-regression`, browse for the downloaded model file on the previous step and then press **Register**.
+
+   ![Register Model](./media/034_RegisterModel.png)
+
+5. Once the registration process has completed, you will be prompted with the message `Model created successfully` in the notification area at the top. Now you should be able to view this model in the **Models** list.
+
+   ![Viewing the list of models in the Azure Machine Learning workspace](media/035-automl-registered-model.png)
 
 4. If you see your model in the above list, you are now ready to continue on to the next exercise.
 
