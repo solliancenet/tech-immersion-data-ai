@@ -10,25 +10,22 @@
         "projectUniqueName": "\\\\Mac\\Home\\tech-immersion-data-ai\\lab-files\\ai\\2\\CosmosDb.Common\\CosmosDb.Common.csproj",
         "projectName": "CosmosDb.Common",
         "projectPath": "\\\\Mac\\Home\\tech-immersion-data-ai\\lab-files\\ai\\2\\CosmosDb.Common\\CosmosDb.Common.csproj",
-        "packagesPath": "C:\\Users\\Kyle\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\kyle\\.nuget\\packages\\",
         "outputPath": "\\\\Mac\\Home\\tech-immersion-data-ai\\lab-files\\ai\\2\\CosmosDb.Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Kyle\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\kyle\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://www.myget.org/F/n2yvs/auth/0eee30b1-9682-4399-9288-27c2b1b6b560/api/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp2.2": {
@@ -52,10 +49,16 @@
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

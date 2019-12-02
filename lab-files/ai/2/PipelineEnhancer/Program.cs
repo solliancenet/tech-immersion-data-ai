@@ -41,11 +41,9 @@ namespace PipelineEnhancer
                     Console.WriteLine("=============");
                     Console.WriteLine("Choose an option below to run the PipelineEnhancer.");
                     Console.WriteLine("** Enter 1 to add a Sentiment Analysis cognitive skill to the Tweets search index.");
-                    Console.WriteLine("** Enter 2 to integrate a custom text translator skill to the Tweets search index.");
-                    //Console.WriteLine("** Enter 3 to integrate a custom summarizer skill using a deployed ML model.");
-                    Console.WriteLine("** Enter 3 to add a knowledge store.");
-                    Console.WriteLine("** Enter 4 to create a new search pipeline for searching and recognizing forms in Blob Storage.");
-                    Console.WriteLine("** Enter 5 to create a new search pipeline for indexing vehicle telemetry and inspecting for engine temperature anomalies.");
+                    Console.WriteLine("** Enter 2 to add a knowledge store.");
+                    Console.WriteLine("** Enter 3 to create a new search pipeline for searching and recognizing forms in Blob Storage.");
+                    Console.WriteLine("** Enter 4 to create a new search pipeline for indexing vehicle telemetry and inspecting for engine temperature anomalies.");
                     Console.WriteLine("** Enter X to exit the console application.");
                     Console.WriteLine("=============");
                     Console.WriteLine("");
@@ -61,8 +59,6 @@ namespace PipelineEnhancer
                             input.Equals("2", StringComparison.InvariantCultureIgnoreCase) ||
                             input.Equals("3", StringComparison.InvariantCultureIgnoreCase) ||
                             input.Equals("4", StringComparison.InvariantCultureIgnoreCase) ||
-                            input.Equals("5", StringComparison.InvariantCultureIgnoreCase) ||
-                            //input.Equals("6", StringComparison.InvariantCultureIgnoreCase) ||
                             input.Equals("X", StringComparison.InvariantCultureIgnoreCase))
                         {
                             userInput = input;
@@ -92,25 +88,17 @@ namespace PipelineEnhancer
                         
                         switch(userInput)
                         {
-                            case "5":
+                            case "4":
                                 await CreateAnomalyDetectionPipeline(searchClient, appConfig);
                                 break;
-                            case "4":
+                            case "3":
                                 var modelId = await TrainFormRecognizerModel(appConfig.FormRecognizer, appConfig.BlobStorage);
                                 await CreateFormsRecognitionPipeline(searchClient, appConfig, modelId);
                                 break;
-                            case "3":
+                            case "2":
                                 AddKnowledgeStore(searchClient, appConfig, ref index, ref indexer, ref skillset);
                                 Console.WriteLine("Successfully added the knowledge store to the cognitive search pipeline.");
                                 break;
-                            //case "3":
-                            //    AddCustomSummarizerSkill(ref index, ref indexer, ref skillset, appConfig.FunctionApp);
-                            //    Console.WriteLine("The custom machine learning model skill was successfully integrated to the search pipeline.");
-                            //    goto case "2";
-                            case "2":
-                                AddCustomTranslateSkill(ref index, ref indexer, ref skillset, appConfig.FunctionApp);
-                                Console.WriteLine("Your custom translator skill was successfully integrated to the search pipeline.");
-                                goto case "1";
                             case "1":
                                 AddSentimentAnalysisSkill(ref index, ref indexer, ref skillset);
                                 message = "The sentiment analysis skill was successfully added to the search pipeline.";
@@ -165,7 +153,7 @@ namespace PipelineEnhancer
             {
                 Context = "/document",
                 Description = "Sentiment analysis skill",
-                DefaultLanguageCode = "en",
+                DefaultLanguageCode = SentimentSkillLanguage.En,
                 Inputs = new List<InputFieldMappingEntry> { new InputFieldMappingEntry("text", "/document/text") },
                 Outputs = new List<OutputFieldMappingEntry> { new OutputFieldMappingEntry("score", "sentiment") }
             });
@@ -173,105 +161,14 @@ namespace PipelineEnhancer
 
         #endregion
 
-        #region Task 2: Integrate custom translator skill
-
-        private static void AddCustomTranslateSkill(ref Index index, ref Indexer indexer, ref Skillset skillset, FunctionAppConfig config)
-        {
-            var targetField = "textTranslated";
-            var headers = new Dictionary<string, string>
-            {
-                { "Content-Type", "application/json" }
-            };
-
-            index.Fields.Add(new Field(targetField, AnalyzerName.StandardLucene));
-            indexer.OutputFieldMappings.Add(CognitiveSearchHelper.CreateFieldMapping($"/document/{targetField}", targetField).GetAwaiter().GetResult());
-
-            // Create the custom translate skill
-            skillset.Skills.Add(new WebApiSkill
-            {
-                Description = "Custom translator skill",
-                Context = "/document",
-                Uri = $"{config.Url}/api/Translate?code={config.DefaultHostKey}",
-                HttpMethod = "POST",
-                //HttpHeaders = new WebApiHttpHeaders(headers),
-                BatchSize = 1,
-                Inputs = new List<InputFieldMappingEntry>
-                {
-                    new InputFieldMappingEntry("text", "/document/text"),
-                    new InputFieldMappingEntry("language", "/document/Language")
-                },
-                Outputs = new List<OutputFieldMappingEntry>
-                {
-                    new OutputFieldMappingEntry("text", targetField)
-                }
-            });
-            
-            // Update all the other skills, except for the LanguageDetectionSkill, to use the new textTranslated field.
-            foreach (var skill in skillset.Skills)
-            {
-                var type = skill.GetType();
-                var typeName = type.Name;
-
-                if (typeName != "WebApiSkill" && typeName != "LanguageDetectionSkill")
-                {
-                    foreach (var input in skill.Inputs)
-                    {
-                        if (input.Source == "/document/text")
-                        {
-                            input.Source = $"/document/{targetField}";
-                        }
-                    }
-                }
-            }
-        }
-
-        #endregion
-
-        #region Task 3: Integrate custom summarizer ML model
-
-        private static void AddCustomSummarizerSkill(ref Index index, ref Indexer indexer, ref Skillset skillset, FunctionAppConfig config)
-        {
-            var targetField = "summary";
-            var headers = new Dictionary<string, string>
-            {
-                { "Content-Type", "application/json" }
-            };
-
-            index.Fields.Add(new Field(targetField, AnalyzerName.StandardLucene));
-            indexer.OutputFieldMappings.Add(CognitiveSearchHelper.CreateFieldMapping($"/document/{targetField}", targetField).GetAwaiter().GetResult());
-
-            // Create the custom translate skill
-            skillset.Skills.Add(new WebApiSkill
-            {
-                Description = "Custom summarization skill",
-                Context = "/document",
-                Uri = $"{config.Url}/api/Summarize?code={config.DefaultHostKey}",
-                HttpMethod = "POST",
-                //HttpHeaders = new WebApiHttpHeaders(headers),
-                BatchSize = 1,
-                Inputs = new List<InputFieldMappingEntry>
-                {
-                    new InputFieldMappingEntry("text", "/document/textTranslated")
-                },
-                Outputs = new List<OutputFieldMappingEntry>
-                {
-                    new OutputFieldMappingEntry("summaryText", targetField)
-                }
-            });
-        }
-        #endregion
-
-        #region Task 4: Add knowledge store
+        #region Task 2: Add knowledge store
 
         private static void AddKnowledgeStore(SearchServiceClient searchClient, AppConfig appConfig, ref Index index, ref Indexer indexer, ref Skillset skillset)
         {
             // Add the skills from previous steps
             AddSentimentAnalysisSkill(ref index, ref indexer, ref skillset);
-            AddCustomTranslateSkill(ref index, ref indexer, ref skillset, appConfig.FunctionApp);
-            //AddCustomSummarizerSkill(ref index, ref indexer, ref skillset, appConfig.FunctionApp);
 
             // Convert the Skillset into a JSON string.
-
             var skillsetJson = CognitiveSearchHelper.GetSkillsetJson(skillset).GetAwaiter().GetResult();
 
             //  Insert ShaperSkill into the Skillset as a JSON string
@@ -310,7 +207,7 @@ namespace PipelineEnhancer
 
         #endregion
 
-        #region Task 5: Form Recognizer skill
+        #region Task 3: Form Recognizer skill
 
         private static async Task CreateFormsRecognitionPipeline(SearchServiceClient searchClient, AppConfig appConfig, string modelId)
         {
@@ -382,10 +279,10 @@ namespace PipelineEnhancer
 
         private static void AddCustomFormRecognizerSkill(ref Index index, ref Indexer indexer, ref Skillset skillset, AppConfig config, string modelId)
         {
-            var headers = new WebApiHttpHeaders(new Dictionary<string, string>
+            var headers = new Dictionary<string, string>
             {
                 { "Content-Type", "application/json" }
-            });
+            };
 
             index.Fields.Add(new Field($"formHeight", DataType.Int32));
             index.Fields.Add(new Field($"formWidth", DataType.Int32));
@@ -424,7 +321,7 @@ namespace PipelineEnhancer
 
         #endregion
 
-        #region Task 6: Anomaly detection skill
+        #region Task 4: Anomaly detection skill
 
         private static async Task CreateAnomalyDetectionPipeline(SearchServiceClient searchClient, AppConfig appConfig)
         {
@@ -463,10 +360,10 @@ namespace PipelineEnhancer
 
         private static void AddCustomAnomalyDetectorSkill(ref Index index, ref Indexer indexer, ref Skillset skillset, AppConfig config)
         {
-            var headers = new WebApiHttpHeaders(new Dictionary<string, string>
+            var headers = new Dictionary<string, string>
             {
                 { "Content-Type", "application/json" }
-            });
+            };
 
             var anomalyFields = new List<Field>
             {

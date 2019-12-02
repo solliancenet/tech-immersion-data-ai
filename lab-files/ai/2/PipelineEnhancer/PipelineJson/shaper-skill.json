@@ -1,7 +1,5 @@
 {
   "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
-  "name": "ShaperSkill",
-  "description": "ShaperSkill for knowledge store",
   "context": "/document",
   "inputs": [
     {
@@ -19,18 +17,6 @@
     {
       "name": "text",
       "source": "/document/text",
-      "sourceContext": null,
-      "inputs": []
-    },
-    {
-      "name": "textTranslated",
-      "source": "/document/textTranslated",
-      "sourceContext": null,
-      "inputs": []
-    },
-    {
-      "name": "sentiment",
-      "source": "/document/sentiment",
       "sourceContext": null,
       "inputs": []
     },
@@ -59,37 +45,55 @@
       "inputs": []
     },
     {
-      "name": "KeyPhrases",
-      "source": "/document/text/Keyphrases/*",
+      "name": "keyPhrases",
+      "source": "/document/keyphrases/*",
       "sourceContext": null,
       "inputs": []
     },
     {
-      "name": "LanguageCode",
-      "source": "/document/Language",
+      "name": "languageCode",
+      "source": "/document/language",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "translatedText",
+      "source": "/document/translated_text",
+      "sourceContext": null,
+      "inputs": []
+    },
+    {
+      "name": "sentiment",
+      "source": "/document/sentiment",
       "sourceContext": null,
       "inputs": []
     },
     {
       "name": "Entities",
       "source": null,
-      "sourceContext": "/document/text/ExtractedEntities/*",
+      "sourceContext": "/document/extracted_entities/*",
       "inputs": [
         {
-          "name": "Name",
-          "source": "/document/text/ExtractedEntities/*/name",
+          "name": "Entity",
+          "source": "/document/extracted_entities/*/name",
           "sourceContext": null,
           "inputs": []
         },
         {
-          "name": "Type",
-          "source": "/document/text/ExtractedEntities/*/type",
+          "name": "EntityType",
+          "source": "/document/extracted_entities/*/type",
+          "sourceContext": null,
+          "inputs": []
+        },
+        {
+          "name": "EntitySubType",
+          "source": "/document/extracted_entities/*/subType",
           "sourceContext": null,
           "inputs": []
         },
         {
           "name": "Url",
-          "source": "/document/text/ExtractedEntities/*/wikipediaUrl",
+          "source": "/document/extracted_entities/*/wikipediaUrl",
           "sourceContext": null,
           "inputs": []
         }

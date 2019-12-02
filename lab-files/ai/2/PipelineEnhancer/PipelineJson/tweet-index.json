@@ -319,7 +319,7 @@
       "synonymMaps": []
     },
     {
-      "name": "People",
+      "name": "people",
       "type": "Collection(Edm.String)",
       "searchable": true,
       "filterable": true,
@@ -333,7 +333,7 @@
       "synonymMaps": []
     },
     {
-      "name": "Organizations",
+      "name": "organizations",
       "type": "Collection(Edm.String)",
       "searchable": true,
       "filterable": true,
@@ -347,7 +347,7 @@
       "synonymMaps": []
     },
     {
-      "name": "Locations",
+      "name": "locations",
       "type": "Collection(Edm.String)",
       "searchable": true,
       "filterable": true,
@@ -361,7 +361,7 @@
       "synonymMaps": []
     },
     {
-      "name": "Keyphrases",
+      "name": "keyphrases",
       "type": "Collection(Edm.String)",
       "searchable": true,
       "filterable": true,
@@ -375,7 +375,7 @@
       "synonymMaps": []
     },
     {
-      "name": "Language",
+      "name": "language",
       "type": "Edm.String",
       "searchable": true,
       "filterable": true,
@@ -389,7 +389,21 @@
       "synonymMaps": []
     },
     {
-      "name": "ExtractedEntities",
+      "name": "translated_text",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "retrievable": true,
+      "sortable": false,
+      "facetable": false,
+      "key": false,
+      "indexAnalyzer": null,
+      "searchAnalyzer": null,
+      "analyzer": "en.lucene",
+      "synonymMaps": []
+    },
+    {
+      "name": "extracted_entities",
       "type": "Collection(Edm.ComplexType)",
       "fields": [
         {
@@ -541,7 +555,7 @@
       ]
     },
     {
-      "name": "NamedEntities",
+      "name": "named_entities",
       "type": "Collection(Edm.ComplexType)",
       "fields": [
         {

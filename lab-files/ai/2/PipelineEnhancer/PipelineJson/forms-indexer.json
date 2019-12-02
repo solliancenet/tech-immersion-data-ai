@@ -1,5 +1,7 @@
 {
-  "description": null,
+  "dataSourceName": "forms-datasource",
+  "skillsetName": "forms-skillset",
+  "targetIndexName": "forms-index",
   "disabled": null,
   "schedule": null,
   "parameters": {
@@ -50,22 +52,22 @@
   ],
   "outputFieldMappings": [
     {
-      "sourceFieldName": "/document/content/people",
+      "sourceFieldName": "/document/people",
       "targetFieldName": "people",
       "mappingFunction": null
     },
     {
-      "sourceFieldName": "/document/content/organizations",
+      "sourceFieldName": "/document/organizations",
       "targetFieldName": "organizations",
       "mappingFunction": null
     },
     {
-      "sourceFieldName": "/document/content/locations",
+      "sourceFieldName": "/document/locations",
       "targetFieldName": "locations",
       "mappingFunction": null
     },
     {
-      "sourceFieldName": "/document/content/keyphrases",
+      "sourceFieldName": "/document/keyphrases",
       "targetFieldName": "keyphrases",
       "mappingFunction": null
     },

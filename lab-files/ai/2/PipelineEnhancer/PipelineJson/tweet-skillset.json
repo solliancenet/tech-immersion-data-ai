@@ -2,9 +2,30 @@
   "description": "Extract entities, detect language and extract key-phrases",
   "skills": [
     {
+      "@odata.type": "#Microsoft.Skills.Text.TranslationSkill",
+      "description": null,
+      "context": "/document",
+      "defaultFromLanguageCode": null,
+      "defaultToLanguageCode": "en",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/text",
+          "sourceContext": null,
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "translatedText",
+          "targetName": "translated_text"
+        }
+      ]
+    },
+    {
       "@odata.type": "#Microsoft.Skills.Text.EntityRecognitionSkill",
       "description": null,
-      "context": "/document/text",
+      "context": "/document",
       "categories": [
         "Person",
         "Quantity",
@@ -20,13 +41,13 @@
       "inputs": [
         {
           "name": "text",
-          "source": "/document/text",
+          "source": "/document/translated_text",
           "sourceContext": null,
           "inputs": []
         },
         {
           "name": "languageCode",
-          "source": "/document/Language",
+          "source": "/document/language",
           "sourceContext": null,
           "inputs": []
         }
@@ -34,42 +55,42 @@
       "outputs": [
         {
           "name": "persons",
-          "targetName": "People"
+          "targetName": "people"
         },
         {
           "name": "organizations",
-          "targetName": "Organizations"
+          "targetName": "organizations"
         },
         {
           "name": "locations",
-          "targetName": "Locations"
+          "targetName": "locations"
         },
         {
           "name": "entities",
-          "targetName": "ExtractedEntities"
+          "targetName": "extracted_entities"
         },
         {
           "name": "namedEntities",
-          "targetName": "NamedEntities"
+          "targetName": "named_entities"
         }
       ]
     },
     {
       "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
       "description": null,
-      "context": "/document/text",
+      "context": "/document",
       "defaultLanguageCode": "en",
       "maxKeyPhraseCount": null,
       "inputs": [
         {
           "name": "text",
-          "source": "/document/text",
+          "source": "/document/translated_text",
           "sourceContext": null,
           "inputs": []
         },
         {
           "name": "languageCode",
-          "source": "/document/Language",
+          "source": "/document/language",
           "sourceContext": null,
           "inputs": []
         }
@@ -77,7 +98,7 @@
       "outputs": [
         {
           "name": "keyPhrases",
-          "targetName": "Keyphrases"
+          "targetName": "keyphrases"
         }
       ]
     },
@@ -96,7 +117,7 @@
       "outputs": [
         {
           "name": "languageCode",
-          "targetName": "Language"
+          "targetName": "language"
         }
       ]
     }

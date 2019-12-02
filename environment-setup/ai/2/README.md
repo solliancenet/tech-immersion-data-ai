@@ -10,7 +10,7 @@ Each attendee will have a resource group containing the following resources:
 
 - Cosmos DB (Core SQL API)
   - Name: tech-immersionXXXXX
-- Azure Search
+- Azure Cognitive Search
   - Basic tier
   - Name: tech-immersion
 - Cognitive Services
@@ -24,9 +24,7 @@ Each attendee will have a resource group containing the following resources:
   - Name: tech-immersion-form-recog
   - In limited private preview
   - Only available in West US 2 or West Europe regions
-- Translator Text
-  - S1 Standard
-  - Name: tech-immersion-translator
+  - S0 (1 call per minute for training API)
 - Azure Function App
   - Consumption Plan
   - Runtime stack: .Net Core
