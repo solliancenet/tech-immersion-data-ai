@@ -4,24 +4,24 @@ Complete the steps below to prepare the environment for the [AI, Experience 1](.
 
 ## Pre-requisites
 
-The computer or VM on which you run the scripts to deploy the cluster and restore the databases requires the following:
+The computer or VM on which you run the scripts requires the following:
 
 - Visual Studio 2017 Community (or better)
-- Latest version of [.NET Core](https://www.microsoft.com/net/download) including the .NET Core SDK ([version 2.2](https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.105-windows-x64-installer) or greater)
+- Latest version of [.NET Core](https://www.microsoft.com/net/download) including the **.NET Core SDK** ([version 2.2 or greater](https://dotnet.microsoft.com/download) or greater)
 - [Node.js](https://nodejs.org/) version 8.5 or higher
 - [Bot Framework Emulator](https://github.com/Microsoft/BotFramework-Emulator/releases/latest)
 - PowerShell Core (latest release): <https://github.com/PowerShell/PowerShell/releases>
 - Azure Bot Service command line (CLI) tools. It's important to do this even if you have earlier versions as the Virtual Assistant makes use of new deployment capabilities. **Minimum version 4.3.2 required for msbot, and minimum version 1.1.0 required for ludown.**
 
   ```shell
-  npm install -g botdispatch chatdown ludown luis-apis luisgen msbot qnamaker
+  npm install -g botdispatch ludown luis-apis qnamaker luisgen@2.0.2
   ```
 
 - [Azure Command Line Tools (CLI)](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest) version **2.0.59** or later
-- Install the AZ Extension for Bot Service
+- Install the Botskills (CLI) tool
 
   ```shell
-  az extension add -n botservice
+  npm install -g botskills
   ```
 
 - Add the following PATH setting to the machine's environment variables: `%USERPROFILE%\AppData\Roaming\npm`. Without it, you will receive an error in the command window during provisioning that `botservice` could not be found.

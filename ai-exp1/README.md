@@ -51,7 +51,7 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
    ![Click on your name then select Settings.](media/luis-name-menu.png 'Settings')
 
-6. Copy the **Authoring Key** and save it to Notepad or a similar text application for later steps.
+6. Copy the **Primary Key** found underneath the **Starter_Key** authoring resource, and save it to Notepad or a similar text application for later steps.
 
    ![The User Settings page is displayed with the Authoring Key highlighted.](media/luis-authoring-key.png 'Authoring Key')
 
@@ -86,7 +86,7 @@ In this task, you will deploy all of these Azure dependencies as well as configu
 
 5. Copy and paste the command below into the command prompt, then hit `Enter`. This will change directories to the Virtual Assistant automotive bot project folder:
 
-   `cd C:\lab-files\ai\1\automotiveskill\automotiveskill`
+   `cd C:\lab-files\ai\1\automotiveskill`
 
 6. Copy and paste the command below into the command prompt, then hit `Enter`. This will deploy the Azure services for your skill and create LUIS applications for your bot:
 
@@ -128,39 +128,11 @@ As you will see, most of this work is already done for you! Additional work that
 
 For now, let's explore how this bot is created and how LUIS is trained with the sets of utterances, intents, and entities as described.
 
-1.  Open Windows Explorer and navigate to `C:\lab-files\ai\1`. Double-click on **Skills.sln** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab.
+1.  Open Windows Explorer and navigate to `C:\lab-files\ai\1`. Double-click on **AutomotiveSkill.csproj** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab.
 
-    ![The VirtualAssistant.sln file is highlighted in Windows Explorer.](media/windows-explorer-solution.png 'Windows Explorer')
+    ![The AutomotiveSkill.csproj file is highlighted in Windows Explorer.](media/windows-explorer-solution.png 'Windows Explorer')
 
-    The Visual Studio solution contains the following:
-
-    - **Experimental** solution folder containing various early prototype skills projects.
-
-      - **BingSearchSkill** project to enable your bot to conduct Bing internet searches.
-
-      - **NewsSkill** provides a simple Skill that integrates with the Bing News Cognitive Service to demonstrate how a news experience can be integrated into a Virtual Assistant.
-
-      - **RestaurantBooking** provides a simple restaurant booking experience guiding the user through booking a table and leverages Adaptive Cards throughout to demonstrate how Speech, Text and UX can be combined for a compelling user experience.
-
-      - **WeatherSkill** provides a basic Skill that integrates with AccuWeather to demonstrate how a weather experience can be integrated into a Virtual Assistant.
-
-    - **Skills** solution folder containing various skills projects that work with the Virtual Assistant.
-
-      - **AutomotiveSkill** folder contains the Automotive skill you are deploying, as well as its test project.
-
-      - **CalendarSkill** folder contains the Calendar skill that enables the Virtual Assistant to help users manage their connected O365 calendar.
-
-      - **EmailSkill** folder contains the Email skill that enables the Virtual Assistant to help users manage their connected email account.
-
-      - **PointsOfInterestSkill** folder contains the Points of Interest skill that provides point of interest and navigation-related capabilities to the Virtual Assistant. It does this through integrations with [Azure Maps](https://azure.microsoft.com/en-us/services/azure-maps/) and [Foursquare](https://developer.foursquare.com/docs/api).
-
-      - **ToDoSkill** folder contains the ToDo skill, adding these capabilities to the Virtual Assistant.
-
-    - **Test** solution folder containing test projects for the skills.
-
-    ![The solution projects are displayed within the Solution Explorer.](media/vs-solution-explorer.png 'Solution Explorer')
-
-2.  You will see the projects listed within the Solution Explorer in Visual Studio. Expand the **AutomotiveSkill** project. Next, expand **Resources**, then **LU**, and then **en**, which is the language folder for English. Next, double-click on **General.lu**.
+2.  You will see the projects listed within the Solution Explorer in Visual Studio. Expand the **AutomotiveSkill** project. Next, expand **Resources**, then **LU**, and then **en-us**, which is the language folder for English. Next, double-click on **General.lu**.
 
     ![Screenshot of the Solution Explorer.](media/vs-general-lu.png 'Solution Explorer')
 
