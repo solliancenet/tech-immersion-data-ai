@@ -43,15 +43,19 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
    ![The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted.](media/luis-accept.png 'Accept Service Agreement')
 
-4. If you do not currently have any LUIS apps, you will see a page explaining what LUIS is and how it works. Within this page, select **Create a LUIS app now**.
+4. If you are presented with a step to link your Azure account, select **Continue using your trial key**, then select **Next**.
+
+    ![The Continue using your trial key option is highlighted.](media/luis-link-azure-account.png "Link your Azure account")
+
+5. If you do not currently have any LUIS apps, you will see a page explaining what LUIS is and how it works. Within this page, select **Create a LUIS app now**.
 
    ![The LUIS welcome page.](media/luis-welcome-create.png 'Create a LUIS app now')
 
-5. At this point, you will see a page called "My Apps". You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select **Settings**.
+6. At this point, you will see a page called "My Apps". You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select **Settings**.
 
    ![Click on your name then select Settings.](media/luis-name-menu.png 'Settings')
 
-6. Copy the **Primary Key** found underneath the **Starter_Key** authoring resource, and save it to Notepad or a similar text application for later steps.
+7. Copy the **Primary Key** found underneath the **Starter_Key** authoring resource, and save it to Notepad or a similar text application for later steps.
 
    ![The User Settings page is displayed with the Authoring Key highlighted.](media/luis-authoring-key.png 'Authoring Key')
 
@@ -388,11 +392,11 @@ In this task, you will open the Bot Framework Emulator and start testing out you
 
 To explain, the utterance is your text (located on the bottom): `put the air on my feet`. LUIS detected the intent as `VEHICLE_SETTINGS_CHANGE` (you should remember that one from earlier) with a score, or "confidence" level of 99%. It detected two entities, a `SETTING` of "air" with a value of "feet". The "air" setting also had a high score of 99%, but the setting value of "feet" scored about 55%.
 
-The result is that the bot must clarify the user's intent by prompting for more information. To do this, the bot asks which of the two matching settings would you like to select? Since you did not explicitly say to turn the air on in the back of the car or the front of the car, you need to tell it which option you like. The bot displays a [card](https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-add-rich-card-attachments?view=azure-bot-service-3.0) for you to choose from. You may either click on one of the options, or type it in.
+The result is that the bot must clarify the user's intent by prompting for more information. To do this, the bot asks which of the two matching settings would you like to select? Since you did not explicitly say to turn the air on in the back of the car or the front of the car, you need to tell it which option you like. The bot displays a [card](https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-add-rich-card-attachments?view=azure-bot-service-3.0) for you to choose from. Type either `1` or `2` for your selection, then press Send (or hit Enter).
 
 ![The Live Chat shows the bot's prompt to choose which air control mode to use.](media/bot-framework-emulator-option.png 'Live Chat')
 
-1.  If you selected or typed in the `Front Combined Air Delivery Mode Control` option, you should see a response from the bot that says: `Setting Front Combined Air Delivery Mode Control to Floor`. The amazing thing that happened is that your original somewhat vague request to "put the air on my feet" ultimately resulted in the bot telling the vehicle to turn on the air in the front of the car to the floor setting, knowing that your feet are most likely located on the floor :)
+1.  If you selected the `Front Combined Air Delivery Mode Control` option, you should see a response from the bot that says: `Setting Front Combined Air Delivery Mode Control to Floor`. The amazing thing that happened is that your original somewhat vague request to "put the air on my feet" ultimately resulted in the bot telling the vehicle to turn on the air in the front of the car to the floor setting, knowing that your feet are most likely located on the floor :)
 
     ![The bot's response to your selected action.](media/bot-framework-emulator-air-feet.png 'Live Chat')
 
@@ -492,7 +496,7 @@ If you recall, the bot deployment script created Azure services, generated a .bo
 
     ![The view options menu is expanded and Detailed view is selected.](media/luis-detailed-view.png 'Detailed view')
 
-8.  As you can see, these utterances are a bit more descriptive and contain one or more `SETTING` and/or `VALUE` entities. When you hover over an entity, you can see a sample value. You can also see the nearest intent and difference, which you can read the descriptions for by hovering the question mark icon next to the column names. Feel free to explore the other entities.
+8.  As you can see, these utterances are a bit more descriptive and contain one or more `SETTING` and/or `VALUE` entities. When you hover over an entity, you can see a sample value. You can also see the nearest intent and difference, which you can read the descriptions for by selecting the question mark icon next to the column names. Feel free to explore the other entities.
 
     ![The declarative intent is shown.](media/luis-declarative-intent.png 'Declarative intent')
 
