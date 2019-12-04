@@ -4,7 +4,7 @@
     {
       "@odata.type": "#Microsoft.Skills.Text.EntityRecognitionSkill",
       "description": null,
-      "context": "/document/content",
+      "context": "/document",
       "categories": [
         "Person",
         "Quantity",
@@ -16,7 +16,7 @@
       ],
       "defaultLanguageCode": "en",
       "minimumPrecision": null,
-      "includeTypelessEntities": null,
+      "includeTypelessEntities": true,
       "inputs": [
         {
           "name": "text",
@@ -53,7 +53,7 @@
     {
       "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
       "description": null,
-      "context": "/document/content",
+      "context": "/document",
       "defaultLanguageCode": "en",
       "maxKeyPhraseCount": null,
       "inputs": [

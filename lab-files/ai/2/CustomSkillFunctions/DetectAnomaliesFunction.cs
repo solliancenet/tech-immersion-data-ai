@@ -17,7 +17,9 @@ namespace CustomSkillFunctions
 {
     public static class DetectAnomaliesFunction
     {
-        private static readonly string serviceEndpoint = "https://westus2.api.cognitive.microsoft.com/";
+        // TODO: Replace the service endpoint with the endpoint for your Anomaly Detector service.
+        private static readonly string serviceEndpoint = "<enter your service endpoint here>";
+        // TODO: Replace the key with a valid service key.
         private static readonly string key = "<enter your api key here>";
 
         [FunctionName("DetectAnomalies")]

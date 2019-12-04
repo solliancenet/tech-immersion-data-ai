@@ -14,11 +14,11 @@
           "tableName": "KeyPhrases",
           "generatedKeyName": "KeyPhraseId",
           "source": null,
-          "sourceContext": "/document/tableprojection/KeyPhrases/*",
+          "sourceContext": "/document/tableprojection/keyPhrases/*",
           "inputs": [
             {
-              "name": "Keyphrases",
-              "source": "/document/tableprojection/KeyPhrases/*",
+              "name": "keyphrases",
+              "source": "/document/tableprojection/keyPhrases/*",
               "sourceContext": null,
               "inputs": []
             }

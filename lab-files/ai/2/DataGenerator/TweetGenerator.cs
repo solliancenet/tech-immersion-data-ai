@@ -109,7 +109,7 @@ namespace DataGenerator
                 $"¡El sistema de sonido en mi nuevo #{vehicle.Make} #{vehicle.Model} es increíble!",
                 // French tweets
                 $"La circulation à la frontière canadienne était terrible aujourd'hui. Heureusement, mon nouveau #{vehicle.Make} #{vehicle.Model} est confortable.",
-                $"Quand le {DateTime.Now.AddYears(1)} #{vehicle.Make} #{vehicle.Model} sera-t-il disponible au Canada?"
+                $"Quand le {DateTime.Now.AddYears(1).Year} #{vehicle.Make} #{vehicle.Model} sera-t-il disponible au Canada?"
             };
 
             var r = new Random();

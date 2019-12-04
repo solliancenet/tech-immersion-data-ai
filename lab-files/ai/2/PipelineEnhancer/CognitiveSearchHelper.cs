@@ -180,7 +180,7 @@ namespace PipelineEnhancer
                 skillset.Name = name;
                 skillset.Description = "Cognitive skills collection";
                 skillset.CognitiveServices = new CognitiveServicesByKey(cognitiveServicesConfig.Key, cognitiveServicesConfig.ResourceId);
-                
+
                 return skillset;
             }
         }
@@ -219,6 +219,7 @@ namespace PipelineEnhancer
                 {
                     request.Method = HttpMethod.Put;
                     var cleanPayload = await GetSkillsetJson(skillset);
+                    cleanPayload = cleanPayload.Replace("\"inputs\":null", "\"inputs\":[]");
                     var content = new StringContent(cleanPayload, Encoding.UTF8, "application/json");
 
                     var response = await (httpClient.PutAsync(uri, content));
@@ -250,7 +251,8 @@ namespace PipelineEnhancer
                 using (var request = new HttpRequestMessage())
                 {
                     request.Method = HttpMethod.Put;
-                    var content = new StringContent(skillset, Encoding.UTF8, "application/json");
+                    var cleanPayload = skillset.Replace("\"inputs\": null", "\"inputs\": []");
+                    var content = new StringContent(cleanPayload, Encoding.UTF8, "application/json");
 
                     var response = await (httpClient.PutAsync(uri, content));
                     var responseContent = await response.Content.ReadAsStringAsync();
