@@ -54,39 +54,26 @@ In this experience you will learn how Contoso Auto can leverage Deep Learning te
 
 In this task, you will train a deep learning model to classify the descriptions of car components provided by technicians as compliant or non-compliant, convert it to ONNX, and deploy it as a web service. To accomplish this, you will use an Azure Notebook and Azure Machine Learning.
 
-1. To start, open a new web browser window and navigate to <https://notebooks.azure.com>.
+1. Download the notebook on your local disk from the following URL:
 
-2. Select **Sign In** and then use your Microsoft Account to complete the sign in process.
+   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/5
 
-   ![The Sign In button](media/01.png 'Sign In')
+   Save `deep-learning.ipynb` notebook file locally by right-clicking on the file name and selecting **Save link as**.
 
-3. Dismiss the dialog to create the user ID (you will not need this). Within the Microsoft Azure Notebooks portal, select **My Projects** from the menu at the top.
+2. In the Jupyter Notebook environment navigate to the Files tab and open the automatically created folder named as your username.
+3. Select the **Upload** menu and browse for the notebook downloaded in step 1.
 
-   ![The My Projects button](media/02.png 'My Projects')
+   ![Upload notebook](media/05.png 'Upload')
 
-4. Then select **New Project**.
-
-   ![The New Project button](media/03.png 'New Project')
-
-5. On the Create New Project dialog, provide a Project Name (this should be a user friendly description) and Project ID (this will form a part of the URL used to access this project in the browser) and uncheck Public. Select **Create**.
-
-   ![The Create New Project dialog](media/04.png 'Create New Project')
-
-6. Select the **Upload** menu and then choose **From URL**.
-
-   ![The Upload menu](media/05.png 'Upload')
-
-7. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
-
-   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/5/deep-learning.ipynb
-
-   Then select **Done** to upload and dismiss the dialog.
+4. Press **Upload** to start uploading the notebook to the VM.
 
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
-8. In the listing, select the Notebook you just uploaded (deep-learning.ipynb) to open it.
+5. In the listing, select the Notebook you just uploaded (deep-learning.ipynb) to open it.
+Please select Kernel **Python 3.6 - Azure ML** if you are prompter with a `Kernel not found` exception.
 
-9. Follow the instructions within the notebook to complete the experience.
+6. Follow the instructions within the notebook to complete the experience.
+
 
 ## Wrap-up
 
