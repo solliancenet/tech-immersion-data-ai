@@ -4,7 +4,7 @@ Complete the steps below to prepare the environment for the [AI, Experience 3](.
 
 ## Pre-requisites
 
-- General: The experience runs within the free tier of Azure Notebooks and uses a cluster created within Azure by using Azure Machine Learning.
+- General: The experience runs within an Azure Machine Learning Notebook VM.
 - In addition to their AAD account used to access Azure, attendees will need a Microsoft Account (e.g., Live ID/Passport) provided by the hosting environment to sign in to Azure Notebooks.
 - Attendees will want ready access to their: subscription ID and resource group name.
 - Need pre-created resource group `tech-immersion-xxxxx` and machine learning workspace `tech-immersion-aml-xxxxx` (Workspace edition must be set to **Enterprise**)

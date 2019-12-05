@@ -7,7 +7,7 @@
 - [Technology overview](#Technology-overview)
   - [What are machine learning pipelines?](#What-are-machine-learning-pipelines)
   - [Scenario Overview](#Scenario-Overview)
-  - [Task 1: Create the Azure Notebooks project](#Task-1-Create-the-Azure-Notebooks-project)
+  - [Task 1: Setup the Notebook VM environment](#Task-1-Setup-the-Notebook-VM-environment)
   - [Task 2: Upload the starter notebook](#Task-2-Upload-the-starter-notebook)
   - [Wrap-up](#Wrap-up)
   - [Additional resources and more information](#Additional-resources-and-more-information)
@@ -44,49 +44,42 @@ Each of these pipelines is going to have implicit data dependencies and the exam
 
 The pipelines will be run on the Azure Machine Learning compute.
 
-## Task 1: Create the Azure Notebooks project
+## Task 1: Setup the Notebook VM environment
 
-To complete this task, you will use an Azure Notebook and Azure Machine Learning.
+To complete this task, you will use an Azure Notebook VM and Azure Machine Learning.
 
-If you have not already created the `connected-car` project in Azure Notebooks follow these steps. If you already have this project in your environment, continue with the **Task 2**.
+If you have not already created the `tech-immersion` notebook VM in Azure Machine Learning studio follow these steps. If you already have this compute in your environment, continue with the **Task 2**.
 
-1. To start, open a new web browser window and navigate to <https://notebooks.azure.com>.
+1. To start, open Azure Machine Learning studio and navigate to the `tech_immersion_aml_XXXXX` workspace.
 
-2. Select **Sign In** and then use your Microsoft Account to complete the sign in process.
+2. Navigate to the `Compute` section by selecting the option on the left navigation menu.
 
-   ![The Sign In button](media/01.png 'Sign In')
+3. Under the `Notebook VMs` tab, click **New** to create the notebook VM. Name it `tech-immersion`, select **Standard_DS3** for VM type and press **Create**. Wait a few minutes until the notebook is fully provisioned.
+4. Back to the `Notebook VMs` tab, click **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, click on the **Jupyter** link.
 
-3. Dismiss the dialog to create the user ID (you will not need this). Within the Microsoft Azure Notebooks portal, select **My Projects** from the menu at the top.
-
-   ![The My Projects button](media/02.png 'My Projects')
-
-4. Then select **New Project**.
-
-   ![The New Project button](media/03.png 'New Project')
-
-5. On the Create New Project dialog, provide a Project Name (this should be a user friendly description) and Project ID (this will form a part of the URL used to access this project in the browser) and uncheck Public. Select **Create**.
-
-   ![The Create New Project dialog](media/04.png 'Create New Project')
+   ![Open NotebookVM](media/01-OpenNotebookVM.png)
 
 ## Task 2: Upload the starter notebook
 
-1. Navigate to your `connected-car` project in your Azure Notebook environment.
+1. Download the notebook on your local disk from the following URL:
 
-2. Select the **Upload** menu and then choose **From URL**.
+   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4
+   
+   Save `pipelines-AML.ipynb` notebook file locally by right-clicking on the file name and selecting **Save link as**. 
 
-   ![The Upload menu](media/05.png 'Upload')
+2. In the Jupyter Notebook environment configured in **Task1**, navigate to the `Files` tab and open the automatically created folder named as your username.
+3. Select the **Upload** menu and browse for the notebook downloaded in step 1.
 
-3. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
+   ![Upload notebook](media/05.png 'Upload')
 
-   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4/pipelines-AML.ipynb
-
-   Then select **Done** to upload and dismiss the dialog.
+4. Press **Upload** to start uploading the notebook to the VM.
 
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
-4. In the listing, select the Notebook you just uploaded (pipelines-AML.ipynb) to open it.
+5. In the listing, select the Notebook you just uploaded (pipelines-AML.ipynb) to open it.
 
-5. Follow the instructions within the notebook to complete the experience.
+6. Follow the instructions within the notebook to complete the experience.
+
 
 ## Wrap-up
 

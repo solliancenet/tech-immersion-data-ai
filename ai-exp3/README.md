@@ -11,7 +11,7 @@
     - [Task 2: Review the experiment run results](#Task-2-Review-the-experiment-run-results)
     - [Task 3: Register the Best Model](#Task-3-Register-the-Best-Model)
   - [Exercise 2: Understanding the automated ML generated model using model explainability](#Exercise-2-Understanding-the-automated-ML-generated-model-using-model-explainability)
-    - [Task 1: Create the Azure Notebooks project](#Task-1-Create-the-Azure-Notebooks-project)
+    - [Task 1: Setup the Notebook VM environment](#Task-1-Setup-the-Notebook-VM-environment)
     - [Task 2: Upload the starter notebook](#Task-2-Upload-the-starter-notebook)
   - [Exercise 3 (Optional): Train and evaluate a model using Azure Machine Learning](#Exercise-3-Optional-Train-and-evaluate-a-model-using-Azure-Machine-Learning)
     - [Task 1: Upload and open the starter notebook](#Task-1-Upload-and-open-the-starter-notebook)
@@ -148,49 +148,42 @@ In this exercise, you will create a model that predicts battery failure from tim
 
 ## Exercise 2: Understanding the automated ML generated model using model explainability
 
-### Task 1: Create the Azure Notebooks project
+### Task 1: Setup the Notebook VM environment
 
-To complete this task, you will use an Azure Notebook and Azure Machine Learning.
+To complete this task, you will use an Azure Notebook VM and Azure Machine Learning.
 
-If you have not already created the `connected-car` project in Azure Notebooks follow these steps. If you already have this project in your environment, continue with the **Task 2**.
+If you have not already created the `tech-immersion` notebook VM in Azure Machine Learning studio follow these steps. If you already have this compute in your environment, continue with the **Task 2**.
 
-1. To start, open a new web browser window and navigate to <https://notebooks.azure.com>.
+1. To start, open Azure Machine Learning studio and navigate to the `tech_immersion_aml_XXXXX` workspace.
 
-2. Select **Sign In** and then use your Microsoft Account to complete the sign in process.
+2. Navigate to the `Compute` section by selecting the option on the left navigation menu.
 
-   ![The Sign In button](media/01.png 'Sign In')
+3. Under the `Notebook VMs` tab, click **New** to create the notebook VM. Name it `tech-immersion`, select **Standard_DS3** for VM type and press **Create**. Wait a few minutes until the notebook is fully provisioned.
+4. Back to the `Notebook VMs` tab, click **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, click on the **Jupyter** link.
 
-3. Dismiss the dialog to create the user ID (you will not need this). Within the Microsoft Azure Notebooks portal, select **My Projects** from the menu at the top.
-
-   ![The My Projects button](media/02.png 'My Projects')
-
-4. Then select **New Project**.
-
-   ![The New Project button](media/03.png 'New Project')
-
-5. On the Create New Project dialog, provide a Project Name (this should be a user friendly description) and Project ID (this will form a part of the URL used to access this project in the browser) and uncheck Public. Select **Create**.
-
-   ![The Create New Project dialog](media/04.png 'Create New Project')
+   ![Open NotebookVM](media/212-OpenNotebookVM.png)
 
 ### Task 2: Upload the starter notebook
 
-1. Navigate to your `connected-car` project in your Azure Notebook environment.
 
-2. Select the **Upload** menu and then choose **From URL**.
+1. Download the notebook on your local disk from the following URL:
 
-   ![The Upload menu](media/05.png 'Upload')
+   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/3
 
-3. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
+   Save `scoring-from-automl-model.ipynb` notebook file locally by right-clicking on the file name and selecting **Save link as**.
 
-   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/3/scoring-from-automl-model.ipynb
+2. In the Jupyter Notebook environment configured in **Task1**, navigate to the `Files` tab and open the automatically created folder named as your username.
+3. Select the **Upload** menu and browse for the notebook downloaded in step 1.
 
-   Then select **Done** to upload and dismiss the dialog.
+   ![Upload notebook](media/05.png 'Upload')
+
+4. Press **Upload** to start uploading the notebook to the VM.
 
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
-4. In the listing, select the Notebook you just uploaded (scoring-from-automl-model.ipynb) to open it.
+5. In the listing, select the Notebook you just uploaded (scoring-from-automl-model.ipynb) to open it.
 
-5. Follow the instructions within the notebook to complete the experience.
+6. Follow the instructions within the notebook to complete the experience.
 
 ## Exercise 3 (Optional): Train and evaluate a model using Azure Machine Learning
 
@@ -198,23 +191,24 @@ If you have not already created the `connected-car` project in Azure Notebooks f
 
 In this exercise, you will use compute resources provided by Azure Machine Learning to remotely train a set of models using Automated Machine Learning, evaluate performance of each model and pick the best performing model to deploy as a web service. You will perform this lab using Azure Notebooks. The model you train here is created using automated machine learning just as you did in exercise 1, except instead of using the visual interface in the Azure Portal you setup the model training using Python.
 
-1. Navigate to your `connected-car` project in your Azure Notebook environment.
+1. Download the notebook on your local disk from the following URL:
 
-2. Select the **Upload** menu and then choose **From URL**.
+   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/3
 
-   ![The Upload menu](media/05.png 'Upload')
+   Save `predict-battery-life-with-AML.ipynb` notebook file locally by right-clicking on the file name and selecting **Save link as**.
 
-3. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
+2. In the Jupyter Notebook environment navigate to the Files tab and open the automatically created folder named as your username.
+3. Select the **Upload** menu and browse for the notebook downloaded in step 1.
 
-   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/3/predict-battery-life-with-AML.ipynb
+   ![Upload notebook](media/05.png 'Upload')
 
-   Then select **Done** to upload and dismiss the dialog.
+4. Press **Upload** to start uploading the notebook to the VM.
 
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
-4. In the listing, select the Notebook you just uploaded (predict-battery-life-with-AML.ipynb) to open it.
+5. In the listing, select the Notebook you just uploaded (predict-battery-life-with-AML.ipynb) to open it.
 
-5. Follow the instructions within the notebook to complete the experience.
+6. Follow the instructions within the notebook to complete the experience.
 
 ## Wrap-up
 
