@@ -2,13 +2,13 @@
 
 ## AI, Experience 5 - Making deep learning portable with ONNX
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [AI, Experience 5 - Making deep learning portable with ONNX](#AI-Experience-5---Making-deep-learning-portable-with-ONNX)
-  - [Technology overview](#Technology-overview)
-  - [Scenario overview](#Scenario-overview)
-  - [Task 1: Train and deploy a deep learning model](#Task-1-Train-and-deploy-a-deep-learning-model)
-  - [Wrap-up](#Wrap-up)
-  - [Additional resources and more information](#Additional-resources-and-more-information)
+- [Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data-amp-ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
+  - [AI, Experience 5 - Making deep learning portable with ONNX](#ai-experience-5---making-deep-learning-portable-with-onnx)
+  - [Technology overview](#technology-overview)
+  - [Scenario overview](#scenario-overview)
+  - [Task 1: Train and deploy a deep learning model](#task-1-train-and-deploy-a-deep-learning-model)
+  - [Wrap-up](#wrap-up)
+  - [Additional resources and more information](#additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -54,12 +54,13 @@ In this experience you will learn how Contoso Auto can leverage Deep Learning te
 
 In this task, you will train a deep learning model to classify the descriptions of car components provided by technicians as compliant or non-compliant, convert it to ONNX, and deploy it as a web service. To accomplish this, you will use a Notebook VM and Azure Machine Learning.
 
-1. To start, open Azure Machine Learning studio and navigate to the `tech_immersion_aml_XXXXX` workspace.
+1. Open your Azure Machine Learning workspace. Sign-in to the Azure Portal, navigate to your Azure Machine Learning workspace and select **Launch the new Azure Machine Learning studio**. Alternatively, you can sign in directly to the [Azure Machine Learning studio](https://ml.azure.com).
 
 2. Navigate to the `Compute` section by selecting the option on the left navigation menu.
 
-3. Under the `Notebook VMs` tab, if you have already created a notebook VM named `tech-immersion`, go directly to step 5. Otherwise click **New** to create your notebook VM. Name it `tech-immersion`, select **Standard_DS3** for VM type and press **Create**. Wait a few minutes until the notebook is fully provisioned.
-4. Back to the `Notebook VMs` tab, click **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, click on the **Jupyter** link.
+3. Under the `Notebook VMs` tab, if you have already created a notebook VM named `tech-immersion`, go directly to step 5. Otherwise select **New** to create your notebook VM. Name it `tech-immersion`, select **Standard_DS3** for VM type and select **Create**. Wait a few minutes until the notebook is fully provisioned.
+
+4. Back to the `Notebook VMs` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, click on the **Jupyter** link.
 
    ![Open NotebookVM](media/01-OpenNotebookVM.png)
 
@@ -69,8 +70,8 @@ In this task, you will train a deep learning model to classify the descriptions 
 
    Save `deep-learning.ipynb` notebook file locally by right-clicking on the file name and selecting **Save link as**.
 
-6. In the Jupyter Notebook environment navigate to the Files tab and open the automatically created folder named as your username.
-7. Select the **Upload** menu and browse for the notebook downloaded in step 1.
+6. In the Jupyter Notebook environment navigate to the Files tab and open the automatically created folder named after your username.
+7. Select **Upload** and browse for the notebook downloaded in step 1.
 
    ![Upload notebook](media/05.png 'Upload')
 
@@ -79,10 +80,9 @@ In this task, you will train a deep learning model to classify the descriptions 
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
 9. In the listing, select the Notebook you just uploaded (deep-learning.ipynb) to open it.
-Please select Kernel **Python 3.6 - Azure ML** if you are prompter with a `Kernel not found` exception.
+Please select Kernel **Python 3.6 - Azure ML** if you are prompted with a `Kernel not found` exception.
 
 10. Follow the instructions within the notebook to complete the experience.
-
 
 ## Wrap-up
 
