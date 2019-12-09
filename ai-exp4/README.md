@@ -2,15 +2,15 @@
 
 ## AI, Experience 4 - Creating repeatable processes with Azure Machine Learning pipelines
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [AI, Experience 4 - Creating repeatable processes with Azure Machine Learning pipelines](#AI-Experience-4---Creating-repeatable-processes-with-Azure-Machine-Learning-pipelines)
-- [Technology overview](#Technology-overview)
-  - [What are machine learning pipelines?](#What-are-machine-learning-pipelines)
-  - [Scenario Overview](#Scenario-Overview)
-  - [Task 1: Setup the Notebook VM environment](#Task-1-Setup-the-Notebook-VM-environment)
-  - [Task 2: Upload the starter notebook](#Task-2-Upload-the-starter-notebook)
-  - [Wrap-up](#Wrap-up)
-  - [Additional resources and more information](#Additional-resources-and-more-information)
+- [Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data-amp-ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
+  - [AI, Experience 4 - Creating repeatable processes with Azure Machine Learning pipelines](#ai-experience-4---creating-repeatable-processes-with-azure-machine-learning-pipelines)
+- [Technology overview](#technology-overview)
+  - [What are machine learning pipelines?](#what-are-machine-learning-pipelines)
+  - [Scenario Overview](#scenario-overview)
+  - [Task 1: Setup the Notebook VM environment](#task-1-setup-the-notebook-vm-environment)
+  - [Task 2: Upload the starter notebook](#task-2-upload-the-starter-notebook)
+  - [Wrap-up](#wrap-up)
+  - [Additional resources and more information](#additional-resources-and-more-information)
 
 # Technology overview
 
@@ -48,14 +48,14 @@ The pipelines will be run on the Azure Machine Learning compute.
 
 To complete this task, you will use an Azure Notebook VM and Azure Machine Learning.
 
-If you have not already created the `tech-immersion` notebook VM in Azure Machine Learning studio follow these steps. If you already have this compute in your environment, continue with the **Task 2**.
+If you have not already created the `tech-immersion` notebook VM in Azure Machine Learning studio, follow these steps. If you already have this compute in your environment, continue with **Task 2**.
 
-1. To start, open Azure Machine Learning studio and navigate to the `tech_immersion_aml_XXXXX` workspace.
+1. Open your Azure Machine Learning workspace. Sign-in to the Azure Portal, navigate to your Azure Machine Learning workspace and select **Launch the new Azure Machine Learning studio**. Alternatively, you can sign in directly to the [Azure Machine Learning studio](https://ml.azure.com).
 
 2. Navigate to the `Compute` section by selecting the option on the left navigation menu.
 
-3. Under the `Notebook VMs` tab, click **New** to create the notebook VM. Name it `tech-immersion`, select **Standard_DS3** for VM type and press **Create**. Wait a few minutes until the notebook is fully provisioned.
-4. Back to the `Notebook VMs` tab, click **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, click on the **Jupyter** link.
+3. Under the `Notebook VMs` tab, select **New** to create the notebook VM. Name it `tech-immersion`, select **Standard_DS3** for VM type and select **Create**. Wait a few minutes until the notebook is fully provisioned.
+4. Back to the `Notebook VMs` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, click on the **Jupyter** link.
 
    ![Open NotebookVM](media/01-OpenNotebookVM.png)
 
@@ -64,10 +64,11 @@ If you have not already created the `tech-immersion` notebook VM in Azure Machin
 1. Download the notebook on your local disk from the following URL:
 
    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4
-   
-   Save `pipelines-AML.ipynb` notebook file locally by right-clicking on the file name and selecting **Save link as**. 
+
+   Save `pipelines-AML.ipynb` notebook file locally by right-clicking on the file name and selecting **Save link as**.
 
 2. In the Jupyter Notebook environment configured in **Task1**, navigate to the `Files` tab and open the automatically created folder named as your username.
+
 3. Select the **Upload** menu and browse for the notebook downloaded in step 1.
 
    ![Upload notebook](media/05.png 'Upload')
@@ -77,10 +78,9 @@ If you have not already created the `tech-immersion` notebook VM in Azure Machin
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
 5. In the listing, select the Notebook you just uploaded (pipelines-AML.ipynb) to open it.
-Please select Kernel **Python 3.6 - Azure ML** if you are prompter with a `Kernel not found` exception.
+Please select Kernel **Python 3.6 - Azure ML** if you are prompted with a `Kernel not found` exception.
 
 6. Follow the instructions within the notebook to complete the experience.
-
 
 ## Wrap-up
 
