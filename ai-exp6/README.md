@@ -83,7 +83,7 @@ Duration: 20 minutes
 
 1. Select and open the `azure-pipelines.yml` file.
 
-2. Select **Edit** and update the following variables: `resourcegroup`, and `workspace`. If you are using your own Azure subscription, please provide names to use. If an environment is provided to you be sure to replace XXXXX in the values below with your unique identifier.
+2. Select **Edit** and update the following variables: `resourcegroup`, and `workspace`. If you are using your own Azure subscription, please provide names to use. If an environment is provided to you, be sure to replace XXXXX in the values below with your unique identifier. Typically, for the provided environment, the format for the resourcegroup is `tech_immersion_XXXXX` and for workspace is `tech_immersion_aml_XXXXX` where XXXXX is your unique identifier.
 
     ![Edit build YAML file and provide your resource group and workspace information.](media/devops-build-pipeline-01.png 'Edit Build YAML file')
 
@@ -113,9 +113,9 @@ Duration: 20 minutes
 
     > **Note**: It might take up to 30 seconds for the **Subscription** dropdown to be populated with available subscriptions, depending on the number of different subscriptions your account has access to.
 
-    c. Resource group: This value should match the value you provided in the `azure-pipelines.yml` file.
+    c. Resource group: This value should match the value you provided in the `azure-pipelines.yml` file. (Typically, for the provided environment, the format for the resourcegroup is `tech_immersion_XXXXX`.)
 
-    d. Machine Learning Workspace: This value should match the value you provided in the `azure-pipelines.yml` file.
+    d. Machine Learning Workspace: This value should match the value you provided in the `azure-pipelines.yml` file. (Typically, for the provided environment, the format for the workspace is `tech_immersion_aml_XXXXX`.)
 
     e. Service connection name: `quick-starts-sc`
 
@@ -167,9 +167,9 @@ Duration: 25 minutes
 
     ![Start the run for your build pipeline.](media/devops-build-pipeline-11.png 'Run Build Pipeline')
 
-2. Monitor the build run. The build pipeline, for the first run, will take around 15 minutes to run.
+2. Monitor the build run. The build pipeline, for the first run, will take around 20 minutes to run.
 
-    ![Monitor your build pipeline. It will take around 15 minutes to run.](media/devops-build-pipeline-12.png 'Monitor Build Pipeline')
+    ![Monitor your build pipeline. It will take around 20 minutes to run.](media/devops-build-pipeline-12.png 'Monitor Build Pipeline')
 
 3. Select **Job** to monitor the detailed status of the build pipeline execution.
 
@@ -257,7 +257,7 @@ Duration: 20 minutes
 
     a. Name: `aks_name` Value: `aks-cluster01`
 
-    b. Name: `aks_region` Value: `eastus`
+    b. Name: `aks_region` Value: `eastus2`
 
     c. Name: `service_name` Value: `compliance-classifier-service`
 
