@@ -2,10 +2,10 @@
 
 ## AI, Experience 6 - MLOps with Azure Machine Learning and Azure DevOps
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [AI, Experience 6 - MLOps with Azure Machine Learning and Azure DevOps](#AI-Experience-6---MLOps-with-Azure-Machine-Learning-and-Azure-DevOps)
-  - [Technology overview](#Technology-overview)
-  - [Scenario overview](#Scenario-overview)
+- [Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data-amp-ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
+  - [AI, Experience 6 - MLOps with Azure Machine Learning and Azure DevOps](#ai-experience-6---mlops-with-azure-machine-learning-and-azure-devops)
+  - [Technology overview](#technology-overview)
+  - [Scenario overview](#scenario-overview)
   - [Exercise 1: Setup New Project in Azure DevOps](#exercise-1-setup-new-project-in-azure-devops)
     - [Task 1: Create New Project](#task-1-create-new-project)
     - [Task 2: Import Quickstart code from a GitHub Repo](#task-2-import-quickstart-code-from-a-github-repo)
@@ -19,11 +19,11 @@
   - [Exercise 3: Setup the Release Pipeline](#exercise-3-setup-the-release-pipeline)
     - [Task 1: Create an Empty Job](#task-1-create-an-empty-job)
     - [Task 2: Add Build Artifact](#task-2-add-build-artifact)
-    - [Task 3: Add Variables to Deploy & Test stage](#task-3-add-variables-to-deploy--test-stage)
-    - [Task 4: Setup Agent Pool for Deploy & Test stage](#task-4-setup-agent-pool-for-deploy--test-stage)
+    - [Task 3: Add Variables to Deploy &amp; Test stage](#task-3-add-variables-to-deploy-amp-test-stage)
+    - [Task 4: Setup Agent Pool for Deploy &amp; Test stage](#task-4-setup-agent-pool-for-deploy-amp-test-stage)
     - [Task 5: Add Use Python Version task](#task-5-add-use-python-version-task)
     - [Task 6: Add Install Requirements task](#task-6-add-install-requirements-task)
-    - [Task 7: Add Deploy & Test Webservice task](#task-7-add-deploy--test-webservice-task)
+    - [Task 7: Add Deploy &amp; Test Webservice task](#task-7-add-deploy-amp-test-webservice-task)
     - [Task 8: Define Deployment Trigger](#task-8-define-deployment-trigger)
     - [Task 9: Enable Continuous Deployment Trigger](#task-9-enable-continuous-deployment-trigger)
     - [Task 10: Save the Release Pipeline](#task-10-save-the-release-pipeline)
@@ -32,8 +32,8 @@
     - [Task 2: Monitor Build Pipeline](#task-2-monitor-build-pipeline)
     - [Task 3: Monitor Release Pipeline](#task-3-monitor-release-pipeline)
     - [Task 4: Review Release Pipeline Outputs](#task-4-review-release-pipeline-outputs)
-  - [Wrap-up](#Wrap-up)
-  - [Additional resources and more information](#Additional-resources-and-more-information)
+  - [Wrap-up](#wrap-up)
+  - [Additional resources and more information](#additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -49,7 +49,7 @@ Azure Machine Learning uses a Machine Learning Operations (MLOps) approach, whic
 
 In this experience you will learn how Contoso Auto can use MLOps to formalize the process of training and deploying new models using a DevOps approach.
 
-# Exercise 1: Setup New Project in Azure DevOps
+## Exercise 1: Setup New Project in Azure DevOps
 
 Duration: 20 minutes
 
@@ -257,7 +257,7 @@ Duration: 20 minutes
 
     a. Name: `aks_name` Value: `aks-cluster01`
 
-    b. Name: `aks_region` Value: `eastus2`
+    b. Name: `aks_region` Value: should be the same region as the region of your Azure Machine Learning workspace (e.g. `eastus`)
 
     c. Name: `service_name` Value: `compliance-classifier-service`
 
@@ -416,7 +416,6 @@ Duration: 30 minutes
 3. Log in to Azure Machine Learning studio. Open your **Endpoints** section, and observe the deployed webservice: **compliance-classifier-service**.
 
     ![View deployed webservice in Azure Machine Learning studio.](media/devops-test-pipelines-08.png 'Azure Machine Learning studio - Workspace, Deployments')
-
 
 ## Wrap-up
 
