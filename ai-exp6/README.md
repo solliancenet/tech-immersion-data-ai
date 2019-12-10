@@ -101,6 +101,23 @@ Duration: 20 minutes
 
     ![Select Create Service Connection, Azure Resource Manager.](media/devops-build-pipeline-04.png 'Azure Resource Manager')
 
+    > **Note**: Due to an issue with a newly released version of the user interface, the new service connection experience was temporarily disabled. You might see the following user interface:
+
+    ![Azure DevOps new service connection experience fix](media/devops-service-connection-fix-01.png 'Azure DevOps new service connection fix').
+
+    In this case, set the connection name to `quick-starts-sc`, provide the subscription, resource group, and machine learning workspace information, and select **OK**. Ignore steps 3 and 4 below and continue with Exercise 2.
+
+    > **Note**: If an environment is provided to you, select the `Subscription` scope level and the select `use full version of the service connection dialog`.
+
+    ![Azure DevOps new service connection experience fix - full dialog](media/devops-service-connection-fix-02.png 'Azure DevOps new service connection fix full dialog')
+
+    > Provide the following information and then select `OK`:
+    > - Connection name: quick-starts-sc (note: provide exact name as shown)
+    > - Service principal client ID (Lab environment details page: Service Principal Details->Application/Client Id)
+    > - Service principal key (Lab environment details page: Service Principal Details->Application Secret Key)
+
+    ![Azure DevOps new service connection experience fix - full dialog values](media/devops-service-connection-fix-03.png 'Azure DevOps new service connection fix full dialog values')
+
 3. Select **Service principal (automatic)** and then select **Next**.
 
     ![Select Service principal (automatic), and then select Next.](media/devops-build-pipeline-05.png 'Service principal authentication')
@@ -122,6 +139,11 @@ Duration: 20 minutes
     f. Grant access permission to all pipelines: this checkbox must be selected.
 
     ![Provide connection name, Azure Resource Group, Machine Learning Workspace, and then select Save. The resource group and machine learning workspace must match the value you provided in the YAML file.](media/devops-build-pipeline-06.png 'Add an Azure Resource Manager service connection dialog')
+
+    > **Note**: If an environment is provided to you, select the `Subscription` scope level, provide the following information and      then select `Save`:
+    > - Connection name: quick-starts-sc (note: provide exact name as shown)
+    > - Service principal client ID (Lab environment details page: Service Principal Details->Application/Client Id)
+    > - Service principal key (Lab environment details page: Service Principal Details->Application Secret Key)
 
 ## Exercise 2: Setup and Run the Build Pipeline
 
