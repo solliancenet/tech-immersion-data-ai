@@ -54,8 +54,11 @@ If you have not already created the `tech-immersion` notebook VM in Azure Machin
 
 2. Navigate to the `Compute` section by selecting the option on the left navigation menu.
 
-3. Under the `Notebook VMs` tab, select **New** to create the notebook VM. Name it `tech-immersion`, select **Standard_DS3** for VM type and select **Create**. Wait a few minutes until the notebook is fully provisioned.
-4. Back to the `Notebook VMs` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, click on the **Jupyter** link.
+3. Under the `Notebook VMs` tab, select **New** to create the notebook VM. Name it `tech-immersion`, select `Standard_DS3_V2` for VM type and select **Create**. Wait a few minutes until the notebook is fully provisioned.
+
+    > **Note**: If the `Notebook VM names should be unique within an Azure Region` notification appears, choose a different name that is unique to your environment.
+
+4. Back to the `Notebook VMs` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, select **Jupyter**.
 
    ![Open NotebookVM](media/01-OpenNotebookVM.png)
 
@@ -63,17 +66,17 @@ If you have not already created the `tech-immersion` notebook VM in Azure Machin
 
 1. Download the notebook on your local disk from the following URL:
 
-   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4
+   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4/pipelines-AML.ipynb
 
-   Save `pipelines-AML.ipynb` notebook file locally by right-clicking on the file name and selecting **Save link as**.
+   Select **Raw** to view the text version of the file and then right-click in the browser and save the content locally as  `pipelines-AML.ipynb`.
 
-2. In the Jupyter Notebook environment configured in **Task1**, navigate to the `Files` tab and open the automatically created folder named as your username.
+2. In the Jupyter Notebook environment configured in **Task1**, navigate to the `Files` tab to view the root folder content. If you see a folder named after your user name, use that to upload notebooks.
 
-3. Select the **Upload** menu and browse for the notebook downloaded in step 1.
+3. Select **Upload** and browse for the notebook downloaded in step 1.
 
    ![Upload notebook](media/05.png 'Upload')
 
-4. Press **Upload** to start uploading the notebook to the VM.
+4. Select **Upload** to start uploading the notebook to the VM.
 
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
