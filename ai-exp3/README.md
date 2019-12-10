@@ -185,7 +185,7 @@ If you have not already created the `tech-immersion` notebook VM in Azure Machin
    ![The Upload files from Computer dialog](media/upload-notebook-01.png 'Upload files from Computer')
 
 5. In the listing, select the Notebook you just uploaded (`explain-automl-model.ipynb`) to open it.
-Please select Kernel **Python 3.6 - Azure ML** if you are prompter with a Kernel not found exception.
+Please select Kernel **Python 3.6 - Azure ML** if you are prompted with a Kernel not found exception.
 
 6. Follow the instructions within the notebook to complete the experience.
 
@@ -212,7 +212,7 @@ In this exercise, you will use compute resources provided by Azure Machine Learn
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
 5. In the listing, select the Notebook you just uploaded (`predict-battery-life-with-AML.ipynb`) to open it.
-Please select Kernel **Python 3.6 - Azure ML** if you are prompter with a `Kernel not found` exception.
+Please select Kernel **Python 3.6 - Azure ML** if you are prompted with a `Kernel not found` exception.
 
 6. Follow the instructions within the notebook to complete the experience.
 
