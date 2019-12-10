@@ -58,19 +58,22 @@ In this task, you will train a deep learning model to classify the descriptions 
 
 2. Navigate to the `Compute` section by selecting the option on the left navigation menu.
 
-3. Under the `Notebook VMs` tab, if you have already created a notebook VM named `tech-immersion`, go directly to step 5. Otherwise select **New** to create your notebook VM. Name it `tech-immersion`, select **Standard_DS3** for VM type and select **Create**. Wait a few minutes until the notebook is fully provisioned.
+3. Under the `Notebook VMs` tab, if you have already created a notebook VM named `tech-immersion`, go directly to step 5. Otherwise select **New** to create your notebook VM. Name it `tech-immersion`, select `Standard_DS3_V2` for VM type and select **Create**. Wait a few minutes until the notebook is fully provisioned.
 
-4. Back to the `Notebook VMs` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, click on the **Jupyter** link.
+    > **Note**: If the `Notebook VM names should be unique within an Azure Region` notification appears, choose a different name that is unique to your environment.
+
+4. Back to the `Notebook VMs` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, select **Jupyter**.
 
    ![Open NotebookVM](media/01-OpenNotebookVM.png)
 
 5. Download the notebook on your local disk from the following URL:
 
-   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/5
+   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/5/deep-learning.ipynb
 
-   Save `deep-learning.ipynb` notebook file locally by right-clicking on the file name and selecting **Save link as**.
+   Select **Raw** to view the text version of the file and then right-click in the browser and save the content locally as  `deep-learning.ipynb`.
 
-6. In the Jupyter Notebook environment navigate to the Files tab and open the automatically created folder named after your username.
+6. In the Jupyter Notebook environment configured in **Task1**, navigate to the `Files` tab to view the root folder content. If you see a folder named after your user name, use that to upload notebooks.
+
 7. Select **Upload** and browse for the notebook downloaded in step 1.
 
    ![Upload notebook](media/05.png 'Upload')
@@ -79,7 +82,7 @@ In this task, you will train a deep learning model to classify the descriptions 
 
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
-9. In the listing, select the Notebook you just uploaded (deep-learning.ipynb) to open it.
+9. In the listing, select the Notebook you just uploaded (`deep-learning.ipynb`) to open it.
 Please select Kernel **Python 3.6 - Azure ML** if you are prompted with a `Kernel not found` exception.
 
 10. Follow the instructions within the notebook to complete the experience.
