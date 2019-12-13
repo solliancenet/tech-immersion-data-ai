@@ -105,7 +105,7 @@ Duration: 20 minutes
 
     ![Azure DevOps new service connection experience fix](media/devops-service-connection-fix-01.png 'Azure DevOps new service connection fix').
 
-    In this case, set the connection name to `quick-starts-sc`, provide the subscription, resource group, and machine learning workspace information, and select **OK**. Ignore steps 3 and 4 below and continue with Exercise 2.
+    In this case, set the connection name to `quick-starts-sc`, provide the subscription, resource group, and machine learning workspace information, check the `Allow all pipelines to use this connection` option and select **OK**. Ignore steps 3 and 4 below and continue with Exercise 2.
 
     > **Note**: If an environment is provided to you, select the `Subscription` scope level and the select `use full version of the service connection dialog`.
 
