@@ -2,21 +2,21 @@
 
 ## AI, Experience 3 - Better models made easy with Automated Machine Learning
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [AI, Experience 3 - Better models made easy with Automated Machine Learning](#AI-Experience-3---Better-models-made-easy-with-Automated-Machine-Learning)
-  - [Technology overview](#Technology-overview)
-  - [Scenario overview](#Scenario-overview)
-  - [Exercise 1: Creating a model using automated machine learning](#Exercise-1-Creating-a-model-using-automated-machine-learning)
-    - [Task 1: Create an automated machine learning experiment using the Portal](#Task-1-Create-an-automated-machine-learning-experiment-using-the-Portal)
-    - [Task 2: Review the experiment run results](#Task-2-Review-the-experiment-run-results)
-    - [Task 3: Register the Best Model](#Task-3-Register-the-Best-Model)
-  - [Exercise 2: Understanding the automated ML generated model using model explainability](#Exercise-2-Understanding-the-automated-ML-generated-model-using-model-explainability)
-    - [Task 1: Create the Azure Notebooks project](#Task-1-Create-the-Azure-Notebooks-project)
-    - [Task 2: Upload the starter notebook](#Task-2-Upload-the-starter-notebook)
-  - [Exercise 3 (Optional): Train and evaluate a model using Azure Machine Learning](#Exercise-3-Optional-Train-and-evaluate-a-model-using-Azure-Machine-Learning)
-    - [Task 1: Upload and open the starter notebook](#Task-1-Upload-and-open-the-starter-notebook)
-  - [Wrap-up](#Wrap-up)
-  - [Additional resources and more information](#Additional-resources-and-more-information)
+- [Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data-amp-ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
+  - [AI, Experience 3 - Better models made easy with Automated Machine Learning](#ai-experience-3---better-models-made-easy-with-automated-machine-learning)
+  - [Technology overview](#technology-overview)
+  - [Scenario overview](#scenario-overview)
+  - [Exercise 1: Creating a model using automated machine learning](#exercise-1-creating-a-model-using-automated-machine-learning)
+    - [Task 1: Create an automated machine learning experiment using the Portal](#task-1-create-an-automated-machine-learning-experiment-using-the-portal)
+    - [Task 2: Review the experiment run results](#task-2-review-the-experiment-run-results)
+    - [Task 3: Register the Best Model](#task-3-register-the-best-model)
+  - [Exercise 2: Understanding the automated ML generated model using model explainability](#exercise-2-understanding-the-automated-ml-generated-model-using-model-explainability)
+    - [Task 1: Setup the Notebook VM environment](#task-1-setup-the-notebook-vm-environment)
+    - [Task 2: Upload the starter notebook](#task-2-upload-the-starter-notebook)
+  - [Exercise 3 (Optional): Train and evaluate a model using Azure Machine Learning](#exercise-3-optional-train-and-evaluate-a-model-using-azure-machine-learning)
+    - [Task 1: Upload and open the starter notebook](#task-1-upload-and-open-the-starter-notebook)
+  - [Wrap-up](#wrap-up)
+  - [Additional resources and more information](#additional-resources-and-more-information)
 
 ## Technology overview
 
@@ -42,137 +42,179 @@ In this exercise, you will create a model that predicts battery failure from tim
 
 ### Task 1: Create an automated machine learning experiment using the Portal
 
-1. Navigate to your Azure Machine Learning workspace in the Azure Portal.
-2. Select `Automated machine learning` in the left navigation bar.
-3. Select **Create Experiment**.
+1. Navigate to your Azure Machine Learning workspace in the Azure Portal. Select `Overview` in the left navigation bar and then select **Launch the new Azure Machine Learning studio**. Alternatively, you can navigate directly to the new [Azure Machine Learning studio](https://ml.azure.com/). This will prompt you to select the workspace as part of the sign-in process.
 
-   ![Create new experiment](./media/02_CreateExperiment.png)
+   ![Navigate to Azure Machine Learning studio](./media/001_AzureMachineLearningStudio.png)
 
-4. Provide the experiment name: `automl-regression` and from the drop-down select **gpucluster** and then select **Next**.
+2. Select **Automated ML** in the left navigation bar.
 
-   ![Provide experiment name and click on compute](./media/03_NewExperiment_1.png)
+   ![Select Automated ML](./media/002_AutomatedML.png)
 
-5) Now you will upload the training data. Start by downloading the data from https://quickstartsws9073123377.blob.core.windows.net/azureml-blobstore-0d1c4218-a5f9-418b-bf55-902b65277b85/training-formatted.csv. Select **Upload** and then in the dialog that appears choose the file `training-formatted.csv` from your local disk.
+3. Select **New automated ML run** to start creating a new experiment.
 
-   ![Uploading the training data](./media/05_UploadDataFile.png)
+   ![New automated ML run](./media/003_CreateAutomatedMLRun.png)
 
-6) Select **training-formatted.csv** and review the training data. Be sure to scroll to the right to observe all of the columns in the data.
+4. Select **Create dataset** and choose the **From web files** option from the drop-down.
 
-   ![Reviewing the training data](./media/06_ReviewDataFile.png)
+   ![Create dataset from local file](./media/004_NewDataset_FromURL.png)
 
-7) Now, you will setup the Auto ML Experiment Basic Settings by providing the following values:
+5. Fill in the training data URL in the `Web URL` field: `https://quickstartsws9073123377.blob.core.windows.net/azureml-blobstore-0d1c4218-a5f9-418b-bf55-902b65277b85/training-formatted.csv`, make sure the name is set to `training-formatted-dataset`, and select **Next** to load a preview of the parsed training data.
 
-   - Prediction Task: select **Regression**
+   ![Training data web URL](./media/005_Dataset_BasicInfo.png)
+
+6. In the `Settings and preview` page, scroll to the right to observe all of the columns in the data.
+
+   ![Reviewing the training data](./media/006_ReviewDataFile.png)
+
+7. Select **Next** to check the schema and then confirm the dataset details by selecting **Next** and then **Create** on the confirmation page.
+
+   ![Reviewing the schema of training data](./media/007_TrainingDataSchema.png)
+
+   ![Confirm dataset creation](./media/007_ConfirmDataset.png)
+
+8. Now you should be able to select the newly created dataset for your experiment. Select the `training-formatted-dataset` dataset and select **Next** to move to the experiment run details page.
+
+   ![Select the dataset](./media/008_SelectDataset.png)
+
+9. You will now configure the Auto ML run basic settings by providing the following values for the experiment name, target column and training compute:
+
+   - Experiment name: **automl-regression**
    - Target column: select **Survival_In_Days**
+   - Select training compute target: : select **aml-compute-cpu**
 
-     ![Setup Auto ML experiment basic settings](./media/07_SetupExp_1.png)
+   ![Setup Auto ML experiment basic settings](./media/009_SetupExperiment.png)
 
-8) Select **Advanced Settings** to expand that area. Provide the following settings:
+10. Select **Next** and select **Regression** in the `Task type and settings` page.
 
-   - Primary metric: **normalized_root-mean_squared_error**
-   - Max number of iterations: **3**
-   - Number of Cross Validations: **5**
-   - Max concurrent iterations: **1**
+    ![Select Regression task type](./media/010_TaskTypeForExperiment.png)
 
-     ![Configuring the Advanced Settings as described](./media/08_SetupExp_2.png)
+11. Select **View additional configuration settings** to open the advanced settings section. Provide the following settings:
 
-9) Select **Start** to run the experiment and begin automated machine learning process.
+    - Primary metric: **Normalized root mean squared error**
+    - Exit criterion > Metric score threshold: **0.09**
+    - Validation > Validation type: **k-fold cross validation**
+    - Validation > Number of Cross Validations: **5**
+    - Concurrency > Max concurrent iterations: **1**
+
+    ![Configuring the Advanced Settings as described](./media/011_TaskConfigurationSettings.png)
+
+12. Select **Save** and then **Finish** to begin the automated machine learning process.
+
+    ![Start Automate ML run](./media/012_CreatingExperiment.png)
+
+13. Wait until the `Run status` becomes **Running** in the `Run Detail page`.
+
+    ![Preparing experiment](./media/012_PreparingExperiment.png)
 
 ### Task 2: Review the experiment run results
 
-1. The experiment will run for about _10 minutes_. Once it completes you should examine the chart to observe the model performance for the primary metric for different iterations.
+1. The experiment will run for about _15 minutes_. While it runs and once it completes, you should check the `Models` tab on the `Run Detail` page to observe the model performance for the primary metric for different runs.
 
-   ![Review run details - graph view](./media/09_ReviewRunDetails_1.png)
+   ![Review run details - graph view](./media/021_RunDetails1.png)
 
-2. Scroll down to see a table view of different iterations and select the iteration with the best **normalized root mean square error** score. Note that the normalized root mean square error measures the error between the predicted value and actual value. In this case, the model with the lowest normalized root mean square error is the best model.
+2. In the models list, notice at the top the iteration with the best **normalized root mean square error** score. Note that the normalized root mean square error measures the error between the predicted value and actual value. In this case, the model with the lowest normalized root mean square error is the best model.
 
-   ![Review run details - table view](./media/010_ReviewRunDetails_2.png)
+   ![Review run details - table view](./media/022_RunDetails2.png)
+
+3. Select **Experiments** on the left navigation pane and select the experiment `automl-regression` to see the list of available runs.
+
+   ![Open experiment runs table](./media/023_CheckExperimentRuns.png)
+
+4. Select the option to **Include child runs** to be able to examine  model performance for the primary metric of different runs. By default, the left chart describes the `mean_absolute_error` value for each run. Select the pen icon on the right corner of the `mean_absolute_error` chart to configure the `normalized_root_mean_square_error` metric representation.
+
+   ![Review runs - chart view](./media/024_IncludeChildRuns.png)
 
 ### Task 3: Register the Best Model
 
-1. Return to the top of the `Run Details` screen and select **Deploy Best Model** as shown. Note that deployment consists of four steps: (1) _Register Best Model_, (2) Download _Scoring and Environment Script files_, (3) Create _Deployment Image_ using the downloaded script files, and (4) Deploy _Scoring Web Service_ using the created image.
+1. Return to the `Run Details` screen for Run 1 which you can find by scrolling down to the last row in the iterations table.
 
-   ![The Deploy Best Model button](./media/014_DeployBestModel.png)
+    ![Open run details](./media/031_RunDetails1.png)
 
-2. You register the best model with the Azure Machine Learning model registry so that you can retrieve it later when you want to use it for scoring. Select **Register Model** link. Once the registration process has completed, the link will change to the text `Model has been registered`.
+2. Select **Download best model** as shown and save the `model.pkl` file on your local disk.
 
-   ![Register Best Model](./media/015_RegisterModel.png)
+   ![The Download best model link](./media/032_DeployBestModel.png)
 
-3. The model registration, will create a new model in your Azure Machine Learning workspace with the same name as the experiment: `automl-regression`. To view this model from the Azure Machine Learning workspace, select **Models**.
+3. You need to register the best model with the Azure Machine Learning model registry so that you can retrieve it later when you want to use it for scoring. Select **Models** in the left navigation pane.
 
-   ![Viewing the list of models in the Azure Machine Learning workspace](media/03-automl-registered-model.png)
+4. Select **Register Model** at the top of the models list. Enter the name of your model: `automl-regression`, browse for the downloaded model file from the previous step and then select **Register**.
 
-4. If you see your model in the above list, you are now ready to continue on to the next exercise.
+   ![Register Model](./media/034_RegisterModel.png)
+
+5. Once the registration process has completed, you will be prompted with the message `Model created successfully` in the notification area at the top. Now you should be able to view this model in the **Models** list.
+
+   ![Viewing the list of models in the Azure Machine Learning workspace](media/035-automl-registered-model.png)
+
+6. If you see your model in the above list, you are now ready to continue on to the next exercise.
 
 ## Exercise 2: Understanding the automated ML generated model using model explainability
 
-### Task 1: Create the Azure Notebooks project
+### Task 1: Setup the Notebook VM environment
 
-To complete this task, you will use an Azure Notebook and Azure Machine Learning.
+To complete this task, you will use an Azure Notebook VM and Azure Machine Learning.
 
-If you have not already created the `connected-car` project in Azure Notebooks follow these steps. If you already have this project in your environment, continue with the **Task 2**.
+If you have not already created the `tech-immersion` notebook VM in Azure Machine Learning studio follow these steps. If you already have it in your environment, continue with **Task 2**.
 
-1. To start, open a new web browser window and navigate to <https://notebooks.azure.com>.
+1. To get started, sign-in to the Azure Portal, navigate to your Azure Machine Learning workspace and select **Launch the new Azure Machine Learning studio**. Alternatively, you can sign in directly to the [Azure Machine Learning studio](https://ml.azure.com).
 
-2. Select **Sign In** and then use your Microsoft Account to complete the sign in process.
+2. Navigate to the `Compute` section by selecting the option on the left navigation menu.
 
-   ![The Sign In button](media/01.png 'Sign In')
+3. Under the `Notebook VMs` tab, select **New** to create the notebook VM. Name it `tech-immersion`, select `Standard_DS3_V2` for VM type and select **Create**. Wait a few minutes until the notebook VM is fully provisioned.
 
-3. Dismiss the dialog to create the user ID (you will not need this). Within the Microsoft Azure Notebooks portal, select **My Projects** from the menu at the top.
+    > **Note**: If the `Notebook VM names should be unique within an Azure Region` notification appears, choose a different name that is unique to your environment.
 
-   ![The My Projects button](media/02.png 'My Projects')
+4. Back to the `Notebook VMs` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, select the **Jupyter** link.
 
-4. Then select **New Project**.
-
-   ![The New Project button](media/03.png 'New Project')
-
-5. On the Create New Project dialog, provide a Project Name (this should be a user friendly description) and Project ID (this will form a part of the URL used to access this project in the browser) and uncheck Public. Select **Create**.
-
-   ![The Create New Project dialog](media/04.png 'Create New Project')
+   ![Open NotebookVM](media/212-OpenNotebookVM.png)
 
 ### Task 2: Upload the starter notebook
 
-1. Navigate to your `connected-car` project in your Azure Notebook environment.
+1. Download the notebook on your local disk from the following URL:
 
-2. Select the **Upload** menu and then choose **From URL**.
+   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/3/explain-automl-model.ipynb
 
-   ![The Upload menu](media/05.png 'Upload')
+   Select **Raw** to view the text version of the file and then right-click in the browser and save the content locally as  `explain-automl-model.ipynb`.
 
-3. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
+2. In the Jupyter Notebook environment configured in **Task1**, navigate to the `Files` tab to view the root folder content. If you see a folder named after your user name, use that to upload notebooks.
 
-   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/3/scoring-from-automl-model.ipynb
+3. Select the **Upload** menu and browse for the notebook downloaded in step 1.
 
-   Then select **Done** to upload and dismiss the dialog.
+   ![Upload notebook](media/05.png 'Upload')
 
-   ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
+4. Press **Upload** to start uploading the notebook to the VM.
 
-4. In the listing, select the Notebook you just uploaded (scoring-from-automl-model.ipynb) to open it.
+   ![The Upload files from Computer dialog](media/upload-notebook-01.png 'Upload files from Computer')
 
-5. Follow the instructions within the notebook to complete the experience.
+5. In the listing, select the Notebook you just uploaded (`explain-automl-model.ipynb`) to open it.
+Please select Kernel **Python 3.6 - Azure ML** if you are prompted with a Kernel not found exception.
+
+6. Follow the instructions within the notebook to complete the experience.
 
 ## Exercise 3 (Optional): Train and evaluate a model using Azure Machine Learning
 
 ### Task 1: Upload and open the starter notebook
 
-In this exercise, you will use compute resources provided by Azure Machine Learning to remotely train a set of models using Automated Machine Learning, evaluate performance of each model and pick the best performing model to deploy as a web service. You will perform this lab using Azure Notebooks. The model you train here is created using automated machine learning just as you did in exercise 1, except instead of using the visual interface in the Azure Portal you setup the model training using Python.
+In this exercise, you will use compute resources provided by Azure Machine Learning to remotely train a set of models using Automated Machine Learning, evaluate the performance of each model and pick the best performing model to deploy as a web service. You will perform this lab using an Azure Machine Learning notebook VM. The model you train here is created using automated machine learning just as you did in exercise 1, except instead of using the visual interface in the Azure Machine Learning studio, you setup the model training using Python.
 
-1. Navigate to your `connected-car` project in your Azure Notebook environment.
-
-2. Select the **Upload** menu and then choose **From URL**.
-
-   ![The Upload menu](media/05.png 'Upload')
-
-3. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
+1. Download the notebook on your local disk from the following URL:
 
    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/3/predict-battery-life-with-AML.ipynb
 
-   Then select **Done** to upload and dismiss the dialog.
+   Select **Raw** to view the text version of the file and then right-click in the browser and save the content locally as  `predict-battery-life-with-AML.ipynb`.
+
+2. In the Jupyter Notebook environment navigate to the `Files` tab to view the root folder content. If you see a folder named after your user name, use that to upload notebooks.
+
+3. Select the **Upload** menu and browse for the notebook downloaded in step 1.
+
+   ![Upload notebook](media/05.png 'Upload')
+
+4. Press **Upload** to start uploading the notebook to the VM.
 
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
-4. In the listing, select the Notebook you just uploaded (predict-battery-life-with-AML.ipynb) to open it.
+5. In the listing, select the Notebook you just uploaded (`predict-battery-life-with-AML.ipynb`) to open it.
+Please select Kernel **Python 3.6 - Azure ML** if you are prompted with a `Kernel not found` exception.
 
-5. Follow the instructions within the notebook to complete the experience.
+6. Follow the instructions within the notebook to complete the experience.
 
 ## Wrap-up
 

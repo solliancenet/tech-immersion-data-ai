@@ -2,15 +2,15 @@
 
 ## AI, Experience 4 - Creating repeatable processes with Azure Machine Learning pipelines
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#Data--AI-Tech-Immersion-Workshop-%E2%80%93-Product-Review-Guide-and-Lab-Instructions)
-  - [AI, Experience 4 - Creating repeatable processes with Azure Machine Learning pipelines](#AI-Experience-4---Creating-repeatable-processes-with-Azure-Machine-Learning-pipelines)
-- [Technology overview](#Technology-overview)
-  - [What are machine learning pipelines?](#What-are-machine-learning-pipelines)
-  - [Scenario Overview](#Scenario-Overview)
-  - [Task 1: Create the Azure Notebooks project](#Task-1-Create-the-Azure-Notebooks-project)
-  - [Task 2: Upload the starter notebook](#Task-2-Upload-the-starter-notebook)
-  - [Wrap-up](#Wrap-up)
-  - [Additional resources and more information](#Additional-resources-and-more-information)
+- [Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data-amp-ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
+  - [AI, Experience 4 - Creating repeatable processes with Azure Machine Learning pipelines](#ai-experience-4---creating-repeatable-processes-with-azure-machine-learning-pipelines)
+- [Technology overview](#technology-overview)
+  - [What are machine learning pipelines?](#what-are-machine-learning-pipelines)
+  - [Scenario Overview](#scenario-overview)
+  - [Task 1: Setup the Notebook VM environment](#task-1-setup-the-notebook-vm-environment)
+  - [Task 2: Upload the starter notebook](#task-2-upload-the-starter-notebook)
+  - [Wrap-up](#wrap-up)
+  - [Additional resources and more information](#additional-resources-and-more-information)
 
 # Technology overview
 
@@ -44,49 +44,46 @@ Each of these pipelines is going to have implicit data dependencies and the exam
 
 The pipelines will be run on the Azure Machine Learning compute.
 
-## Task 1: Create the Azure Notebooks project
+## Task 1: Setup the Notebook VM environment
 
-To complete this task, you will use an Azure Notebook and Azure Machine Learning.
+To complete this task, you will use an Azure Notebook VM and Azure Machine Learning.
 
-If you have not already created the `connected-car` project in Azure Notebooks follow these steps. If you already have this project in your environment, continue with the **Task 2**.
+If you have not already created the `tech-immersion` notebook VM in Azure Machine Learning studio, follow these steps. If you already have this compute in your environment, continue with **Task 2**.
 
-1. To start, open a new web browser window and navigate to <https://notebooks.azure.com>.
+1. Open your Azure Machine Learning workspace. Sign-in to the Azure Portal, navigate to your Azure Machine Learning workspace and select **Launch the new Azure Machine Learning studio**. Alternatively, you can sign in directly to the [Azure Machine Learning studio](https://ml.azure.com).
 
-2. Select **Sign In** and then use your Microsoft Account to complete the sign in process.
+2. Navigate to the `Compute` section by selecting the option on the left navigation menu.
 
-   ![The Sign In button](media/01.png 'Sign In')
+3. Under the `Notebook VMs` tab, select **New** to create the notebook VM. Name it `tech-immersion`, select `Standard_DS3_V2` for VM type and select **Create**. Wait a few minutes until the notebook is fully provisioned.
 
-3. Dismiss the dialog to create the user ID (you will not need this). Within the Microsoft Azure Notebooks portal, select **My Projects** from the menu at the top.
+    > **Note**: If the `Notebook VM names should be unique within an Azure Region` notification appears, choose a different name that is unique to your environment.
 
-   ![The My Projects button](media/02.png 'My Projects')
+4. Back to the `Notebook VMs` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, select **Jupyter**.
 
-4. Then select **New Project**.
-
-   ![The New Project button](media/03.png 'New Project')
-
-5. On the Create New Project dialog, provide a Project Name (this should be a user friendly description) and Project ID (this will form a part of the URL used to access this project in the browser) and uncheck Public. Select **Create**.
-
-   ![The Create New Project dialog](media/04.png 'Create New Project')
+   ![Open NotebookVM](media/01-OpenNotebookVM.png)
 
 ## Task 2: Upload the starter notebook
 
-1. Navigate to your `connected-car` project in your Azure Notebook environment.
-
-2. Select the **Upload** menu and then choose **From URL**.
-
-   ![The Upload menu](media/05.png 'Upload')
-
-3. In the Upload files from URL dialog, copy and paste the following URL into the `File URL`.
+1. Download the notebook on your local disk from the following URL:
 
    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/4/pipelines-AML.ipynb
 
-   Then select **Done** to upload and dismiss the dialog.
+   Select **Raw** to view the text version of the file and then right-click in the browser and save the content locally as  `pipelines-AML.ipynb`.
+
+2. In the Jupyter Notebook environment configured in **Task1**, navigate to the `Files` tab to view the root folder content. If you see a folder named after your user name, use that to upload notebooks.
+
+3. Select **Upload** and browse for the notebook downloaded in step 1.
+
+   ![Upload notebook](media/05.png 'Upload')
+
+4. Select **Upload** to start uploading the notebook to the VM.
 
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
-4. In the listing, select the Notebook you just uploaded (pipelines-AML.ipynb) to open it.
+5. In the listing, select the Notebook you just uploaded (`pipelines-AML.ipynb`) to open it.
+Please select Kernel **Python 3.6 - Azure ML** if you are prompted with a `Kernel not found` exception.
 
-5. Follow the instructions within the notebook to complete the experience.
+6. Follow the instructions within the notebook to complete the experience.
 
 ## Wrap-up
 

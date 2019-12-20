@@ -4,9 +4,10 @@ Complete the steps below to prepare the environment for the [AI, Experience 6](.
 
 ## Pre-requisites
 
-  - General: The experience runs within Azure DevOps and uses a cluster created within Azure by using Azure Machine Learning.
-  - Attendees will want ready access to their: subscription ID and resource group name.
-  - Need pre-created resource group `tech-immersion-XXXXX` and machine learning workspace `tech-immersion-ws-XXXXX`
-  - Need privelege to create Service Principal in the tenet. This translate to `Ensure that the user has 'Owner' or 'User Access Administrator' permissions on the Subscription`.
-  - The AML cluster is created within Azure DevOps / Azure CLI, which requires 1 node, STANDARD_D2_V2
-  - An ACI instance is created within Azure DevOps / Azure CLI, which requires cpu_cores=1, and memory_gb=1
+- General: The experience runs within Azure DevOps and Azure Machine Learning (AML).
+- Attendees will want ready access to their: subscription ID and resource group name.
+- Need pre-created resource group (e.g. `tech_immersion_XXXXX`) and machine learning workspace (e.g. `tech_immersion_aml_XXXXX`).
+- Need permission to create new Azure DevOps project in the Azure DevOps tenant.
+- Need permission to create Service Principal in the tenant. This translates to `Ensure that the user has 'Owner' or 'User Access Administrator' permissions on the Subscription`.
+- An AML compute cluster is created within Azure DevOps / Azure CLI using one `STANDARD_D2_V2` node.
+- An Azure Kubernetes Service (AKS) cluster is created within Azure DevOps / Azure CLI.

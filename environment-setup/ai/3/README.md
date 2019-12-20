@@ -4,10 +4,9 @@ Complete the steps below to prepare the environment for the [AI, Experience 3](.
 
 ## Pre-requisites
 
-- General: The experience runs within the free tier of Azure Notebooks and uses a cluster created within Azure by using Azure Machine Learning.
-- In addition to their AAD account used to access Azure, attendees will need a Microsoft Account (e.g., Live ID/Passport) provided by the hosting environment to sign in to Azure Notebooks.
+- General: The experience runs within an Azure Machine Learning (AML) Notebook VM and uses an AML compute cluster.
 - Attendees will want ready access to their: subscription ID and resource group name.
-- Need pre-created resource group `tech-immersion-onnx-xxxxx` and machine learning workspace `gpu-tech-immersion-aml-xxxxx`
-- Within the workspace, need a pre-created machine learning compute named: `gpucluster`, Standard_DS3_v2, min nodes = 1 and max nodes = 1
-- The AML cluster is created within the notebook, which requires 4 nodes, STANDARD_D12_V2
-- An ACI instance is created within the notebook, which requires cpu_cores=1, and memory_gb=1
+- Need pre-created resource group (e.g. `tech-immersion-xxxxx`) and machine learning workspace (e.g. `tech-immersion-aml-xxxxx`) (Workspace edition must be set to **Enterprise**).
+- Need pre-created AML training cluster named `aml-compute-cpu`, with one `STANDARD_DS3_V2` node.
+- An additional AML training cluster is created within one of the notebooks (GPU cluster, one `STANDARD_NC12` node).
+- An ACI instance is created within one of the notebooks (requires `cpu_cores=1`, and `memory_gb=1`).
