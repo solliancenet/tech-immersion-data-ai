@@ -2,7 +2,7 @@
 
 ## AI, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant solution accelerator
 
-- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
+- [Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data-amp-ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
   - [AI, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant solution accelerator](#ai-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
@@ -396,9 +396,7 @@ The result is that the bot must clarify the user's intent by prompting for more 
 
 ![The Live Chat shows the bot's prompt to choose which air control mode to use.](media/bot-framework-emulator-option.png 'Live Chat')
 
-1.  If you selected the `Front Combined Air Delivery Mode Control` option, you should see a response from the bot that says: `Setting Front Combined Air Delivery Mode Control to Floor`. The amazing thing that happened is that your original somewhat vague request to "put the air on my feet" ultimately resulted in the bot telling the vehicle to turn on the air in the front of the car to the floor setting, knowing that your feet are most likely located on the floor :)
-
-    ![The bot's response to your selected action.](media/bot-framework-emulator-air-feet.png 'Live Chat')
+1.  If you input a valid response, the bot will simply reply with `Ok.` to confirm the action.
 
 2.  Now type a command that the bot would not understand, such as "make me a coffee". The bot will respond with, "Sorry, I don't know what setting you're talking about."
 
