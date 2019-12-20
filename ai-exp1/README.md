@@ -348,57 +348,57 @@ In this task, you will open the Bot Framework Emulator and start testing out you
 
 11. The bot sent the `put the air on my feet` text to LUIS so that it could derive your intent and desired action. If you click on the LUIS trace message in the chat window, you should see the following in the Inspector pane:
 
-```javascript
-{
-"recognizerResult": {
-  "alteredText": null,
-  "entities": {
-    "$instance": {
-      "SETTING": [
-        {
-          "endIndex": 11,
-          "score": 0.996788144,
-          "startIndex": 8,
-          "text": "air",
-          "type": "SETTING"
+    ```javascript
+    {
+    "recognizerResult": {
+      "alteredText": null,
+      "entities": {
+        "$instance": {
+          "SETTING": [
+            {
+              "endIndex": 11,
+              "score": 0.996788144,
+              "startIndex": 8,
+              "text": "air",
+              "type": "SETTING"
+            }
+          ],
+          "VALUE": [
+            {
+              "endIndex": 22,
+              "score": 0.5489724,
+              "startIndex": 18,
+              "text": "feet",
+              "type": "VALUE"
+            }
+          ]
+        },
+        "SETTING": [
+          "air"
+        ],
+        "VALUE": [
+          "feet"
+        ]
+      },
+      "intents": {
+        "VEHICLE_SETTINGS_CHANGE": {
+          "score": 0.9998417
         }
-      ],
-      "VALUE": [
-        {
-          "endIndex": 22,
-          "score": 0.5489724,
-          "startIndex": 18,
-          "text": "feet",
-          "type": "VALUE"
-        }
-      ]
-    },
-    "SETTING": [
-      "air"
-    ],
-    "VALUE": [
-      "feet"
-    ]
-  },
-  "intents": {
-    "VEHICLE_SETTINGS_CHANGE": {
-      "score": 0.9998417
+      },
+      "text": "put the air on my feet"
     }
-  },
-  "text": "put the air on my feet"
-}
-}
-```
+    }
+    ```
 
-To explain, the utterance is your text (located on the bottom): `put the air on my feet`. LUIS detected the intent as `VEHICLE_SETTINGS_CHANGE` (you should remember that one from earlier) with a score, or "confidence" level of 99%. It detected two entities, a `SETTING` of "air" with a value of "feet". The "air" setting also had a high score of 99%, but the setting value of "feet" scored about 55%.
+    To explain, the utterance is your text (located on the bottom): `put the air on my feet`. LUIS detected the intent as `VEHICLE_SETTINGS_CHANGE` (you should remember that one from earlier) with a score, or "confidence" level of 99%. It detected two entities, a `SETTING` of "air" with a value of "feet". The "air" setting also had a high score of 99%, but the setting value of "feet" scored about 55%.
 
-The result is that the bot must clarify the user's intent by prompting for more information. To do this, the bot asks which of the two matching settings would you like to select? Since you did not explicitly say to turn the air on in the back of the car or the front of the car, you need to tell it which option you like. The bot displays a [card](https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-add-rich-card-attachments?view=azure-bot-service-3.0) for you to choose from. Type either `1` or `2` for your selection, then press Send (or hit Enter).
+    The result is that the bot must clarify the user's intent by prompting for more information. To do this, the bot asks which of the two matching settings would you like to select? Since you did not explicitly say to turn the air on in the back of the car or the front of the car, you need to tell it which option you like. The bot displays a [card](https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-add-rich-card-attachments?view=azure-bot-service-3.0) for you to choose from. Type either `1` or `2` for your selection, then press Send (or hit Enter).
 
-![The Live Chat shows the bot's prompt to choose which air control mode to use.](media/bot-framework-emulator-option.png 'Live Chat')
+    ![The Live Chat shows the bot's prompt to choose which air control mode to use.](media/bot-framework-emulator-option.png 'Live Chat')
 
-1.  If you input a valid response, the bot will simply reply with `Ok.` to confirm the action.
+12. If you input a valid response, the bot will simply reply with `Ok.` to confirm the action.
 
-2.  Now type a command that the bot would not understand, such as "make me a coffee". The bot will respond with, "Sorry, I don't know what setting you're talking about."
+13. Now type a command that the bot would not understand, such as "make me a coffee". The bot will respond with, "Sorry, I don't know what setting you're talking about."
 
     ![The bot responded with it does not know what setting you are talking about.](media/bot-framework-emulator-do-not-know.png 'Live Chat')
 
@@ -411,47 +411,47 @@ The result is that the bot must clarify the user's intent by prompting for more 
 
     Next, the `topIntent`'s value is evaluated in a `switch` statement to perform actions based on the value. In this case, it is determined that the intent type is `VEHICLE_SETTINGS_DECLARATIVE`. Next, some post-processing of the entities is performed as well as removing entities that don't make sense (like "coffee"). After this processing and cleanup is done, there are no matching setting names, so we call `SendActivityAsync` with the `VehicleSettingsResponses.VehicleSettingsMissingSettingName` response.
 
-```csharp
-switch (topIntent.Value)
-{
-    case Luis.VehicleSettings.Intent.VEHICLE_SETTINGS_CHANGE:
-    case Luis.VehicleSettings.Intent.VEHICLE_SETTINGS_DECLARATIVE:
-
-        // Perform post-processing on the entities, if it's declarative we indicate for special processing (opposite of the condition they've expressed)
-        settingFilter.PostProcessSettingName(state, topIntent.Value == Luis.VehicleSettings.Intent.VEHICLE_SETTINGS_DECLARATIVE ? true : false);
-
-        // Perform content logic and remove entities that don't make sense
-        settingFilter.ApplyContentLogic(state);
-
-        var settingNames = state.GetUniqueSettingNames();
-        if (!settingNames.Any())
-        {
-            // missing setting name
-            await sc.Context.SendActivityAsync(ResponseManager.GetResponse(VehicleSettingsResponses.VehicleSettingsMissingSettingName));
-            return await sc.EndDialogAsync();
-        }
-
-    // ...
-    // REMOVED FOR BREVITY
-    // ...
-}
-```
-
-Remember reading about the Speech & Text response files at the end of the previous Task? That's what the `VehicleSettingsResponses.VehicleSettingsMissingSettingName` value was referring to. You can find the `VehicleSettingsMissingSettingName` response within the `VehicleSettingsResponses.json` file:
-
-```javascript
-"VehicleSettingsMissingSettingName": {
-  "replies": [
+    ```csharp
+    switch (topIntent.Value)
     {
-      "text": "Sorry, I don't know what setting you're talking about.",
-      "speak": "Sorry, I don't know what setting you're talking about."
-    }
-  ],
-  "inputHint": "ignoringInput"
-},
-```
+        case Luis.VehicleSettings.Intent.VEHICLE_SETTINGS_CHANGE:
+        case Luis.VehicleSettings.Intent.VEHICLE_SETTINGS_DECLARATIVE:
 
-3.  Now that you are starting to understand what is going on, **try out the following commands** to see how the bot responds:
+            // Perform post-processing on the entities, if it's declarative we indicate for special processing (opposite of the condition they've expressed)
+            settingFilter.PostProcessSettingName(state, topIntent.Value == Luis.VehicleSettings.Intent.VEHICLE_SETTINGS_DECLARATIVE ? true : false);
+
+            // Perform content logic and remove entities that don't make sense
+            settingFilter.ApplyContentLogic(state);
+
+            var settingNames = state.GetUniqueSettingNames();
+            if (!settingNames.Any())
+            {
+                // missing setting name
+                await sc.Context.SendActivityAsync(ResponseManager.GetResponse(VehicleSettingsResponses.VehicleSettingsMissingSettingName));
+                return await sc.EndDialogAsync();
+            }
+
+        // ...
+        // REMOVED FOR BREVITY
+        // ...
+    }
+    ```
+
+    Remember reading about the Speech & Text response files at the end of the previous Task? That's what the `VehicleSettingsResponses.VehicleSettingsMissingSettingName` value was referring to. You can find the `VehicleSettingsMissingSettingName` response within the `VehicleSettingsResponses.json` file:
+
+    ```javascript
+    "VehicleSettingsMissingSettingName": {
+      "replies": [
+        {
+          "text": "Sorry, I don't know what setting you're talking about.",
+          "speak": "Sorry, I don't know what setting you're talking about."
+        }
+      ],
+      "inputHint": "ignoringInput"
+    },
+    ```
+
+14. Now that you are starting to understand what is going on, **try out the following commands** to see how the bot responds:
 
     - Set temperature to 68 degrees
     - It's feeling cold in the back
