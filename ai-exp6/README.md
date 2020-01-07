@@ -79,7 +79,7 @@ Duration: 20 minutes
 
     ![Provide the above GitHub URL and select import to import the source code.](media/devops-project-04.png 'Import a Git repository dialog')
     
-    *Note that if you receive an error while importing the repository, please disable the preview feature `New Repos landing pages` as shown in steps #3, #4, and #5 below and try to import the GitHub repository again from the old UI.*
+    *Note that if you receive an error while importing the repository, please disable the preview feature `New Repos landing pages` and import the GitHub repository from the old UI, as shown in steps #3, #4, and #5 below.*
 
 3. [Optional] Select **Account settings, Preview features**.
 
