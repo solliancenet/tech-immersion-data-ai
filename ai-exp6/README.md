@@ -78,6 +78,18 @@ Duration: 20 minutes
 2. Provide the following GitHub URL: `https://github.com/solliancenet/mcw-mlops-starter` and select **Import**. This should import the code required for the quickstart.
 
     ![Provide the above GitHub URL and select import to import the source code.](media/devops-project-04.png 'Import a Git repository dialog')
+    
+    *Note that if you receive an error while importing the repository, please disable the preview feature `New Repos landing pages` as shown in steps #3, #4, and #5 below and try to import the GitHub repository again from the old UI.*
+
+3. [Optional] Select **Account settings, Preview features**.
+
+    ![The image shows how to navigate to the list of preview features.](media/preview_features-01.png 'Preview features')
+
+4. [Optional] From the list of preview features, disable the preview feature **New Repos landing pages**.
+
+   ![The image shows a list of preview features and highlights the preview feature, New Repos landing pages.](media/preview_features-02.png 'Disable New Repos landing pages')
+
+5. [Optional] Repeat Step #1 above to import the GitHub repository from the old UI.
 
 ### Task 3: Update the build YAML file
 
