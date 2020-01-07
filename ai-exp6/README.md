@@ -113,8 +113,8 @@ Duration: 20 minutes
 
     ![Select Create Service Connection, Azure Resource Manager.](media/devops-build-pipeline-04.png 'Azure Resource Manager')
 
-    > **Note**: Due to an issue with a newly released version of the user interface, the new service connection experience was temporarily disabled. You might see the following user interface:
-
+    > **Note**: Due to an issue with a newly released version of the user interface, the new service connection experience was temporarily disabled. You might see the following user interface. If you do not see the interface below, continue to step #3.
+    
     ![Azure DevOps new service connection experience fix](media/devops-service-connection-fix-01.png 'Azure DevOps new service connection fix').
 
     In this case, set the connection name to `quick-starts-sc`, provide the subscription, resource group, and machine learning workspace information, check the `Allow all pipelines to use this connection` option and select **OK**. Ignore steps 3 and 4 below and continue with Exercise 2.
@@ -129,6 +129,8 @@ Duration: 20 minutes
     > - Service principal key (Lab environment details page: Service Principal Details->Application Secret Key)
 
     ![Azure DevOps new service connection experience fix - full dialog values](media/devops-service-connection-fix-03.png 'Azure DevOps new service connection fix full dialog values')
+    
+    **Ignore steps #3 and #4 below and continue with Exercise 2.**
 
 3. Select **Service principal (automatic)** and then select **Next**.
 
