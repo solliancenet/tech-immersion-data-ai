@@ -130,7 +130,7 @@ Duration: 20 minutes
 
     ![Azure DevOps new service connection experience fix - full dialog values](media/devops-service-connection-fix-03.png 'Azure DevOps new service connection fix full dialog values')
     
-    **Ignore steps #3 and #4 below and continue with Exercise 2.**
+    > **Ignore steps #3 and #4 below and continue with Exercise 2.**
 
 3. Select **Service principal (automatic)** and then select **Next**.
 
