@@ -6,7 +6,7 @@
   - [Data, Experience 6 - Delivering the Modern Data Warehouse with Azure Synapse Analytics, Azure Databricks, Azure Data Factory, and Power BI](#data-experience-6---delivering-the-modern-data-warehouse-with-azure-synapse-analytics-azure-databricks-azure-data-factory-and-power-bi)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
-  - [Task 0: Pause the Azure Synapse and Virtual Machine](Optional)
+  - [Task 0: Verify pre requisite environment]
   - [Task 1: Start the vehicle telemetry generator](#task-1-start-the-vehicle-telemetry-generator)
   - [Task 2: Execute ADF Pipeline to copy data](#task-2-execute-adf-pipeline-to-copy-data)
   - [Task 3: Read streaming data from Cosmos DB using Databricks](#task-3-read-streaming-data-from-cosmos-db-using-databricks)
@@ -62,9 +62,9 @@ Follow these steps to pause a virtual machine and SQL Data Warehouse(If you are 
 4. Select the **Azure Synapse SQL Pool** from the resource group page.
 <img src="media/rg1.jpg"/><br/>
 5. To pause the data warehouse, click the **Pause** button.
-<img src="media/pausedw.jpg"/><br/>
-6. A confirmation question appears asking if you want to continue. Click **Yes**.
 <img src="media/dwstop.jpg"/><br/>
+6. A confirmation question appears asking if you want to continue. Click **Yes**.
+<img src="media/pausedw.jpg"/><br/>
 7. Wait a few moments, and then notice the Status is Pausing.
 8. On the Azure Synapse SQL Pool page, notice Status is **Online**.
 
