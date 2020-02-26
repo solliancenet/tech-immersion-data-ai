@@ -6,7 +6,7 @@
   - [Data, Experience 6 - Delivering the Modern Data Warehouse with Azure Synapse Analytics, Azure Databricks, Azure Data Factory, and Power BI](#data-experience-6---delivering-the-modern-data-warehouse-with-azure-synapse-analytics-azure-databricks-azure-data-factory-and-power-bi)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
-  - [Task 0: Verify pre requisite environment]
+  - [Task 0: Verify pre requisite environment](#task-0-verify-pre-requisite-environmen)
   - [Task 1: Start the vehicle telemetry generator](#task-1-start-the-vehicle-telemetry-generator)
   - [Task 2: Execute ADF Pipeline to copy data](#task-2-execute-adf-pipeline-to-copy-data)
   - [Task 3: Read streaming data from Cosmos DB using Databricks](#task-3-read-streaming-data-from-cosmos-db-using-databricks)
