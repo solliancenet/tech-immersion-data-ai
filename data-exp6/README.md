@@ -52,20 +52,21 @@ As part of the process, you will also use Databricks to connect to the Cosmos DB
 
 ## Task 0: Verify pre requisite environment
 
-Follow these steps to pause a virtual machine and SQL Data Warehouse:
+Follow these steps to pause a virtual machine and SQL Data Warehouse(If you are using an automated or provided lab environment, please perform Task 0, else you can skip to Task 1).
 
 1. Within the Azure Portal, navigate to the resource group blade and select **jumpvm**.
 <img src="media/rg.jpg"/><br/>
 2. On the **Overview** pane, click the Stop button.
 <img src="media/vmstop.jpg"/><br/>
-3. Select the **Azure Synapse SQL Pool** from the resource group page.
+3. Wait a few moment, and you will get the notification for stop vitual machine.
+4. Select the **Azure Synapse SQL Pool** from the resource group page.
 <img src="media/rg1.jpg"/><br/>
-4. To pause the data warehouse, click the **Pause** button.
+5. To pause the data warehouse, click the **Pause** button.
 <img src="media/pausedw.jpg"/><br/>
-5. A confirmation question appears asking if you want to continue. Click **Yes**.
-<img src="media/dwpause.jpg"/><br/>
-6. Wait a few moments, and then notice the Status is Pausing.
-7. On the Azure Synapse SQL Pool page, notice Status is **Online**.
+6. A confirmation question appears asking if you want to continue. Click **Yes**.
+<img src="media/dwstop.jpg"/><br/>
+7. Wait a few moments, and then notice the Status is Pausing.
+8. On the Azure Synapse SQL Pool page, notice Status is **Online**.
 
 ## Task 1: Start the vehicle telemetry generator
 
