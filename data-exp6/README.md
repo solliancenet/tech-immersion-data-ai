@@ -58,7 +58,7 @@ Follow these steps to pause a virtual machine and SQL Data Warehouse(If you are 
 <img src="media/rg.jpg"/><br/>
 2. On the **Overview** pane, click the **Start** button.
 <img src="media/start.jpg"/><br/>
-3. Wait a few moment, and you will get the notification for stop vitual machine.
+3. Wait a few moment, and you will get the notification for vitual machine start.
 4. Select the **Azure Synapse SQL Pool** from the resource group page.
 <img src="media/rg1.jpg"/><br/>
 5. To pause the data warehouse, click the **Resume** button.
