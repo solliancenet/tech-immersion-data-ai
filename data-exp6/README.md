@@ -52,7 +52,7 @@ As part of the process, you will also use Databricks to connect to the Cosmos DB
 
 ## Task 0: Verify pre requisite environment
 
-Follow these steps to pause a virtual machine and SQL Data Warehouse(If you are using an automated or provided lab environment, please perform Task 0, else you can skip to Task 1).
+Follow these steps to restart the virtual machine and resume your Azure Synapse Analytics(If you are using an automated or provided lab environment, please perform Task 0, else you can skip to Task 1).
 
 1. Within the Azure Portal, navigate to the resource group blade and select **jumpvm**.
 <img src="media/rg.jpg"/><br/>
@@ -61,7 +61,7 @@ Follow these steps to pause a virtual machine and SQL Data Warehouse(If you are 
 3. Wait a few moment, and you will get the notification for vitual machine start.
 4. Select the **Azure Synapse SQL Pool** from the resource group page.
 <img src="media/rg1.jpg"/><br/>
-5. To pause the data warehouse, click the **Resume** button.
+5. To resume the data warehouse, click the **Resume** button.
 <img src="media/resume.jpg"/><br/>
 6. A confirmation question appears asking if you want to continue. Click **Yes**.
 <img src="media/resumedw.jpg"/><br/>
@@ -112,13 +112,13 @@ In this task, you will configure and run the data generator to save simulated ve
      "COSMOS_DB_CONNECTION_STRING": "AccountEndpoint=https://tech-immersion.documents.azure.com:443/;AccountKey=xVXyajzdlD3q4UXHIpMnriBhtasLztTrMrGSJgvRl8D1bUu1B7wwfGN1Q8rhBu0BHBTc2jR9iGPRtYpIV3lAkQ==;",
 
      "SECONDS_TO_LEAD": "0",
-     "SECONDS_TO_RUN": "3600"
+     "SECONDS_TO_RUN": "7200"
    }
    ```
 
    `SECONDS_TO_LEAD` is the amount of time to wait before sending vehicle telemetry data. Default value is `0`.
 
-   `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. Ensure the value is set to `3600`, which instructs the generator to run for 60 minutes. Data will also stop transmitting when you enter <Ctrl+C> while the generator is running, or if you close the window.
+   `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. Ensure the value is set to `7200`, which instructs the generator to run for 60 minutes. Data will also stop transmitting when you enter <Ctrl+C> while the generator is running, or if you close the window.
 
    > **Note**: The telemetry generator needs to be running for the Cosmos DB Change Feed, Spark Structured Streaming, and Azure Synapse Analytics tasks below, so if it takes longer than 60 minutes to complete this lab, you may have to restart the generator.
 
