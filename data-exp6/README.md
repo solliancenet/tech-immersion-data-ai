@@ -65,8 +65,7 @@ Follow these steps to pause a virtual machine and SQL Data Warehouse(If you are 
 <img src="media/resume.jpg"/><br/>
 6. A confirmation question appears asking if you want to continue. Click **Yes**.
 <img src="media/resumedw.jpg"/><br/>
-7. Wait a few moments, and then notice the Status is Pausing.
-8. On the Azure Synapse SQL Pool page, notice Status is **Online**.
+7. On the Azure Synapse SQL Pool page, notice Status is **Online**.
 
 ## Task 1: Start the vehicle telemetry generator
 
