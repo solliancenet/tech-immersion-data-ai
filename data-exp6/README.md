@@ -57,18 +57,18 @@ If you are using an automated or provided lab environment, continue with this ta
  Before starting with the lab, ensure the pre-requisite resources are in running state. 
  Follow these steps to start the virtual machine and resume the Azure Synapse Analytics.
 
-1. Within the Azure Portal, navigate to the resource group blade and select **jumpvm**.
+1. Within the Azure Portal, navigate to the resource group blade and select the virtual machine resource named **jumpvm**.
 <img src="media/rg.jpg"/><br/>
-2. On the **Overview** pane, click the **Start** button.
+2. On the **Overview** page, click the **Start** button.
 <img src="media/start.jpg"/><br/>
-3. Wait a few moment, and you will get the notification for vitual machine start.
+3. Wait for a few moment, and you will get a notification that Virtual Machine has been successfully started.
 4. Select the **Azure Synapse SQL Pool** from the resource group page.
 <img src="media/rg1.jpg"/><br/>
-5. To resume the data warehouse, click the **Resume** button.
+5. Click the **Resume** button to resume the SQL Datawarehouse.
 <img src="media/resume.jpg"/><br/>
-6. A confirmation question appears asking if you want to continue. Click **Yes**.
+6. You will get a prompt to confirm if you want to continue. Click **Yes** to confirm.
 <img src="media/resumedw.jpg"/><br/>
-7. On the Azure Synapse SQL Pool page, notice Status is **Online**.
+7. After a few moments, on the Azure Synapse SQL Pool page, notice Status has changed to **Online**.
 
 ## Task 1: Start the vehicle telemetry generator
 
