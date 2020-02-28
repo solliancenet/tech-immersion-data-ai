@@ -6,7 +6,7 @@
   - [Data, Experience 6 - Delivering the Modern Data Warehouse with Azure Synapse Analytics, Azure Databricks, Azure Data Factory, and Power BI](#data-experience-6---delivering-the-modern-data-warehouse-with-azure-synapse-analytics-azure-databricks-azure-data-factory-and-power-bi)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
-  - [Task 0: Verify pre requisite environment](#task-0-verify-pre-requisite-environment)
+  - [Task 0: Verify Pre-Requisite environment](#task-0-verify-resources-in-pre-requisite-environment)
   - [Task 1: Start the vehicle telemetry generator](#task-1-start-the-vehicle-telemetry-generator)
   - [Task 2: Execute ADF Pipeline to copy data](#task-2-execute-adf-pipeline-to-copy-data)
   - [Task 3: Read streaming data from Cosmos DB using Databricks](#task-3-read-streaming-data-from-cosmos-db-using-databricks)
@@ -50,22 +50,25 @@ In this experience, ​​you will see how Azure Data Factory (ADF), Azure Datab
 
 As part of the process, you will also use Databricks to connect to the Cosmos DB Change Feed to stream near-real-time vehicle telemetry data directly into your Data Warehouse using Spark Structured Streaming.
 
-## Task 0: Verify pre requisite environment
+## Task 0: Verify resources in pre-requisite environment
 
-Follow these steps to restart the virtual machine and resume your Azure Synapse Analytics(If you are using an automated or provided lab environment, please perform Task 0, else you can skip to Task 1).
+If you are using an automated or provided lab environment, continue with this task, else you can start with Task 1
 
-1. Within the Azure Portal, navigate to the resource group blade and select **jumpvm**.
+ Before starting with the lab, ensure the pre-requisite resources are in running state. 
+ Follow these steps to start the virtual machine and resume the Azure Synapse Analytics.
+
+1. Within the Azure Portal, navigate to the resource group blade and select the virtual machine resource named **jumpvm**.
 <img src="media/rg.jpg"/><br/>
-2. On the **Overview** pane, click the **Start** button.
+2. On the **Overview** page, click the **Start** button.
 <img src="media/start.jpg"/><br/>
-3. Wait a few moment, and you will get the notification for vitual machine start.
+3. Wait for a few moment, and you will get a notification that Virtual Machine has been successfully started.
 4. Select the **Azure Synapse SQL Pool** from the resource group page.
 <img src="media/rg1.jpg"/><br/>
-5. To resume the data warehouse, click the **Resume** button.
+5. Click the **Resume** button to resume the SQL Datawarehouse.
 <img src="media/resume.jpg"/><br/>
-6. A confirmation question appears asking if you want to continue. Click **Yes**.
+6. You will get a prompt to confirm if you want to continue. Click **Yes** to confirm.
 <img src="media/resumedw.jpg"/><br/>
-7. On the Azure Synapse SQL Pool page, notice Status is **Online**.
+7. After a few moments, on the Azure Synapse SQL Pool page, notice Status has changed to **Online**.
 
 ## Task 1: Start the vehicle telemetry generator
 
@@ -118,9 +121,9 @@ In this task, you will configure and run the data generator to save simulated ve
 
    `SECONDS_TO_LEAD` is the amount of time to wait before sending vehicle telemetry data. Default value is `0`.
 
-   `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. Ensure the value is set to `7200`, which instructs the generator to run for 60 minutes. Data will also stop transmitting when you enter <Ctrl+C> while the generator is running, or if you close the window.
+   `SECONDS_TO_RUN` is the maximum amount of time to allow the generator to run before stopping transmission of data. Ensure the value is set to `7200`, which instructs the generator to run for 120 minutes. Data will also stop transmitting when you enter <Ctrl+C> while the generator is running, or if you close the window.
 
-   > **Note**: The telemetry generator needs to be running for the Cosmos DB Change Feed, Spark Structured Streaming, and Azure Synapse Analytics tasks below, so if it takes longer than 60 minutes to complete this lab, you may have to restart the generator.
+   > **Note**: The telemetry generator needs to be running for the Cosmos DB Change Feed, Spark Structured Streaming, and Azure Synapse Analytics tasks below, so if it takes longer than 120 minutes to complete this lab, you may have to restart the generator.
 
 10. Save the `appsettings.json` file.
 
