@@ -126,17 +126,17 @@ In this exercise, you will create a model that predicts battery failure from tim
 
 ### Task 3: Register the Best Model
 
-1. Return to the `Run Details` screen for Run 1 which you can find by scrolling down to the last row in the iterations table.
+1. Return to the `Run Details` screen for Run 1 and select the model run.
 
     ![Open run details](./media/031_RunDetails1.png)
 
-2. Select **Download best model** as shown and save the `model.pkl` file on your local disk.
+2. Select **Download best model** as shown and save the folder with model files on your local disk. Remember to unzip the folder.
 
    ![The Download best model link](./media/032_DeployBestModel.png)
 
 3. You need to register the best model with the Azure Machine Learning model registry so that you can retrieve it later when you want to use it for scoring. Select **Models** in the left navigation pane.
 
-4. Select **Register Model** at the top of the models list. Enter the name of your model: `automl-regression`, browse for the downloaded model file from the previous step and then select **Register**.
+4. Select **Register Model** at the top of the models list. Enter the name of your model: `automl-regression`, browse for the downloaded model folder from the previous step and then select **Register**.
 
    ![Register Model](./media/034_RegisterModel.png)
 
