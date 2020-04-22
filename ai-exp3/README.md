@@ -130,7 +130,7 @@ In this exercise, you will create a model that predicts battery failure from tim
 
     ![Open run details](./media/031_RunDetails1.png)
 
-2. Select **Download best model** as shown and save the folder with model files on your local disk. Remember to unzip the folder.
+2. Select **Download** as shown and save the folder with model files on your local disk. Remember to unzip the folder.
 
    ![The Download best model link](./media/032_DeployBestModel.png)
 
