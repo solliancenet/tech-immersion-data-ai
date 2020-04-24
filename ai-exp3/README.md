@@ -11,7 +11,7 @@
     - [Task 2: Review the experiment run results](#task-2-review-the-experiment-run-results)
     - [Task 3: Register the Best Model](#task-3-register-the-best-model)
   - [Exercise 2: Understanding the automated ML generated model using model explainability](#exercise-2-understanding-the-automated-ml-generated-model-using-model-explainability)
-    - [Task 1: Setup the Notebook VM environment](#task-1-setup-the-notebook-vm-environment)
+    - [Task 1: Setup New Compute Instance](#task-1-setup-new-compute-instance)
     - [Task 2: Upload the starter notebook](#task-2-upload-the-starter-notebook)
   - [Exercise 3 (Optional): Train and evaluate a model using Azure Machine Learning](#exercise-3-optional-train-and-evaluate-a-model-using-azure-machine-learning)
     - [Task 1: Upload and open the starter notebook](#task-1-upload-and-open-the-starter-notebook)
@@ -148,21 +148,21 @@ In this exercise, you will create a model that predicts battery failure from tim
 
 ## Exercise 2: Understanding the automated ML generated model using model explainability
 
-### Task 1: Setup the Notebook VM environment
+### Task 1: Setup New Compute Instance
 
-To complete this task, you will use an Azure Notebook VM and Azure Machine Learning.
+To complete this task, you will use an Azure Compute Instance and Azure Machine Learning.
 
-If you have not already created the `tech-immersion` notebook VM in Azure Machine Learning studio follow these steps. If you already have it in your environment, continue with **Task 2**.
+If you have not already created the `tech-immersion` compute instance in Azure Machine Learning studio follow these steps. If you already have it in your environment, continue with **Task 2**.
 
 1. To get started, sign-in to the Azure Portal, navigate to your Azure Machine Learning workspace and select **Launch the new Azure Machine Learning studio**. Alternatively, you can sign in directly to the [Azure Machine Learning studio](https://ml.azure.com).
 
 2. Navigate to the `Compute` section by selecting the option on the left navigation menu.
 
-3. Under the `Notebook VMs` tab, select **New** to create the notebook VM. Name it `tech-immersion`, select `Standard_DS3_V2` for VM type and select **Create**. Wait a few minutes until the notebook VM is fully provisioned.
+3. Under the `Compute Instances` tab, select **New** to create the compute instance. Name it `tech-immersion`, select `Standard_DS3_V2` for VM type and select **Create**. Wait a few minutes until the compute instance is fully provisioned.
 
-    > **Note**: If the `Notebook VM names should be unique within an Azure Region` notification appears, choose a different name that is unique to your environment.
+    > **Note**: If the `Compute Instance names should be unique within an Azure Region` notification appears, choose a different name that is unique to your environment.
 
-4. Back to the `Notebook VMs` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, select the **Jupyter** link.
+4. Back to the `Compute Instances` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the compute instance is listed, select the **Jupyter** link.
 
    ![Open NotebookVM](media/212-OpenNotebookVM.png)
 
@@ -180,7 +180,7 @@ If you have not already created the `tech-immersion` notebook VM in Azure Machin
 
    ![Upload notebook](media/05.png 'Upload')
 
-4. Press **Upload** to start uploading the notebook to the VM.
+4. Press **Upload** to start uploading the notebook.
 
    ![The Upload files from Computer dialog](media/upload-notebook-01.png 'Upload files from Computer')
 
@@ -193,7 +193,7 @@ Please select Kernel **Python 3.6 - Azure ML** if you are prompted with a Kernel
 
 ### Task 1: Upload and open the starter notebook
 
-In this exercise, you will use compute resources provided by Azure Machine Learning to remotely train a set of models using Automated Machine Learning, evaluate the performance of each model and pick the best performing model to deploy as a web service. You will perform this lab using an Azure Machine Learning notebook VM. The model you train here is created using automated machine learning just as you did in exercise 1, except instead of using the visual interface in the Azure Machine Learning studio, you setup the model training using Python.
+In this exercise, you will use compute resources provided by Azure Machine Learning to remotely train a set of models using Automated Machine Learning, evaluate the performance of each model and pick the best performing model to deploy as a web service. You will perform this lab using an Azure Machine Learning Compute Instance. The model you train here is created using automated machine learning just as you did in exercise 1, except instead of using the visual interface in the Azure Machine Learning studio, you setup the model training using Python.
 
 1. Download the notebook on your local disk from the following URL:
 
@@ -207,7 +207,7 @@ In this exercise, you will use compute resources provided by Azure Machine Learn
 
    ![Upload notebook](media/05.png 'Upload')
 
-4. Press **Upload** to start uploading the notebook to the VM.
+4. Press **Upload** to start uploading the notebook.
 
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
