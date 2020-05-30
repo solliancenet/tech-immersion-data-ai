@@ -538,7 +538,7 @@ If you recall, the bot deployment script created Azure services, generated a .bo
 
     ![The Live Metrics Stream is displayed.](media/live-metrics-stream.png 'Live Metrics Stream')
 
-7. Select one of the messages under **Sample Telemetry**. In the screenshot below, we selected a `BotMessageReceived` event. When selected, the details box below shows information about the event. In our case, you can see the "adjust equalizer" command we typed into the Bot Framework Emulator's live chat. Above this event is another event that shows the `LuisResult`, including the intent score.
+7. Select one of the messages under **Sample Telemetry**. In the screenshot below, we selected a `LuisResult` event. When selected, the details box below shows information about the event. In our case, you can see the "Turn off the ac" command we typed into the Bot Framework Emulator's live chat.
 
     ![The Sample Telemetry is shown.](media/live-metrics-stream-sample-telemetry.png 'Sample Telemetry')
 
