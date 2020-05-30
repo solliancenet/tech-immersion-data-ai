@@ -43,7 +43,7 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
    ![The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted.](media/luis-accept.png 'Accept Service Agreement')
 
-4. If you are presented with a step to link your Azure account, select **Continue using your trial key**, then select **Next**.
+4. If you are presented with a step to link your Azure account, select **Continue using your trial key**, then select **Continue**.
 
     ![The Continue using your trial key option is highlighted.](media/luis-link-azure-account.png "Link your Azure account")
 
@@ -106,7 +106,11 @@ In this task, you will deploy all of these Azure dependencies as well as configu
 
    ![The bot creation script and parameters are highlighted.](media/cmd-bot-script.png 'Command Prompt')
 
-8. This script will take around 10 minutes to run. **Important:** Keep the window open.
+8. This script will take around 20 minutes to run. **Important:** Keep the window open.
+
+   > **Note**: You can continue with Task 4, as it is independent of the script, as you wait for the script to complete.
+
+   > **Note**: Sometimes you will not see the script completing message, but instead, a message stating “Publishing to Azure…” in green. If you see this message, you can safely continue with the rest of the lab.
 
 ## Task 4: Load and explore the Virtual Assistant Skills starter solution
 
@@ -132,11 +136,11 @@ As you will see, most of this work is already done for you! Additional work that
 
 For now, let's explore how this bot is created and how LUIS is trained with the sets of utterances, intents, and entities as described.
 
-1.  Open Windows Explorer and navigate to `C:\lab-files\ai\1`. Double-click on **AutomotiveSkill.csproj** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab.
+1.  Open Windows Explorer and navigate to `C:\lab-files\ai\1\automotiveskill`. Double-click on **AutomotiveSkill.csproj** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab.
 
     ![The AutomotiveSkill.csproj file is highlighted in Windows Explorer.](media/windows-explorer-solution.png 'Windows Explorer')
 
-2.  You will see the projects listed within the Solution Explorer in Visual Studio. Expand the **AutomotiveSkill** project. Next, expand **Resources**, then **LU**, and then **en-us**, which is the language folder for English. Next, double-click on **General.lu**.
+2. You will see the projects listed within the Solution Explorer in Visual Studio. Expand the **AutomotiveSkill** project. Next, expand **Deployment**, then **Resources**, then **LU**, and then **en-us**, which is the language folder for English. Next, double-click on **General.lu**.
 
     ![Screenshot of the Solution Explorer.](media/vs-general-lu.png 'Solution Explorer')
 
@@ -300,33 +304,33 @@ To address this problem, the Bot Builder v4 SDK used in this solution stores the
 
 In this task, you will open the Bot Framework Emulator and start testing out your bot! First, we need to make sure the script is finished running. This must be completed before continuing with this experience.
 
-1.  Switch back to your Command Prompt (console) window to make sure the script has successfully finished. Sometimes you will not see a completion message, but instead, a message stating "Publishing to Azure..." in green. If you see this message (as shown in the screenshot below), you can safely continue with the lab.
+1. Switch back to your Command Prompt (console) window to make sure the script has successfully finished. Sometimes you will not see a completion message, but instead, a message stating "Publishing to Azure..." in green. If you see this message (as shown in the screenshot below), you can safely continue with the lab.
 
     ![The bot file secret is highlighted.](media/cmd-script-finished.png 'Command Prompt')
 
-2.  Now we are ready to test the bot. Before testing, you must copy the Application ID from the **appsettings.json** file in the **AutomotiveSkills** project. To do this, switch back to the solution in Visual Studio and expand the **AutomotiveSkill** project in the Solution Explorer. **Double-click** on the **appsettings.json** file to open it. The Application ID is for the Azure Application the deployment script created for authentication and authorization between the published bot and its required Azure services.
+2. Now we are ready to test the bot. Before testing, you must copy the Application ID from the **appsettings.json** file in the **AutomotiveSkills** project. To do this, switch back to the solution in Visual Studio and expand the **AutomotiveSkill** project in the Solution Explorer. **Double-click** on the **appsettings.json** file to open it. The Application ID is for the Azure Application the deployment script created for authentication and authorization between the published bot and its required Azure services.
 
-3.  Locate and copy the `microsoftAppId` value located at the top of the file. Also, make note of the `microsoftAppPassword` if you entered a different one than instructed in the deployment steps above.
+3. Locate and copy the `microsoftAppId` value located at the top of the file. Also, make note of the `microsoftAppPassword` if you entered a different one than instructed in the deployment steps above.
 
     ![Screenshot of a completed appsettings.json file.](media/vs-appsettings.png 'appsettings.json')
 
-4.  Next, you must **Debug** the **AutomotiveSkills** project. To do this, **right-click** the **AutomotiveSkills** project in the Solution Explorer, then select **Debug** in the context menu, then **Start new instance**.
+4. Next, you must **Debug** the **AutomotiveSkills** project. To do this, **right-click** the **AutomotiveSkills** project in the Solution Explorer, then select **Debug** in the context menu, then **Start new instance**.
 
     ![The AutomotiveSkill project is highlighted, as well as the Debug and Start new instance sub-menu items.](media/vs-debug.png 'Debug')
 
-5.  After a few moments, a new web browser window will open, displaying web page with the message, "Your Enterprise Bot is ready!". **Leave this window open** and continue to the next task.
+5. After a few moments, a new web browser window will open, displaying web page with the message, "Your Automotive Skill is ready!". **Leave this window open** and continue to the next task.
 
     ![The Enterprise Bot Template web page is displayed.](media/web-browser.png 'Web browser')
 
-6.  Open the Bot Framework Emulator by clicking on the search box next to the Start Menu on the bottom-left corner of your Windows desktop. Type **Bot Framework Emulator**, then select the Bot Framework Emulator desktop app in the search results.
+6. Open the Bot Framework Emulator by clicking on the search box next to the Start Menu on the bottom-left corner of your Windows desktop. Type **Bot Framework Emulator**, then select the Bot Framework Emulator desktop app in the search results.
 
     ![The search box has "Bot Framework Emulator" entered into it and the desktop app is highlighted in the results.](media/launch-emulator.png 'Launch Command Prompt')
 
-7.  Within the Bot Framework Emulator window, click on **Open Bot**.
+7. Within the Bot Framework Emulator window, click on **Open Bot**.
 
     ![Th Open Bot button is highlighted on the Bot Framework Emulator home screen.](media/bot-framework-emulator.png 'Bot Framework Emulator')
 
-8.  In the "Open a bot" dialog, enter the following values into the form fields, then click **Connect**:
+8. In the "Open a bot" dialog, enter the following values into the form fields, then select **Connect**:
 
     - **Bot URL or .bot file location**: Enter the URL for the running bot web app: `http://localhost:3980/api/messages`.
     - **Microsoft App ID**: Paste the `microsoftAppId` value from your `appsettings.json` file.
@@ -334,7 +338,7 @@ In this task, you will open the Bot Framework Emulator and start testing out you
 
     ![The Browse button is highlighted.](media/bot-framework-emulator-open-dialog.png 'Open a bot')
 
-9.  Now you should see a Live Chat window with the following features:
+9. Now you should see a Live Chat window with the following features:
 
     1. **Bot service path:** This should display the path to your locally running bot (http://localhost:3980/api/messages).
     2. **Welcome message:** The bot is configured to show a welcome message when the user first connects to it. This is controlled by the dialogs within the project that you explored. This area is where your chat history is displayed as well.
@@ -468,69 +472,73 @@ In this task, you will open the Bot Framework Emulator and start testing out you
 
 If you recall, the bot deployment script created Azure services, generated a .bot file, and converted the .lu files to JSON files were uploaded to LUIS. Let's take this new knowledge about how LUIS works and how the files are used to train it, and browse to the LUIS portal to explore the generated apps.
 
-1.  Navigate to the LUIS portal ([www.luis.ai](https://www.luis.ai/)) and sign in if needed. You should see four new apps listed underneath **My Apps**, each of which start with the name of your bot.
+1. Navigate to the LUIS portal ([www.luis.ai](https://www.luis.ai/)) and sign in if needed. You should see four new apps listed underneath **My Apps**, each of which start with the name of your bot.
 
     ![My Apps is displayed with a list of generated LUIS apps.](media/luis-apps.png 'My Apps')
 
-2.  Open the app that ends with **General**. Select the **Build** tab, then select **Intents** under App Assets on the left-hand menu. Notice that each named intent has a number of labeled utterances. Remember, utterances are used to train LUIS on different ways a user may express their intent. Generally speaking, the more utterances you have, the more variety of ways LUIS can understand how people may type or speak a phrase.
+2. Open the app that ends with **General**. If shown, dismiss the dialog `How to create an effective LUIS app`. Select the **Build** tab, then select **Intents** under App Assets on the left-hand menu. Notice that each named intent has a number of example utterances. Remember, utterances are used to train LUIS on different ways a user may express their intent. Generally speaking, the more utterances you have, the more variety of ways LUIS can understand how people may type or speak a phrase.
 
     ![The list of General intents.](media/luis-general-intents.png 'Intents')
 
-3.  Select the **Cancel** intent.
+3. Select the **Cancel** intent.
 
-4.  You may use the navigation controls on the bottom of the list to look through the utterances for this intent. If you click on a word, you will see an option to assign an entity to that word. We'll take a look at an utterance with an entity in a bit to see what that looks like.
+4. You may use the navigation controls on the bottom of the list to look through the `Example user input` (utterances) for this intent. If you click on a word, you will see an option to assign an entity to that word. We'll take a look at an utterance with an entity in a bit to see what that looks like.
 
     ![Screenshot of the Cancel intent.](media/luis-cancel-intent.png 'Cancel intent')
 
-5.  Select **My apps** in the top menu. Now open the app that ends with **\_Settings**.
+5. Select **My apps** in the top menu. Now open the app that ends with **\_Settings**.
 
     ![My Apps is displayed with the settings app highlighted.](media/luis-apps-settings.png 'My Apps')
 
-6.  As you can see, this app's intents have a much larger number of labeled utterances. Select **VEHICLE_SETTINGS_DECLARATIVE**.
+6. As you can see, this app's intents have a much larger number of examples. Select **VEHICLE_SETTINGS_DECLARATIVE**.
 
     ![The settings app's intents are listed.](media/luis-settings-intents.png 'Intents')
 
-7.  Select **View options** on the top-right side of the toolbar above the utterances, then select **Detailed view**.
+7. Select **View options** on the top-right side of the toolbar above the utterances, then select **Show detailed intent scores**.
 
     ![The view options menu is expanded and Detailed view is selected.](media/luis-detailed-view.png 'Detailed view')
 
-8.  As you can see, these utterances are a bit more descriptive and contain one or more `SETTING` and/or `VALUE` entities. When you hover over an entity, you can see a sample value. You can also see the nearest intent and difference, which you can read the descriptions for by selecting the question mark icon next to the column names. Feel free to explore the other entities.
+8. As you can see, these example user inputs are a bit more descriptive and contain one or more `SETTING` and/or `VALUE` entities. You can also see the nearest intent and difference. Feel free to explore the other entities.
 
     ![The declarative intent is shown.](media/luis-declarative-intent.png 'Declarative intent')
 
-9.  Select **Entities** on the left-hand menu. The list of entities shows the number of times each is used within an utterance. If you click on an entity, you can browse through the list of utterances in which it is used.
+9. Select **Entities** on the left-hand menu.
 
     ![The list of entities is displayed.](media/luis-entities.png 'Entities')
+
+10. Select the entity **SETTING** and then select **Examples**. You can browse through the list of examples in which it is used.
+
+    ![Examples of the entity SETTING is displayed.](media/luis-entities-setting.png 'Setting Examples')
 
 ## Task 7: View your bot services in action with Application Insights
 
 [Azure Application Insights](https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) is an extensible Application Performance Management (APM) service used to monitor live web applications and related services. Since the bot we deployed runs in an Azure Web App, we can watch performance metrics and logging messages in real time while using the bot.
 
-1.  Login into the Azure portal (<https://portal.azure.com>) using the Azure credentials provided to you for this lab.
+1. Login into the Azure portal (<https://portal.azure.com>) using the Azure credentials provided to you for this lab.
 
-2.  Select **Resource groups** in the left-hand menu. You should see just one resource group that matches the name of the resource group provided to you for this lab. If you are not using a hosted environment, locate the resource group to which you deployed your bot. Now **select the resource group**.
+2. Select **Resource groups** in the left-hand menu. You should see just one resource group that matches the name of the resource group provided to you for this lab. If you are not using a hosted environment, locate the resource group to which you deployed your bot. Now **select the resource group**.
 
     ![The resource groups are listed.](media/resource-groups.png 'Resource Groups')
 
-3.  Locate the Application Insights resource and select it.
+3. Locate the Application Insights resource and select it.
 
     ![Application Insights is highlighted within the resource group.](media/resource-group-app-insights.png 'Resource group view')
 
-4.  Select **Live Metrics Stream** in the left-hand menu.
+4. Select **Live Metrics Stream** in the left-hand menu.
 
     ![The Live Metrics Stream menu link is highlighted.](media/live-metrics-stream-link.png 'Application Insights')
 
-5.  Open the **Bot Framework Emulator** and begin entering phrases in the live chat, such as:
+5. Open the **Bot Framework Emulator** and begin entering phrases in the live chat, such as:
 
     - Turn off the ac
     - Increase the volume
     - adjust equalizer
 
-6.  After entering each phrase, switch back to the **Live Metrics Stream** in your web browser and observe the real-time performance metrics of your requests and service workload. You will see statistics such as the Request Rate, Request Duration, Request Failure Rate, Dependency Call Rate, Dependency Call Duration, Dependency Call Failure Rate, Committed Memory, CPU Total, Exception Rate, and how many servers are online to handle the workload. On the right-hand side, observe logging messages as they flow into the scrollable pane in real-time.
+6. After entering each phrase, switch back to the **Live Metrics Stream** in your web browser and observe the real-time performance metrics of your requests and service workload. You will see statistics such as the Request Rate, Request Duration, Request Failure Rate, Dependency Call Rate, Dependency Call Duration, Dependency Call Failure Rate, Committed Memory, CPU Total, Exception Rate, and how many servers are online to handle the workload. On the right-hand side, observe logging messages as they flow into the scrollable pane in real-time.
 
     ![The Live Metrics Stream is displayed.](media/live-metrics-stream.png 'Live Metrics Stream')
 
-7.  Select one of the messages under **Sample Telemetry**. In the screenshot below, we selected a `BotMessageReceived` event. When selected, the details box below shows information about the event. In our case, you can see the "adjust equalizer" command we typed into the Bot Framework Emulator's live chat. Above this event is another event that shows the `LuisResult`, including the intent score.
+7. Select one of the messages under **Sample Telemetry**. In the screenshot below, we selected a `BotMessageReceived` event. When selected, the details box below shows information about the event. In our case, you can see the "adjust equalizer" command we typed into the Bot Framework Emulator's live chat. Above this event is another event that shows the `LuisResult`, including the intent score.
 
     ![The Sample Telemetry is shown.](media/live-metrics-stream-sample-telemetry.png 'Sample Telemetry')
 
