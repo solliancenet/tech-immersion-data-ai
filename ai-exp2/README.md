@@ -1034,7 +1034,7 @@ Now, let's add the knowledge store to your search pipeline.
 
    ![A status of Warning is displayed for the tweet-indexer.](media/azure-search-indexer-warning.png "Warning status")
 
-5. To view the details of any warnings, select the **tweet-indexer**, and then select the most recent run within the Execution details block. On the right-hand screen, you will be able to view any errors and warnings in more detail.
+5. To view the details of any warnings, select the **tweet-indexer**, then select the most recent run from the Execution history shown on the right-hand side, and finally select one of the messages with warning. On the right-hand screen, you will be able to view any errors and warnings in more detail.
 
    ![The tweet-indexer details screen is displayed, with the last run selected and details about the warning displayed.](media/azure-search-indexer-warning-details.png "Warning details")
 
@@ -1056,7 +1056,9 @@ Now, let's add the knowledge store to your search pipeline.
 
 In this task you will do some knowledge mining using Power BI and data written to the knowledge store.
 
-1. On your JumpBox VM, open Power BI Desktop from the Windows Start menu. If you see Power BI Desktop splash screen skip to Step 4 below.
+1. On your JumpBox VM, open Power BI Desktop from the Windows Start menu.
+
+    > If you see Power BI Desktop splash screen skip to Step 4 below.
 
 2. On the **Welcome to Power BI Desktop** dialog, select the **Already have a Power BI account? Sign in** link in the bottom.
 
@@ -1076,9 +1078,11 @@ In this task you will do some knowledge mining using Power BI and data written t
 
 6. Select **Connect**.
 
-7. On the Azure Table Storage dialog, enter the name of your Azure Storage account, which you can get from the Environment Details sheet provided to you for this lab. The storage account name should be **techimmersionstoreXXXXX** (where XXXXX is the unique identifier assigned to you for this workshop). If you are asked provide an account access key, navigate to **Access keys** page of your Azure Storage account and use the ** Key** under **key1**.
+7. On the Azure Table Storage dialog, enter the name of your Azure Storage account, which you can get from the Environment Details sheet provided to you for this lab. The storage account name should be **techimmersionstoreXXXXX** (where XXXXX is the unique identifier assigned to you for this workshop).
 
    ![The storage account name is entered into the Account name or URL field on the Azure Table Storage dialog.](media/power-bi-get-data-azure-table-storage-account-name.png "Azure Table Storage")
+
+    > If you are asked provide an account access key, navigate to **Access keys** page of your Azure Storage account and use the **Key** under **key1**.
 
 8. On the **Navigator** dialog, select all four tables by checking the box next to each one, and then select **Load**.
 
