@@ -62,7 +62,7 @@ In this exercise, you will create a model that predicts battery failure from tim
 
    ![Training data web URL](./media/005_Dataset_BasicInfo.png)
 
-6. In the `Settings and preview` page, scroll to the right to observe all of the columns in the data.
+6. In the `Settings and preview` page select **All files have same headers**, and scroll to the right to observe all of the columns in the data.
 
    ![Reviewing the training data](./media/006_ReviewDataFile.png)
 
@@ -98,11 +98,13 @@ In this exercise, you will create a model that predicts battery failure from tim
 
     ![Configuring the Advanced Settings as described](./media/011_TaskConfigurationSettings.png)
 
+    > Note that we are setting a metric score threshold to limit the training time. In practice, for initial experiments, you will typically only set the training job time to allow AutoML to discover the best algorithm to use for your specific data.
+
 12. Select **Save** and then **Finish** to begin the automated machine learning process.
 
     ![Start Automate ML run](./media/012_CreatingExperiment.png)
 
-13. Wait until the `Run status` becomes **Running** in the `Run Detail page`.
+13. Wait until the `Run status` becomes **Running** in the `Run Detail page`. Save the  **Run ID: AutoML_xxx** to be used later in Exercise #2 Task #2.
 
     ![Preparing experiment](./media/012_PreparingExperiment.png)
 
@@ -114,37 +116,49 @@ In this exercise, you will create a model that predicts battery failure from tim
 
 2. In the models list, notice at the top the iteration with the best **normalized root mean square error** score. Note that the normalized root mean square error measures the error between the predicted value and actual value. In this case, the model with the lowest normalized root mean square error is the best model.
 
-   ![Review run details - table view](./media/022_RunDetails2.png)
+   ![Review run details - table view](./media/022_RunDetails3.png)
 
-3. Select **Experiments** on the left navigation pane and select the experiment `automl-regression` to see the list of available runs.
+   > Note that we have set a metric score threshold to limit the training time. As a result you might see only one algorithm in your models list.
 
-   ![Open experiment runs table](./media/023_CheckExperimentRuns.png)
+3. Select the **Algorithm name** of the best performing model to view the model details.
 
-4. Select the option to **Include child runs** to be able to examine  model performance for the primary metric of different runs. By default, the left chart describes the `mean_absolute_error` value for each run. Select the pen icon on the right corner of the `mean_absolute_error` chart to configure the `normalized_root_mean_square_error` metric representation.
+   ![Open model details](./media/023_model_Summary.png)
 
-   ![Review runs - chart view](./media/024_IncludeChildRuns.png)
+4. Select **View all other metrics** to review all the model performance metrics.
+
+   ![Review run metrics](./media/024_Run_Metrics.png)
 
 ### Task 3: Register the Best Model
 
-1. Return to the `Run Details` screen for Run 1 and select the model run.
-
-    ![Open run details](./media/031_RunDetails1.png)
-
-2. Select **Download** as shown and save the folder with model files on your local disk. Remember to unzip the folder.
+1. From the `Model details` page, select **Download** as shown and save the folder with model files on your local disk. Remember to **unzip** the folder.
 
    ![The Download best model link](./media/032_DeployBestModel.png)
 
-3. You need to register the best model with the Azure Machine Learning model registry so that you can retrieve it later when you want to use it for scoring. Select **Models** in the left navigation pane.
+2. You need to register the best model with the Azure Machine Learning model registry so that you can retrieve it later when you want to use it for scoring. Select **Models** in the left navigation pane.
 
-4. Select **Register Model** at the top of the models list. Enter the name of your model: `automl-regression`, browse for the downloaded model folder from the previous step and then select **Register**.
+    ![The Models page](./media/033_Models.png)
+
+3. Select **Create** to open the `Register a model` page. Provide the following information and then select **Register**.
+
+    - Name: `battery-life-predictor-model`
+
+    - Description: `Predict the number of days until battery failure.`
+
+    - Model framework: `AutoML`
+
+    - Framework version: `0`
+
+    - Model file or folder: Select **Upload folder**
+
+    - Browse and select the downloaded model folder from the previous step.
 
    ![Register Model](./media/034_RegisterModel.png)
 
-5. Once the registration process has completed, you will be prompted with the message `Model created successfully` in the notification area at the top. Now you should be able to view this model in the **Models** list.
+4. Once the registration process has completed, you will be prompted with the message `Success: Model battery-life-predictor-model registered successfully.` in the notification area at the top. Now you should be able to view this model in the **Models** list.
 
    ![Viewing the list of models in the Azure Machine Learning workspace](media/035-automl-registered-model.png)
 
-6. If you see your model in the above list, you are now ready to continue on to the next exercise.
+5. If you see your model in the above list, you are now ready to continue on to the next exercise.
 
 ## Exercise 2: Understanding the automated ML generated model using model explainability
 
