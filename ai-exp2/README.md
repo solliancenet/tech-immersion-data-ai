@@ -116,9 +116,9 @@ With data now streaming into your Cosmos DB `tweets` container, you are ready to
 
     > The `text` field, which contains the content of the tweet, is what you will be using as you begin building your Cognitive Search pipeline.
 
-4. With a better understanding of the structure of the tweet documents stored in Cosmos DB, let's move on to creating a basic Cognitive Search pipeline. From your Cosmos DB blade in the Azure portal, select **Add Azure Search** from the left-hand menu, select your **tech-immersion** search service, and then select **Next: Connect to your data**.
+4. With a better understanding of the structure of the tweet documents stored in Cosmos DB, let's move on to creating a basic Cognitive Search pipeline. From your Cosmos DB blade in the Azure portal, select **Add Azure Cognitive Search** from the left-hand menu, select your **tech-immersion** search service, and then select **Next: Connect to your data**.
 
-    ![Add Azure Search is selected and highlighted on the left-hand menu and the tech-immersion search service is highlighted in the list of search services.](media/cosmos-db-add-azure-search-select-search-service.png "Select a search service")
+    ![Add Azure Cognitive Search is selected and highlighted on the left-hand menu and the tech-immersion search service is highlighted in the list of search services.](media/cosmos-db-add-azure-search-select-search-service.png "Select a search service")
 
 5. On the **Connect to your data** tab, enter the following:
 
@@ -345,7 +345,7 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
     "ResourceId": "/subscriptions/30fc406c-c745-44f0-be2d-63b1c860cde0/resourceGroups/tech-immersion/providers/Microsoft.CognitiveServices/accounts/tech-immersion-cogserv"
     ```
 
-13. Return to your Cognitive Services account in the Azure portal, and select **Keys** from the left-hand menu. On the Keys blade, copy the **Key 1** value by selecting the copy button to the right of the field.
+13. Return to your Cognitive Services account in the Azure portal, and select **Keys and Endpoint** from the left-hand menu. On the Keys blade, copy the **Key 1** value by selecting the copy button to the right of the field.
 
     ![Cognitive Services keys.](media/cog-services-keys.png "Keys")
 
@@ -359,7 +359,7 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
 
     ![The Form Recognizer Cognitive Service resource is displayed.](media/tech-immersion-form-recog-resource.png "Form Recognizer resource")
 
-16. Select **Quick start** from the left-hand menu of the Form Recognizer Cognitive Services blade. From this screen, you will copy the **Key1** and **Endpoint** values.
+16. Select **Keys and Endpoint** from the left-hand menu of the Form Recognizer Cognitive Services blade. From this screen, you will copy the **Key1** and **Endpoint** values.
 
     ![The Key1 and Endpoint values for the Form Recognizer are highlighted.](media/form-recognizer-endpoint.png "Form Recognizer Quick Start")
 
@@ -397,7 +397,7 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
     "ConnectionString": "DefaultEndpointsProtocol=https;AccountName=techimmersionstorage;AccountKey=4JBkkA1ot5bDZoLs4DvlH+7e5UXwrFxxrYb4taYMgkkrSdB8fan7E0coGlzvtzrlqPBzJg+DKpAFPoCHBIxlag==;EndpointSuffix=core.windows.net"
     ```
 
-24. The final setting you need for your Blob storage account is a shared access signature, or SAS token. Return to your Blob storage account in the Azure portal and select **Shared access signature** from the left-hand menu. On the Shared access signature blade, enter an **End** date for a week or two in the future, select **Generate SAS and connection string** and then copy the **SAS token** value.
+24. The final setting you need for your Blob storage account is a shared access signature, or SAS token. Return to your Blob storage account in the Azure portal and select **Shared access signature** from the left-hand menu. On the Shared access signature blade, ensure that the **Allowed resource types** is all checked, and then enter an **End** date for a week or two in the future, select **Generate SAS and connection string** and then copy the **SAS token** value.
 
     ![On the Shared access signature blade, the end date is highlighted, the Generate SAS and connection string button is highlighted, and the copy button for the SAS token is highlighted.](media/blob-storage-generate-sas.png "Shared access signature")
 
@@ -437,7 +437,7 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
     "Url": "https://tech-immersion-functions.azurewebsites.net"
     ```
 
-32. Back in the Azure portal, select **Function app settings** on the Overview blade.
+32. In the Azure portal, navigate to your **ti-function-day2-XXXXX** Function App (where XXXXX is the unique identifier assigned to you for this workshop). In the Overview blade, select **Classic Function App Management**, and then select **Function app settings** under `Configured features`.
 
     ![Function app settings link.](media/function-app-settings.png "Function app settings")
 
@@ -486,6 +486,8 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
     > In the above JSON, the `inputs` specify the field in the source data document to send for analysis. The `outputs` section dictates that the `score` value returned by the Text Analytics endpoint in Cognitive Services should be mapped to an output field named `sentiment` in the search results. This is sent into the REST API, along with the JSON from the previously built skillset to update or create the skillset.
 
 38. To add sentiment analysis to your pipeline you will run the `PipelineEnhancer` project within the **CognitiveSearch** solution in Visual Studio. To run the project, right-click the `PipelineEnhancer` project in Visual Studio and select **Set as StartUp Project**.
+
+    > **Note**: You have to exit or stop the `DataGenerator` before you can setup `PipelineEnhancer` as your startup project.
 
     ![In the Solution Explorer, PipelineEnhancer is highlighted, and the right-click context menu is displayed. Set as StartUp Project is highlighted in the context menu.](media/visual-studio-pipeline-enhancer-startup-project.png "Pipeline Enhancer")
 
@@ -640,8 +642,6 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
     > Notice the addition of the `sentiment` field in the results. The value contained in this field is a numeric prediction made by a machine learning model about the sentiment of the contents of the `translated_text` field in the tweet. The `translated_text` field was used to standardize the scores against a single language (English in the case). Scores range from 0 to 1. Scores close to 1 indicate positive sentiment, and scores close to 0 indicate negative sentiment. Scores in the middle are considered to be neutral in the expression of sentiment. In the record above, the sentiment was determined to be neutral, 0.5, by the ML model.
 
     > In addition to the `sentiment` field, you may have also noticed two new objects within the search documents, `extracted_entities` and `named_entities`. These properties are part of the `EntityRecognitionSkill` added through the Azure portal, but are not included in the search documents by default. We added these using the REST APIs to further enhance the enrichments available in search index.
-
-45. Return to the `PipelineEnhancer` console app, and enter **X** at the command prompt to exit the console application.
 
 ## Task 4: Query data in the Azure portal
 
@@ -1056,7 +1056,7 @@ Now, let's add the knowledge store to your search pipeline.
 
 In this task you will do some knowledge mining using Power BI and data written to the knowledge store.
 
-1. On your JumpBox VM, open Power BI Desktop from the Windows Start menu.
+1. On your JumpBox VM, open Power BI Desktop from the Windows Start menu. If you see Power BI Desktop splash screen skip to Step 4 below.
 
 2. On the **Welcome to Power BI Desktop** dialog, select the **Already have a Power BI account? Sign in** link in the bottom.
 
@@ -1076,7 +1076,7 @@ In this task you will do some knowledge mining using Power BI and data written t
 
 6. Select **Connect**.
 
-7. On the Azure Table Storage dialog, enter the name of your Azure Storage account, which you can get from the Environment Details sheet provided to you for this lab. The storage account name should be **techimmersionstoreXXXXX** (where XXXXX is the unique identifier assigned to you for this workshop.)
+7. On the Azure Table Storage dialog, enter the name of your Azure Storage account, which you can get from the Environment Details sheet provided to you for this lab. The storage account name should be **techimmersionstoreXXXXX** (where XXXXX is the unique identifier assigned to you for this workshop). If you are asked provide an account access key, navigate to **Access keys** page of your Azure Storage account and use the ** Key** under **key1**.
 
    ![The storage account name is entered into the Account name or URL field on the Azure Table Storage dialog.](media/power-bi-get-data-azure-table-storage-account-name.png "Azure Table Storage")
 
@@ -1092,61 +1092,59 @@ In this task you will do some knowledge mining using Power BI and data written t
 
     ![The Documents table is expanded under fields, and the resulting list of fields in highlighted.](media/power-bi-tables-documents-fields.png "Fields")
 
-11. As you can see, the content fields from Azure Table Storage are not yet accessible. To access the field in the table we need to edit the queries that are used to pull the table data from your Storage account. On the Power BI Desktop toolbar, select **Edit Queries**.
+11. As you can see, the content fields from Azure Table Storage are not yet accessible. To access the field in the table we need to edit the queries that are used to pull the table data from your Storage account. Right-click on **Documents**, select **Edit query**.
 
-    ![The Edit Queries menu item is highlighted in the Power BI Desktop toolbar.](media/power-bi-edit-queries.png "Edit queries")
+    ![The Edit query menu item is highlighted in the Power BI Desktop.](media/power-bi-edit-queries-new.png "Edit queries")
 
-12. In the Power Query Editor dialog, select the **Documents** table under Queries.
-
-13. Right-click the **Content** column header, and in the context menu select **Remove Other Columns**. This will remove the `PartitionKey`, `RowKey`, and `Timestamp` columns from the table.
+12. Right-click the **Content** column header, and in the context menu select **Remove Other Columns**. This will remove the `PartitionKey`, `RowKey`, and `Timestamp` columns from the table.
 
     ![The Remove Other Columns option is highlighted in the context menu of the Content column.](media/power-bi-query-editor-remove-other-columns.png "Remove other columns")
 
-14. Next, select the **Expand Content** button within the **Content** column.
+13. Next, select the **Expand Content** button within the **Content** column.
 
     ![The Documents table is highlighted under Queries on the left and the Expand Content button is highlighted for the Content column.](media/power-bi-queries-documents-expand-content.png "Documents")
 
-15. In the dialog that appears, ensure all columns are checked in the list. Uncheck ****Use original column name as a prefix** unchecked, and then select **OK**.
+14. In the dialog that appears, ensure all columns are checked in the list. Uncheck ****Use original column name as a prefix** unchecked, and then select **OK**.
 
     ![All columns are selected in the expand content dialog, and the OK button is highlighted.](media/power-bi-queries-documents-expand-select-all-columns.png "Expand Content")
 
-16. This action will expand each column with the **Content** field into a new column in the tableOn the right-hand side of the dialog you can view the query transformation steps that have been applied. Should you wish to undo a change, you can select the X next to that step in the list.
+15. This action will expand each column with the **Content** field into a new column in the tableOn the right-hand side of the dialog you can view the query transformation steps that have been applied. Should you wish to undo a change, you can select the X next to that step in the list.
 
     ![The expanded content is displayed, and the list of applied steps is highlighted.](media/power-bi-queries-documents-expanded-columns.png "Query applied steps")
 
-17. Within the expanded columns for the **Documents** table, locate the **sentiment** field, select the **Data Type** icon for the column, and change it to **Decimal Number**.
+16. Within the expanded columns for the **Documents** table, locate the **sentiment** field, select the **Data Type** icon for the column, and change it to **Decimal Number**.
 
     ![The data type selector is displayed for the sentiment column and decimal number is highlighted.](media/power-bi-change-column-data-type.png "Change data type")
 
-18. Next, select **Entities** under Queries and repeat the steps above to remove the unnecessary columns and expand the contents of the **Content** column. There are no columns that need to have their data types changes, so skip that step for the remaining tables.
+17. Next, select **Entities** under Queries and repeat the steps above to remove the unnecessary columns and expand the contents of the **Content** column. There are no columns that need to have their data types changes, so skip that step for the remaining tables.
 
-19. Repeat this process for the **KeyPhrases** and **Users** tables.
+18. Repeat this process for the **KeyPhrases** and **Users** tables.
 
-20. When the query edits have been made on all of the tables, select **Close & Apply** in the Power Query Editor window's toolbar.
+19. When the query edits have been made on all of the tables, select **Close & Apply** in the Power Query Editor window's toolbar.
 
     ![The Close & Apply button is highlighted on the Power Query Editor dialog.](media/power-bi-query-editor-close-apply.png "Close & Apply")
 
-21. When the updated queries finish loading, expand **Documents** under Fields on the right-hand side of the Power BI Desktop window, and confirm that you can now see the Content fields.
+20. When the updated queries finish loading, expand **Documents** under Fields on the right-hand side of the Power BI Desktop window, and confirm that you can now see the Content fields.
 
     ![The Documents table is expanded under Fields, and the list of fields includes the Content fields expanded in the previous steps.](media/power-bi-fields-updated.png "Power BI Fields")
 
-22. With the fields reflecting properly, you are now ready to add some visualizations for your enriched data. In the Visualizations pane, select the **Gauge** visual to add it to the report canvas.
+21. With the fields reflecting properly, you are now ready to add some visualizations for your enriched data. In the Visualizations pane, select the **Gauge** visual to add it to the report canvas.
 
     ![The gauge visualization is highlighted.](media/power-bi-visuals-gauge.png "Visualizations")
 
-23. In the properties pane for the Gauge visualization, drag the `sentiment` field under the Documents table into the **Value** box.
+22. In the properties pane for the Gauge visualization, drag the `sentiment` field under the Documents table into the **Value** box.
 
     ![An arrow is pointing from the sentiment field under the Documents table to the Value field under the gauge visualization.](media/power-bi-visuals-gauge-value.png "Gauge visualization")
 
-24. Next, select the drop down arrow next to `sentiment` in the Value field, and select **Average**.
+23. Next, select the drop down arrow next to `sentiment` in the Value field, and select **Average**.
 
     ![The drop down next to sentiment is highlighted and in the resulting context menu Average is selected and highlighted.](media/power-bi-visuals-gauge-value-average.png "Gauge visualization")
 
-25. Select the **Format** icon in the Visualizations properties pane.
+24. Select the **Format** icon in the Visualizations properties pane.
 
     ![The Format button under Visualizations is highlighted.](media/power-bi-visuals-format.png "Format Visualizations")
 
-26. On the Format pane of the Gauge visualization, expand **Gauge axis** and enter the following values:
+25. On the Format pane of the Gauge visualization, expand **Gauge axis** and enter the following values:
 
     - **Min**: 0
     - **Max**: 1
@@ -1154,88 +1152,56 @@ In this task you will do some knowledge mining using Power BI and data written t
 
     ![The Gauge axis section in the format pane is expanded and the values specified above are entered into the fields.](media/power-bi-visuals-gauge-axis.png "Gauge format")
 
-27. Now expand the **Title** section and enter **Sentiment KPI** as the Title text.
+26. Now expand the **Title** section and enter **Sentiment KPI** as the Title text.
 
     ![The Title section is expanded and Sentiment KPI is highlighted within the Title text field.](media/power-bi-visuals-gauge-title.png "Gauge format")
 
-28. Click anywhere in the whitespace of the report canvas to deselect the Gauge visualization. The gauge should look similar to the following:
+27. Click anywhere in the whitespace of the report canvas to deselect the Gauge visualization. The gauge should look similar to the following:
 
     ![The completed gauge visualization is displayed.](media/power-bi-canvas-gauge.png "Gauge visualization")
 
-29. Before moving on to the next visualization, let's set up relationships between the tables. On the left-hand side of the Power BI report canvas, select the **Model** icon.
+28. Before moving on to the next visualization, let's review the relationships between the tables. On the left-hand side of the Power BI report canvas, select the **Model** icon.
 
     ![The Model icon is highlighted on the left-hand toolbar.](media/power-bi-table-relationships-editor.png "Tables")
 
-30. On the Models view, select the ellipsis on the Documents table to bring up the context menu, and then select **Manage relationships**.
-
-    ![The Manage relationships items is highlighted in the Documents table's context menu.](media/power-bi-models-documents-manage-relationships.png "Manage relationships")
-
-31. In the **Manage relationships** dialog, select **New...**.
-
-    ![The New... button is highlighted on the Manage relationships dialog.](media/power-bi-manage-relationships-new.png "Manage relationships")
-
-32. On the **Create relationship** dialog, do the following:
-
-    - Select **Documents** in the top drop down list.
-    - Select the **DocumentId** column in the Documents table view.
-    - Select **Entities** in the bottom drop down list.
-    - Select the **DocumentId** column in the Entities table view.
-    - Leave the Cardinality set to **Many to Many** and the Cross filter direction set to **Both**.
-    - Ensure the Make this relationship active box is checked.
-    - Select **OK**.
-
-    ![The settings specified above are highlighted in the Create relationship dialog.](media/power-bi-documents-to-entities.png "Create relationship")
-
-33. Back on the **Manage relationships** dialog, select **New...** again.
-
-    ![The Entities to Documents relationship is displayed and the New... button is highlighted on the Manage relationships dialog.](media/power-bi-manage-relationships-new-again.png "Manage relationships")
-
-34. In the **Create relationship** dialog, repeat step 32, this time selecting **KeyPhrases** in the bottom drop down list.
-
-35. Select **New...** again on the **Manage relationships** dialog, and create a relationship between **Documents** and **Users** by repeating step 32 and selecting **Users** in the bottom drop down list. You should now see three relationships defined in the **Manage relationships** dialog.
-
-    ![The newly defined relationships are highlighted in the Manage relationships dialog.](media/power-bi-manage-relationships-list.png "Manage relationships")
-
-36. Select **Close**.
-
-37. The relationship are represented as lines connecting the tables. Return to the report canvas by selecting the **Report** icon in the left-hand toolbar.
+29. The relationship are represented as lines connecting the tables. Return to the report canvas by selecting the **Report** icon in the left-hand toolbar.
 
     ![The relationships between tables are displays as lines connecting the tables, and the Report icon is highlighted in the left-hand toolbar.](media/power-bi-report-canvas.png "Report canvas")
 
-38. On the Report view, select the **Map** visualization to add that to the canvas.
+30. On the Report view, select the **Map** visualization to add that to the canvas.
 
     ![The Map visualization is highlighted under Visualizations.](media/power-bi-visuals-map.png "Visualizations")
 
-39. Under Fields, expand the Users table and drag the **location** field into the **Location** box of the Map visualization. Then, drag the **sentiment** field from the Documents table into the **Size** field.
+31. Under Fields, expand the Users table and drag the **location** field into the **Location** box of the Map visualization. Then, drag the **sentiment** field from the Documents table into the **Size** field.
 
     ![The Visualizations and Fields sections are displayed, with arrows pointing from the Users location field to the Location box and the Documents sentiment field to the Size box.](media/power-bi-visuals-map-properties.png "Visualizations")
 
-40. As you did previously, select the drop down arrow next to sentiment in the Size field and select **Average** from the context menu.
+32. As you did previously, select the drop down arrow next to sentiment in the Size field and select **Average** from the context menu.
 
     ![The drop down menu for the sentiment field in the Size box is highlighted and Average is highlighted in the context menu.](media/power-bi-visuals-maps-size.png "Visualizations")
 
-41. Finally, select the **Format** icon as you did above, expand the **Title** section, and set the **Title text** of the Map visualization to "Average sentiment by location".
+33. Finally, select the **Format** icon as you did above, expand the **Title** section, and set the **Title text** of the Map visualization to "Average sentiment by location".
 
-42. Click anywhere in the whitespace of the report canvas to unselect the Map visualization.
+34. Click anywhere in the whitespace of the report canvas to unselect the Map visualization.
 
-43. Next, select a **Treemap** visualization and drag the **Keyphrases** field from the **KeyPhrases** table into the **Group** and **Values** fields on the Treemap visualization.
+35. Next, select a **Treemap** visualization and drag the **Keyphrases** field from the **KeyPhrases** table into the **Group** and **Values** fields on the Treemap visualization.
 
     ![The Treemap visualization is selected and highlighted and arrows are pointing from the Keyphrases field to the Group and Values boxes.](media/power-bi-visuals-treemap.png "Visualizations")
 
-44. Select the **Format** icon, and set the visualization title to **Keyphrase treemap**.
+36. Select the **Format** icon, and set the visualization title to **Keyphrase treemap**.
 
-45. Click anywhere in the whitespace of the report canvas to unselect the Treemap visualization.
+37. Click anywhere in the whitespace of the report canvas to unselect the Treemap visualization.
 
-46. The final visualization you will add is a **Table** visualization. Select it from the list of visualizations and set the following:
+38. The final visualization you will add is a **Table** visualization. Select it from the list of visualizations and set the following:
 
     - Drag the **Keyphrases** field from the KeyPhrases table into the **Values** box.
     - Drag the **Keyphrases** field into the Values box a second time, and on the second Keyphrases item select the drop down arrow and select **Count** from the context menu.
 
     ![The table visualization is highlighted and selected and the values specified above are entered into the properties pane.](media/power-bi-visuals-table.png "Visualizations")
 
-47. Click anywhere in the whitespace of the report canvas to unselect the Table visualization.
+39. Click anywhere in the whitespace of the report canvas to unselect the Table visualization.
 
-48. Resize and reposition the visualizations so your report dashboard looks similar to the following:
+40. Resize and reposition the visualizations so your report dashboard looks similar to the following:
 
     ![The completed report dashboard is displayed.](media/power-bi-dashboard.png "Dashboard")
 
@@ -1251,7 +1217,7 @@ In addition to predefined Cognitive skills, you also have the ability to integra
 
    ![The tech-immersion-form-recog resource is selected in the tech-immersion resource group.](media/tech-immersion-rg-form-recognizer.png "Tech Immersion Resource Group - Form Recognizer")
 
-2. On the Form Recognizer Cognitive Services blade, select **Quick start** from the left-hand menu, and then select the Copy button next to the value for **Key1**.
+2. On the Form Recognizer Cognitive Services blade, select **Keys and Endpoint** from the left-hand menu, and then select the Copy button next to the value for **Key 1**.
 
    ![The copy buttons for Key1 and Endpoints are highlighted on the Quick start blade.](media/cognitive-services-form-recognizer-quick-start.png "Quick start")
 
@@ -1274,7 +1240,7 @@ In addition to predefined Cognitive skills, you also have the ability to integra
     private static readonly string key = "9d1079dd70494ac3b366a8a91e363b5b";
     ```
 
-6. Return to the Form Recognizer Quick start blade in the Azure portal and copy the **Endpoint** value.
+6. Return to the **Keys and Endpoint** blade in the Azure portal and copy the **ENDPOINT** value.
 
 7. Back in Visual Studio, replace the `serviceEndpoint` value in the `AnalyzeFormFunction.cs` file with the endpoint of your Forms Recognizer service. The completed line will look similar to:
 
@@ -1290,7 +1256,7 @@ In addition to predefined Cognitive skills, you also have the ability to integra
 
 9. Next, you will update another function that will be used for detecting anomalies in vehicle telemetry. Return to the Azure portal, and select the **tech-immersion-anomaly-detector** resource from the list of resources in the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop).
 
-10. On the Anomaly Detector Cognitive Services blade, select **Quick start** from the left-hand menu, and then select the Copy button next to the value for **Key1**.
+10. On the Anomaly Detector Cognitive Services blade, select **Keys and Endpoint** from the left-hand menu, and then select the Copy button next to the value for **Key 1**.
 
     ![The copy buttons for Key1 and Endpoint are highlighted on the Quick start blade.](media/cognitive-services-anomaly-detector-quick-start.png "Quick start")
 
@@ -1313,7 +1279,7 @@ In addition to predefined Cognitive skills, you also have the ability to integra
     private static readonly string key = "e5fe6a9a9702447680864369d7a8965e";
     ```
 
-14. Return to the Anomaly Detector Quick start blade in the Azure portal and copy the **Endpoint** value.
+14. Return to the Anomaly Detector Keys and Endpoint blade in the Azure portal and copy the **ENDPOINT** value.
 
 15. Back in Visual Studio, replace the `serviceEndpoint` value in the `DetectAnomaliesFunction.cs` file with the endpoint of your Anomaly Detector service. The completed line will look similar to:
 
@@ -1329,31 +1295,27 @@ In addition to predefined Cognitive skills, you also have the ability to integra
 
     ![Publish is highlighted in the context menu for the TextTranslateFunction project.](media/visual-studio-function-publish.png "Publish")
 
-18. On the **Pick a publish target** dialog:
+18. On the **Publish, Target** dialog, select **Azure** and then select **Next**.
 
-    - Select **Azure Functions Consumption Plan**.
-    - Choose **Select Existing**.
-    - Check **Run from package file**.
-    - Select **Create Profile**.
-
-    ![Select Existing is highlighted and selected on the Pick a publish target dialog. The publish button is highlighted.](media/visual-studio-function-publish-target.png "Pick a publish target")
+    ![Select Azure is highlighted and selected on the Publish dialog. The Next button is highlighted.](media/visual-studio-function-publish-target_1.png "Pick a publish target")
 
     > If you are prompted to sign in, use the Azure credentials provided to you for this experience.
 
-19. On the **App service** dialog, select your Subscription and locate the **tech-immersion-XXXXX** resource group (where XXXXX is the unique identifier assigned to you for this workshop) in the list. Select the Function App named **ti-function-day2-XXXXX** from the list of resources (where XXXXX is the unique identifier assigned to you for this workshop).
+19. On the **Publish, Functions instance** dialog, select your Subscription. Select the Function App named **ti-function-day2-XXXXX** from the list of resources (where XXXXX is the unique identifier assigned to you for this workshop).
 
-    ![The tech-immersion-functions Function App is highlighted in the search results.](media/visual-studio-function-publish-app-service.png "App service")
+    ![The tech-immersion-functions Function App is highlighted in the search results.](media/visual-studio-function-publish-app-service_1.png "App service")
 
     > You may need to enter the credentials of the account you are using for this workshop before you can see any resources for your subscription.
 
-20. Select **OK**.
+20. Ensure that the **Run from package file** checkbox is selected and then select **Finish**.
+
 21. Select **Publish** to start the publish process. You will see an animated progress icon next to the Publish button while the deployment is in progress.
 
     ![The progress icon is highlighted on the Publish dialog.](media/visual-studio-function-publish-progress.png "Publish")
 
-22. When the publish is complete, you can open the **Output** window at the bottom left-hand corner of the Visual Studio window to observe the results. You should see messages that the **Publish Succeeded** and **Publish completed**.
+22. When the publish is complete, you can open the **Output** window at the bottom left-hand corner of the Visual Studio window to observe the results. You should see messages that the **Build Succeeded** and **Publish Succeeded**.
 
-    ![The publish succeeded and publish completed messages are highlighted in the Output window.](media/visual-studio-function-publish-output.png "Output")
+    ![The publish succeeded and publish completed messages are highlighted in the Output window.](media/visual-studio-function-publish-output_1.png "Output")
 
     > If the Output window is not visible, you can display it by selecting the **View** menu in Visual Studio, and then selecting **Output**.
 
