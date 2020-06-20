@@ -403,7 +403,7 @@ namespace DataGenerator
 
         #region Cosmos DB
 
-        private static async Task InitializeCosmosDb(string databaseId, string containerId, string partitionKey, int throughput = 15000)
+        private static async Task InitializeCosmosDb(string databaseId, string containerId, string partitionKey, int throughput = 1500)
         {
             await _cosmosDbClient.CreateDatabaseIfNotExistsAsync(new Database { Id = databaseId });
 
