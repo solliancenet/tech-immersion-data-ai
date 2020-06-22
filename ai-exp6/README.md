@@ -113,7 +113,7 @@ Duration: 20 minutes
 
     ![Select Create Service Connection, Azure Resource Manager.](media/devops-build-pipeline-04.png 'Azure Resource Manager')
 
-3. If an environment is provided to you goto step #5. Select **Service principal (automatic)** and then select **Next**.
+3. If an environment is provided to you **goto step #5**. Select **Service principal (automatic)** and then select **Next**.
 
     ![Select Service principal (automatic), and then select Next.](media/devops-build-pipeline-05.png 'Service principal authentication')
 
@@ -144,7 +144,7 @@ Duration: 20 minutes
     - Please remember to name your service connection as `quick-starts-sc`
     - Grant access permission to all pipelines
 
-    >**Note**: If you successfully created the new service connection goto Exercise 2.
+    >**Note**: If you successfully created the new service connection **goto Exercise 2**.
 
 5. Select **Service principal (manual)** and then select **Next**.
 

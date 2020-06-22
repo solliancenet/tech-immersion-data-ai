@@ -497,7 +497,7 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
 
     ![The run button is displayed for PipelineEnhancer.](media/visual-studio-run-pipeline-enhancer.png "Run button")
 
-    > Note: If the program stops because of a breakpoint in the code, select **Continue** in top menu.
+    > Note: If the program stops because of a breakpoint in the code, select **Continue** in the top menu.
 
 40. At the command prompt for the console app, enter **1** to incorporate the Sentiment cognitive skill to your pipeline.
 
