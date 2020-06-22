@@ -437,7 +437,9 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
     "Url": "https://tech-immersion-functions.azurewebsites.net"
     ```
 
-32. In the Azure portal, navigate to your **ti-function-day2-XXXXX** Function App (where XXXXX is the unique identifier assigned to you for this workshop). In the Overview blade, select **Classic Function App Management**, and then select **Function app settings** under `Configured features`.
+32. In the Azure portal, navigate to your **ti-function-day2-XXXXX** Function App (where XXXXX is the unique identifier assigned to you for this workshop). In the Overview blade, select **Switch to classic experience, Continue to classic experience**, and then select **Function app settings** under `Configured features`.
+
+    ![Continue to classic experience link.](media/function-app-classic.png "Classic Function App Management")
 
     ![Function app settings link.](media/function-app-settings.png "Function app settings")
 
@@ -494,6 +496,8 @@ In the previous task, you created a basic Cognitive Search pipeline using the Az
 39. Now, select the run button on the Visual Studio toolbar, which is the one with a green arrow followed by the text "PipelineEnhancer."
 
     ![The run button is displayed for PipelineEnhancer.](media/visual-studio-run-pipeline-enhancer.png "Run button")
+
+    > Note: If the program stops because of a breakpoint in the code, select **Continue** in top menu.
 
 40. At the command prompt for the console app, enter **1** to incorporate the Sentiment cognitive skill to your pipeline.
 
@@ -1507,7 +1511,7 @@ To accomplish this, we will use the the final function you deployed to your Func
 
     > The `engineTemperature` field will be used to demonstrate the capabilities of the Anomaly Detector API. The `engineTemperature` value for each document will be compared against time series data of engine temperatures to determine if the value is outside of the normal range.
 
-7. To create the new anomaly detector search index, return to the open `PipelineEnhancer` console app, and enter **5** at the prompt.
+7. To create the new anomaly detector search index, return to the open `PipelineEnhancer` console app, and enter **4** at the prompt.
 
    ![5 is entered at the prompt in the pipeline enhancer and the output is highlighted.](media/pipeline-enhancer-4.png "Pipeline Enhancer")
 
