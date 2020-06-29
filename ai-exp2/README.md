@@ -150,7 +150,7 @@ With data now streaming into your Cosmos DB `tweets` container, you are ready to
    - Expand the **Add Enrichments** section and set the following configuration:
      - Enter **tweet-skillset** as the name.
      - Select **text** as the source data field.
-     - Check the box next to the Text Cognitive Skills header to select all of the options.
+     - Check the box next to the Text Cognitive Skills header to select all of the options except **extract personally identifiable information**.
 
    ![The Add enrichments section of the Add cognitive search (Optional) tab is highlighted, and the values specified above are entered into the form and highlighted.](media/cosmos-db-add-azure-search-add-enrichments.png "Add enrichments")
 
