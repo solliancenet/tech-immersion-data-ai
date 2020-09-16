@@ -232,7 +232,7 @@ Duration: 25 minutes
 
     ![Download output from the model evaluation step.](media/devops-build-pipeline-15.png 'Download JSON file')
 
-3. Open the `eval_info.json` in a json viewer or a text editor and observe the information. The json output contains information such as if the model passed the evaluation step (`deploy_model`: *true or false*), and the name and id of the created image (`image_name` and `image_id`) to deploy.
+3. Open the `eval_info.json` in a json viewer or a text editor and observe the information. The json output contains information such as if the model passed the evaluation step (`deploy_model`: *true or false*) and evaluation accuracy.
 
     ![Review information in the eval_info json file.](media/devops-build-pipeline-16.png 'Eval Info JSON File')
 
@@ -257,10 +257,6 @@ Duration: 25 minutes
 5. Select **Models** to view a list of registered models that reference the dataset.
 
     ![Review list of registered models that reference dataset in Azure Machine Learning studio.](media/devops-build-outputs-05.png 'Registered dataset model references in Azure Machine Learning studio')
-
-6. Log in to the [Azure Portal](https://portal.azure.com), open your **Resource Group, Workspace, Images** section and observe the deployment image created during the build pipeline: `compliance-classifier-image`.
-
-    ![Review deployment image in Azure Portal.](media/devops-build-outputs-06.png 'Images in Azure Portal')
 
 ## Exercise 3: Setup the Release Pipeline
 
