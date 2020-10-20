@@ -41,6 +41,14 @@ ContosoAuto is interested in leveraging their unstructured data to gain further 
 
 In this experience, you will learn the mechanics of using Cognitive Search and Knowledge Mining to yield rapid insights into unstructured data. Using a combination of pre-configured and custom cognitive skills in Azure Cognitive Search, you will create a series of Cognitive Search indexing pipelines that enriches source data in route to an index. Cognitive skills are natural language processing (NLP) and image analysis operations that extract text and text representations of an image, detect language, entities, key phrases, and more. The end result is rich additional content in an Azure Cognitive Search index, created by a cognitive search indexing pipeline. The output is a full-text searchable index on Azure Cognitive Search.
 
+## Before Hands-on-Lab
+
+Before proceeding to lab we have to perform following steps:
+
+1. Go to the storage account named techimmersionstrgxxxxxx (xxxxxx refers to deployment id)
+2. Click on containers, select the **forms** container
+3. Click on upload , select files from `C:\autofiles\forms` upload all the files in the container.
+
 ## Task 1: Populate Cosmos DB with tweets from a generator
 
 For this experience, you will be using the `tweets` container in ContosoAuto's Cosmos DB as a data source for your Cognitive Search pipeline. In order to use Cosmos DB as a data source, documents must exist in the target container prior to creating the Data Source in Azure Cognitive Search. In this task, you will populate the `tweets` container in your Cosmos DB `ContosoAuto` database using a tweet generator application running in Visual Studio.
