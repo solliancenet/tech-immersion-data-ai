@@ -299,13 +299,13 @@ HDFS also provides data persistency, as HDFS data is spread across all the stora
 3. Execute the following in the command prompt to set a new environment variable with the ADLS Gen2 account name and access key credentials:
 
    ```text
-   set MOUNT_CREDENTIALS=fs.azure.abfs.account.name=ikedatabricks.dfs.core.windows.net,fs.azure.account.key.ikedatabricks.dfs.core.windows.net=HUYPk/VUjdYzkCvrKXTgFBObt5VQcp5DCY7C9KiSHX42lv65mjmBFmKFVTLy7Z7suQ0WV44mncuUOvnE8NkxGg==
+   set MOUNT_CREDENTIALS=fs.azure.abfs.account.name=techimmersionde2storage.dfs.core.windows.net,fs.azure.account.key.techimmersionde2storage.dfs.core.windows.net=XbrGm8b5+C20BSKviD0KJipxXorq7oMEb6Ba6l3q4RjvgBPajucK9UOX3RyT5M0y9XelymiXN0onxoWB/9So4g==
    ```
 
-4. Execute the following in the command prompt to mount the drive:
+4. Execute the following in the command prompt to mount the drive. Replace the **YOUR_UNIQUE_IDENTIFIER** portion with the unique identifier assigned to you for this lab:
 
    ```powershell
-   azdata bdc hdfs mount create --remote-uri abfs://databricksfiles@ikedatabricks.dfs.core.windows.net/ --mount-path /mounts/dbfiles
+   azdata bdc hdfs mount create --remote-uri abfs://dbfiles@techimmersionde2storage.dfs.core.windows.net/ --mount-path /mounts/dbfiles-YOUR_UNIQUE_IDENTIFIER
    ```
 
 5. Once the storage account has been mounted, you can check the status:

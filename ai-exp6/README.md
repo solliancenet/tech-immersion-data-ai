@@ -78,6 +78,18 @@ Duration: 20 minutes
 2. Provide the following GitHub URL: `https://github.com/solliancenet/mcw-mlops-starter` and select **Import**. This should import the code required for the quickstart.
 
     ![Provide the above GitHub URL and select import to import the source code.](media/devops-project-04.png 'Import a Git repository dialog')
+    
+    *Note that if you receive an error while importing the repository, please disable the preview feature `New Repos landing pages` and import the GitHub repository from the old UI, as shown in steps #3, #4, and #5 below.*
+
+3. [Optional] Select **Account settings, Preview features**.
+
+    ![The image shows how to navigate to the list of preview features.](media/preview_features-01.png 'Preview features')
+
+4. [Optional] From the list of preview features, disable the preview feature **New Repos landing pages**.
+
+   ![The image shows a list of preview features and highlights the preview feature, New Repos landing pages.](media/preview_features-02.png 'Disable New Repos landing pages')
+
+5. [Optional] Repeat Step #1 above to import the GitHub repository from the old UI.
 
 ### Task 3: Update the build YAML file
 
@@ -101,30 +113,13 @@ Duration: 20 minutes
 
     ![Select Create Service Connection, Azure Resource Manager.](media/devops-build-pipeline-04.png 'Azure Resource Manager')
 
-    > **Note**: Due to an issue with a newly released version of the user interface, the new service connection experience was temporarily disabled. You might see the following user interface:
-
-    ![Azure DevOps new service connection experience fix](media/devops-service-connection-fix-01.png 'Azure DevOps new service connection fix').
-
-    In this case, set the connection name to `quick-starts-sc`, provide the subscription, resource group, and machine learning workspace information, check the `Allow all pipelines to use this connection` option and select **OK**. Ignore steps 3 and 4 below and continue with Exercise 2.
-
-    > **Note**: If an environment is provided to you, select the `Subscription` scope level and the select `use full version of the service connection dialog`.
-
-    ![Azure DevOps new service connection experience fix - full dialog](media/devops-service-connection-fix-02.png 'Azure DevOps new service connection fix full dialog')
-
-    > Provide the following information and then select `OK`:
-    > - Connection name: quick-starts-sc (note: provide exact name as shown)
-    > - Service principal client ID (Lab environment details page: Service Principal Details->Application/Client Id)
-    > - Service principal key (Lab environment details page: Service Principal Details->Application Secret Key)
-
-    ![Azure DevOps new service connection experience fix - full dialog values](media/devops-service-connection-fix-03.png 'Azure DevOps new service connection fix full dialog values')
-
-3. Select **Service principal (automatic)** and then select **Next**.
+3. If an environment is provided to you **goto step #5**. Select **Service principal (automatic)** and then select **Next**.
 
     ![Select Service principal (automatic), and then select Next.](media/devops-build-pipeline-05.png 'Service principal authentication')
 
 4. Provide the following information in the `New Azure service connection` dialog box and then select **Save**:
 
-    a. Type: `Machine Learning Workspace`
+    a. Scope Level: `Machine Learning Workspace`
 
     b. Subscription: Select the Azure subscription to use.
 
@@ -140,10 +135,40 @@ Duration: 20 minutes
 
     ![Provide connection name, Azure Resource Group, Machine Learning Workspace, and then select Save. The resource group and machine learning workspace must match the value you provided in the YAML file.](media/devops-build-pipeline-06.png 'Add an Azure Resource Manager service connection dialog')
 
-    > **Note**: If an environment is provided to you, select the `Subscription` scope level, provide the following information and      then select `Save`:
-    > - Connection name: quick-starts-sc (note: provide exact name as shown)
-    > - Service principal client ID (Lab environment details page: Service Principal Details->Application/Client Id)
-    > - Service principal key (Lab environment details page: Service Principal Details->Application Secret Key)
+     >**Note**: If you are unable to select your **Machine Learning Workspace**, do the following steps:
+
+    - Quit the `New Azure service connection` dialog
+    - Refresh or reload the web browser
+    - Repeat steps 1-3 above
+    - In step 4, change the `Scope level` to **Subscription** and then select your **Resource group**
+    - Please remember to name your service connection as `quick-starts-sc`
+    - Grant access permission to all pipelines
+
+    >**Note**: If you successfully created the new service connection **goto Exercise 2**.
+
+5. Select **Service principal (manual)** and then select **Next**.
+
+    ![Select Service principal (manual), and then select Next.](media/sc_01.png 'Service principal authentication')
+
+6. Provide the following information in the `New Azure service connection` dialog box and then select **Verify and save**:
+
+    1. Scope Level: `Subscription`
+
+    1. Subscription id: (Lab environment details page: Service Principal Details->Subscription Id)
+
+    1. Subscription Name: You can find the subscription name from [Azure Portal](https://portal.azure.com)
+
+    1. Service principal Id: (Lab environment details page: Service Principal Details->Application/Client Id)
+
+    1. Service principal key: (Lab environment details page: Service Principal Details->Application Secret Key)
+
+    1. Tenant ID: (Lab environment details page: Service Principal Details->Tenant Id)
+
+    1. Service connection name: `quick-starts-sc`
+
+    1. Grant access permission to all pipelines: this checkbox must be selected.
+
+    ![Provide information as shown in the dialog.](media/sc_02.png 'Add an Azure Resource Manager service connection dialog')
 
 ## Exercise 2: Setup and Run the Build Pipeline
 
@@ -207,7 +232,7 @@ Duration: 25 minutes
 
     ![Download output from the model evaluation step.](media/devops-build-pipeline-15.png 'Download JSON file')
 
-3. Open the `eval_info.json` in a json viewer or a text editor and observe the information. The json output contains information such as if the model passed the evaluation step (`deploy_model`: *true or false*), and the name and id of the created image (`image_name` and `image_id`) to deploy.
+3. Open the `eval_info.json` in a json viewer or a text editor and observe the information. The json output contains information such as if the model passed the evaluation step (`deploy_model`: *true or false*) and evaluation accuracy.
 
     ![Review information in the eval_info json file.](media/devops-build-pipeline-16.png 'Eval Info JSON File')
 
@@ -232,10 +257,6 @@ Duration: 25 minutes
 5. Select **Models** to view a list of registered models that reference the dataset.
 
     ![Review list of registered models that reference dataset in Azure Machine Learning studio.](media/devops-build-outputs-05.png 'Registered dataset model references in Azure Machine Learning studio')
-
-6. Log in to the [Azure Portal](https://portal.azure.com), open your **Resource Group, Workspace, Images** section and observe the deployment image created during the build pipeline: `compliance-classifier-image`.
-
-    ![Review deployment image in Azure Portal.](media/devops-build-outputs-06.png 'Images in Azure Portal')
 
 ## Exercise 3: Setup the Release Pipeline
 
@@ -341,13 +362,17 @@ Duration: 20 minutes
 
 2. Provide the following information for the Azure CLI task:
 
-    a. Display name: `Deploy & Test Webservice`
+    a. **Task version**: `1.*`
 
-    b. Azure subscription: `quick-starts-sc` *This is the service connection we created in Exercise 1 / Task 4*.
+    b. **Display name**: `Deploy and Test Webservice`
 
-    c. Script Location: `Inline script`
+    c. **Azure subscription**: `quick-starts-sc`
 
-    d. Inline Script: `python aml_service/deploy.py --service_name $(service_name) --aks_name $(aks_name) --aks_region $(aks_region) --description $(description)`
+    > **Note**: This is the service connection we created in Exercise 1 / Task 4.
+
+    d. **Script Location**: `Inline script`
+
+    e. **Inline Script**: `python aml_service/deploy.py --service_name $(service_name) --aks_name $(aks_name) --aks_region $(aks_region) --description $(description)`
 
     ![Setup the Azure CLI task using the information above.](media/devops-release-pipeline-19.png 'Azure CLI Task Dialog')
 
