@@ -2,7 +2,7 @@
 
 ## AI, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant solution accelerator
 
-- [Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data-amp-ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop--product-review-guide-and-lab-instructions)
   - [AI, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant solution accelerator](#ai-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
@@ -39,23 +39,35 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
    > If after signing in and accepting requested permissions, you see a loading screen that seems stuck for more than 10 seconds, try refreshing the page.
 
-3. Again, if this is your first time signing in, you will be prompted to select your **Country/Region**. Select the appropriate option from the list, check the service agreement checkbox, then select **Continue**.
+3. Again, if this is your first time signing in, you may be prompted to select your **Country/Region**. Select the appropriate option from the list, check the service agreement checkbox, then select **Continue**.
 
    ![The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted.](media/luis-accept.png 'Accept Service Agreement')
 
-4. If you are presented with a step to link your Azure account, select **Continue using your trial key**, then select **Continue**.
+4. If you are presented with a step to link your Azure account, select **Continue using an Azure resource (Recommended)**, then select **Create New Authoring Resource**.
 
     ![The Continue using your trial key option is highlighted.](media/luis-link-azure-account.png "Link your Azure account")
 
-5. If you do not currently have any LUIS apps, you will see a page explaining what LUIS is and how it works. Within this page, select **Create a LUIS app now**.
+5. In the create form, select your Azure subscription from the list, then select the Resource Group from the list that you are using for this lab. For the **Azure resource name** value, enter **`luis-SUFFIX`**, where **SUFFIX** matches the suffix of your resource group (if this is a pre-provisioned lab environment). Otherwise, enter a new suffix that will make the resource name unique. Select the **F0** pricing tier, then select **Done**.
+
+  ![The form is displayed as described.](media/create-cog-services-account.png "Create new Azure Cognitive Services account")
+
+6. After the account is successfully migrated, select **Continue**.
+
+  ![The Continue button is highlighted.](media/luis-migrated.png "Your account has been migrated successfully")
+
+7. If you do not currently have any LUIS apps, you will see a page explaining what LUIS is and how it works. Within this page, select **Create a LUIS app now**.
 
    ![The LUIS welcome page.](media/luis-welcome-create.png 'Create a LUIS app now')
 
-6. At this point, you will see a page called "My Apps". You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select **Settings**.
+8. If you are prompted to choose an authoring resource, select your Azure subscription, select the **LUIS authoring resource** you created, then select **Done**.
+
+  ![The new authoring resource is selected.](media/choose-authoring-resource.png "Choose an authoring resource")
+
+9. At this point, you will see a page called "My Apps". You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select **Manage authoring resources**.
 
    ![Click on your name then select Settings.](media/luis-name-menu.png 'Settings')
 
-7. Copy the **Primary Key** found underneath the **Starter_Key** authoring resource, and save it to Notepad or a similar text application for later steps.
+10. Select **Authoring resources** in the left-hand menu, then copy the **Primary key** found underneath the **Starter_Key** for your authoring resource, and save it to Notepad or a similar text application for later steps.
 
    ![The User Settings page is displayed with the Authoring Key highlighted.](media/luis-authoring-key.png 'Authoring Key')
 
