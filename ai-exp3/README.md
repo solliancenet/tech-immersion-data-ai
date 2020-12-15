@@ -95,6 +95,7 @@ In this exercise, you will create a model that predicts battery failure from tim
 12. Select **View additional configuration settings** to open the advanced settings section. Provide the following settings:
 
     - Primary metric: **Normalized root mean squared error**
+    - Training job time(hours): **3**
     - Exit criterion > Metric score threshold: **0.09**
     - Validation > Validation type: **k-fold cross validation**
     - Validation > Number of Cross Validations: **5**
