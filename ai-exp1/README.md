@@ -398,7 +398,7 @@ In this task, you will open the Bot Framework Emulator and start testing out you
 
     The result is that the bot must clarify the user's intent by prompting for more information. To do this, the bot asks which of the two matching settings would you like to select? Since you did not explicitly say to turn the air on in the back of the car or the front of the car, you need to tell it which option you like. The bot displays a [card](https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-add-rich-card-attachments?view=azure-bot-service-3.0) for you to choose from. Type either `1` or `2` for your selection, then press Send (or hit Enter).
 
-    ![The Live Chat shows the bot's prompt to choose which air control mode to use.](media/bot-framework-emulator-option.png 'Live Chat')
+    ![The Live Chat shows the bot's prompt to choose which air control mode to use.](media/ai-14.png 'Live Chat')
 
 12. If you input a valid response, the bot will simply reply with `Ok.` to confirm the action.
 
