@@ -43,9 +43,9 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
    ![The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted.](media/ai-07.png 'Accept Service Agreement')
 
-4. If you are presented with a step to link your Azure account, select **Continue using your trial key**, then select **Continue**.
+4. After clicking on Create an Authoring Resource , select your Resource group name your luis resource as  **luis-XXXXXX**(XXXXXX) refers to unique id, then select **Done**.
 
-    ![The Continue using your trial key option is highlighted.](media/luis-link-azure-account.png "Link your Azure account")
+    ![The Continue using your trial key option is highlighted.](media/ai-09.png "Link your Azure account")
 
 5. If you do not currently have any LUIS apps, you will see a page explaining what LUIS is and how it works. Within this page, select **Create a LUIS app now**.
 
