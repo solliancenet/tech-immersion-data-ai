@@ -39,9 +39,9 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
    > If after signing in and accepting requested permissions, you see a loading screen that seems stuck for more than 10 seconds, try refreshing the page.
 
-3. Again, if this is your first time signing in, you will be prompted to select your **Country/Region**. Select the appropriate option from the list, check the service agreement checkbox, then select **Continue**.
+3. Again, if this is your first time signing in, you will be prompted to select your **Subscription**. Select the appropriate option from the list, then select **Create an authoring Resource**.
 
-   ![The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted.](media/luis-accept.png 'Accept Service Agreement')
+   ![The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted.](media/ai-07.png 'Accept Service Agreement')
 
 4. If you are presented with a step to link your Azure account, select **Continue using your trial key**, then select **Continue**.
 
