@@ -99,9 +99,9 @@ In this task, you will deploy all of these Azure dependencies as well as configu
 7. Supply the following values when prompted:
 
    - **Bot Name:** Enter your unique **Azure Resource Group name** provided to you for this lab. Example: `ti-YOUR_UNIQUE_IDENTIFIER`. It should exactly match your Azure Resource Group name, be all lower case, contain no spaces and no special characters except for dashes (-) and underscores (\_).
-   - **Azure resource group location:** Enter `westus`.
-   - **Password for MSA app registration:** Enter `Abc!1234567890`.
-   - **LUIS Authoring Region:** Enter `westus`.
+   - **Azure resource group location:** Enter `westus`
+   - **Password for MSA app registration:** Enter `Abc!1234567890`
+   - **LUIS Authoring Region:** Enter `westus`
    - **LUIS Authoring Key:** Paste the LUIS Authoring Key you copied at the end of Task 1 above.
 
    ![The bot creation script and parameters are highlighted.](media/cmd-bot-script.png 'Command Prompt')
