@@ -42,41 +42,45 @@ In this exercise, you will create a model that predicts battery failure from tim
 
 ### Task 1: Create an automated machine learning experiment using the Portal
 
-1. Navigate to your Azure Machine Learning workspace in the Azure Portal. Select `Overview` in the left navigation bar and then select **Launch the new Azure Machine Learning studio**. Alternatively, you can navigate directly to the new [Azure Machine Learning studio](https://ml.azure.com/). This will prompt you to select the workspace as part of the sign-in process.
+1. Navigate to your Azure Machine Learning workspace in the Azure Portal. Select `Overview` in the left navigation bar and then select **Launch studio**. Alternatively, you can navigate directly to the new [Azure Machine Learning studio](https://ml.azure.com/)
 
-   ![Navigate to Azure Machine Learning studio](./media/001_AzureMachineLearningStudio.png)
+   ![Navigate to Azure Machine Learning studio](./media/aml-01.png)
 
-2. Select **Automated ML** in the left navigation bar.
+2. Select the Machine learning workspace as part of the sign-in process.
+
+    ![select the machine learning workspace](./media/aml-02.png)
+
+3. Select **Automated ML** in the left navigation bar.
 
    ![Select Automated ML](./media/002_AutomatedML.png)
 
-3. Select **New automated ML run** to start creating a new experiment.
+4. Select **New automated ML run** to start creating a new experiment.
 
    ![New automated ML run](./media/003_CreateAutomatedMLRun.png)
 
-4. Select **Create dataset** and choose the **From web files** option from the drop-down.
+5. Select **Create dataset** and choose the **From web files** option from the drop-down.
 
    ![Create dataset from local file](./media/004_NewDataset_FromURL.png)
 
-5. Fill in the training data URL in the `Web URL` field: `https://quickstartsws9073123377.blob.core.windows.net/azureml-blobstore-0d1c4218-a5f9-418b-bf55-902b65277b85/training-formatted.csv`, make sure the name is set to `training-formatted-dataset`, and select **Next** to load a preview of the parsed training data.
+6. Fill in the training data URL in the `Web URL` field: `https://quickstartsws9073123377.blob.core.windows.net/azureml-blobstore-0d1c4218-a5f9-418b-bf55-902b65277b85/training-formatted.csv`, make sure the name is set to `training-formatted-dataset`, and select **Next** to load a preview of the parsed training data.
 
    ![Training data web URL](./media/005_Dataset_BasicInfo.png)
 
-6. In the `Settings and preview` page select **All files have same headers**, and scroll to the right to observe all of the columns in the data.
+7. In the `Settings and preview` page select **All files have same headers**, and scroll to the right to observe all of the columns in the data.
 
    ![Reviewing the training data](./media/006_ReviewDataFile.png)
 
-7. Select **Next** to check the schema and then confirm the dataset details by selecting **Next** and then **Create** on the confirmation page.
+8. Select **Next** to check the schema and then confirm the dataset details by selecting **Next** and then **Create** on the confirmation page.
 
    ![Reviewing the schema of training data](./media/007_TrainingDataSchema.png)
 
    ![Confirm dataset creation](./media/007_ConfirmDataset.png)
 
-8. Now you should be able to select the newly created dataset for your experiment. Select the `training-formatted-dataset` dataset and select **Next** to move to the experiment run details page.
+9. Now you should be able to select the newly created dataset for your experiment. Select the `training-formatted-dataset` dataset and select **Next** to move to the experiment run details page.
 
    ![Select the dataset](./media/008_SelectDataset.png)
 
-9. You will now configure the Auto ML run basic settings by providing the following values for the experiment name, target column and training compute:
+10. You will now configure the Auto ML run basic settings by providing the following values for the experiment name, target column and training compute:
 
    - Experiment name: **automl-regression**
    - Target column: select **Survival_In_Days**
@@ -84,11 +88,11 @@ In this exercise, you will create a model that predicts battery failure from tim
 
    ![Setup Auto ML experiment basic settings](./media/009_SetupExperiment.png)
 
-10. Select **Next** and select **Regression** in the `Task type and settings` page.
+11. Select **Next** and select **Regression** in the `Task type and settings` page.
 
     ![Select Regression task type](./media/010_TaskTypeForExperiment.png)
 
-11. Select **View additional configuration settings** to open the advanced settings section. Provide the following settings:
+12. Select **View additional configuration settings** to open the advanced settings section. Provide the following settings:
 
     - Primary metric: **Normalized root mean squared error**
     - Exit criterion > Metric score threshold: **0.09**
@@ -100,11 +104,11 @@ In this exercise, you will create a model that predicts battery failure from tim
 
     > Note that we are setting a metric score threshold to limit the training time. In practice, for initial experiments, you will typically only set the training job time to allow AutoML to discover the best algorithm to use for your specific data.
 
-12. Select **Save** and then **Finish** to begin the automated machine learning process.
+13. Select **Save** and then **Finish** to begin the automated machine learning process.
 
     ![Start Automate ML run](./media/012_CreatingExperiment.png)
 
-13. Wait until the `Run status` becomes **Running** in the `Run Detail page`. Save the  **Run ID: AutoML_xxx** to be used later in Exercise #2 Task #2.
+14. Wait until the `Run status` becomes **Running** in the `Run Detail page`. Save the  **Run ID: AutoML_xxx** to be used later in Exercise #2 Task #2.
 
     ![Preparing experiment](./media/012_PreparingExperiment.png)
 
