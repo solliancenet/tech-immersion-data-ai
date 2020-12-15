@@ -117,7 +117,7 @@ In this exercise, you will create a model that predicts battery failure from tim
 
 1. The experiment will run for about _15 minutes_. While it runs and once it completes, you should check the `Models` tab on the `Run Detail` page to observe the model performance for the primary metric for different runs.
 
-   ![Review run details - graph view](./media/021_RunDetails1.png)
+   ![Review run details - graph view](./media/aml-03.png)
 
 2. In the models list, notice at the top the iteration with the best **normalized root mean square error** score. Note that the normalized root mean square error measures the error between the predicted value and actual value. In this case, the model with the lowest normalized root mean square error is the best model.
 
@@ -131,7 +131,7 @@ In this exercise, you will create a model that predicts battery failure from tim
 
 4. Select **View all other metrics** to review all the model performance metrics.
 
-   ![Review run metrics](./media/024_Run_Metrics.png)
+   ![Review run metrics](./media/aml-04.png)
 
 ### Task 3: Register the Best Model
 
