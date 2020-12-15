@@ -51,9 +51,13 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
    ![Click on your name then select Settings.](media/ai-11.png 'Settings')
 
-6. Copy the **Primary Key** found underneath the **Starter_Key** authoring resource, and save it to Notepad or a similar text application for later steps.
+6. Select the **Subscription** and then select **luis-xxxxxx** authoring resource
 
-   ![The User Settings page is displayed with the Authoring Key highlighted.](media/luis-authoring-key.png 'Authoring Key')
+   ![The User Settings page is displayed with the Authoring Key highlighted.](media/luis-ai-12.png 'Authoring Key')
+   
+7.  copy the Primary key  for your authoring resource, and save it to Notepad or a similar text application for later steps
+    
+    ![primarykey](media/ai-13.png)
 
 ## Task 2: Deployment
 
