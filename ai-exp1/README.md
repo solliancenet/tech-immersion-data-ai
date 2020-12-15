@@ -47,15 +47,11 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
     ![The Continue using your trial key option is highlighted.](media/ai-09.png "Link your Azure account")
 
-5. If you do not currently have any LUIS apps, you will see a page explaining what LUIS is and how it works. Within this page, select **Create a LUIS app now**.
-
-   ![The LUIS welcome page.](media/luis-welcome-create.png 'Create a LUIS app now')
-
-6. At this point, you will see a page called "My Apps". You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select **Settings**.
+5. At this point, you will see a page called "My Apps". You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select **Manage authoring resources**.
 
    ![Click on your name then select Settings.](media/luis-name-menu.png 'Settings')
 
-7. Copy the **Primary Key** found underneath the **Starter_Key** authoring resource, and save it to Notepad or a similar text application for later steps.
+6. Copy the **Primary Key** found underneath the **Starter_Key** authoring resource, and save it to Notepad or a similar text application for later steps.
 
    ![The User Settings page is displayed with the Authoring Key highlighted.](media/luis-authoring-key.png 'Authoring Key')
 
