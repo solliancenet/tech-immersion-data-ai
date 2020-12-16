@@ -380,7 +380,7 @@ Duration: 20 minutes
 
     ![Provide Working Directory for the Azure CLI task.](media/devops-release-pipeline-20.png 'Azure CLI Task - Working Directory')
 
-Please review the code in `aml_service/deploy.py`. This step will read the `eval_info.json` and if the evaluation step recommended to deploy the new trained model, it will deploy the new model to production in an **Azure Kubernetes Service (AKS)** cluster.
+In a separate browser tab, navigate to the **Repo** section in Azure DevOps and please review the code in `aml_service/deploy.py`. This step will read the `eval_info.json` and if the evaluation step recommended to deploy the new trained model, it will deploy the new model to production in an **Azure Kubernetes Service (AKS)** cluster.
 
 ### Task 8: Define Deployment Trigger
 
