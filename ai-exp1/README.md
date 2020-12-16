@@ -2,7 +2,7 @@
 
 ## AI, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant solution accelerator
 
-- [Data &amp; AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data-amp-ai-tech-immersion-workshop-%e2%80%93-product-review-guide-and-lab-instructions)
+- [Data & AI Tech Immersion Workshop – Product Review Guide and Lab Instructions](#data--ai-tech-immersion-workshop--product-review-guide-and-lab-instructions)
   - [AI, Experience 1 - Quickly build comprehensive Bot solutions with the Virtual Assistant solution accelerator](#ai-experience-1---quickly-build-comprehensive-bot-solutions-with-the-virtual-assistant-solution-accelerator)
   - [Technology overview](#technology-overview)
   - [Scenario overview](#scenario-overview)
@@ -139,6 +139,10 @@ For now, let's explore how this bot is created and how LUIS is trained with the 
 1.  Open Windows Explorer and navigate to `C:\lab-files\ai\1\automotiveskill`. Double-click on **AutomotiveSkill.csproj** to open the solution in Visual Studio. If you are prompted by Visual Studio to log in, log in with your Azure Active Directory credentials you are using for this lab.
 
     ![The AutomotiveSkill.csproj file is highlighted in Windows Explorer.](media/windows-explorer-solution.png 'Windows Explorer')
+
+2. If you are prompted by Visual Studio that your license has gone stale, select **Check for an updated license**. Enter the Azure credentials you are using for this lab when prompted.
+
+  ![The dialog is displayed as described.](media/vs-check-for-updated-license.png "Check for an updated license")
 
 2. You will see the projects listed within the Solution Explorer in Visual Studio. Expand the **AutomotiveSkill** project. Next, expand **Deployment**, then **Resources**, then **LU**, and then **en-us**, which is the language folder for English. Next, double-click on **General.lu**.
 
@@ -461,7 +465,7 @@ In this task, you will open the Bot Framework Emulator and start testing out you
     - It's feeling cold in the back
     - The passenger is freezing
     - temperature
-    - Turn off the ac
+    - Turn on the ac
     - Increase the volume
     - adjust the equalizer
     - The volume is too low
@@ -472,9 +476,9 @@ In this task, you will open the Bot Framework Emulator and start testing out you
 
 If you recall, the bot deployment script created Azure services, generated a .bot file, and converted the .lu files to JSON files were uploaded to LUIS. Let's take this new knowledge about how LUIS works and how the files are used to train it, and browse to the LUIS portal to explore the generated apps.
 
-1. Navigate to the LUIS portal ([www.luis.ai](https://www.luis.ai/)) and sign in if needed. You should see four new apps listed underneath **My Apps**, each of which start with the name of your bot.
+1. Navigate to the LUIS portal ([www.luis.ai](https://www.luis.ai/)) and sign in if needed. You should see four new apps listed underneath **Conversation apps**, each of which start with the name of your bot.
 
-    ![My Apps is displayed with a list of generated LUIS apps.](media/luis-apps.png 'My Apps')
+    ![My Apps is displayed with a list of generated LUIS apps.](media/luis-apps.png 'Conversation Apps')
 
 2. Open the app that ends with **General**. If shown, dismiss the dialog `How to create an effective LUIS app`. Select the **Build** tab, then select **Intents** under App Assets on the left-hand menu. Notice that each named intent has a number of example utterances. Remember, utterances are used to train LUIS on different ways a user may express their intent. Generally speaking, the more utterances you have, the more variety of ways LUIS can understand how people may type or speak a phrase.
 
@@ -486,9 +490,9 @@ If you recall, the bot deployment script created Azure services, generated a .bo
 
     ![Screenshot of the Cancel intent.](media/luis-cancel-intent.png 'Cancel intent')
 
-5. Select **My apps** in the top menu. Now open the app that ends with **\_Settings**.
+5. Select **My LUIS** in the top breadcrumb menu. Now open the app that ends with **\_Settings**.
 
-    ![My Apps is displayed with the settings app highlighted.](media/luis-apps-settings.png 'My Apps')
+    ![Conversation Apps is displayed with the settings app highlighted.](media/luis-apps-settings.png 'Conversation Apps')
 
 6. As you can see, this app's intents have a much larger number of examples. Select **VEHICLE_SETTINGS_DECLARATIVE**.
 

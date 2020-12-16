@@ -219,21 +219,27 @@ In this exercise, you will use compute resources provided by Azure Machine Learn
    https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/3/predict-battery-life-with-AML.ipynb
 
    Select **Raw** to view the text version of the file and then right-click in the browser and save the content locally as  `predict-battery-life-with-AML.ipynb`.
+   
+2. Download the yaml on your local disk from the following URL:
 
-2. In the Jupyter Notebook environment navigate to the `Files` tab to view the root folder content. If you see a folder named after your user name, use that to upload notebooks.
+   https://github.com/solliancenet/tech-immersion-data-ai/blob/master/lab-files/ai/3/automl_dependencies.yml
 
-3. Select the **Upload** menu and browse for the notebook downloaded in step 1.
+   Select **Raw** to view the text version of the file and then right-click in the browser and save the content locally as  `automl_dependencies.yml`.
+
+3. In the Jupyter Notebook environment navigate to the `Files` tab to view the root folder content. If you see a folder named after your user name, use that to upload notebooks.
+
+4. Select the **Upload** menu and browse for the notebook and yaml file downloaded in step 1 and step 2.
 
    ![Upload notebook](media/05.png 'Upload')
 
-4. Press **Upload** to start uploading the notebook.
+5. Press **Upload** to start uploading the notebook and the yaml file.
 
    ![The Upload files from Computer dialog](media/06.png 'Upload files from Computer')
 
-5. In the listing, select the Notebook you just uploaded (`predict-battery-life-with-AML.ipynb`) to open it.
+6. In the listing, select the Notebook you just uploaded (`predict-battery-life-with-AML.ipynb`) to open it.
 Please select Kernel **Python 3.6 - Azure ML** if you are prompted with a `Kernel not found` exception.
 
-6. Follow the instructions within the notebook to complete the experience.
+7. Follow the instructions within the notebook to complete the experience.
 
 ## Wrap-up
 
