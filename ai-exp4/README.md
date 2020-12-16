@@ -48,19 +48,19 @@ The pipelines will be run on the Azure Machine Learning compute.
 
 To complete this task, you will use an Azure Notebook VM and Azure Machine Learning.
 
-If you have not already created the `tech-immersion` notebook VM in Azure Machine Learning studio, follow these steps. If you already have this compute in your environment, continue with **Task 2**.
+If you have not already created the `tech-immersion` Compute instance in Azure Machine Learning studio, follow these steps. If you already have this compute in your environment, continue with **Task 2**.
 
 1. Open your Azure Machine Learning workspace. Sign-in to the Azure Portal, navigate to your Azure Machine Learning workspace and select **Launch the new Azure Machine Learning studio**. Alternatively, you can sign in directly to the [Azure Machine Learning studio](https://ml.azure.com).
 
 2. Navigate to the `Compute` section by selecting the option on the left navigation menu.
 
-3. Under the `Compute instances` tab, select **+ New** to create the notebook VM. Name it `tech-immersion`, select `Standard_DS3_V2` for VM type and select **Create**. Wait a few minutes until the notebook is fully provisioned.
+3. Under the `Compute instances` tab, select **+ New** to create the notebook VM. Name it `tech-immersion(xxxxxx)` **xxxxxx** refers to the unique id , select `Standard_DS3_V2` for VM type and select **Create**. Wait a few minutes until the notebook is fully provisioned.
 
-    > **Note**: If the `Notebook VM names should be unique within an Azure Region` notification appears, choose a different name that is unique to your environment.
+    > **Note**: If the `Compute instance names should be unique within an Azure Region` notification appears, choose a different name that is unique to your environment.
 
-4. Back to the `Notebook VMs` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, select **Jupyter**.
+4. Back to the `Compute Instance` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, select **Jupyter**.
 
-   ![Open NotebookVM](media/01-OpenNotebookVM.png)
+   ![Open NotebookVM](media/aml-05.png)
 
 ## Task 2: Upload the starter notebook
 

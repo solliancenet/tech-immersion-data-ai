@@ -41,6 +41,14 @@ ContosoAuto is interested in leveraging their unstructured data to gain further 
 
 In this experience, you will learn the mechanics of using Cognitive Search and Knowledge Mining to yield rapid insights into unstructured data. Using a combination of pre-configured and custom cognitive skills in Azure Cognitive Search, you will create a series of Cognitive Search indexing pipelines that enriches source data in route to an index. Cognitive skills are natural language processing (NLP) and image analysis operations that extract text and text representations of an image, detect language, entities, key phrases, and more. The end result is rich additional content in an Azure Cognitive Search index, created by a cognitive search indexing pipeline. The output is a full-text searchable index on Azure Cognitive Search.
 
+## Before Hands-on-Lab
+
+Before proceeding to lab we have to perform following steps:
+
+1. Go to the storage account named techimmersionstrgxxxxxx (xxxxxx refers to deployment id)
+2. Click on containers, select the **forms** container
+3. Click on upload , select files from `C:\autofiles\forms` upload all the files in the container.
+
 ## Task 1: Populate Cosmos DB with tweets from a generator
 
 For this experience, you will be using the `tweets` container in ContosoAuto's Cosmos DB as a data source for your Cognitive Search pipeline. In order to use Cosmos DB as a data source, documents must exist in the target container prior to creating the Data Source in Azure Cognitive Search. In this task, you will populate the `tweets` container in your Cosmos DB `ContosoAuto` database using a tweet generator application running in Visual Studio.
@@ -150,9 +158,9 @@ With data now streaming into your Cosmos DB `tweets` container, you are ready to
    - Expand the **Add Enrichments** section and set the following configuration:
      - Enter **tweet-skillset** as the name.
      - Select **text** as the source data field.
-     - Check the box next to the Text Cognitive Skills header to select all of the options.
+     - Check the box next to the Text Cognitive Skills header to select all of the options except **extract personally identifiable information**.
 
-   ![The Add enrichments section of the Add cognitive search (Optional) tab is highlighted, and the values specified above are entered into the form and highlighted.](media/cosmos-db-add-azure-search-add-enrichments.png "Add enrichments")
+   ![The Add enrichments section of the Add cognitive search (Optional) tab is highlighted, and the values specified above are entered into the form and highlighted.](media/AI-skills.png "Add enrichments")
 
    > In the section above, you added a set of enrichment steps to the data being ingested from Cosmos DB. In a Cognitive Search pipeline, individual enrichment steps are called _skills_, and the collection of enrichment steps is a _skillset_. The predefined skills available at this step through the UI use pre-trained models to extract additional information from the documents. The [EntityRecognitionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-entity-recognition) extracts entities (people, organizations, locations) from the document. The [KeyPhraseExtractionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-keyphrases) detects important phrases based on term placement, linguistic rules, proximity to other terms, and how unusual the term is within the source data. The [LanguageDetectionSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-language-detection) is used to detect the primary language used in the document, and the [TranslationSkill](https://docs.microsoft.com/azure/search/cognitive-search-skill-text-translation) is used to translate input text into a variety of languages for normalization or localization. You can learn more by reading about the available [predefined cognitive skills](https://docs.microsoft.com/azure/search/cognitive-search-predefined-skills).
 
@@ -194,7 +202,7 @@ With data now streaming into your Cosmos DB `tweets` container, you are ready to
 
 14. On the Azure Cognitive Search service blade, select **Indexers**.
 
-    ![Indexers is selected on the Azure Cognitive Search service blade.](media/azure-search-indexers.png "Indexers")
+    ![Indexers is selected on the Azure Cognitive Search service blade.](media/AI-skills2.png "Indexers")
 
 15. You specified the indexer should run once, so it should have automatically started upon creation. If your indexer has a status of **No history**, you can force the indexer to run by selecting the indexer, and then selecting **Run** on the Indexer blade.
 

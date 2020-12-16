@@ -39,37 +39,25 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
    > If after signing in and accepting requested permissions, you see a loading screen that seems stuck for more than 10 seconds, try refreshing the page.
 
-3. Again, if this is your first time signing in, you may be prompted to select your **Country/Region**. Select the appropriate option from the list, check the service agreement checkbox, then select **Continue**.
+3. Again, if this is your first time signing in, you will be prompted to select your **Subscription**. Select the appropriate option from the list, then select **Create an authoring Resource**.
 
-   ![The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted.](media/luis-accept.png 'Accept Service Agreement')
+   ![The service agreement page has the Country/Region and the service agreement acceptance checkbox highlighted.](media/ai-07.png 'Accept Service Agreement')
 
-4. If you are presented with a step to link your Azure account, select **Continue using an Azure resource (Recommended)**, then select **Create New Authoring Resource**.
+4. After clicking on Create an Authoring Resource , select your Resource group name your luis resource as  **luis-XXXXXX**(XXXXXX) refers to unique id, then select **Done**.
 
-    ![The Continue using your trial key option is highlighted.](media/luis-link-azure-account.png "Link your Azure account")
+    ![The Continue using your trial key option is highlighted.](media/ai-09.png "Link your Azure account")
 
-5. In the create form, select your Azure subscription from the list, then select the Resource Group from the list that you are using for this lab. For the **Azure resource name** value, enter **`luis-SUFFIX`**, where **SUFFIX** matches the suffix of your resource group (if this is a pre-provisioned lab environment). Otherwise, enter a new suffix that will make the resource name unique. Select the **F0** pricing tier, then select **Done**.
+5. At this point, you will see a page called "My Apps". You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select **Manage authoring resources**.
 
-  ![The form is displayed as described.](media/create-cog-services-account.png "Create new Azure Cognitive Services account")
+   ![Click on your name then select Settings.](media/ai-11.png 'Settings')
 
-6. After the account is successfully migrated, select **Continue**.
+6. Select the **Subscription** and then select **luis-xxxxxx** authoring resource
 
-  ![The Continue button is highlighted.](media/luis-migrated.png "Your account has been migrated successfully")
-
-7. If you do not currently have any LUIS apps, you will see a page explaining what LUIS is and how it works. Within this page, select **Create a LUIS app now**.
-
-   ![The LUIS welcome page.](media/luis-welcome-create.png 'Create a LUIS app now')
-
-8. If you are prompted to choose an authoring resource, select your Azure subscription, select the **LUIS authoring resource** you created, then select **Done**.
-
-  ![The new authoring resource is selected.](media/choose-authoring-resource.png "Choose an authoring resource")
-
-9. At this point, you will see a page called "My Apps". You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select **Manage authoring resources**.
-
-   ![Click on your name then select Settings.](media/luis-name-menu.png 'Settings')
-
-10. Select **Authoring resources** in the left-hand menu, then copy the **Primary key** found underneath the **Starter_Key** for your authoring resource, and save it to Notepad or a similar text application for later steps.
-
-   ![The User Settings page is displayed with the Authoring Key highlighted.](media/luis-authoring-key.png 'Authoring Key')
+   ![The User Settings page is displayed with the Authoring Key highlighted.](media/ai-12.png 'Authoring Key')
+   
+7.  copy the Primary key  for your authoring resource, and save it to Notepad or a similar text application for later steps
+    
+    ![primarykey](media/ai-13.png)
 
 ## Task 2: Deployment
 
@@ -111,9 +99,9 @@ In this task, you will deploy all of these Azure dependencies as well as configu
 7. Supply the following values when prompted:
 
    - **Bot Name:** Enter your unique **Azure Resource Group name** provided to you for this lab. Example: `ti-YOUR_UNIQUE_IDENTIFIER`. It should exactly match your Azure Resource Group name, be all lower case, contain no spaces and no special characters except for dashes (-) and underscores (\_).
-   - **Azure resource group location:** Enter `westus`.
-   - **Password for MSA app registration:** Enter `Abc!1234567890`.
-   - **LUIS Authoring Region:** Enter `westus`.
+   - **Azure resource group location:** Enter `westus`
+   - **Password for MSA app registration:** Enter `Abc!1234567890`
+   - **LUIS Authoring Region:** Enter `westus`
    - **LUIS Authoring Key:** Paste the LUIS Authoring Key you copied at the end of Task 1 above.
 
    ![The bot creation script and parameters are highlighted.](media/cmd-bot-script.png 'Command Prompt')
@@ -414,7 +402,7 @@ In this task, you will open the Bot Framework Emulator and start testing out you
 
     The result is that the bot must clarify the user's intent by prompting for more information. To do this, the bot asks which of the two matching settings would you like to select? Since you did not explicitly say to turn the air on in the back of the car or the front of the car, you need to tell it which option you like. The bot displays a [card](https://docs.microsoft.com/en-us/azure/bot-service/dotnet/bot-builder-dotnet-add-rich-card-attachments?view=azure-bot-service-3.0) for you to choose from. Type either `1` or `2` for your selection, then press Send (or hit Enter).
 
-    ![The Live Chat shows the bot's prompt to choose which air control mode to use.](media/bot-framework-emulator-option.png 'Live Chat')
+    ![The Live Chat shows the bot's prompt to choose which air control mode to use.](media/ai-14.png 'Live Chat')
 
 12. If you input a valid response, the bot will simply reply with `Ok.` to confirm the action.
 
