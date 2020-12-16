@@ -458,11 +458,11 @@ Duration: 30 minutes
 
 2. Observe the **Scoring URI** and **API Key** for the deployed webservice. Please note down both the `Scoring URI` and `API Key` for *Exercise 7*.
 
-    ![View Deploy & Test Webservice task logs and note down the Scoring URI of the deployed webservice.](media/devops-test-pipelines-07.png 'Deploy & Test Webservice Task Logs')
+    ![View Deploy & Test Webservice task logs and note down the Scoring URI of the deployed webservice.](media/ai-26.png 'Deploy & Test Webservice Task Logs')
 
 3. Log in to Azure Machine Learning studio. Open your **Endpoints** section, and observe the deployed webservice: **compliance-classifier-service**.
 
-    ![View deployed webservice in Azure Machine Learning studio.](media/devops-test-pipelines-08.png 'Azure Machine Learning studio - Workspace, Deployments')
+    ![View deployed webservice in Azure Machine Learning studio.](media/ai-27.png 'Azure Machine Learning studio - Workspace, Deployments')
 
 ## Wrap-up
 
