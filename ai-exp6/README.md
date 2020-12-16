@@ -240,15 +240,15 @@ Duration: 25 minutes
 
 1. Log in to [Azure Machine Learning studio](https://ml.azure.com) either directly or via the [Azure Portal](https://portal.azure.com). Make sure you select the Azure Machine Learning workspace that you created from the notebook earlier. Open your **Models** section, and observe the versions of the registered model: `compliance-classifier`. The latest version is the one registered by the build pipeline you have run in the previous task.
 
-    ![Review registered model in Azure Machine Learning studio.](media/devops-build-outputs-01.png 'Registered Models in Azure Machine Learning studio')
+    ![Review registered model in Azure Machine Learning studio.](media/ai-20.png 'Registered Models in Azure Machine Learning studio')
 
 2. Select the latest version of your model to review its properties. Notice the ```build_number``` tag which links the registered to model to the Azure DevOps build that generated it.
 
-    ![Review registered model properties, notice Build_Number tag.](!media/../media/devops-build-outputs-02.png 'Registered model details and Build_Number tag')
+    ![Review registered model properties, notice Build_Number tag.](!media/../media/ai-21.png 'Registered model details and Build_Number tag')
 
 3. Open your **Datasets** section and observe the versions of the registered dataset: ```connected_car_components```. The latest version is the one registered by the build pipeline you have run in the previous task.
 
-    ![Review registered dataset in Azure Machine Learning studio.](media/devops-build-outputs-03.png 'Registered Datasets in Azure Machine Learning studio')
+    ![Review registered dataset in Azure Machine Learning studio.](media/ai-22.png 'Registered Datasets in Azure Machine Learning studio')
 
 4. Select the latest version of your dataset to review its properties. Notice the ```build_number``` tag that links the dataset version to the Azure DevOps build that generated it.
 
@@ -458,11 +458,11 @@ Duration: 30 minutes
 
 2. Observe the **Scoring URI** and **API Key** for the deployed webservice. Please note down both the `Scoring URI` and `API Key` for *Exercise 7*.
 
-    ![View Deploy & Test Webservice task logs and note down the Scoring URI of the deployed webservice.](media/devops-test-pipelines-07.png 'Deploy & Test Webservice Task Logs')
+    ![View Deploy & Test Webservice task logs and note down the Scoring URI of the deployed webservice.](media/ai-26.png 'Deploy & Test Webservice Task Logs')
 
 3. Log in to Azure Machine Learning studio. Open your **Endpoints** section, and observe the deployed webservice: **compliance-classifier-service**.
 
-    ![View deployed webservice in Azure Machine Learning studio.](media/devops-test-pipelines-08.png 'Azure Machine Learning studio - Workspace, Deployments')
+    ![View deployed webservice in Azure Machine Learning studio.](media/ai-27.png 'Azure Machine Learning studio - Workspace, Deployments')
 
 ## Wrap-up
 
