@@ -240,15 +240,15 @@ Duration: 25 minutes
 
 1. Log in to [Azure Machine Learning studio](https://ml.azure.com) either directly or via the [Azure Portal](https://portal.azure.com). Make sure you select the Azure Machine Learning workspace that you created from the notebook earlier. Open your **Models** section, and observe the versions of the registered model: `compliance-classifier`. The latest version is the one registered by the build pipeline you have run in the previous task.
 
-    ![Review registered model in Azure Machine Learning studio.](media/devops-build-outputs-01.png 'Registered Models in Azure Machine Learning studio')
+    ![Review registered model in Azure Machine Learning studio.](media/ai-20.png 'Registered Models in Azure Machine Learning studio')
 
 2. Select the latest version of your model to review its properties. Notice the ```build_number``` tag which links the registered to model to the Azure DevOps build that generated it.
 
-    ![Review registered model properties, notice Build_Number tag.](!media/../media/devops-build-outputs-02.png 'Registered model details and Build_Number tag')
+    ![Review registered model properties, notice Build_Number tag.](!media/../media/ai-21.png 'Registered model details and Build_Number tag')
 
 3. Open your **Datasets** section and observe the versions of the registered dataset: ```connected_car_components```. The latest version is the one registered by the build pipeline you have run in the previous task.
 
-    ![Review registered dataset in Azure Machine Learning studio.](media/devops-build-outputs-03.png 'Registered Datasets in Azure Machine Learning studio')
+    ![Review registered dataset in Azure Machine Learning studio.](media/ai-22.png 'Registered Datasets in Azure Machine Learning studio')
 
 4. Select the latest version of your dataset to review its properties. Notice the ```build_number``` tag that links the dataset version to the Azure DevOps build that generated it.
 
