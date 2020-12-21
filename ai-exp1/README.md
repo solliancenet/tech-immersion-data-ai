@@ -47,7 +47,7 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
     ![The Continue using your trial key option is highlighted.](media/ai-09.png "Link your Azure account")
 
-5. At this point, you will see a page called "My Apps". You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select **Manage authoring resources**.
+5. At this point, you will see a page called "Conversation  Apps". You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select **Manage authoring resources**.
 
    ![Click on your name then select Settings.](media/ai-11.png 'Settings')
 
