@@ -47,7 +47,7 @@ The bot you will be creating uses [Microsoft's LUIS](https://azure.microsoft.com
 
     ![The Continue using your trial key option is highlighted.](media/ai-09.png "Link your Azure account")
 
-5. At this point, you will see a page called "My Apps". You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select **Manage authoring resources**.
+5. At this point, you will see a page called "Conversation  Apps". You do not need to create a new app. The Bot Framework SDK will do this for you. Click on your name in the top right-hand corner, then select **Manage authoring resources**.
 
    ![Click on your name then select Settings.](media/ai-11.png 'Settings')
 
@@ -356,47 +356,7 @@ In this task, you will open the Bot Framework Emulator and start testing out you
 
 11. The bot sent the `put the air on my feet` text to LUIS so that it could derive your intent and desired action. If you click on the LUIS trace message in the chat window, you should see the following in the Inspector pane:
 
-    ```javascript
-    {
-    "recognizerResult": {
-      "alteredText": null,
-      "entities": {
-        "$instance": {
-          "SETTING": [
-            {
-              "endIndex": 11,
-              "score": 0.996788144,
-              "startIndex": 8,
-              "text": "air",
-              "type": "SETTING"
-            }
-          ],
-          "VALUE": [
-            {
-              "endIndex": 22,
-              "score": 0.5489724,
-              "startIndex": 18,
-              "text": "feet",
-              "type": "VALUE"
-            }
-          ]
-        },
-        "SETTING": [
-          "air"
-        ],
-        "VALUE": [
-          "feet"
-        ]
-      },
-      "intents": {
-        "VEHICLE_SETTINGS_CHANGE": {
-          "score": 0.9998417
-        }
-      },
-      "text": "put the air on my feet"
-    }
-    }
-    ```
+     ![Inspecting data.](media/inspector.png 'Live Chat')
 
     To explain, the utterance is your text (located on the bottom): `put the air on my feet`. LUIS detected the intent as `VEHICLE_SETTINGS_CHANGE` (you should remember that one from earlier) with a score, or "confidence" level of 99%. It detected two entities, a `SETTING` of "air" with a value of "feet". The "air" setting also had a high score of 99%, but the setting value of "feet" scored about 55%.
 

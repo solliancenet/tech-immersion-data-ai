@@ -61,6 +61,10 @@ If you have not already created the `tech-immersion` Compute instance in Azure M
 4. Back to the `Compute Instance` tab, select **Refresh** if you are not able to see `tech-immersion` yet. After the notebook VM is listed, select **Jupyter**.
 
    ![Open NotebookVM](media/aml-05.png)
+   
+5. On the **IMPORTANT NOTE: Always use trusted code** pop-up, Check **Yes, I understand** and click on **Continue**.
+
+      ![Open NotebookVM](media/ai4notebook.png)
 
 ## Task 2: Upload the starter notebook
 
