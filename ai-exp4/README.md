@@ -64,7 +64,7 @@ If you have not already created the `tech-immersion` Compute instance in Azure M
    
 5. On the **IMPORTANT NOTE: Always use trusted code** pop-up, Check **Yes, I understand** and click on **Continue**.
 
-      ![Open NotebookVM](media/ai4.png)
+      ![Open NotebookVM](media/ai4notebook.png)
 
 ## Task 2: Upload the starter notebook
 
