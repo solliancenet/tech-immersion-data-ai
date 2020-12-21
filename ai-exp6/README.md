@@ -228,9 +228,9 @@ Duration: 25 minutes
 
     ![Select Artifacts, 1 published to review the artifact contents.](media/devops-build-pipeline-14.png 'Build Artifacts')
 
-2. Select **outputs, eval_info.json** and then select the download arrow. The `eval_info.json` is the output from the *model evaluation* step and the information from the evaluation step will be later used in the release pipeline to deploy the model. Select the back arrow to return to the previous screen.
+2. Select **outputs, eval_info.json** and  then select **ellipsis** and click on **Download artifacts** . The `eval_info.json` is the output from the *model evaluation* step and the information from the evaluation step will be later used in the release pipeline to deploy the model. Select the back arrow to return to the previous screen.
 
-    ![Download output from the model evaluation step.](media/devops-build-pipeline-15.png 'Download JSON file')
+    ![Download output from the model evaluation step.](media/ai6artifact.png 'Download JSON file')
 
 3. Open the `eval_info.json` in a json viewer or a text editor and observe the information. The json output contains information such as if the model passed the evaluation step (`deploy_model`: *true or false*) and evaluation accuracy.
 
