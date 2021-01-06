@@ -95,13 +95,13 @@ Duration: 20 minutes
 
 1. Select and open the `azure-pipelines.yml` file.
 
-2. Select **Edit** and update the following variables: `resourcegroup`, and `workspace`. If you are using your own Azure subscription, please provide names to use. If an environment is provided to you, be sure to replace XXXXX in the values below with your unique identifier. Typically, for the provided environment, the format for the resourcegroup is `tech_immersion_XXXXX` and for workspace is `tech_immersion_aml_XXXXX` where XXXXX is your unique identifier.
+2. Select **Edit** and update the following variables: `resourcegroup`, and `workspace`. If you are using your own Azure subscription, please provide names to use. If an environment is provided to you, be sure to replace XXXXX in the values below with your unique identifier. Typically, for the provided environment, the format for the workspace is `tech_immersion_aml_XXXXX` where XXXXX is your unique identifier and edit the value of reource group to `ti-XXXXX` where XXXXX is your unique identifier.
 
     ![Edit build YAML file and provide your resource group and workspace information.](media/devops-build-pipeline-01.png 'Edit Build YAML file')
 
 3. Select **Commit** to save your changes.
 
-    ![Commit your changes to the build YAML file.](media/devops-build-pipeline-02.png 'Commit Build YAML file')
+    ![Commit your changes to the build YAML file.](media/e1.png 'Commit Build YAML file')
   
 ### Task 4: Create new Service Connection
 
@@ -135,7 +135,7 @@ Duration: 20 minutes
 
     ![Provide connection name, Azure Resource Group, Machine Learning Workspace, and then select Save. The resource group and machine learning workspace must match the value you provided in the YAML file.](media/devops-build-pipeline-06.png 'Add an Azure Resource Manager service connection dialog')
 
-     >**Note**: If you are unable to select your **Machine Learning Workspace**, do the following steps:
+     >**Note**: If you are unable to select your **Machine Learning Workspace**, do the following steps else skip to Exercise 2:
 
     - Quit the `New Azure service connection` dialog
     - Refresh or reload the web browser
@@ -206,13 +206,13 @@ Duration: 25 minutes
 
     d. Publish the build artifacts. The `snapshot of the repository`, `config.json`, and `eval_info.json` files are published as build artifacts and thus can be made available for the release pipeline.
 
-    ![Review the build pipeline YAML file.](media/devops-build-pipeline-10.png 'Build pipeline YAML')
+    ![Review the build pipeline YAML file.](media/e2.png 'Build pipeline YAML')
 
 ### Task 2: Run the Build Pipeline
 
 1. Select **Run** to start running your build pipeline.
 
-    ![Start the run for your build pipeline.](media/devops-build-pipeline-11.png 'Run Build Pipeline')
+    ![Start the run for your build pipeline.](media/e3.png 'Run Build Pipeline')
 
 2. Monitor the build run. The build pipeline, for the first run, will take around 20 minutes to run.
 
@@ -238,23 +238,28 @@ Duration: 25 minutes
 
 ### Task 4: Review Build Outputs
 
-1. Log in to [Azure Machine Learning studio](https://ml.azure.com) either directly or via the [Azure Portal](https://portal.azure.com). Make sure you select the Azure Machine Learning workspace that you created from the notebook earlier. Open your **Models** section, and observe the versions of the registered model: `compliance-classifier`. The latest version is the one registered by the build pipeline you have run in the previous task.
+1. Log in to [Azure Machine Learning studio](https://ml.azure.com) either directly or via the [Azure Portal](https://portal.azure.com). Make sure you select the Azure Machine Learning workspace that you created from the notebook earlier and click on **Get Started**. 
+
+    ![Review registered model in Azure Machine Learning studio.](media/e4.png 'Registered Models in Azure Machine Learning studio')
+
+
+2. Open your **Models** section, and observe the versions of the registered model: `compliance-classifier`. The latest version is the one registered by the build pipeline you have run in the previous task.
 
     ![Review registered model in Azure Machine Learning studio.](media/ai-20.png 'Registered Models in Azure Machine Learning studio')
 
-2. Select the latest version of your model to review its properties. Notice the ```build_number``` tag which links the registered to model to the Azure DevOps build that generated it.
+3. Select the latest version of your model to review its properties. Notice the ```build_number``` tag which links the registered to model to the Azure DevOps build that generated it.
 
     ![Review registered model properties, notice Build_Number tag.](!media/../media/ai-21.png 'Registered model details and Build_Number tag')
 
-3. Open your **Datasets** section and observe the versions of the registered dataset: ```connected_car_components```. The latest version is the one registered by the build pipeline you have run in the previous task.
+4. Open your **Datasets** section and observe the versions of the registered dataset: ```connected_car_components```. The latest version is the one registered by the build pipeline you have run in the previous task.
 
     ![Review registered dataset in Azure Machine Learning studio.](media/ai-22.png 'Registered Datasets in Azure Machine Learning studio')
 
-4. Select the latest version of your dataset to review its properties. Notice the ```build_number``` tag that links the dataset version to the Azure DevOps build that generated it.
+5. Select the latest version of your dataset to review its properties. Notice the ```build_number``` tag that links the dataset version to the Azure DevOps build that generated it.
 
     ![Review registered dataset version properties, notice Build_Number tag.](medial/../media/devops-build-outputs-04.png 'Registered dataset details in Azure Machine Learning studio')
 
-5. Select **Models** to view a list of registered models that reference the dataset.
+6. Select **Models** to view a list of registered models that reference the dataset.
 
     ![Review list of registered models that reference dataset in Azure Machine Learning studio.](media/devops-build-outputs-05.png 'Registered dataset model references in Azure Machine Learning studio')
 
