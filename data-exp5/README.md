@@ -68,7 +68,7 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
     ![Dragging the data flow activity on to the pipeline design surface](media/05-drag-drop-data-flow.png)
 
-7. In the Adding Data Flow panel, choose **setting**, select **new**.
+7. In the Adding Data Flow panel, choose **setting**, select **Data Flow** and select **new**.
 
     ![On the Add data flow dialog, Create new data flow is selected, Mapping Data Flow is highlighted and selected, and the OK button is highlighted.](media/add-data-flow.png "Add Data Flow")
 
@@ -90,7 +90,7 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
 14. Select the new source data set item, and then in the property panel, select the **Source Setting** tab, 
 
-15. Select **+ New** next to _Source dataset_.
+15. Select **+ New** next to _dataset_.
 
     ![Configuring the Source Settings](media/source-dataflow.png)
 
@@ -220,7 +220,9 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
 2.  Select **Finish** on the tooltip that appears.
 
-3.  With sink1 selected, on the property panel, select **+ New next** to _Sink dataset_.
+3.  With sink1 selected, on the property panel, select **+ New next** to _dataset_.
+
+![Add sink](media/sink-add-dataset.png)
 
 4.  On New Dataset, select **Azure Blob Storage** and select **Continue**.
 
