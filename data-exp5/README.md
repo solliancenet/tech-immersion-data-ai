@@ -68,13 +68,11 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
     ![Dragging the data flow activity on to the pipeline design surface](media/05-drag-drop-data-flow.png)
 
-7. In the Adding Data Flow panel, choose **Create new data flow**, select **Mapping Data Flow** and select **OK**.
+7. In the Adding Data Flow panel, choose **setting**, select **new**.
 
-    ![On the Add data flow dialog, Create new data flow is selected, Mapping Data Flow is highlighted and selected, and the OK button is highlighted.](media/adf-add-mapping-data-flow.png "Add Data Flow")
+    ![On the Add data flow dialog, Create new data flow is selected, Mapping Data Flow is highlighted and selected, and the OK button is highlighted.](media/add-data-flow.png "Add Data Flow")
 
-8. Select **Finish** in the tooltip that appears.
-
-9. Populate the Data Flow Name field on the General tab with a value of `FleetCalculations`.
+8. Populate the Data Flow Name field on the General tab with a value of `FleetCalculations`.
 
     ![The name FleetCalculations is entered in the name field on the new data flow General tab.](media/mapping-data-flow-name.png "Data Flow General tab")
 
@@ -94,7 +92,7 @@ In this experience, ​​you will see how you can use the capabilities of Azure
 
 15. Select **+ New** next to _Source dataset_.
 
-    ![Configuring the Source Settings](media/10-new-source-dataset.png)
+    ![Configuring the Source Settings](media/source-dataflow.png)
 
 16. On the New Data Set panel, select **Azure Blob Storage** and then select **Continue**.
 
@@ -271,9 +269,13 @@ In this task, you will set up your ADLS Gen2 filesystem, and then review and exe
 
 2. Prior to using ADF to move data into your ADLS Gen2 instance, you must create a filesystem in ADLS Gen2. Within the resource group, select the storage account whose name like `adlsstrgXXXXX`.
 
-3. On the Overview blade, look under services and select **Data Lake Gen 2 file systems**.
+3. On the Overview blade, look under services and select **containers**.
 
-4. Select **+ File System** and in the dialog that appears enter `contosoauto` for the name of the file system and select **OK**.
+   ![containers](media/sa-container-overview.png)
+
+4. Select **+ container** and in the dialog that appears enter `contosoauto` for the name of the container and select **OK**.
+
+   ![containers add](media/contoso-container.png)
 
 ### Task 2: Using the Copy activity in Azure Data Factory
 
