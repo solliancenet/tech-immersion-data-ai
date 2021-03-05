@@ -295,7 +295,7 @@ In this task, you will configure Stream Analytics to use the event hub you creat
     - **Event Hub policy name:** Select **Read**.
     - Leave all other values at their defaults.
 
-    ![The New Input form is filled out with the previously mentioned settings entered into the appropriate fields.](media/stream-analytics-new-input.png 'New Input')
+    ![The New Input form is filled out with the previously mentioned settings entered into the appropriate fields.](media/stream-analytics-new-input-2.png 'New Input')
 
 7.  Select **Save** on the bottom of the form when you are finished entering the values.
 
@@ -309,7 +309,7 @@ In this task, you will configure Stream Analytics to use the event hub you creat
 
 10. In the **New Output** blade, select the **Authorize** button to authorize a connection from Stream Analytics to your Power BI account.
 
-    ![The Authorize button is highlighted in the New Output blade.](media/stream-analytics-new-output-authorize.png 'New Output')
+    ![The Authorize button is highlighted in the New Output blade.](media/stream-analytics-new-output-authorize-2.png 'New Output')
 
 11. When prompted, sign in to your Power BI account, which is the same username and password you were provided with and used to login to the Azure Portal.
 
@@ -326,7 +326,9 @@ In this task, you will configure Stream Analytics to use the event hub you creat
     - **Dataset name:** Enter "VehicleAnomalies".
     - **Table name:** Enter "Alerts".
 
-    ![The New Output form is filled out with the previously mentioned settings entered into the appropriate fields.](media/stream-analytics-new-output.png 'New Output')
+    ![The New Output form is filled out with the previously mentioned settings entered into the appropriate fields.](media/stream-analytics-new-output-authorize.png 'New Output')
+    
+    ![The New Output form is filled out with the previously mentioned settings entered into the appropriate fields.](media/stream-analytics-new-output-authorize-2.png 'New Output')
 
 14. Select **Save** on the bottom of the form when you are finished entering the values.
 
@@ -551,7 +553,7 @@ In this task, you will open the lab solution in Visual Studio, publish the Funct
 
 4.  Select **Select Existing** underneath Azure App Service since you will be publishing this to an existing Function App. Check **Run from package file**. This configures the Function App to run from the zip file rather than extracting and copying all the files for each instance of your functions. Click **Publish** on the bottom of the dialog window. If you are prompted to log into your Azure Account, log in with the Azure account you are using for this lab.
 
-    ![The Select Existing radio button and Publish button are highlighted.](media/vs-publish-target.png 'Pick a publish target')
+    ![The Select Existing radio button and Publish button are highlighted.](media/vs-publish-target-2.png 'Pick a publish target')
 
 5.  In the App Service dialog that follows, make sure your Azure **Subscription** for this lab is selected, then find and expand the **tech-immersion-YOUR_UNIQUE_IDENTIFIER** resource group. Select your Function App that includes **day1** in its name, then click **OK** on the bottom of the dialog window
 
@@ -627,7 +629,7 @@ You will notice that the Function App is now set to read-only. This is because y
 
 4.  Expand **Functions (Read Only)** within the navigation tree to the left, then select **CarEventProcessorRegion1**.
 
-    ![The Functions node is expanded in the navigation tree, and the CarEventProcessor is selected.](media/function-app-tree.png 'Functions')
+    ![The Functions node is expanded in the navigation tree, and the CarEventProcessor is selected.](media/function-app-tree-2.png 'Functions')
 
 5.  Looking at the **function.json** file to the right, notice that it was generated for you when you published from Visual Studio. Also notice how the `bindings` section lines up with the function method in `CarEventProcessorFunctions.cs`:
 
@@ -654,7 +656,7 @@ The Function App was configured to send telemetry to Application Insights. This 
 
 1. Navigate back to your Day 1 Function App's Overview blade as you did in the previous task. Select **Application Insights** underneath Configured Features.
 
-   ![Application Insights is highlighted on the Function App's Overview blade.](media/function-app-app-insights.png 'Overview blade')
+   ![Application Insights is highlighted on the Function App's Overview blade.](media/function-app-app-insights-2.png 'Overview blade')
 
 2. Within Application Insights, select **Live Metrics Stream** from the left-hand menu.
 
@@ -680,7 +682,7 @@ In this task, you will use Power BI to create a report showing captured vehicle 
 
 4.  Select the **Datasets** tab on top of the workspace. Locate the dataset named **VehicleAnomalies**, then select the **Create Report** action button to the right of the name. If you do not see the dataset, you may need to wait a few minutes and refresh the page.
 
-    ![The Datasets tab is selected in My Workspace and the VehicleAnomalies dataset is highlighted.](media/pbi-my-workspace.png 'Datasets')
+    ![The Datasets tab is selected in My Workspace and the VehicleAnomalies dataset is highlighted.](media/pbi-my-workspace-2.png 'Datasets')
 
     > **Note:** It can take several minutes for the dataset to appear. You may need to periodically refresh the page before you see the Datasets tab.
 
