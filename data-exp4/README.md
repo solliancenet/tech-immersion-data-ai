@@ -325,8 +325,6 @@ In this task, you will configure Stream Analytics to use the event hub you creat
     - **Group workspace:** Select My Workspace.
     - **Dataset name:** Enter "VehicleAnomalies".
     - **Table name:** Enter "Alerts".
-
-    ![The New Output form is filled out with the previously mentioned settings entered into the appropriate fields.](media/stream-analytics-new-output-authorize.png 'New Output')
     
     ![The New Output form is filled out with the previously mentioned settings entered into the appropriate fields.](media/stream-analytics-new-output-authorize-2.png 'New Output')
 
