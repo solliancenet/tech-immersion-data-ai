@@ -505,19 +505,19 @@ In this task, you will configure the Function App with the Azure Cosmos DB and E
 
 11. Select **+ New application setting** again to add a new one.
 
-12. Enter `EventHubsConnectionString` into the **Name** field, then paste your Event Hubs connection string into the **Value** field, then select **Update**. This is the connection string for the **Write** shared access policy you created. If you cannot locate your connection string, refer to Task 2, step 17.
+12. Enter `EventHubsConnectionString` into the **Name** field, then paste your Event Hubs connection string into the **Value** field, then select **Update/OK**. This is the connection string for the **Write** shared access policy you created. If you cannot locate your connection string, refer to Task 2, step 17.
 
-    ![The EventHubsConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-event-hubs.png 'Application settings')
+    ![The EventHubsConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-event-hubs-2.png 'Application settings')
 
 13. Select **+ New application setting** again to add a new one.
 
-14. Enter `Region1` into the **Name** field, then paste the name of your first region into the **Value** field, then select **Update**.
+14. Enter `Region1` into the **Name** field, then paste the name of your first region into the **Value** field, then select **Update/OK**.
 
-    ![The EventHubsConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-region1.png 'Application settings')
+    ![The EventHubsConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-region1-2.png 'Application settings')
 
 15. Select **+ New application setting** once more to add a new one.
 
-16. Enter `Region2` into the **Name** field, then paste the name of your first region into the **Value** field, then select **Update**.
+16. Enter `Region2` into the **Name** field, then paste the name of your second region into the **Value** field, then select **Update**.
 
     ![The EventHubsConnectionString name and value pair has been added and is highlighted.](media/function-app-app-settings-region2.png 'Application settings')
 
@@ -553,9 +553,9 @@ In this task, you will open the lab solution in Visual Studio, publish the Funct
 
     ![The Select Existing radio button and Publish button are highlighted.](media/vs-publish-target-2.png 'Pick a publish target')
 
-5.  In the App Service dialog that follows, make sure your Azure **Subscription** for this lab is selected, then find and expand the **tech-immersion-YOUR_UNIQUE_IDENTIFIER** resource group. Select your Function App that includes **day1** in its name, then click **OK** on the bottom of the dialog window
+5.  In the App Service dialog that follows, make sure your Azure **Subscription** for this lab is selected, then find and expand the **tech-immersion-YOUR_UNIQUE_IDENTIFIER** resource group. Select your Function App that includes **day1** in its name, then click **Finish** on the bottom of the dialog window
 
-    ![The Function App and OK button are highlighted.](media/vs-publish-app-service.png 'App Service')
+    ![The Function App and OK button are highlighted.](media/vs-publish-app-service-2.png 'App Service')
 
 6.  The Function App will start publishing in a moment. You can watch the output window for the publish status. When it is done publishing, you should see a "Publish completed" message on the bottom of the output window.
 
@@ -758,9 +758,9 @@ In this task, you will use Power BI to create a report showing captured vehicle 
 
     ![Screenshot of the save dialog.](media/pbi-save-dialog.png 'Save dialog')
 
-23. Now let's add this report to a dashboard. Select **Pin Live Page** on the upper-right of the page.
+23. Now let's add this report to a dashboard. Select **Pin to a dashboard** on the upper-right of the page.
 
-    ![The Pin Live Page button is highlighted.](media/pbi-live.png 'Pin Live Page')
+    ![The Pin Live Page button is highlighted.](media/pbi-live-2.png 'Pin Live Page')
 
 24. Select **New dashboard**, then enter a name, such as "Vehicle Anomalies Dashboard". Select **Pin live**. When prompted select the option to view the dashboard. Otherwise, you can find the dashboard under My Workspace on the left-hand menu.
 
