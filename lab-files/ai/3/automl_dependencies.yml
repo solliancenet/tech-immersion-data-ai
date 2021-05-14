@@ -11,10 +11,10 @@ dependencies:
 - python=3.6.2
 
 - pip:
-  - azureml-train-automl-runtime==1.13.0
+  - azureml-train-automl-runtime==1.28.0
   - inference-schema
-  - azureml-explain-model==1.13.0
-  - azureml-defaults==1.13.0
+  - azureml-explain-model==1.28.0
+  - azureml-defaults==1.28.0
 - numpy>=1.16.0,<1.19.0
 - pandas==0.25.1
 - scikit-learn==0.22.1
